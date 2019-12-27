@@ -25,6 +25,8 @@ localMessage.CELLPHONE_INVALID = '您输入的内容不是有效的手机号码�
 localMessage.CELLPHONE_REGISTERED = '您输入的手机号码已注册。';
 localMessage.VERIFICATION_CODE_INVALID = '您输入的验证码不正确。';
 
+localMessage.CELLPHONE_NOT_FOUND = '您输入的手机号码不存在。';
+
 
 localMessage.formatMessage = function (code, msg) {
   return `<strong>抱歉，系统发生异常，请联系我们</strong> </br>状态码:&nbsp ${code} </br> 详细信息:&nbsp ${msg}`;

@@ -12,6 +12,8 @@
 
       "universityAccount": "/api/university/account",
       "checkUniversityAccountCellphone": "/api/university/account/checkCellphone",
+      "checkChangePasswordCellphone": "/api/university/account/changePassword/checkCellphone",
+      "changePassword": "/api/university/account/changePassword",
 
       "universityCustomer": "/api/university/customer",
       "checkUniversityCustomerCellphone": "/api/university/customer/checkCellphone",

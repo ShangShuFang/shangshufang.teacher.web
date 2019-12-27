@@ -88,7 +88,7 @@
             <div class="kt-login__form" ng-app="pageApp" ng-controller="pageCtrl">
               <div class="kt-login__title">
                 <h3><span style="color: #5867dd;">上书房</span>智慧教育平台</h3>
-                <h4>教师账户注册</h4>
+                <h4>教师端账户注册</h4>
               </div>
 
               <!--begin::Register form-->
@@ -173,16 +173,16 @@
                     </button>
                   </div>
                   <div class="invalid-feedback" ng-style="{'display': model.isCodeInvalid == 1 ? 'block':'none'}" ng-bind="model.verificationCodeAlertMessage"></div>
-
                 </div>
                 <div class="form-group">
                   <input class="form-control"
                          type="password"
-                         placeholder="请输入密码"
+                         placeholder="请输入最长12位的密码"
                          maxlength="12"
                          name="password"
                          ng-model="model.password"
-                         required>
+                         required
+                         autocomplete="close">
                 </div>
 
                 <div class="form-group">
@@ -194,7 +194,8 @@
                          ng-model="model.confirmPassword"
                          ng-blur="onConfirmPasswordBlur()"
                          placeholder="请再次输入密码"
-                         required>
+                         required
+                         autocomplete="close">
                   <div class="invalid-feedback" ng-if="model.isPasswordInvalid === 1">两次输入的密码不一致</div>
                 </div>
 
@@ -215,7 +216,6 @@
                                     || model.isCellphoneInvalid != 0
                                     || myForm.verificationCode.$pristine
                                     || (myForm.verificationCode.$dirty && myForm.verificationCode.$invalid)
-
                                     || myForm.password.$pristine
                                     || (myForm.password.$dirty && myForm.password.$invalid)
                                     || myForm.confirmPassword.$pristine

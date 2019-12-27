@@ -1,4 +1,5 @@
 require('date-utils');
+let moment = require('moment');
 
 exports.formatUTC = function(utc_datetime){
   // 转为正常的时间格式 年-月-日 时:分:秒
@@ -28,6 +29,18 @@ exports.formatGMT = function (gmt_datetime) {
   return  date.getFullYear() + '-'
       + formatTime((date.getMonth() + 1)) + '-'
       + formatTime(date.getDate()) + ' ';
+};
+
+exports.currentTime = function () {
+  return  new Date().toFormat("YYYY-MM-DD HH24:MI:SS");
+};
+
+exports.addMinutes = function (date, minutes) {
+  return moment(date).add(minutes, 'minutes').format("YYYY-MM-DD HH:mm:ss");
+};
+
+exports.compare = function (date1, date2) {
+  return Date.compare(date1, date2);
 };
 
 function formatTime(i){

@@ -17,9 +17,15 @@ localMessage.EXERCISES_CODE_PROJECT_FORMAT_INVALID = '项目练习的习题编�
 localMessage.EXERCISES_CODE_INVALID = '您输入的习题编码已存在！';
 localMessage.PARAMETER_ERROR = '参数错误，未能读取到对应参数，无法继续操作！';
 
-localMessage.ACCOUNT_WAITING = '您的账户正在等待所在院校的管理员审批，请审批通过后方可登陆。';
+localMessage.ACCOUNT_WAITING = '您的账户正在等待所在院校的管理员审批，审批通过后方可登陆。';
 localMessage.ACCOUNT_NO_PASS = '您的账户审批未通过，请联系所在院校的管理员。';
 localMessage.ACCOUNT_DISABLED = '您的账户已被冻结，请联系所在院校的管理员或我公司客服。';
+
+localMessage.CELLPHONE_INVALID = '您输入的内容不是有效的手机号码。';
+localMessage.CELLPHONE_REGISTERED = '您输入的手机号码已注册。';
+localMessage.VERIFICATION_CODE_INVALID = '您输入的验证码不正确。';
+
+
 localMessage.formatMessage = function (code, msg) {
   return `<strong>抱歉，系统发生异常，请联系我们</strong> </br>状态码:&nbsp ${code} </br> 详细信息:&nbsp ${msg}`;
 };

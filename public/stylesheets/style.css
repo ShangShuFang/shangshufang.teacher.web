@@ -8,3 +8,25 @@ body {
 .was-validated .form-control:invalid, .form-control.is-invalid{
   border: 1px solid #fd27eb !important;
 }
+
+.kt-portlet .kt-portlet__head{
+  min-height: 40px;
+}
+
+.shs-banner img{
+  width: 100%;
+}
+
+.shs-banner{
+  width: 100%;
+}
+.space-10{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.refresh{
+  cursor: pointer;
+}
+.star-selected{
+  color: #f1b86f;
+}

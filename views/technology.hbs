@@ -1,0 +1,1180 @@
+<link href="/stylesheets/views/technology.css" rel="stylesheet" type="text/css"/>
+
+<div ng-app="pageApp" ng-controller="pageCtrl">
+
+  <!-- begin:: 技术简介 -->
+  <div class="technology-header">
+    <div class="kt-container kt-grid__item kt-grid__item--fluid">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="technology-header-portlet">
+            <div class="kt-portlet__body">
+              <div class="kt-widget kt-widget--user-profile-3">
+                <div class="kt-widget__top">
+                  <div class="kt-font-boldest kt-font-light technology-name">
+                    <input type="hidden" value="{{technologyID}}" id="hidden_technologyID">
+                    <h3 ng-bind="model.technologyInfo.technologyName"></h3>
+                    <span class="kt-widget__desc">
+                      <i class="la" ng-class="{'la-star-o': model.technologyInfo.technologyStars < 1, 'la-star star-selected': model.technologyInfo.technologyStars >= 1}"></i>
+                      <i class="la" ng-class="{'la-star-o': model.technologyInfo.technologyStars < 2, 'la-star star-selected': model.technologyInfo.technologyStars >= 2}"></i>
+                      <i class="la" ng-class="{'la-star-o': model.technologyInfo.technologyStars < 3, 'la-star star-selected': model.technologyInfo.technologyStars >= 3}"></i>
+                      <i class="la" ng-class="{'la-star-o': model.technologyInfo.technologyStars < 4, 'la-star star-selected': model.technologyInfo.technologyStars >= 4}"></i>
+                      <i class="la" ng-class="{'la-star-o': model.technologyInfo.technologyStars < 5, 'la-star star-selected': model.technologyInfo.technologyStars >= 5}"></i>
+                  </span>
+                  </div>
+                  <div class="kt-widget__content">
+                    <div class="color-white">
+                      <h5 >
+                        <span ng-bind="model.technologyInfo.technologyName"></span><span>简介</span>
+                      </h5>
+                    </div>
+                    <div class="kt-widget__info">
+                      <div class="kt-widget__desc">
+                        <p class="technology-decs color-white" ng-bind="model.technologyInfo.technologyMemo"></p>
+                      </div>
+                    </div>
+                    <div class="kt-widget__action">
+                      <button type="button" class="btn btn-brand btn-upper">创建课程</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end:: 技术简介 -->
+
+  <div class="kt-subheader kt-grid__item">
+    <div class="kt-container">
+      <div class="kt-subheader__main">
+        <h3 class="kt-subheader__title"></h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- begin:: 知识点列表 -->
+  <div class="kt-container kt-grid__item kt-grid__item--fluid">
+    <div class="kt-portlet">
+      <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title">
+            知识点列表
+            <small class="count">
+              <strong>包含<span ng-bind="model.knowledgeTotalCount"></span>个知识点</strong>
+            </small>
+          </h3>
+        </div>
+        <div class="kt-portlet__head-label" ng-if="model.knowledgeList.length < model.knowledgeTotalCount">
+          <a class="kt-font-brand refresh kt-font-bold" title="加载更多知识点" ng-click="onLoadMoreKnowledge()">+更多</a>
+        </div>
+
+      </div>
+      <div class="kt-portlet__body">
+        <div class="row">
+          <div class="col-xl-6">
+            <div class="kt-list-timeline">
+              <div class="kt-list-timeline__items">
+
+                <div class="kt-list-timeline__item" ng-repeat="knowledge in model.knowledgeList1">
+                  <span class="kt-list-timeline__badge" ng-class="{'kt-list-timeline__badge--success': knowledge.learningPhaseID % 2 == 1, 'kt-list-timeline__badge--danger': knowledge.learningPhaseID % 2 == 0}"></span>
+                  <span class="kt-list-timeline__text">
+                    <span class="kt-badge kt-badge--inline"
+                          ng-class="{'kt-badge--success': knowledge.learningPhaseID % 2 == 1, 'kt-badge--danger': knowledge.learningPhaseID % 2 == 0}"
+                          ng-bind="knowledge.learningPhaseName"></span>
+                    <span ng-bind="knowledge.knowledgeName"></span>
+
+                  </span>
+                  <span class="kt-list-timeline__time using-company">使用企业<strong class="count" ng-bind="knowledge.usingCompanyCount"></strong>家</span>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="kt-list-timeline">
+              <div class="kt-list-timeline__items">
+                <div class="kt-list-timeline__item" ng-repeat="knowledge in model.knowledgeList2">
+                  <span class="kt-list-timeline__badge" ng-class="{'kt-list-timeline__badge--success': knowledge.learningPhaseID % 2 == 1, 'kt-list-timeline__badge--danger': knowledge.learningPhaseID % 2 == 0}"></span>
+                  <span class="kt-list-timeline__text">
+                    <span class="kt-badge kt-badge--inline"
+                          ng-class="{'kt-badge--success': knowledge.learningPhaseID % 2 == 1, 'kt-badge--danger': knowledge.learningPhaseID % 2 == 0}"
+                          ng-bind="knowledge.learningPhaseName"></span>
+                    <span ng-bind="knowledge.knowledgeName"></span>
+                  </span>
+                  <span class="kt-list-timeline__time using-company">使用企业<strong class="count" ng-bind="knowledge.usingCompanyCount"></strong>家</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end:: 知识点列表 -->
+
+  <div class="space-10"></div>
+
+  <!-- begin:: 市场研发方向 -->
+  <div class="kt-container kt-grid__item kt-grid__item--fluid">
+    <div class="kt-portlet">
+      <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title">
+            市场研发方向
+            <small class="count">
+              <strong>涉及<span ng-bind="model.directionTotalCount"></span>个研发方向</strong>
+            </small>
+          </h3>
+        </div>
+      </div>
+      <div class="kt-portlet__body">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="kt-list-timeline">
+              <div class="kt-list-timeline__items">
+                <div class="kt-list-timeline__item" ng-repeat="direction in model.directionList">
+                  <span class="kt-list-timeline__badge kt-list-timeline__badge--warning"></span>
+                  <span class="kt-list-timeline__text" ng-bind="direction.directionName"></span>
+                  <span class="kt-list-timeline__time direction-stars">
+                    市场热度
+                    <span class="kt-widget__desc">
+                      <i class="la" ng-class="{'la-star-o': direction.directionStars < 1, 'la-star star-selected': direction.directionStars >= 1}"></i>
+                      <i class="la" ng-class="{'la-star-o': direction.directionStars < 2, 'la-star star-selected': direction.directionStars >= 2}"></i>
+                      <i class="la" ng-class="{'la-star-o': direction.directionStars < 3, 'la-star star-selected': direction.directionStars >= 3}"></i>
+                      <i class="la" ng-class="{'la-star-o': direction.directionStars < 4, 'la-star star-selected': direction.directionStars >= 4}"></i>
+                      <i class="la" ng-class="{'la-star-o': direction.directionStars < 5, 'la-star star-selected': direction.directionStars >= 5}"></i>
+                  </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end:: 市场研发方向 -->
+
+  <div class="space-10"></div>
+
+  <!-- begin:: 校内外开设课程 -->
+  <div class="kt-container kt-grid__item kt-grid__item--fluid">
+    <div class="kt-portlet">
+      <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title">
+            校内外开设课程
+            <small class="count">
+              <strong>当前站内共开始6个课程</strong>
+            </small>
+          </h3>
+        </div>
+      </div>
+      <div class="kt-portlet__body">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="kt-portlet kt-portlet--tabs">
+              <div class="kt-portlet__head">
+                <div class="kt-portlet__head-toolbar">
+                  <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-danger nav-tabs-line-2x nav-tabs-line-right"
+                      role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" data-toggle="tab" href="#kt_portlet_base_demo_2_3_tab_content" role="tab"
+                         aria-selected="true">
+                        <i class="fa fa-calendar-check-o" aria-hidden="true"></i>正在进行中的本校课程
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_2_2_tab_content" role="tab"
+                         aria-selected="false">
+                        <i class="fa fa-bar-chart" aria-hidden="true"></i>正在进行中的外校课程
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="kt-portlet__body">
+                <div class="tab-content">
+                  <div class="tab-pane active" id="kt_portlet_base_demo_2_3_tab_content" role="tabpanel">
+                    <div class="row">
+                      <div class="col-xl-4">
+                        <div class="kt-portlet kt-portlet--height-fluid">
+                          <div class="kt-portlet__body kt-portlet__body--fit">
+
+                            <!--begin::Widget -->
+                            <div class="kt-widget kt-widget--project-1">
+                              <div class="kt-widget__head d-flex">
+                                <div class="kt-widget__label">
+                                  <div class="kt-widget__media kt-widget__media--m">
+																<span class="kt-media kt-media--md kt-media--circle kt-hidden-">
+																	<img src="/media/project-logos/3.png" alt="image">
+																</span>
+                                    <span class="kt-media kt-media--md kt-media--circle kt-hidden">
+																	<img src="/media/users/100_12.jpg" alt="image">
+																</span>
+                                  </div>
+                                  <div class="kt-widget__info kt-padding-0 kt-margin-l-15">
+                                    <a href="#" class="kt-widget__title">
+                                      Nexa - Next generation SAAS
+                                    </a>
+                                    <span class="kt-widget__desc">
+																	Creates Limitless possibilities
+																</span>
+                                  </div>
+                                </div>
+                                <div class="kt-widget__toolbar">
+                                  <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown"
+                                     aria-expanded="false">
+                                    <i class="flaticon-more-1"></i>
+                                  </a>
+                                  <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right"
+                                       x-placement="bottom-end"
+                                       style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(411px, 58px, 0px);">
+                                    <ul class="kt-nav">
+                                      <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                          <i class="kt-nav__link-icon flaticon2-line-chart"></i>
+                                          <span class="kt-nav__link-text">Reports</span>
+                                        </a>
+                                      </li>
+                                      <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                          <i class="kt-nav__link-icon flaticon2-send"></i>
+                                          <span class="kt-nav__link-text">Messages</span>
+                                        </a>
+                                      </li>
+                                      <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                          <i class="kt-nav__link-icon flaticon2-pie-chart-1"></i>
+                                          <span class="kt-nav__link-text">Charts</span>
+                                        </a>
+                                      </li>
+                                      <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                          <i class="kt-nav__link-icon flaticon2-avatar"></i>
+                                          <span class="kt-nav__link-text">Members</span>
+                                        </a>
+                                      </li>
+                                      <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                          <i class="kt-nav__link-icon flaticon2-settings"></i>
+                                          <span class="kt-nav__link-text">Settings</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="kt-widget__body">
+														<span class="kt-widget__text kt-margin-t-0 kt-padding-t-5">
+															I distinguish three main text objecttives.First
+															your objective could be merely
+														</span>
+                                <div class="kt-widget__stats kt-margin-t-20">
+                                  <div class="kt-widget__item d-flex align-items-center kt-margin-r-30">
+																<span class="kt-widget__date kt-padding-0 kt-margin-r-10">
+																	Start
+																</span>
+                                    <div class="kt-widget__label">
+                                      <span class="btn btn-label-brand btn-sm btn-bold btn-upper">07 may, 18</span>
+                                    </div>
+                                  </div>
+                                  <div class="kt-widget__item d-flex align-items-center kt-padding-l-0">
+																<span class="kt-widget__date kt-padding-0 kt-margin-r-10 ">
+																	Due
+																</span>
+                                    <div class="kt-widget__label">
+                                      <span class="btn btn-label-danger btn-sm btn-bold btn-upper">07 0ct, 18</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="kt-widget__container">
+                                  <span class="kt-widget__subtitel">Progress</span>
+                                  <div class="kt-widget__progress d-flex align-items-center flex-fill">
+                                    <div class="progress" style="height: 5px;width: 100%;">
+                                      <div class="progress-bar kt-bg-success" role="progressbar" style="width: 78%;"
+                                           aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <span class="kt-widget__stat">
+																	78%
+																</span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="kt-widget__footer">
+                                <div class="kt-widget__wrapper">
+                                  <div class="kt-widget__section">
+                                    <div class="kt-widget__blog">
+                                      <i class="flaticon2-list-1"></i>
+                                      <a href="#" class="kt-widget__value kt-font-brand">64 Tasks</a>
+                                    </div>
+                                    <div class="kt-widget__blog">
+                                      <i class="flaticon2-talk"></i>
+                                      <a href="#" class="kt-widget__value kt-font-brand">654 Comments</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--end::Widget -->
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-4">
+                        <div class="kt-portlet kt-portlet--height-fluid">
+                          <div class="kt-portlet__body kt-portlet__body--fit">
+
+                            <!--begin::Widget -->
+                            <div class="kt-widget kt-widget--project-1">
+                              <div class="kt-widget__head d-flex">
+                                <div class="kt-widget__label">
+                                  <div class="kt-widget__media kt-widget__media--m">
+																<span class="kt-media kt-media--md kt-media--circle kt-hidden-">
+																	<img src="/media/project-logos/3.png" alt="image">
+																</span>
+                                    <span class="kt-media kt-media--md kt-media--circle kt-hidden">
+																	<img src="/media/users/100_12.jpg" alt="image">
+																</span>
+                                  </div>
+                                  <div class="kt-widget__info kt-padding-0 kt-margin-l-15">
+                                    <a href="#" class="kt-widget__title">
+                                      Nexa - Next generation SAAS
+                                    </a>
+                                    <span class="kt-widget__desc">
+																	Creates Limitless possibilities
+																</span>
+                                  </div>
+                                </div>
+                                <div class="kt-widget__toolbar">
+                                  <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown"
+                                     aria-expanded="false">
+                                    <i class="flaticon-more-1"></i>
+                                  </a>
+                                  <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right"
+                                       x-placement="bottom-end"
+                                       style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(411px, 58px, 0px);">
+                                    <ul class="kt-nav">
+                                      <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                          <i class="kt-nav__link-icon flaticon2-line-chart"></i>
+                                          <span class="kt-nav__link-text">Reports</span>
+                                        </a>
+                                      </li>
+                                      <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                          <i class="kt-nav__link-icon flaticon2-send"></i>
+                                          <span class="kt-nav__link-text">Messages</span>
+                                        </a>
+                                      </li>
+                                      <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                          <i class="kt-nav__link-icon flaticon2-pie-chart-1"></i>
+                                          <span class="kt-nav__link-text">Charts</span>
+                                        </a>
+                                      </li>
+                                      <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                          <i class="kt-nav__link-icon flaticon2-avatar"></i>
+                                          <span class="kt-nav__link-text">Members</span>
+                                        </a>
+                                      </li>
+                                      <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                          <i class="kt-nav__link-icon flaticon2-settings"></i>
+                                          <span class="kt-nav__link-text">Settings</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="kt-widget__body">
+														<span class="kt-widget__text kt-margin-t-0 kt-padding-t-5">
+															I distinguish three main text objecttives.First
+															your objective could be merely
+														</span>
+                                <div class="kt-widget__stats kt-margin-t-20">
+                                  <div class="kt-widget__item d-flex align-items-center kt-margin-r-30">
+																<span class="kt-widget__date kt-padding-0 kt-margin-r-10">
+																	Start
+																</span>
+                                    <div class="kt-widget__label">
+                                      <span class="btn btn-label-brand btn-sm btn-bold btn-upper">07 may, 18</span>
+                                    </div>
+                                  </div>
+                                  <div class="kt-widget__item d-flex align-items-center kt-padding-l-0">
+																<span class="kt-widget__date kt-padding-0 kt-margin-r-10 ">
+																	Due
+																</span>
+                                    <div class="kt-widget__label">
+                                      <span class="btn btn-label-danger btn-sm btn-bold btn-upper">07 0ct, 18</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="kt-widget__container">
+                                  <span class="kt-widget__subtitel">Progress</span>
+                                  <div class="kt-widget__progress d-flex align-items-center flex-fill">
+                                    <div class="progress" style="height: 5px;width: 100%;">
+                                      <div class="progress-bar kt-bg-success" role="progressbar" style="width: 78%;"
+                                           aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <span class="kt-widget__stat">
+																	78%
+																</span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="kt-widget__footer">
+                                <div class="kt-widget__wrapper">
+                                  <div class="kt-widget__section">
+                                    <div class="kt-widget__blog">
+                                      <i class="flaticon2-list-1"></i>
+                                      <a href="#" class="kt-widget__value kt-font-brand">64 Tasks</a>
+                                    </div>
+                                    <div class="kt-widget__blog">
+                                      <i class="flaticon2-talk"></i>
+                                      <a href="#" class="kt-widget__value kt-font-brand">654 Comments</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--end::Widget -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane" id="kt_portlet_base_demo_2_2_tab_content" role="tabpanel">
+                    <div class="row">
+                      <div class="col-xl-4">
+                        <div class="kt-portlet kt-portlet--height-fluid">
+                          <div class="kt-portlet__body kt-portlet__body--fit">
+
+                            <!--begin::Widget -->
+                            <div class="kt-widget kt-widget--project-1">
+                              <div class="kt-widget__head d-flex">
+                                <div class="kt-widget__label">
+                                  <div class="kt-widget__media kt-widget__media--m">
+																<span class="kt-media kt-media--md kt-media--circle kt-hidden-">
+																	<img src="/media/project-logos/4.png" alt="image">
+																</span>
+                                    <span class="kt-media kt-media--md kt-media--circle kt-hidden">
+																	<img src="/media/users/100_12.jpg" alt="image">
+																</span>
+                                  </div>
+                                  <div class="kt-widget__info kt-padding-0 kt-margin-l-15">
+                                    <a href="#" class="kt-widget__title">
+                                      B&amp;Q - Food Company
+                                    </a>
+                                    <span class="kt-widget__desc">
+																	Tasty food for everyone
+																</span>
+                                  </div>
+                                </div>
+                                <div class="kt-widget__toolbar">
+                                  <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown">
+                                    <i class="flaticon-more-1"></i>
+                                  </a>
+                                  <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right">
+                                    <ul class="kt-nav">
+                                      <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                          <i class="kt-nav__link-icon flaticon2-line-chart"></i>
+                                          <span class="kt-nav__link-text">Reports</span>
+                                        </a>
+                                      </li>
+                                      <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                          <i class="kt-nav__link-icon flaticon2-send"></i>
+                                          <span class="kt-nav__link-text">正在进行的校内课程</span>
+                                        </a>
+                                      </li>
+                                      <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                          <i class="kt-nav__link-icon flaticon2-pie-chart-1"></i>
+                                          <span class="kt-nav__link-text">Charts</span>
+                                        </a>
+                                      </li>
+                                      <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                          <i class="kt-nav__link-icon flaticon2-avatar"></i>
+                                          <span class="kt-nav__link-text">Members</span>
+                                        </a>
+                                      </li>
+                                      <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                          <i class="kt-nav__link-icon flaticon2-settings"></i>
+                                          <span class="kt-nav__link-text">Settings</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="kt-widget__body">
+														<span class="kt-widget__text kt-margin-t-0 kt-padding-t-5">
+															I distinguish three main text objecttives.First<br>
+															your objective could be merely
+														</span>
+                                <div class="kt-widget__stats kt-margin-t-20">
+                                  <div class="kt-widget__item d-flex align-items-center kt-margin-r-30">
+																<span class="kt-widget__date kt-padding-0 kt-margin-r-10">
+																	Start
+																</span>
+                                    <div class="kt-widget__label">
+                                      <span class="btn btn-label-brand btn-sm btn-bold btn-upper">20 aug, 18</span>
+                                    </div>
+                                  </div>
+                                  <div class="kt-widget__item d-flex align-items-center kt-padding-l-0">
+																<span class="kt-widget__date kt-padding-0 kt-margin-r-10 ">
+																	Due
+																</span>
+                                    <div class="kt-widget__label">
+                                      <span class="btn btn-label-danger btn-sm btn-bold btn-upper">07 dec, 18</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="kt-widget__container">
+                                  <span class="kt-widget__subtitel">Progress</span>
+                                  <div class="kt-widget__progress d-flex align-items-center flex-fill">
+                                    <div class="progress" style="height: 5px;width: 100%;">
+                                      <div class="progress-bar kt-bg-success" role="progressbar" style="width: 92%;"
+                                           aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <span class="kt-widget__stat">
+																	92%
+																</span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="kt-widget__footer">
+                                <div class="kt-widget__wrapper">
+                                  <div class="kt-widget__section">
+                                    <div class="kt-widget__blog">
+                                      <i class="flaticon2-list-1"></i>
+                                      <a href="#" class="kt-widget__value kt-font-brand">32 Tasks</a>
+                                    </div>
+                                    <div class="kt-widget__blog">
+                                      <i class="flaticon2-talk"></i>
+                                      <a href="#" class="kt-widget__value kt-font-brand">534 Comments</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!--end::Widget -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end:: 校内外开设课程  -->
+
+  <div class="space-10"></div>
+
+  <!-- begin:: 选课学生信息 -->
+  <div class="kt-container kt-grid__item kt-grid__item--fluid">
+    <div class="kt-portlet">
+      <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title">
+            选课学生信息
+            <small class="count">
+              <strong>当前站内共有300名学生正在学习该技术</strong>
+            </small>
+          </h3>
+        </div>
+      </div>
+      <div class="kt-portlet__body">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="kt-portlet kt-portlet--mobile">
+              <div class="kt-portlet__body kt-portlet__body--fit">
+
+                <!--begin: Datatable -->
+                <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded"
+                     id="kt_apps_user_list_datatable" style="">
+                  <table class="kt-datatable__table" style="display: block;">
+                    <thead class="kt-datatable__head">
+                    <tr class="kt-datatable__row" style="left: 0px;">
+                      <th data-field="RecordID"
+                          class="kt-datatable__cell--center kt-datatable__cell kt-datatable__cell--check"><span
+                              style="width: 20px;"><label
+                              class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid"><input
+                              type="checkbox">&nbsp;<span></span></label></span></th>
+                      <th data-field="AgentName" class="kt-datatable__cell kt-datatable__cell--sort"><span
+                              style="width: 200px;">User</span></th>
+                      <th data-field="Country" class="kt-datatable__cell kt-datatable__cell--sort"><span
+                              style="width: 148px;">Country</span></th>
+                      <th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort"><span
+                              style="width: 148px;">Ship Date</span></th>
+                      <th data-field="ShipName" data-autohide-disabled="false"
+                          class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 252px;">Company</span>
+                      </th>
+                      <th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort"><span
+                              style="width: 100px;">Status</span></th>
+                      <th data-field="Type" data-autohide-disabled="false"
+                          class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 110px;">Type</span></th>
+                      <th data-field="Actions" data-autohide-disabled="false"
+                          class="kt-datatable__cell kt-datatable__cell--sort"><span style="width: 80px;">Actions</span>
+                      </th>
+                    </tr>
+                    </thead>
+                    <tbody class="kt-datatable__body" style="">
+                    <tr data-row="0" class="kt-datatable__row" style="left: 0px;">
+                      <td class="kt-datatable__cell--center kt-datatable__cell kt-datatable__cell--check"
+                          data-field="RecordID"><span style="width: 20px;"><label
+                              class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><input type="checkbox" value="1">&nbsp;<span></span></label></span>
+                      </td>
+                      <td data-field="AgentName" class="kt-datatable__cell"><span style="width: 200px;"><div
+                              class="kt-user-card-v2">								<div class="kt-user-card-v2__pic">									<div
+                              class="kt-badge kt-badge--xl kt-badge--warning">N</div>								</div>								<div
+                              class="kt-user-card-v2__details">									<a class="kt-user-card-v2__name"
+                                                                                    href="#">Nixie Sailor</a>									<span
+                              class="kt-user-card-v2__desc">Manager</span>								</div>							</div></span>
+                      </td>
+                      <td data-field="Country" class="kt-datatable__cell"><span style="width: 148px;">China CN</span></td>
+                      <td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 148px;">2/12/2018</span>
+                      </td>
+                      <td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 252px;">                        <div class="kt-user-card-v2">                            <div
+                              class="kt-user-card-v2__pic">                                <img alt="photo"
+                                                                                                src="media/client-logos/logo1.png">                            </div>                            <div
+                              class="kt-user-card-v2__details">                                <a
+                              class="kt-user-card-v2__name" href="#">Gleichner, Ziemann and Gutkowski</a>                                <span
+                              class="kt-user-card-v2__email">Angular, React</span>                            </div>                        </div></span>
+                      </td>
+                      <td data-field="Status" class="kt-datatable__cell"><span style="width: 100px;"><span
+                              class="btn btn-bold btn-sm btn-font-sm  btn-label-success">Success</span></span></td>
+                      <td data-field="Type" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 110px;"><span
+                              class="kt-badge kt-badge--primary kt-badge--dot"></span>&nbsp;<span
+                              class="kt-font-bold kt-font-primary">Retail</span></span></td>
+                      <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="overflow: visible; position: relative; width: 80px;">							<div
+                              class="dropdown">								<a data-toggle="dropdown"
+                                                                  class="btn btn-sm btn-clean btn-icon btn-icon-md">									<i
+                              class="flaticon-more-1"></i>								</a>								<div
+                              class="dropdown-menu dropdown-menu-right">									<ul class="kt-nav">										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-expand"></i>												<span
+                              class="kt-nav__link-text">View</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-contract"></i>												<span
+                              class="kt-nav__link-text">Edit</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-trash"></i>												<span
+                              class="kt-nav__link-text">Delete</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-mail-1"></i>												<span
+                              class="kt-nav__link-text">Export</span>											</a>										</li>									</ul>								</div>							</div>						</span>
+                      </td>
+                    </tr>
+                    <tr data-row="1" class="kt-datatable__row kt-datatable__row--even" style="left: 0px;">
+                      <td class="kt-datatable__cell--center kt-datatable__cell kt-datatable__cell--check"
+                          data-field="RecordID"><span style="width: 20px;"><label
+                              class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><input type="checkbox" value="2">&nbsp;<span></span></label></span>
+                      </td>
+                      <td data-field="AgentName" class="kt-datatable__cell"><span style="width: 200px;"><div
+                              class="kt-user-card-v2">								<div class="kt-user-card-v2__pic">									<div
+                              class="kt-badge kt-badge--xl kt-badge--brand">E</div>								</div>								<div
+                              class="kt-user-card-v2__details">									<a class="kt-user-card-v2__name"
+                                                                                    href="#">Emelita Giraldez</a>									<span
+                              class="kt-user-card-v2__desc">Designer</span>								</div>							</div></span>
+                      </td>
+                      <td data-field="Country" class="kt-datatable__cell"><span style="width: 148px;">Indonesia ID</span>
+                      </td>
+                      <td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 148px;">8/6/2017</span>
+                      </td>
+                      <td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 252px;">                        <div class="kt-user-card-v2">                            <div
+                              class="kt-user-card-v2__pic">                                <img alt="photo"
+                                                                                                src="media/client-logos/logo2.png">                            </div>                            <div
+                              class="kt-user-card-v2__details">                                <a
+                              class="kt-user-card-v2__name" href="#">Rosenbaum-Reichel</a>                                <span
+                              class="kt-user-card-v2__email">Vue, Kendo</span>                            </div>                        </div></span>
+                      </td>
+                      <td data-field="Status" class="kt-datatable__cell"><span style="width: 100px;"><span
+                              class="btn btn-bold btn-sm btn-font-sm  btn-label-danger">Done</span></span></td>
+                      <td data-field="Type" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 110px;"><span
+                              class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span
+                              class="kt-font-bold kt-font-success">Direct</span></span></td>
+                      <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="overflow: visible; position: relative; width: 80px;">							<div
+                              class="dropdown">								<a data-toggle="dropdown"
+                                                                  class="btn btn-sm btn-clean btn-icon btn-icon-md">									<i
+                              class="flaticon-more-1"></i>								</a>								<div
+                              class="dropdown-menu dropdown-menu-right">									<ul class="kt-nav">										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-expand"></i>												<span
+                              class="kt-nav__link-text">View</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-contract"></i>												<span
+                              class="kt-nav__link-text">Edit</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-trash"></i>												<span
+                              class="kt-nav__link-text">Delete</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-mail-1"></i>												<span
+                              class="kt-nav__link-text">Export</span>											</a>										</li>									</ul>								</div>							</div>						</span>
+                      </td>
+                    </tr>
+                    <tr data-row="2" class="kt-datatable__row" style="left: 0px;">
+                      <td class="kt-datatable__cell--center kt-datatable__cell kt-datatable__cell--check"
+                          data-field="RecordID"><span style="width: 20px;"><label
+                              class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><input type="checkbox" value="3">&nbsp;<span></span></label></span>
+                      </td>
+                      <td data-field="AgentName" class="kt-datatable__cell"><span style="width: 200px;"><div
+                              class="kt-user-card-v2">								<div class="kt-user-card-v2__pic">									<img
+                              alt="photo" src="media/users/100_6.jpg">								</div>								<div
+                              class="kt-user-card-v2__details">									<a class="kt-user-card-v2__name"
+                                                                                    href="#">Ula Luckin</a>									<span
+                              class="kt-user-card-v2__desc">Designer</span>								</div>							</div></span>
+                      </td>
+                      <td data-field="Country" class="kt-datatable__cell"><span style="width: 148px;">Argentina AR</span>
+                      </td>
+                      <td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 148px;">5/26/2016</span>
+                      </td>
+                      <td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 252px;">                        <div class="kt-user-card-v2">                            <div
+                              class="kt-user-card-v2__pic">                                <img alt="photo"
+                                                                                                src="media/client-logos/logo3.png">                            </div>                            <div
+                              class="kt-user-card-v2__details">                                <a
+                              class="kt-user-card-v2__name" href="#">Kulas, Cassin and Batz</a>                                <span
+                              class="kt-user-card-v2__email">.NET, Oracle, MySQL</span>                            </div>                        </div></span>
+                      </td>
+                      <td data-field="Status" class="kt-datatable__cell"><span style="width: 100px;"><span
+                              class="btn btn-bold btn-sm btn-font-sm  btn-label-brand">Pending</span></span></td>
+                      <td data-field="Type" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 110px;"><span
+                              class="kt-badge kt-badge--primary kt-badge--dot"></span>&nbsp;<span
+                              class="kt-font-bold kt-font-primary">Retail</span></span></td>
+                      <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="overflow: visible; position: relative; width: 80px;">							<div
+                              class="dropdown">								<a data-toggle="dropdown"
+                                                                  class="btn btn-sm btn-clean btn-icon btn-icon-md">									<i
+                              class="flaticon-more-1"></i>								</a>								<div
+                              class="dropdown-menu dropdown-menu-right">									<ul class="kt-nav">										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-expand"></i>												<span
+                              class="kt-nav__link-text">View</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-contract"></i>												<span
+                              class="kt-nav__link-text">Edit</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-trash"></i>												<span
+                              class="kt-nav__link-text">Delete</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-mail-1"></i>												<span
+                              class="kt-nav__link-text">Export</span>											</a>										</li>									</ul>								</div>							</div>						</span>
+                      </td>
+                    </tr>
+                    <tr data-row="3" class="kt-datatable__row kt-datatable__row--even" style="left: 0px;">
+                      <td class="kt-datatable__cell--center kt-datatable__cell kt-datatable__cell--check"
+                          data-field="RecordID"><span style="width: 20px;"><label
+                              class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><input type="checkbox" value="4">&nbsp;<span></span></label></span>
+                      </td>
+                      <td data-field="AgentName" class="kt-datatable__cell"><span style="width: 200px;"><div
+                              class="kt-user-card-v2">								<div class="kt-user-card-v2__pic">									<img
+                              alt="photo" src="media/users/100_7.jpg">								</div>								<div
+                              class="kt-user-card-v2__details">									<a class="kt-user-card-v2__name"
+                                                                                    href="#">Evangeline Cure</a>									<span
+                              class="kt-user-card-v2__desc">CEO</span>								</div>							</div></span>
+                      </td>
+                      <td data-field="Country" class="kt-datatable__cell"><span style="width: 148px;">Indonesia ID</span>
+                      </td>
+                      <td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 148px;">7/2/2016</span>
+                      </td>
+                      <td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 252px;">                        <div class="kt-user-card-v2">                            <div
+                              class="kt-user-card-v2__pic">                                <img alt="photo"
+                                                                                                src="media/client-logos/logo4.png">                            </div>                            <div
+                              class="kt-user-card-v2__details">                                <a
+                              class="kt-user-card-v2__name" href="#">Pfannerstill-Treutel</a>                                <span
+                              class="kt-user-card-v2__email">Node, SASS, Webpack</span>                            </div>                        </div></span>
+                      </td>
+                      <td data-field="Status" class="kt-datatable__cell"><span style="width: 100px;"><span
+                              class="btn btn-bold btn-sm btn-font-sm  btn-label-brand">Pending</span></span></td>
+                      <td data-field="Type" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 110px;"><span
+                              class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span
+                              class="kt-font-bold kt-font-success">Direct</span></span></td>
+                      <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="overflow: visible; position: relative; width: 80px;">							<div
+                              class="dropdown">								<a data-toggle="dropdown"
+                                                                  class="btn btn-sm btn-clean btn-icon btn-icon-md">									<i
+                              class="flaticon-more-1"></i>								</a>								<div
+                              class="dropdown-menu dropdown-menu-right">									<ul class="kt-nav">										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-expand"></i>												<span
+                              class="kt-nav__link-text">View</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-contract"></i>												<span
+                              class="kt-nav__link-text">Edit</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-trash"></i>												<span
+                              class="kt-nav__link-text">Delete</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-mail-1"></i>												<span
+                              class="kt-nav__link-text">Export</span>											</a>										</li>									</ul>								</div>							</div>						</span>
+                      </td>
+                    </tr>
+                    <tr data-row="4" class="kt-datatable__row" style="left: 0px;">
+                      <td class="kt-datatable__cell--center kt-datatable__cell kt-datatable__cell--check"
+                          data-field="RecordID"><span style="width: 20px;"><label
+                              class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><input type="checkbox" value="5">&nbsp;<span></span></label></span>
+                      </td>
+                      <td data-field="AgentName" class="kt-datatable__cell"><span style="width: 200px;"><div
+                              class="kt-user-card-v2">								<div class="kt-user-card-v2__pic">									<img
+                              alt="photo" src="media/users/100_8.jpg">								</div>								<div
+                              class="kt-user-card-v2__details">									<a class="kt-user-card-v2__name"
+                                                                                    href="#">Tierney St. Louis</a>									<span
+                              class="kt-user-card-v2__desc">Manager</span>								</div>							</div></span>
+                      </td>
+                      <td data-field="Country" class="kt-datatable__cell"><span style="width: 148px;">Austria AT</span>
+                      </td>
+                      <td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 148px;">5/20/2017</span>
+                      </td>
+                      <td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 252px;">                        <div class="kt-user-card-v2">                            <div
+                              class="kt-user-card-v2__pic">                                <img alt="photo"
+                                                                                                src="media/client-logos/logo5.png">                            </div>                            <div
+                              class="kt-user-card-v2__details">                                <a
+                              class="kt-user-card-v2__name" href="#">Dicki-Kling</a>                                <span
+                              class="kt-user-card-v2__email">MangoDB, Java</span>                            </div>                        </div></span>
+                      </td>
+                      <td data-field="Status" class="kt-datatable__cell"><span style="width: 100px;"><span
+                              class="btn btn-bold btn-sm btn-font-sm  btn-label-danger">Processing</span></span></td>
+                      <td data-field="Type" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 110px;"><span
+                              class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span
+                              class="kt-font-bold kt-font-success">Direct</span></span></td>
+                      <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="overflow: visible; position: relative; width: 80px;">							<div
+                              class="dropdown">								<a data-toggle="dropdown"
+                                                                  class="btn btn-sm btn-clean btn-icon btn-icon-md">									<i
+                              class="flaticon-more-1"></i>								</a>								<div
+                              class="dropdown-menu dropdown-menu-right">									<ul class="kt-nav">										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-expand"></i>												<span
+                              class="kt-nav__link-text">View</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-contract"></i>												<span
+                              class="kt-nav__link-text">Edit</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-trash"></i>												<span
+                              class="kt-nav__link-text">Delete</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-mail-1"></i>												<span
+                              class="kt-nav__link-text">Export</span>											</a>										</li>									</ul>								</div>							</div>						</span>
+                      </td>
+                    </tr>
+                    <tr data-row="5" class="kt-datatable__row kt-datatable__row--even" style="left: 0px;">
+                      <td class="kt-datatable__cell--center kt-datatable__cell kt-datatable__cell--check"
+                          data-field="RecordID"><span style="width: 20px;"><label
+                              class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><input type="checkbox" value="6">&nbsp;<span></span></label></span>
+                      </td>
+                      <td data-field="AgentName" class="kt-datatable__cell"><span style="width: 200px;"><div
+                              class="kt-user-card-v2">								<div class="kt-user-card-v2__pic">									<img
+                              alt="photo" src="media/users/100_9.jpg">								</div>								<div
+                              class="kt-user-card-v2__details">									<a class="kt-user-card-v2__name"
+                                                                                    href="#">Gerhard Reinhard</a>									<span
+                              class="kt-user-card-v2__desc">Sales</span>								</div>							</div></span>
+                      </td>
+                      <td data-field="Country" class="kt-datatable__cell"><span style="width: 148px;">China CN</span></td>
+                      <td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 148px;">11/26/2016</span>
+                      </td>
+                      <td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 252px;">                        <div class="kt-user-card-v2">                            <div
+                              class="kt-user-card-v2__pic">                                <img alt="photo"
+                                                                                                src="media/client-logos/logo3.png">                            </div>                            <div
+                              class="kt-user-card-v2__details">                                <a
+                              class="kt-user-card-v2__name" href="#">Gleason, Kub and Marquardt</a>                                <span
+                              class="kt-user-card-v2__email">.NET, Oracle, MySQL</span>                            </div>                        </div></span>
+                      </td>
+                      <td data-field="Status" class="kt-datatable__cell"><span style="width: 100px;"><span
+                              class="btn btn-bold btn-sm btn-font-sm  btn-label-warning">Canceled</span></span></td>
+                      <td data-field="Type" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 110px;"><span
+                              class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span
+                              class="kt-font-bold kt-font-success">Direct</span></span></td>
+                      <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="overflow: visible; position: relative; width: 80px;">							<div
+                              class="dropdown">								<a data-toggle="dropdown"
+                                                                  class="btn btn-sm btn-clean btn-icon btn-icon-md">									<i
+                              class="flaticon-more-1"></i>								</a>								<div
+                              class="dropdown-menu dropdown-menu-right">									<ul class="kt-nav">										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-expand"></i>												<span
+                              class="kt-nav__link-text">View</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-contract"></i>												<span
+                              class="kt-nav__link-text">Edit</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-trash"></i>												<span
+                              class="kt-nav__link-text">Delete</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-mail-1"></i>												<span
+                              class="kt-nav__link-text">Export</span>											</a>										</li>									</ul>								</div>							</div>						</span>
+                      </td>
+                    </tr>
+                    <tr data-row="6" class="kt-datatable__row" style="left: 0px;">
+                      <td class="kt-datatable__cell--center kt-datatable__cell kt-datatable__cell--check"
+                          data-field="RecordID"><span style="width: 20px;"><label
+                              class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><input type="checkbox" value="7">&nbsp;<span></span></label></span>
+                      </td>
+                      <td data-field="AgentName" class="kt-datatable__cell"><span style="width: 200px;"><div
+                              class="kt-user-card-v2">								<div class="kt-user-card-v2__pic">									<img
+                              alt="photo" src="media/users/100_10.jpg">								</div>								<div
+                              class="kt-user-card-v2__details">									<a class="kt-user-card-v2__name"
+                                                                                    href="#">Englebert Shelley</a>									<span
+                              class="kt-user-card-v2__desc">CEO</span>								</div>							</div></span>
+                      </td>
+                      <td data-field="Country" class="kt-datatable__cell"><span style="width: 148px;">China CN</span></td>
+                      <td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 148px;">6/28/2016</span>
+                      </td>
+                      <td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 252px;">                        <div class="kt-user-card-v2">                            <div
+                              class="kt-user-card-v2__pic">                                <img alt="photo"
+                                                                                                src="media/client-logos/logo4.png">                            </div>                            <div
+                              class="kt-user-card-v2__details">                                <a
+                              class="kt-user-card-v2__name" href="#">Jenkins Inc</a>                                <span
+                              class="kt-user-card-v2__email">Node, SASS, Webpack</span>                            </div>                        </div></span>
+                      </td>
+                      <td data-field="Status" class="kt-datatable__cell"><span style="width: 100px;"><span
+                              class="btn btn-bold btn-sm btn-font-sm  btn-label-danger">Processing</span></span></td>
+                      <td data-field="Type" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 110px;"><span
+                              class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span
+                              class="kt-font-bold kt-font-success">Direct</span></span></td>
+                      <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="overflow: visible; position: relative; width: 80px;">							<div
+                              class="dropdown">								<a data-toggle="dropdown"
+                                                                  class="btn btn-sm btn-clean btn-icon btn-icon-md">									<i
+                              class="flaticon-more-1"></i>								</a>								<div
+                              class="dropdown-menu dropdown-menu-right">									<ul class="kt-nav">										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-expand"></i>												<span
+                              class="kt-nav__link-text">View</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-contract"></i>												<span
+                              class="kt-nav__link-text">Edit</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-trash"></i>												<span
+                              class="kt-nav__link-text">Delete</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-mail-1"></i>												<span
+                              class="kt-nav__link-text">Export</span>											</a>										</li>									</ul>								</div>							</div>						</span>
+                      </td>
+                    </tr>
+                    <tr data-row="7" class="kt-datatable__row kt-datatable__row--even" style="left: 0px;">
+                      <td class="kt-datatable__cell--center kt-datatable__cell kt-datatable__cell--check"
+                          data-field="RecordID"><span style="width: 20px;"><label
+                              class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><input type="checkbox" value="8">&nbsp;<span></span></label></span>
+                      </td>
+                      <td data-field="AgentName" class="kt-datatable__cell"><span style="width: 200px;"><div
+                              class="kt-user-card-v2">								<div class="kt-user-card-v2__pic">									<img
+                              alt="photo" src="media/users/100_11.jpg">								</div>								<div
+                              class="kt-user-card-v2__details">									<a class="kt-user-card-v2__name"
+                                                                                    href="#">Hazlett Kite</a>									<span
+                              class="kt-user-card-v2__desc">Architect</span>								</div>							</div></span>
+                      </td>
+                      <td data-field="Country" class="kt-datatable__cell"><span style="width: 148px;">Croatia HR</span>
+                      </td>
+                      <td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 148px;">8/5/2016</span>
+                      </td>
+                      <td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 252px;">                        <div class="kt-user-card-v2">                            <div
+                              class="kt-user-card-v2__pic">                                <img alt="photo"
+                                                                                                src="media/client-logos/logo5.png">                            </div>                            <div
+                              class="kt-user-card-v2__details">                                <a
+                              class="kt-user-card-v2__name" href="#">Streich LLC</a>                                <span
+                              class="kt-user-card-v2__email">MangoDB, Java</span>                            </div>                        </div></span>
+                      </td>
+                      <td data-field="Status" class="kt-datatable__cell"><span style="width: 100px;"><span
+                              class="btn btn-bold btn-sm btn-font-sm  btn-label-danger">Done</span></span></td>
+                      <td data-field="Type" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 110px;"><span
+                              class="kt-badge kt-badge--danger kt-badge--dot"></span>&nbsp;<span
+                              class="kt-font-bold kt-font-danger">Online</span></span></td>
+                      <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="overflow: visible; position: relative; width: 80px;">							<div
+                              class="dropdown">								<a data-toggle="dropdown"
+                                                                  class="btn btn-sm btn-clean btn-icon btn-icon-md">									<i
+                              class="flaticon-more-1"></i>								</a>								<div
+                              class="dropdown-menu dropdown-menu-right">									<ul class="kt-nav">										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-expand"></i>												<span
+                              class="kt-nav__link-text">View</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-contract"></i>												<span
+                              class="kt-nav__link-text">Edit</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-trash"></i>												<span
+                              class="kt-nav__link-text">Delete</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-mail-1"></i>												<span
+                              class="kt-nav__link-text">Export</span>											</a>										</li>									</ul>								</div>							</div>						</span>
+                      </td>
+                    </tr>
+                    <tr data-row="8" class="kt-datatable__row" style="left: 0px;">
+                      <td class="kt-datatable__cell--center kt-datatable__cell kt-datatable__cell--check"
+                          data-field="RecordID"><span style="width: 20px;"><label
+                              class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><input type="checkbox" value="9">&nbsp;<span></span></label></span>
+                      </td>
+                      <td data-field="AgentName" class="kt-datatable__cell"><span style="width: 200px;"><div
+                              class="kt-user-card-v2">								<div class="kt-user-card-v2__pic">									<img
+                              alt="photo" src="media/users/100_12.jpg">								</div>								<div
+                              class="kt-user-card-v2__details">									<a class="kt-user-card-v2__name"
+                                                                                    href="#">Freida Morby</a>									<span
+                              class="kt-user-card-v2__desc">Architect</span>								</div>							</div></span>
+                      </td>
+                      <td data-field="Country" class="kt-datatable__cell"><span style="width: 148px;">Colombia CO</span>
+                      </td>
+                      <td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 148px;">3/31/2017</span>
+                      </td>
+                      <td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 252px;">                        <div class="kt-user-card-v2">                            <div
+                              class="kt-user-card-v2__pic">                                <img alt="photo"
+                                                                                                src="media/client-logos/logo3.png">                            </div>                            <div
+                              class="kt-user-card-v2__details">                                <a
+                              class="kt-user-card-v2__name" href="#">Haley, Schamberger and Durgan</a>                                <span
+                              class="kt-user-card-v2__email">.NET, Oracle, MySQL</span>                            </div>                        </div></span>
+                      </td>
+                      <td data-field="Status" class="kt-datatable__cell"><span style="width: 100px;"><span
+                              class="btn btn-bold btn-sm btn-font-sm  btn-label-danger">Processing</span></span></td>
+                      <td data-field="Type" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 110px;"><span
+                              class="kt-badge kt-badge--danger kt-badge--dot"></span>&nbsp;<span
+                              class="kt-font-bold kt-font-danger">Online</span></span></td>
+                      <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="overflow: visible; position: relative; width: 80px;">							<div
+                              class="dropdown">								<a data-toggle="dropdown"
+                                                                  class="btn btn-sm btn-clean btn-icon btn-icon-md">									<i
+                              class="flaticon-more-1"></i>								</a>								<div
+                              class="dropdown-menu dropdown-menu-right">									<ul class="kt-nav">										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-expand"></i>												<span
+                              class="kt-nav__link-text">View</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-contract"></i>												<span
+                              class="kt-nav__link-text">Edit</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-trash"></i>												<span
+                              class="kt-nav__link-text">Delete</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-mail-1"></i>												<span
+                              class="kt-nav__link-text">Export</span>											</a>										</li>									</ul>								</div>							</div>						</span>
+                      </td>
+                    </tr>
+                    <tr data-row="9" class="kt-datatable__row kt-datatable__row--even" style="left: 0px;">
+                      <td class="kt-datatable__cell--center kt-datatable__cell kt-datatable__cell--check"
+                          data-field="RecordID"><span style="width: 20px;"><label
+                              class="kt-checkbox kt-checkbox--single kt-checkbox--solid"><input type="checkbox"
+                                                                                                value="10">&nbsp;<span></span></label></span>
+                      </td>
+                      <td data-field="AgentName" class="kt-datatable__cell"><span style="width: 200px;"><div
+                              class="kt-user-card-v2">								<div class="kt-user-card-v2__pic">									<img
+                              alt="photo" src="media/users/100_10.jpg">								</div>								<div
+                              class="kt-user-card-v2__details">									<a class="kt-user-card-v2__name"
+                                                                                    href="#">Obed Helian</a>									<span
+                              class="kt-user-card-v2__desc">CEO</span>								</div>							</div></span>
+                      </td>
+                      <td data-field="Country" class="kt-datatable__cell"><span style="width: 148px;">Thailand TH</span>
+                      </td>
+                      <td data-field="ShipDate" class="kt-datatable__cell"><span style="width: 148px;">1/26/2017</span>
+                      </td>
+                      <td data-field="ShipName" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 252px;">                        <div class="kt-user-card-v2">                            <div
+                              class="kt-user-card-v2__pic">                                <img alt="photo"
+                                                                                                src="media/client-logos/logo4.png">                            </div>                            <div
+                              class="kt-user-card-v2__details">                                <a
+                              class="kt-user-card-v2__name" href="#">Labadie, Predovic and Hammes</a>                                <span
+                              class="kt-user-card-v2__email">Node, SASS, Webpack</span>                            </div>                        </div></span>
+                      </td>
+                      <td data-field="Status" class="kt-datatable__cell"><span style="width: 100px;"><span
+                              class="btn btn-bold btn-sm btn-font-sm  btn-label-brand">Pending</span></span></td>
+                      <td data-field="Type" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="width: 110px;"><span
+                              class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span
+                              class="kt-font-bold kt-font-success">Direct</span></span></td>
+                      <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell"><span
+                              style="overflow: visible; position: relative; width: 80px;">							<div
+                              class="dropdown">								<a data-toggle="dropdown"
+                                                                  class="btn btn-sm btn-clean btn-icon btn-icon-md">									<i
+                              class="flaticon-more-1"></i>								</a>								<div
+                              class="dropdown-menu dropdown-menu-right">									<ul class="kt-nav">										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-expand"></i>												<span
+                              class="kt-nav__link-text">View</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-contract"></i>												<span
+                              class="kt-nav__link-text">Edit</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-trash"></i>												<span
+                              class="kt-nav__link-text">Delete</span>											</a>										</li>										<li
+                              class="kt-nav__item">											<a class="kt-nav__link" href="#">												<i
+                              class="kt-nav__link-icon flaticon2-mail-1"></i>												<span
+                              class="kt-nav__link-text">Export</span>											</a>										</li>									</ul>								</div>							</div>						</span>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                  <div class="kt-datatable__pager kt-datatable--paging-loaded">
+                    <ul class="kt-datatable__pager-nav">
+                      <li><a title="First"
+                             class="kt-datatable__pager-link kt-datatable__pager-link--first kt-datatable__pager-link--disabled"
+                             data-page="1" disabled="disabled"><i class="flaticon2-fast-back"></i></a></li>
+                      <li><a title="Previous"
+                             class="kt-datatable__pager-link kt-datatable__pager-link--prev kt-datatable__pager-link--disabled"
+                             data-page="1" disabled="disabled"><i class="flaticon2-back"></i></a></li>
+                      <li style=""></li>
+                      <li style="display: none;"><input type="text" class="kt-pager-input form-control"
+                                                        title="Page number"></li>
+                      <li>
+                        <a class="kt-datatable__pager-link kt-datatable__pager-link-number kt-datatable__pager-link--active"
+                           data-page="1" title="1">1</a></li>
+                      <li><a class="kt-datatable__pager-link kt-datatable__pager-link-number" data-page="2"
+                             title="2">2</a></li>
+                      <li><a class="kt-datatable__pager-link kt-datatable__pager-link-number" data-page="3"
+                             title="3">3</a></li>
+                      <li><a class="kt-datatable__pager-link kt-datatable__pager-link-number" data-page="4"
+                             title="4">4</a></li>
+                      <li style=""></li>
+                      <li><a title="Next" class="kt-datatable__pager-link kt-datatable__pager-link--next" data-page="2"><i
+                              class="flaticon2-next"></i></a></li>
+                      <li><a title="Last" class="kt-datatable__pager-link kt-datatable__pager-link--last" data-page="4"><i
+                              class="flaticon2-fast-next"></i></a></li>
+                    </ul>
+
+                  </div>
+
+                  <!--end: Datatable -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end:: 选课学生信息 -->
+</div>
+
+
+<script src="/javascripts/views/technology.js" type="text/javascript"></script>
+

@@ -41,12 +41,13 @@
       "changeDirectionStatus": "/api/direction/changeStatus",
       "changeDirectionThumbnail": "/api/direction/changeThumbnail",
 
+      "technologyList": "/api/technology/client",
       "technology": "/api/technology",
       "checkTechnologyNameExist": "/api/technology/checkTechnologyName",
       "changeTechnologyStatus": "/api/technology/changeStatus",
       "changeTechnologyThumbnail": "/api/technology/changeThumbnail",
 
-      "technologyDirection4Technology": "/api/technology/direction/forTechnology",
+      "developmentDirections": "/api/technology/direction/forTechnology",
       "technologyDirection4Direction": "/api/technology/direction/forDirection",
 
       "knowledge": "/api/technology/knowledge",

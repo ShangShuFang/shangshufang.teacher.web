@@ -8,6 +8,7 @@ let indexRouter = require('./routes/index');
 let loginRouter = require('./routes/login');
 let registerRouter = require('./routes/register');
 let forgetPasswordRouter = require('./routes/forgetPassword');
+let technologyRouter = require('./routes/technology');
 let commonRouter = require('./routes/common');
 
 let app = express();
@@ -23,9 +24,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/index', indexRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/forgetPassword', forgetPasswordRouter);
+app.use('/technology', technologyRouter);
 app.use('/common', commonRouter);
 
 // catch 404 and forward to error handler

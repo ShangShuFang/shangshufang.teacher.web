@@ -95,7 +95,7 @@
               </div>
             </div>
             <div class="kt-widget__footer">
-              <button type="button" class="btn btn-label-brand btn-lg btn-upper">创建课程</button>
+              <button type="button" class="btn btn-label-brand btn-lg btn-upper" ng-click="onCreateCourse(data.technologyID)">创建课程</button>
             </div>
           </div>
         </div>
@@ -114,13 +114,13 @@
     </div>
   </div>
 
-  <div style="display: none">
-    <div class="row">
+  <div >
+    <div class="row" style="display: none">
       <div class="col-xl-12">
         <div class="kt-portlet">
           <div class="kt-portlet__body">
             <div class="kt-widget kt-widget--user-profile-3 text-center">
-              您还没有正在进行的课程，<a class="kt-font-brand kt-link kt-font-bold" href="javascript:;">现在创建</a>
+              您还没有正在进行的课程，<a class="kt-font-brand kt-link kt-font-bold" href="javascript:;" ng-click="onCreateCourse()">现在创建</a>
             </div>
 
           </div>
@@ -130,6 +130,7 @@
       </div>
     </div>
   </div>
+
   <div>
     <div class="row">
       <div class="col-xl-12">

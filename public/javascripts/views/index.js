@@ -45,5 +45,16 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.loadTechnologyList();
   };
 
+  $scope.onCreateCourse = function(technologyID){
+    if(technologyID !== undefined){
+      localStorage.setItem(Constants.KEY_NEW_COURSE_TECHNOLOGY, technologyID);
+    }
+    if(!commonUtility.isLogin()){
+      location.href = '/login?backUrl=/course';
+    }else{
+      location.href = '/course';
+    }
+  };
+
   $scope.initPage();
 });

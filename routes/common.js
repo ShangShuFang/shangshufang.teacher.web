@@ -3,6 +3,16 @@ let router = express.Router();
 let dateUtils = require('../common/dateUtils');
 let commonService = require('../service/commonService');
 
+router.get('/dateFormat', (req, res, next) => {
+  let formatDate = dateUtils.formatGMT(req.query.utcDate);
+  res.json({
+    err: false,
+    code: 1000,
+    msg: 'UTC日期格式化成功',
+    formatDate: formatDate
+  });
+});
+
 router.get('/chinaRegion', (req, res, next) => {
   let service = new commonService.commonInvoke('chinaRegion');
   let parentCode = req.query.parentCode === undefined ? 0 : req.query.parentCode;

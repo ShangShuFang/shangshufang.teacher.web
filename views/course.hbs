@@ -1,0 +1,562 @@
+<link href="stylesheets/plugins/wizard-1.css" rel="stylesheet" type="text/css"/>
+<link href="stylesheets/views/course.css" rel="stylesheet" type="text/css"/>
+<div ng-app="pageApp" ng-controller="pageCtrl">
+  <div class="kt-subheader kt-grid__item" id="kt_subheader">
+    <div class="kt-container ">
+      <div class="kt-subheader__main">
+        <div class="kt-subheader__breadcrumbs">
+          <a href="" class="kt-subheader__breadcrumbs-link">
+            主页/Java
+          </a>
+          <span class="kt-subheader__breadcrumbs-separator"></span>
+          <a href="" class="kt-subheader__breadcrumbs-link">
+            创建课程
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="kt-portlet" ng-if="!model.isSubmitSuccess">
+      <div class="kt-portlet__body kt-portlet__body--fit">
+        <div class="kt-grid kt-wizard-v1 kt-wizard-v1--white" id="kt_wizard_v1" data-ktwizard-state="first">
+          <div class="kt-grid__item">
+
+            <!--begin: Form Wizard Nav -->
+            <div class="kt-wizard-v1__nav">
+              <div class="kt-wizard-v1__nav-items kt-wizard-v1__nav-items--clickable">
+
+                <!--doc: Replace A tag with SPAN tag to disable the step link click -->
+                <div class="kt-wizard-v1__nav-item" data-ktwizard-type="step" data-ktwizard-state="current">
+                  <div class="kt-wizard-v1__nav-body">
+                    <div class="kt-wizard-v1__nav-icon">
+                      <i class="fab fa-python"></i>
+                    </div>
+                    <div class="kt-wizard-v1__nav-label">
+                      1: 选择所属技术
+                    </div>
+                  </div>
+                </div>
+                <div class="kt-wizard-v1__nav-item" data-ktwizard-type="step" data-ktwizard-state="pending">
+                  <div class="kt-wizard-v1__nav-body">
+                    <div class="kt-wizard-v1__nav-icon">
+                      <i class="fa fa-info-circle"></i>
+                    </div>
+                    <div class="kt-wizard-v1__nav-label">
+                      2. 课程基本信息
+                    </div>
+                  </div>
+                </div>
+                <div class="kt-wizard-v1__nav-item" data-ktwizard-type="step" data-ktwizard-state="pending">
+                  <div class="kt-wizard-v1__nav-body">
+                    <div class="kt-wizard-v1__nav-icon">
+                      <i class="flaticon2-calendar-2"></i>
+                    </div>
+                    <div class="kt-wizard-v1__nav-label">
+                      3. 课程计划
+                    </div>
+                  </div>
+                </div>
+                <div class="kt-wizard-v1__nav-item" data-ktwizard-type="step" data-ktwizard-state="pending">
+                  <div class="kt-wizard-v1__nav-body">
+                    <div class="kt-wizard-v1__nav-icon">
+                      <i class="flaticon-globe"></i>
+                    </div>
+                    <div class="kt-wizard-v1__nav-label">
+                      4. 预览并提交
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--end: Form Wizard Nav -->
+          </div>
+          <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v1__wrapper">
+            <!--begin: Form Wizard Form-->
+            <form class="kt-form" name="myForm" id="kt_form" novalidate="novalidate">
+
+              <!--begin: Form Wizard Step 1-->
+              <div class="kt-wizard-v1__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
+                <div class="row">
+                  <div class="col-xl-4" ng-repeat="data in model.technologyList">
+                    <div class="kt-portlet kt-portlet--height-fluid">
+                      <div class="kt-portlet__head kt-portlet__head--noborder">
+                        <div class="kt-portlet__head-label">
+                          <h3 class="kt-portlet__head-title">
+                          </h3>
+                        </div>
+                      </div>
+                      <div class="kt-portlet__body">
+                        <div class="kt-widget kt-widget--user-profile-2 ">
+                          <div class="kt-widget__head">
+                            <div class="kt-widget__media">
+                              <a ng-href="/technology?technology=\{{data.technologyID}}" target="_blank"
+                              class="kt-widget__username kt-font-brand kt-font-bold">
+                              <img class="kt-widget__img" ng-src="\{{data.technologyThumbnail}}" alt="image">
+                              </a>
+                            </div>
+
+                            <div class="kt-widget__info">
+                              <a ng-href="/technology?technology=\{{data.technologyID}}" ng-bind="data.technologyName"
+                              target="_blank" class="kt-widget__username kt-font-brand kt-link kt-font-bold"></a>
+                              <span class="kt-widget__desc">
+                                <i class="la"
+                                   ng-class="{'la-star-o': data.technologyStars < 1, 'la-star star-selected': data.technologyStars >= 1}"></i>
+                                <i class="la"
+                                   ng-class="{'la-star-o': data.technologyStars < 2, 'la-star star-selected': data.technologyStars >= 2}"></i>
+                                <i class="la"
+                                   ng-class="{'la-star-o': data.technologyStars < 3, 'la-star star-selected': data.technologyStars >= 3}"></i>
+                                <i class="la"
+                                   ng-class="{'la-star-o': data.technologyStars < 4, 'la-star star-selected': data.technologyStars >= 4}"></i>
+                                <i class="la"
+                                   ng-class="{'la-star-o': data.technologyStars < 5, 'la-star star-selected': data.technologyStars >= 5}"></i>
+                              </span>
+                            </div>
+                          </div>
+                          <div class="kt-widget__footer">
+                            <button type="button" class="btn btn-elevate btn-pill"
+                                    ng-class="{'btn-outline-brand': !data.selected, 'btn-brand': data.selected}"
+                                    ng-click="onChooseTechnology(data)">
+                              <i class="fa fa-hand-point-up" ng-if="!data.selected"></i>
+                              <i class="flaticon2-check-mark" ng-if="data.selected"></i>
+                              <span ng-if="!data.selected">待选</span>
+                              <span ng-if="data.selected">已选中</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-12 text-center">
+                    <button type="button" class="btn btn-secondary btn-elevate btn-pill"
+                            ng-click="onLoadMoreTechnology()"
+                            ng-if="model.technologyList.length < model.technologyTotalCount"><i
+                            class="fa fa-sync-alt"></i> 查看更多热门技术
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!--end: Form Wizard Step 1-->
+
+              <!--begin: Form Wizard Step 2-->
+              <div class="kt-wizard-v1__content" data-ktwizard-type="step-content">
+                <div class="kt-form__section kt-form__section--first">
+                  <div class="kt-wizard-v1__form">
+                    <div class="form-group">
+                      <label>课程名称</label>
+                      <input type="text"
+                             class="form-control"
+                             name="courseName"
+                             ng-model="model.courseName"
+                             maxlength="35"
+                             required
+                             placeholder="请输入课程名称，如：Java语言程序设计（计算机科学与技术2班）">
+                    </div>
+                    <div class="form-group" style="position: relative">
+                      <label>授课教师</label>
+                      <input type="text" class="form-control" name="teacherName" ng-model="model.teacherName"
+                             maxlength="15" ng-change="onTeacherChange()" required placeholder="请输入授课教师姓名">
+                      <div class="auto-teacher" ng-if="model.isShowTeacherList">
+                        <ul>
+                          <li ng-repeat="teacher in model.teacherList" ng-click="onSelectCourseTeacher(teacher)">\{{teacher.fullName}} \{{teacher.schoolName}}</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>授课时间</label>
+                      <div class="row">
+                        <div class="col-xl-5">
+                          <div class="form-group">
+                            <input type="date" class="form-control" name="courseBeginDate" ng-model="model.courseBeginDate" ng-change="onBeginDateChange(model.courseBeginDate)" required placeholder="yyyy-MM-dd">
+                          </div>
+                        </div>
+                        <div class="col-xl-2">
+                          <div class="form-group data-separate">
+                            ～
+                          </div>
+                        </div>
+                        <div class="col-xl-5">
+                          <div class="form-group">
+                            <input type="date" class="form-control" name="courseEndDate" ng-model="model.courseEndDate" ng-change="onEndDateChange(model.courseEndDate)" required placeholder="yyyy-MM-dd">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>课程简介</label>
+                      <div class="row">
+                        <div class="col-xl-12">
+                          <div class="form-group">
+                            <textarea class="form-control" maxlength="500" rows="5" ng-model="model.courseIntroduction" required placeholder="请输入课程简介，如课程目标、所授知识点、需要达到的能力等等(最多500字)"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>课程表</label>
+                      <a class="kt-font-brand kt-link kt-font-bold" href="javascript:;"
+                         ng-click="onShowCourseScheduleModal()" style="float: right"><i class="fa fa-plus"></i>添加</a>
+                      <div class="kt-notification-v2">
+                        <a href="javascript:;" ng-repeat="courseSchedule in model.courseScheduleList"
+                           class="kt-notification-v2__item kt-font-brand kt-font-bold">
+                          <div class="kt-notification-v2__item-icon" ng-bind="courseSchedule.weekday.dayText"></div>
+                          <div class="kt-notification-v2__itek-wrapper" style="float: left">
+                            <div class="kt-notification-v2__item-title">
+                              <span class="course-schedule" ng-repeat="course in courseSchedule.schedule">\{{course.orderText}}(\{{course.time}}) <br ng-if="$index == 3"/></span>
+                            </div>
+                          </div>
+                          <div style="float: right">
+                            <button type="button" ng-click="onRemoveCourseSchedule(courseSchedule)"
+                                    class="btn btn-outline-hover-danger btn-sm btn-icon btn-circle"><i
+                                    class="fa fa-times"></i></button>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--end: Form Wizard Step 2-->
+
+              <!--begin: Form Wizard Step 3-->
+              <div class="kt-wizard-v1__content" data-ktwizard-type="step-content">
+                <div class="kt-portlet__body kt-portlet__body--fit" style="margin-bottom: 10px;">
+                  <a class="kt-font-brand kt-link kt-font-bold" href="javascript:;" ng-click="onShowCoursePlanModal()" style="width: 50px">
+                    <i class="fa fa-plus"></i>
+                    添加
+                  </a>
+                </div>
+                <div class="kt-portlet kt-portlet--mobile">
+                  <div class="kt-portlet__body kt-portlet__body--fit">
+                    <!--begin: Datatable -->
+                    <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded">
+                      <table class="kt-datatable__table course-plan" style="display: block;">
+                        <thead class="kt-datatable__head">
+                          <tr class="kt-datatable__row" style="left: 0;">
+                            <th class="kt-datatable__cell text-center">
+                              节次
+                            </th>
+                            <th class="kt-datatable__cell text-center">
+                              技术
+                            </th>
+                            <th class="kt-datatable__cell text-center">
+                              所授知识点
+                            </th>
+                            <th class="kt-datatable__cell text-center">
+                              操作
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody class="kt-datatable__body">
+                          <tr class="kt-datatable__row" ng-repeat="coursePlan in model.coursePlanList" style="left: 0;">
+                            <td data-field="AgentName" class="kt-datatable__cell">
+                              <span>第\{{coursePlan.courseOrder}}节</span>
+                            </td>
+                            <td class="kt-datatable__cell text-center">
+                              <span ng-bind="coursePlan.technologyName"></span>
+                            </td>
+                            <td data-field="ShipDate" class="kt-datatable__cell">
+                              <a href="javascript:;" class="kt-font-brand kt-link kt-font-bold knowledgeName" title="\{{coursePlan.knowledgeName}}" ng-bind="coursePlan.knowledgeName">
+                              </a>
+                            </td>
+                            <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell text-center">
+                              <a title="delete" class="btn btn-sm btn-clean btn-icon btn-icon-md" ng-click="onRemoveCoursePlan(coursePlan)">
+                                <i class="la la-trash"></i>
+                              </a>
+                            </td>
+                          </tr>
+
+                        </tbody>
+                      </table>
+                    </div>
+                    <!--end: Datatable -->
+                  </div>
+                </div>
+              </div>
+              <!--end: Form Wizard Step 3-->
+
+              <!--begin: Form Wizard Step 4-->
+              <div class="kt-wizard-v1__content step-4" data-ktwizard-type="step-content">
+                <div class="kt-form__section kt-form__section--first">
+                  <div class="kt-wizard-v1__review">
+                    <div class="kt-wizard-v1__review-item">
+                      <div class="kt-wizard-v1__review-title">
+                        课程所属技术
+                      </div>
+                      <div class="kt-wizard-v1__review-content">
+                        <span ng-bind="model.selectedTechnology.technologyName"></span>
+                      </div>
+                    </div>
+                    <div class="kt-wizard-v1__review-item">
+                      <div class="kt-wizard-v1__review-title">
+                        课程基本信息
+                      </div>
+                      <div class="kt-wizard-v1__review-content">
+                        <div class="review-content-group">
+                          <span>课程名称: </span>
+                          <span ng-bind="model.courseName"></span>
+                        </div>
+                        <div class="review-content-group">
+                          <span>授课教师: </span>
+                          <span ng-bind="model.courseTeacher.teacherName"></span>
+                        </div>
+                        <div class="review-content-group">
+                          <span>授课时间: </span>
+                          <span ng-bind="model.courseBeginDateFormat"></span> ~ <span ng-bind="model.courseEndDateFormat"></span>
+                        </div>
+                        <div class="kt-notification-v2">
+                          <a href="javascript:;" ng-repeat="courseSchedule in model.courseScheduleList"
+                             class="kt-notification-v2__item kt-font-brand kt-font-bold">
+                            <div class="" ng-bind="courseSchedule.weekday.dayText"></div>
+                            <div class="kt-notification-v2__itek-wrapper" style="float: left">
+                              <div class="kt-notification-v2__item-title">
+                                <span class="course-schedule" ng-repeat="course in courseSchedule.schedule">\{{course.orderText}}(\{{course.time}}) <br ng-if="$index == 3"/></span>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="kt-wizard-v1__review-item">
+                      <div class="kt-wizard-v1__review-title">
+                        课程计划
+                      </div>
+                      <div class="kt-wizard-v1__review-content">
+                        <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded">
+                          <table class="kt-datatable__table course-plan-review">
+                            <thead class="kt-datatable__head">
+                              <tr class="kt-datatable__row" style="left: 0;">
+                                <th class="kt-datatable__cell text-center">
+                                  节次
+                                </th>
+                                <th class="kt-datatable__cell">
+                                  所授知识点
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody class="kt-datatable__body">
+                              <tr class="kt-datatable__row" ng-repeat="coursePlan in model.coursePlanList" style="left: 0;">
+                                <td data-field="AgentName" class="kt-datatable__cell">
+                                  <span>第\{{coursePlan.courseOrder}}节</span>
+                                </td>
+                                <td data-field="ShipDate" class="kt-datatable__cell">
+                                  <a href="javascript:;" class="kt-font-brand kt-font-bold" title="\{{coursePlan.knowledgeName}}" ng-bind="coursePlan.knowledgeName">
+                                  </a>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--end: Form Wizard Step 4-->
+
+              <!--begin: Form Actions -->
+              <div class="kt-form__actions">
+                <button class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+                        data-ktwizard-type="action-prev">
+                  上一步
+                </button>
+                <button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+                        data-ktwizard-type="action-submit"
+                        ng-click="onSubmit()"
+                        ng-disabled="model.selectedTechnology == null
+
+                                    || myForm.courseName.$pristine
+                                    || (myForm.courseName.$dirty && myForm.courseName.$invalid)
+
+                                    || myForm.teacherName.$pristine
+                                    || (myForm.teacherName.$dirty && myForm.teacherName.$invalid)
+
+                                    || model.courseTeacher.teacherID == 0
+
+                                    || myForm.courseBeginDate.$pristine
+                                    || (myForm.courseBeginDate.$dirty && myForm.courseBeginDate.$invalid)
+
+                                    || myForm.courseEndDate.$pristine
+                                    || (myForm.courseEndDate.$dirty && myForm.courseEndDate.$invalid)
+
+                                    || myForm.courseIntroduction.$pristine
+                                    || (myForm.courseIntroduction.$dirty && myForm.courseIntroduction.$invalid)
+
+                                    || model.courseScheduleList.length == 0
+
+                                    || model.coursePlanList.length == 0">
+                  提交
+                </button>
+                <button class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+                        data-ktwizard-type="action-next">
+                  下一步
+                </button>
+              </div>
+              <!--end: Form Actions -->
+            </form>
+            <!--end: Form Wizard Form-->
+
+            <div class="modal fade" id="kt_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true" style="display: none;">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <form name="courseScheduleForm">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">添加课程表</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-xl-6 separator--border-right">
+                          <div class="form-group">
+                            <label>一周内哪天授课</label>
+                            <div class="kt-radio-list">
+                              <label class="kt-radio" ng-repeat="weekday in model.weeklyDayList">
+                                <input type="radio" name="weekday" ng-click="onChooseWeeklyDay(weekday)">
+                                \{{weekday.dayText}}
+                                <span></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-6">
+                          <div class="form-group">
+                            <label>哪几节课授课</label>
+                            <div class="kt-checkbox-list">
+                              <label class="kt-checkbox" ng-repeat="course in model.courseList">
+                                <input type="checkbox" name="courseTime" ng-click="onChooseCourse(course)">
+                                \{{course.orderText}}（\{{course.time}}）
+                                <span></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                      <button type="button" class="btn btn-primary" ng-click="onSelectCourseSchedule()"
+                              ng-disabled="model.selectWeekday == null || model.selectCourseList.length == 0">确定
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="kt_modal_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">添加授课计划(一门课程最多可创建300节课)</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                  </div>
+                  <form name="coursePlanForm" novalidate>
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-xl-6">
+                          <div class="form-group">
+                            <div class="dropdown search-form-dropdown">
+                              <input type="text" class="form-control" placeholder="请先在第一步选择课程讲授技术" ng-model="model.selectedTechnology.technologyName" disabled required>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <input type="number" class="form-control" min="1" max="300" maxlength="3" ng-model="model.courseOrder" placeholder="请输入第几节课" required>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="dropdown search-form-dropdown">
+                              <button class="btn btn-secondary" type="button" data-toggle="dropdown">
+                                <span ng-bind="model.selectedLearningPhase.learningPhaseName"></span>
+                                <i class="flaticon2-down"></i>
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start">
+                                <a ng-repeat="data in model.learningPhaseList"
+                                   class="dropdown-item"
+                                   href="javascript:;"
+                                   ng-click="onLearningPhase(data)"
+                                   ng-bind="data.learningPhaseName"></a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label>这节课所包含的知识点</label>
+                            <div class="row">
+                              <div class="col-xl-12">
+                                <div class="kt-checkbox-list">
+                                  <label class="kt-checkbox" ng-repeat="knowledge in model.knowledgeList">
+                                    <input type="checkbox" name="technologyKnowledge" ng-click="onChooseKnowledge(knowledge,$event)"> \{{knowledge.knowledgeName}}
+                                    <span></span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-6">
+                          <div class="form-group">
+                            <label>第<span class="kt-font-danger font-weight-bolder" ng-bind="model.courseOrder"></span>节课讲授的知识点</label>
+                            <div class="kt-notification kt-notification--fit">
+
+                              <div class="kt-notification__item" ng-repeat="courseKnowledge in model.courseKnowledgeList">
+                                <div class="kt-notification__item-icon course-knowledge-technology">
+                                  <img ng-src="\{{courseKnowledge.technologyThumbnail}}">
+                                </div>
+                                <div class="kt-notification__item-details">
+                                  <div class="kt-notification__item-title" ng-bind="courseKnowledge.knowledgeName">
+                                  </div>
+                                  <div class="kt-notification__item-time" ng-bind="courseKnowledge.learningPhaseName">
+                                  </div>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                      <button type="button" class="btn btn-primary" ng-click="onSetCoursePlan()" ng-disabled="model.selectedTechnology == null
+                                                                              || model.courseOrder == undefined
+                                                                              || model.selectedLearningPhase.learningPhaseID == 0
+                                                                              || model.courseKnowledgeList.length == 0">确定</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="kt-portlet" ng-if="model.isSubmitSuccess">
+      <div class="alert alert-success" role="alert" style="width: 100%; margin: 0 auto">
+        <div class="alert-text">
+          <h4 class="alert-heading">
+            <i class="flaticon2-check-mark"></i>
+            提交成功！
+          </h4>
+          <p>
+            您的课程信息已提交成功，现在可以让学生开始报名啦！
+          </p>
+          <hr>
+          <p class="mb-0">
+            上书房智慧教育slogan todo
+            <a href="/course/list" class="kt-font-brand kt-link kt-font-bold">查看我的课程</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="javascripts/plugins/wizard-1.min.js" type="text/javascript"></script>
+<script src="javascripts/views/course.js" type="text/javascript"></script>

@@ -4,10 +4,7 @@
     "port": 8080,
     "path": {
       "login": "/api/university/account/login",
-
       "university": "/api/university",
-
-
       "school": "/api/school",
 
       "universityAccount": "/api/university/account",
@@ -58,9 +55,8 @@
 
       "learningPath": "/api/learningPath",
       "usingTechnology4LearningPath": "/api/learningPath/usingTechnology",
-      "usingLearningPhase": "/api/learningPath/usingLearningPhase",
-      "usingKnowledge": "/api/learningPath/usingKnowledge",
-      "changeLearningPathStatus": "/api/learningPath/changeStatus",
+      "usingLearningPhase": "/api/learningPath/learningPhase",
+      "usingKnowledge": "/api/learningPath/knowledge",
 
       "exercises": "/api/exercises",
       "checkExercisesCode": "/api/exercises/checkExercisesCode",
@@ -68,7 +64,12 @@
       "exercisesFile": "/api/exercises/file",
       "changeExercisesStatus": "/api/exercises/changeStatus",
 
-      "verificationCode": "/api/verificationCode"
+      "verificationCode": "/api/verificationCode",
+
+
+      "course": "/api/course",
+      "teachers": "/api/university/customer",
+      "checkCourse": "/api/course/checkCourse"
     }
   }
 }

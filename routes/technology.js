@@ -36,7 +36,7 @@ router.get('/knowledgeList', (req, res, next) => {
   let pageNumber = parameterUtils.processNumberParameter(req.query.pageNumber, Constants.PAGE_NUMBER_DEFAULT);
   let technologyID = parameterUtils.processNumberParameter(req.query.technologyID, Constants.TECHNOLOGY_DEFAULT_ID);
 
-  let parameter = `${pageNumber}/${sysConfig.knowledgePageSize}/${technologyID}/0/N`;
+  let parameter = `${pageNumber}/${sysConfig.knowledgePageSize}/${technologyID}/0/${Constants.DATA_ACTIVE}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {

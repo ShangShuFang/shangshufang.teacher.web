@@ -83,3 +83,8 @@ commonUtility.isCellphoneNumber = function (cellphone) {
   }
   return true;
 };
+
+commonUtility.isLogin = function () {
+  let login_cookie = commonUtility.getCookie(Constants.COOKIE_LOGIN_USER);
+  return login_cookie !== null;
+};

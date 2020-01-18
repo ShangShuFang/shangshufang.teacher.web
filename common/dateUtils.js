@@ -28,7 +28,7 @@ exports.formatGMT = function (gmt_datetime) {
   let date = new Date(gmt_datetime);
   return  date.getFullYear() + '-'
       + formatTime((date.getMonth() + 1)) + '-'
-      + formatTime(date.getDate()) + ' ';
+      + formatTime(date.getDate());
 };
 
 exports.currentTime = function () {

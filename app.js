@@ -9,6 +9,7 @@ let loginRouter = require('./routes/login');
 let registerRouter = require('./routes/register');
 let forgetPasswordRouter = require('./routes/forgetPassword');
 let technologyRouter = require('./routes/technology');
+let courseRouter = require('./routes/course');
 let commonRouter = require('./routes/common');
 
 let app = express();
@@ -29,6 +30,7 @@ app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/forgetPassword', forgetPasswordRouter);
 app.use('/technology', technologyRouter);
+app.use('/course', courseRouter);
 app.use('/common', commonRouter);
 
 // catch 404 and forward to error handler

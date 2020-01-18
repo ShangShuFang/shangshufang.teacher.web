@@ -11,6 +11,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
 
     directionTotalCount: 0,
     directionList: [],
+    isShowLoadCompleteMessage: false
   };
 
   $scope.initPage = function () {
@@ -74,7 +75,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
           $scope.model.knowledgeList1 = $scope.model.knowledgeList.slice(0, toIndex);
           $scope.model.knowledgeList2 = $scope.model.knowledgeList.slice(startIndex, $scope.model.knowledgeList.length);
         }
-        if($scope.model.knowledgeList.length === $scope.model.knowledgeTotalCount){
+        if($scope.model.isShowLoadCompleteMessage && $scope.model.knowledgeList.length === $scope.model.knowledgeTotalCount){
           layer.msg(localMessage.LOADED_ALL_KNOWLEDGE);
         }
       }, function errorCallback(response) {
@@ -107,7 +108,16 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
 
   $scope.onLoadMoreKnowledge = function() {
     $scope.model.knowledgePageNumber++;
+    $scope.model.isShowLoadCompleteMessage = true;
     $scope.loadKnowledgeList();
   };
+
+  $scope.onCreateCourse = function(){
+    if($scope.model.technologyID !== 0){
+      localStorage.setItem(Constants.KEY_NEW_COURSE_TECHNOLOGY, $scope.model.technologyID);
+    }
+    location.href = '/course';
+  };
+
   $scope.initPage();
 });

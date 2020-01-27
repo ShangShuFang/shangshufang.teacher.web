@@ -48,13 +48,12 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     }
     let currentDateString = dateUtils.getCurrentDate();
 
-
     let universityCode = $scope.model.loginUser.universityCode;
     let schoolID = $scope.model.loginUser.schoolID;
     let teacherID = $scope.model.loginUser.customerID;
     let courseTimeBegin = dateUtils.addDateYear(currentDateString, -1) + ' 00:00:00';
     let dataStatus = 'A';
-    $http.get(`/course/list?pageNumber=${$scope.model.pageNumber}&universityCode=${universityCode}&schoolID=${schoolID}&teacherID=${teacherID}&courseTimeBegin=${courseTimeBegin}&dataStatus=${dataStatus}`).then(function successCallback (response) {
+    $http.get(`/course/list?pageNumber=${$scope.model.pageNumber}&pageSize=99&universityCode=${universityCode}&schoolID=${schoolID}&teacherID=${teacherID}&courseTimeBegin=${courseTimeBegin}&dataStatus=${dataStatus}`).then(function successCallback (response) {
       if(response.data.err){
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;

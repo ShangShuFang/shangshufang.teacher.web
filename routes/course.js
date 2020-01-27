@@ -35,13 +35,14 @@ router.get('/list', (req, res, next) => {
   let service = new commonService.commonInvoke('course');
 
   let pageNumber = req.query.pageNumber;
+  let pageSize = parameterUtils.processNumberParameter(req.query.pageSize, sysConfig.pageSize);
   let universityCode = req.query.universityCode;
   let schoolID = req.query.schoolID;
   let teacherID = req.query.teacherID;
   let courseTimeBegin = req.query.courseTimeBegin;
   let dataStatus = req.query.dataStatus;
 
-  let parameter = `${pageNumber}/${sysConfig.pageSize}/${universityCode}/${schoolID}/${teacherID}/${courseTimeBegin}/${dataStatus}`;
+  let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${teacherID}/${courseTimeBegin}/${dataStatus}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {

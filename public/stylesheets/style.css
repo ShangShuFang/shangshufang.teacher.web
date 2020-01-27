@@ -60,3 +60,6 @@ body {
   transform: translate3d(0px, 38px, 0px);
 }
 /* end： 查询表单的下拉列表*/
+a.no-hand{
+  cursor: auto;
+}

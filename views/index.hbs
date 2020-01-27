@@ -114,41 +114,46 @@
     </div>
   </div>
 
-  <div >
-    <div class="row" style="display: none">
-      <div class="col-xl-12">
-        <div class="kt-portlet">
-          <div class="kt-portlet__body">
-            <div class="kt-widget kt-widget--user-profile-3 text-center">
-              您还没有正在进行的课程，<a class="kt-font-brand kt-link kt-font-bold" href="javascript:;" ng-click="onCreateCourse()">现在创建</a>
-            </div>
-
+  <div class="row" ng-if="model.isLogin == false">
+    <div class="col-xl-12">
+      <div class="kt-portlet">
+        <div class="kt-portlet__body">
+          <div class="kt-widget kt-widget--user-profile-3 text-center">
+            您还没有登陆，<a class="kt-font-brand kt-link kt-font-bold" href="/login?backUrl=/index">现在登陆</a>查看正在进行中的课程
           </div>
-
         </div>
-
       </div>
     </div>
   </div>
 
-  <div>
-    <div class="row">
+
+  <div class="row" ng-if="model.isLogin && model.courseProcessingTotalCount === 0">
+    <div class="col-xl-12">
+      <div class="kt-portlet">
+        <div class="kt-portlet__body">
+          <div class="kt-widget kt-widget--user-profile-3 text-center">
+            您还没有正在进行的课程，<a class="kt-font-brand kt-link kt-font-bold" href="javascript:;" ng-click="onCreateCourse()">
+            现在创建 <i class="fa fa-angle-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-if="model.isLogin && model.courseProcessingTotalCount !== 0">
+    <div class="row" ng-repeat="course in model.courseProcessingList">
       <div class="col-xl-12">
         <div class="kt-portlet">
           <div class="kt-portlet__body">
             <div class="kt-widget kt-widget--user-profile-3">
               <div class="kt-widget__top">
-                <div class="kt-widget__media kt-hidden">
-                  <img src="/media/users/100_10.jpg" alt="image">
-                </div>
-                <div class="kt-widget__pic kt-widget__pic--success kt-font-success kt-font-boldest kt-font-light">
-                  Java
+                <div class="kt-widget__pic kt-font-boldest kt-font-light"
+                     ng-class="{'kt-widget__pic--success kt-font-success': $index%2 == 0, 'kt-widget__pic--danger kt-font-danger': $index%2 != 0}"
+                     ng-bind="course.technologyName">
                 </div>
                 <div class="kt-widget__content">
                   <div class="kt-widget__head">
-                    <a href="#" class="kt-widget__username">
-                      课程名称1
-                    </a>
+                    <a href="#" class="kt-widget__username" ng-bind="course.courseName"></a>
                     <div class="kt-widget__action">
                       <button type="button" class="btn btn-brand btn-sm btn-upper">详细信息</button>
                       <button type="button" class="btn btn-label-success btn-sm btn-upper">批改作业</button>&nbsp;
@@ -158,15 +163,14 @@
                   <div class="kt-widget__subhead">
                   <span>
                     <i class="flaticon-calendar-with-a-clock-time-tools"></i>
-                    <span>2019/12/01</span>
+                    <span ng-bind="course.courseTimeBegin"></span>
                     <span>~</span>
-                    <span>2019/12/31</span>
+                    <span ng-bind="course.courseTimeEnd"></span>
                   </span>
                   </div>
                   <div class="kt-widget__info">
                     <div class="kt-widget__desc">
-                      <p class="course-decs" title="课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍">
-                        课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍
+                      <p class="course-decs" title="\{{course.courseIntroduction}}" ng-bind="course.courseIntroduction">
                       </p>
                     </div>
                     <div class="kt-widget__progress">
@@ -174,10 +178,12 @@
                         Progress
                       </div>
                       <div class="progress" style="height: 5px;width: 100%;">
-                        <div class="progress-bar kt-bg-success" role="progressbar" style="width: 35%;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar"
+                             role="progressbar"
+                             ng-class="{'kt-bg-success': $index%2 == 0, 'kt-bg-danger': $index%2 != 0}"
+                             ng-style="{'width':course.courseProcess}"></div>
                       </div>
-                      <div class="kt-widget__stats">
-                        53%
+                      <div class="kt-widget__stats" ng-bind="course.courseProcess">
                       </div>
                     </div>
                   </div>
@@ -189,111 +195,10 @@
                     <i class="fa fa-handshake"></i>
                   </div>
                   <div class="kt-widget__details">
-                    <span class="kt-widget__title">内容认可企业</span>
-                    <a href="#" class="kt-widget__value kt-font-brand">20</a>
-                  </div>
-                </div>
-                <div class="kt-widget__item">
-                  <div class="kt-widget__icon">
-                    <i class="flaticon-list-3"></i>
-                  </div>
-                  <div class="kt-widget__details">
-                    <span class="kt-widget__title">涵盖知识点</span>
-                    <span class="kt-widget__value">65/150</span>
-                  </div>
-                </div>
-                <div class="kt-widget__item">
-                  <div class="kt-widget__icon">
-                    <i class="flaticon-list"></i>
-                  </div>
-                  <div class="kt-widget__details">
-                    <span class="kt-widget__title">涵盖练习题</span>
-                    <span class="kt-widget__value">200</span>
-                  </div>
-                </div>
-                <div class="kt-widget__item">
-                  <div class="kt-widget__icon">
-                    <i class="flaticon2-user"></i>
-                  </div>
-                  <div class="kt-widget__details">
-                    <span class="kt-widget__title">报名学生</span>
-                    <span class="kt-widget__value">50</span>
-                  </div>
-                </div>
-                <div class="kt-widget__item">
-                  <div class="kt-widget__icon">
-                    <i class="flaticon-chat-1"></i>
-                  </div>
-                  <div class="kt-widget__details">
-                    <span class="kt-widget__title">在线提问</span>
-                    <a href="#" class="kt-widget__value kt-font-brand">999</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xl-12">
-        <div class="kt-portlet">
-          <div class="kt-portlet__body">
-            <div class="kt-widget kt-widget--user-profile-3">
-              <div class="kt-widget__top">
-                <div class="kt-widget__media kt-hidden">
-                  <img src="/media/users/100_10.jpg" alt="image">
-                </div>
-                <div class="kt-widget__pic kt-widget__pic--danger kt-font-danger kt-font-boldest kt-font-light">
-                  Java
-                </div>
-                <div class="kt-widget__content">
-                  <div class="kt-widget__head">
-                    <a href="#" class="kt-widget__username">
-                      课程名称1
+                    <span class="kt-widget__title">使用该技术的企业</span>
+                    <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+                      \{{course.courseTechnologyUsingCompanyCount}}家
                     </a>
-                    <div class="kt-widget__action">
-                      <button type="button" class="btn btn-brand btn-sm btn-upper">详细信息</button>&nbsp;
-                      <button type="button" class="btn btn-label-success btn-sm btn-upper">批改作业</button>&nbsp;
-                      <button type="button" class="btn btn-label-danger btn-sm btn-upper">结束课程</button>
-                    </div>
-                  </div>
-                  <div class="kt-widget__subhead">
-                  <span>
-                    <i class="flaticon-calendar-with-a-clock-time-tools"></i>
-                    <span>2019/12/01</span>
-                    <span>~</span>
-                    <span>2019/12/31</span>
-                  </span>
-                  </div>
-                  <div class="kt-widget__info">
-                    <div class="kt-widget__desc">
-                      <p class="course-decs" title="课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍">
-                        课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍
-                      </p>
-                    </div>
-                    <div class="kt-widget__progress">
-                      <div class="kt-widget__text">
-                        Progress
-                      </div>
-                      <div class="progress" style="height: 5px;width: 100%;">
-                        <div class="progress-bar kt-bg-danger" role="progressbar" style="width: 35%;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <div class="kt-widget__stats">
-                        53%
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="kt-widget__bottom">
-                <div class="kt-widget__item">
-                  <div class="kt-widget__icon">
-                    <i class="fa fa-handshake"></i>
-                  </div>
-                  <div class="kt-widget__details">
-                    <span class="kt-widget__title">内容认可企业</span>
-                    <a href="#" class="kt-widget__value kt-font-brand">20</a>
                   </div>
                 </div>
                 <div class="kt-widget__item">
@@ -302,110 +207,9 @@
                   </div>
                   <div class="kt-widget__details">
                     <span class="kt-widget__title">涵盖知识点</span>
-                    <span class="kt-widget__value">65/150</span>
-                  </div>
-                </div>
-                <div class="kt-widget__item">
-                  <div class="kt-widget__icon">
-                    <i class="flaticon-list"></i>
-                  </div>
-                  <div class="kt-widget__details">
-                    <span class="kt-widget__title">涵盖练习题</span>
-                    <span class="kt-widget__value">200</span>
-                  </div>
-                </div>
-                <div class="kt-widget__item">
-                  <div class="kt-widget__icon">
-                    <i class="flaticon2-user"></i>
-                  </div>
-                  <div class="kt-widget__details">
-                    <span class="kt-widget__title">报名学生</span>
-                    <span class="kt-widget__value">50</span>
-                  </div>
-                </div>
-                <div class="kt-widget__item">
-                  <div class="kt-widget__icon">
-                    <i class="flaticon-chat-1"></i>
-                  </div>
-                  <div class="kt-widget__details">
-                    <span class="kt-widget__title">在线提问</span>
-                    <a href="#" class="kt-widget__value kt-font-brand">999</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xl-12">
-        <div class="kt-portlet">
-          <div class="kt-portlet__body">
-            <div class="kt-widget kt-widget--user-profile-3">
-              <div class="kt-widget__top">
-                <div class="kt-widget__media kt-hidden">
-                  <img src="/media/users/100_10.jpg" alt="image">
-                </div>
-                <div class="kt-widget__pic kt-widget__pic--success kt-font-success kt-font-boldest kt-font-light">
-                  Java
-                </div>
-                <div class="kt-widget__content">
-                  <div class="kt-widget__head">
-                    <a href="#" class="kt-widget__username">
-                      课程名称1
+                    <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+                      \{{course.courseKnowledgeCount}}/\{{course.technologyKnowledgeCount}}
                     </a>
-                    <div class="kt-widget__action">
-                      <button type="button" class="btn btn-brand btn-sm btn-upper">详细信息</button>
-                      <button type="button" class="btn btn-label-success btn-sm btn-upper">批改作业</button>&nbsp;
-                      <button type="button" class="btn btn-label-danger btn-sm btn-upper">结束课程</button>
-                    </div>
-                  </div>
-                  <div class="kt-widget__subhead">
-                  <span>
-                    <i class="flaticon-calendar-with-a-clock-time-tools"></i>
-                    <span>2019/12/01</span>
-                    <span>~</span>
-                    <span>2019/12/31</span>
-                  </span>
-                  </div>
-                  <div class="kt-widget__info">
-                    <div class="kt-widget__desc">
-                      <p class="course-decs" title="课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍">
-                        课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍
-                      </p>
-                    </div>
-                    <div class="kt-widget__progress">
-                      <div class="kt-widget__text">
-                        Progress
-                      </div>
-                      <div class="progress" style="height: 5px;width: 100%;">
-                        <div class="progress-bar kt-bg-success" role="progressbar" style="width: 35%;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <div class="kt-widget__stats">
-                        53%
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="kt-widget__bottom">
-                <div class="kt-widget__item">
-                  <div class="kt-widget__icon">
-                    <i class="fa fa-handshake"></i>
-                  </div>
-                  <div class="kt-widget__details">
-                    <span class="kt-widget__title">内容认可企业</span>
-                    <a href="#" class="kt-widget__value kt-font-brand">20</a>
-                  </div>
-                </div>
-                <div class="kt-widget__item">
-                  <div class="kt-widget__icon">
-                    <i class="flaticon-list-3"></i>
-                  </div>
-                  <div class="kt-widget__details">
-                    <span class="kt-widget__title">涵盖知识点</span>
-                    <span class="kt-widget__value">65/150</span>
                   </div>
                 </div>
                 <div class="kt-widget__item">
@@ -414,110 +218,9 @@
                   </div>
                   <div class="kt-widget__details">
                     <span class="kt-widget__title">涵盖练习题</span>
-                    <span class="kt-widget__value">200</span>
-                  </div>
-                </div>
-                <div class="kt-widget__item">
-                  <div class="kt-widget__icon">
-                    <i class="flaticon2-user"></i>
-                  </div>
-                  <div class="kt-widget__details">
-                    <span class="kt-widget__title">报名学生</span>
-                    <span class="kt-widget__value">50</span>
-                  </div>
-                </div>
-                <div class="kt-widget__item">
-                  <div class="kt-widget__icon">
-                    <i class="flaticon-chat-1"></i>
-                  </div>
-                  <div class="kt-widget__details">
-                    <span class="kt-widget__title">在线提问</span>
-                    <a href="#" class="kt-widget__value kt-font-brand">999</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xl-12">
-        <div class="kt-portlet">
-          <div class="kt-portlet__body">
-            <div class="kt-widget kt-widget--user-profile-3">
-              <div class="kt-widget__top">
-                <div class="kt-widget__media kt-hidden">
-                  <img src="/media/users/100_10.jpg" alt="image">
-                </div>
-                <div class="kt-widget__pic kt-widget__pic--danger kt-font-danger kt-font-boldest kt-font-light">
-                  Java
-                </div>
-                <div class="kt-widget__content">
-                  <div class="kt-widget__head">
-                    <a href="#" class="kt-widget__username">
-                      课程名称1
+                    <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+                      \{{course.courseKnowledgeExercisesCount}}
                     </a>
-                    <div class="kt-widget__action">
-                      <button type="button" class="btn btn-brand btn-sm btn-upper">详细信息</button>&nbsp;
-                      <button type="button" class="btn btn-label-success btn-sm btn-upper">批改作业</button>&nbsp;
-                      <button type="button" class="btn btn-label-danger btn-sm btn-upper">结束课程</button>
-                    </div>
-                  </div>
-                  <div class="kt-widget__subhead">
-                  <span>
-                    <i class="flaticon-calendar-with-a-clock-time-tools"></i>
-                    <span>2019/12/01</span>
-                    <span>~</span>
-                    <span>2019/12/31</span>
-                  </span>
-                  </div>
-                  <div class="kt-widget__info">
-                    <div class="kt-widget__desc">
-                      <p class="course-decs" title="课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍">
-                        课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍课程名称2内容介绍
-                      </p>
-                    </div>
-                    <div class="kt-widget__progress">
-                      <div class="kt-widget__text">
-                        Progress
-                      </div>
-                      <div class="progress" style="height: 5px;width: 100%;">
-                        <div class="progress-bar kt-bg-danger" role="progressbar" style="width: 35%;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <div class="kt-widget__stats">
-                        53%
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="kt-widget__bottom">
-                <div class="kt-widget__item">
-                  <div class="kt-widget__icon">
-                    <i class="fa fa-handshake"></i>
-                  </div>
-                  <div class="kt-widget__details">
-                    <span class="kt-widget__title">内容认可企业</span>
-                    <a href="#" class="kt-widget__value kt-font-brand">20</a>
-                  </div>
-                </div>
-                <div class="kt-widget__item">
-                  <div class="kt-widget__icon">
-                    <i class="flaticon-list-3"></i>
-                  </div>
-                  <div class="kt-widget__details">
-                    <span class="kt-widget__title">涵盖知识点</span>
-                    <span class="kt-widget__value">65/150</span>
-                  </div>
-                </div>
-                <div class="kt-widget__item">
-                  <div class="kt-widget__icon">
-                    <i class="flaticon-list"></i>
-                  </div>
-                  <div class="kt-widget__details">
-                    <span class="kt-widget__title">涵盖练习题</span>
-                    <span class="kt-widget__value">200</span>
                   </div>
                 </div>
                 <div class="kt-widget__item">
@@ -526,7 +229,9 @@
                   </div>
                   <div class="kt-widget__details">
                     <span class="kt-widget__title">报名学生</span>
-                    <span class="kt-widget__value">50</span>
+                    <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+                      \{{course.courseSingUpCount}}
+                    </a>
                   </div>
                 </div>
                 <div class="kt-widget__item">
@@ -535,7 +240,9 @@
                   </div>
                   <div class="kt-widget__details">
                     <span class="kt-widget__title">在线提问</span>
-                    <a href="#" class="kt-widget__value kt-font-brand">999</a>
+                    <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+                      \{{course.courseQuestionFinish}}/\{{course.courseQuestion}}
+                    </a>
                   </div>
                 </div>
               </div>

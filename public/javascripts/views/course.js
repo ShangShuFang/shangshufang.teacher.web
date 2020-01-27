@@ -258,6 +258,9 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
       }
+      if(commonUtility.isEmptyList(response.data.dataList)){
+        return false;
+      }
       $scope.model.learningPhaseList = response.data.dataList;
       if($scope.model.learningPhaseList.length > 0){
         $scope.model.selectedLearningPhase = {
@@ -414,8 +417,9 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       coursePlan.knowledgeIDArray.forEach(function (knowledgeID) {
         coursePlanEntityList.push({
           courseClass: coursePlan.courseOrder,
+          technologyID: $scope.model.selectedTechnology.technologyID,
           learningPhaseID: coursePlan.learningPhaseID,
-          technologyID: knowledgeID
+          knowledgeID: knowledgeID
         })
       })
     });

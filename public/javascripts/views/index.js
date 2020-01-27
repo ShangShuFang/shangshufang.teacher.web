@@ -3,10 +3,16 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   $scope.model = {
     pageNumber: 1,
     technologyTotalCount: 0,
-    technologyList: []
+    technologyList: [],
+    courseProcessingTotalCount: 0,
+    courseProcessingList: [],
+    isLogin: false,
+    loginUser: null
   };
 
   $scope.initPage = function () {
+    $scope.model.isLogin = commonUtility.isLogin();
+    $scope.model.loginUser = commonUtility.getLoginUser();
     $scope.loadTechnologyList();
     $scope.loadCourseList();
   };
@@ -37,7 +43,37 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.loadCourseList = function () {
+    if(!$scope.model.isLogin){
+      return false;
+    }
+    let currentDateString = dateUtils.getCurrentDate();
 
+
+    let universityCode = $scope.model.loginUser.universityCode;
+    let schoolID = $scope.model.loginUser.schoolID;
+    let teacherID = $scope.model.loginUser.customerID;
+    let courseTimeBegin = dateUtils.addDateYear(currentDateString, -1) + ' 00:00:00';
+    let dataStatus = 'A';
+    $http.get(`/course/list?pageNumber=${$scope.model.pageNumber}&universityCode=${universityCode}&schoolID=${schoolID}&teacherID=${teacherID}&courseTimeBegin=${courseTimeBegin}&dataStatus=${dataStatus}`).then(function successCallback (response) {
+      if(response.data.err){
+        bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+        return false;
+      }
+
+      if(response.data.dataContent.dataList === null || response.data.dataContent.dataList.length === 0){
+        if($scope.model.pageNumber > 1){
+          $scope.model.pageNumber--;
+          layer.msg(localMessage.NO_TECHNOLOGY_DATA);
+        }
+        return false;
+      }
+
+      $scope.model.courseProcessingList = response.data.dataContent.dataList;
+      $scope.model.courseProcessingTotalCount = response.data.dataContent.totalCount;
+      $scope.model.pageNumber = response.data.dataContent.currentPageNum;
+    }, function errorCallback(response) {
+      bootbox.alert(localMessage.NETWORK_ERROR);
+    });
   };
 
   $scope.onLoadMoreTechnology = function (){

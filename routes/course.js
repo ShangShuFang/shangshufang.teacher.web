@@ -31,6 +31,37 @@ router.get('/learningPhase', (req, res, next) => {
   });
 });
 
+router.get('/list', (req, res, next) => {
+  let service = new commonService.commonInvoke('course');
+
+  let pageNumber = req.query.pageNumber;
+  let universityCode = req.query.universityCode;
+  let schoolID = req.query.schoolID;
+  let teacherID = req.query.teacherID;
+  let courseTimeBegin = req.query.courseTimeBegin;
+  let dataStatus = req.query.dataStatus;
+
+  let parameter = `${pageNumber}/${sysConfig.pageSize}/${universityCode}/${schoolID}/${teacherID}/${courseTimeBegin}/${dataStatus}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      let dataContent = commonService.buildRenderData('课程列表', pageNumber, result);
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        dataContent: dataContent
+      });
+    }
+  });
+});
+
 router.get('/knowledgeList', (req, res, next) => {
   let service = new commonService.commonInvoke('knowledge');
   let technologyID = parameterUtils.processNumberParameter(req.query.technologyID, Constants.TECHNOLOGY_DEFAULT_ID);

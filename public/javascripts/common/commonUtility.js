@@ -52,7 +52,7 @@ commonUtility.delCookie = function (name) {
 commonUtility.getLoginUser = function () {
   let cookie = this.getCookie(Constants.COOKIE_LOGIN_USER);
   if(cookie === null){
-    location.href = '/';
+    return null;
   }
   return JSON.parse(cookie);
 };

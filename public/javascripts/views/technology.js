@@ -8,10 +8,22 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     knowledgeList: [],
     knowledgeList1: [],
     knowledgeList2: [],
-
     directionTotalCount: 0,
     directionList: [],
-    isShowLoadCompleteMessage: false
+    isShowLoadCompleteMessage: false,
+
+    courseProcessingTotalCount: 0,
+
+    courseProcessing4UniversityPageNumber: 1,
+    courseProcessing4UniversityTotalCount: 0,
+    courseProcessing4UniversityList: [],
+
+    courseProcessing4OtherUniversityPageNumber: 1,
+    courseProcessing4OtherUniversityTotalCount: 0,
+    courseProcessing4OtherUniversityList: [],
+
+    isLogin: false,
+    loginUser: null
   };
 
   $scope.initPage = function () {
@@ -25,6 +37,8 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.setParameter = function () {
+    $scope.model.isLogin = commonUtility.isLogin();
+    $scope.model.loginUser = commonUtility.getLoginUser();
     $scope.model.technologyID = $('#hidden_technologyID').val();
     if(commonUtility.isEmpty($scope.model.technologyID) || Number.isNaN($scope.model.technologyID)){
       bootbox.alert(localMessage.NO_TECHNOLOGY_INFO);
@@ -100,9 +114,67 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     });
   };
 
-  $scope.loadCourseOfUniversityList = function () {};
+  $scope.loadCourseOfUniversityList = function () {
+    if(!$scope.model.isLogin){
+      return false;
+    }
+    let currentDateString = dateUtils.getCurrentDate();
+    let universityCode = $scope.model.loginUser.universityCode;
+    let courseTimeBegin = dateUtils.addDateYear(currentDateString, -1) + ' 00:00:00';
+    let dataStatus = 'A';
+    $http.get(`/course/list?pageNumber=${$scope.model.courseProcessing4UniversityPageNumber}&pageSize=6&universityCode=${universityCode}&schoolID=0&teacherID=0&technologyID=${$scope.model.technologyID}&courseTimeBegin=${courseTimeBegin}&dataStatus=${dataStatus}&isSelf=true`).then(function successCallback (response) {
+      if(response.data.err){
+        bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+        return false;
+      }
 
-  $scope.loadCourseOfOtherUniversityList = function () {};
+      if(response.data.dataContent.dataList === null || response.data.dataContent.dataList.length === 0){
+        if($scope.model.courseProcessing4UniversityPageNumber > 1){
+          $scope.model.courseProcessing4UniversityPageNumber--;
+          layer.msg(localMessage.NO_TECHNOLOGY_DATA);
+        }
+        return false;
+      }
+
+      $scope.model.courseProcessing4UniversityList = response.data.dataContent.dataList;
+      $scope.model.courseProcessing4UniversityTotalCount = response.data.dataContent.totalCount;
+      $scope.model.courseProcessing4UniversityPageNumber = response.data.dataContent.currentPageNum;
+      $scope.model.courseProcessingTotalCount = $scope.model.courseProcessing4UniversityTotalCount + $scope.model.courseProcessing4OtherUniversityTotalCount;
+    }, function errorCallback(response) {
+      bootbox.alert(localMessage.NETWORK_ERROR);
+    });
+  };
+
+  $scope.loadCourseOfOtherUniversityList = function () {
+    if(!$scope.model.isLogin){
+      return false;
+    }
+    let currentDateString = dateUtils.getCurrentDate();
+    let universityCode = $scope.model.loginUser.universityCode;
+    let courseTimeBegin = dateUtils.addDateYear(currentDateString, -1) + ' 00:00:00';
+    let dataStatus = 'A';
+    $http.get(`/course/list?pageNumber=${$scope.model.courseProcessing4OtherUniversityPageNumber}&pageSize=6&universityCode=${universityCode}&schoolID=0&teacherID=0&technologyID=${$scope.model.technologyID}&courseTimeBegin=${courseTimeBegin}&dataStatus=${dataStatus}&isSelf=false`).then(function successCallback (response) {
+      if(response.data.err){
+        bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+        return false;
+      }
+
+      if(response.data.dataContent.dataList === null || response.data.dataContent.dataList.length === 0){
+        if($scope.model.courseProcessing4OtherUniversityPageNumber > 1){
+          $scope.model.courseProcessing4OtherUniversityPageNumber--;
+          layer.msg(localMessage.NO_TECHNOLOGY_DATA);
+        }
+        return false;
+      }
+
+      $scope.model.courseProcessing4OtherUniversityList = response.data.dataContent.dataList;
+      $scope.model.courseProcessing4OtherUniversityTotalCount = response.data.dataContent.totalCount;
+      $scope.model.courseProcessing4OtherUniversityPageNumber = response.data.dataContent.currentPageNum;
+      $scope.model.courseProcessingTotalCount = $scope.model.courseProcessing4UniversityTotalCount + $scope.model.courseProcessing4OtherUniversityTotalCount;
+    }, function errorCallback(response) {
+      bootbox.alert(localMessage.NETWORK_ERROR);
+    });
+  };
 
   $scope.loadStudentList = function () {};
 
@@ -117,6 +189,16 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       localStorage.setItem(Constants.KEY_NEW_COURSE_TECHNOLOGY, $scope.model.technologyID);
     }
     location.href = '/course';
+  };
+
+  $scope.onLoadMoreCourseSelfUniversity = function() {
+    $scope.model.courseProcessing4UniversityPageNumber++;
+    $scope.loadCourseOfUniversityList();
+  };
+
+  $scope.onLoadMoreCourseOtherUniversity = function() {
+    $scope.model.courseProcessing4OtherUniversityPageNumber++;
+    $scope.loadCourseOfOtherUniversityList();
   };
 
   $scope.initPage();

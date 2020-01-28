@@ -168,7 +168,7 @@
           <h3 class="kt-portlet__head-title">
             校内外开设课程
             <small class="count">
-              <strong>当前站内共开始6个课程</strong>
+              <strong>当前站内共开始课程<span ng-bind="model.courseProcessingTotalCount"></span>个</strong>
             </small>
           </h3>
         </div>
@@ -199,95 +199,46 @@
               <div class="kt-portlet__body">
                 <div class="tab-content">
                   <div class="tab-pane active" id="kt_portlet_base_demo_2_3_tab_content" role="tabpanel">
-                    <div class="row">
-                      <div class="col-xl-4">
+                    <div class="row" ng-if="model.courseProcessing4UniversityList.length > 0">
+                      <div class="col-xl-4" ng-repeat="course in model.courseProcessing4UniversityList">
                         <div class="kt-portlet kt-portlet--height-fluid">
                           <div class="kt-portlet__body kt-portlet__body--fit">
-
                             <!--begin::Widget -->
                             <div class="kt-widget kt-widget--project-1">
                               <div class="kt-widget__head d-flex">
-                                <div class="kt-widget__label">
+                                <div class="kt-widget__label" style="margin-left: -15px">
                                   <div class="kt-widget__media kt-widget__media--m">
-																<span class="kt-media kt-media--md kt-media--circle kt-hidden-">
-																	<img src="/media/project-logos/3.png" alt="image">
-																</span>
-                                    <span class="kt-media kt-media--md kt-media--circle kt-hidden">
-																	<img src="/media/users/100_12.jpg" alt="image">
-																</span>
+                                    <span class="kt-media kt-media--md kt-media--circle kt-hidden-">
+                                      <img src="/media/users/teacher_default.png" ng-if="course.teacherPhotoUrl == ''" alt="image">
+                                      <img ng-src="\{{course.teacherPhotoUrl}}" ng-if="course.teacherPhotoUrl != ''" alt="image">
+                                    </span>
                                   </div>
                                   <div class="kt-widget__info kt-padding-0 kt-margin-l-15">
-                                    <a href="#" class="kt-widget__title">
-                                      Nexa - Next generation SAAS
+                                    <a href="#" class="kt-widget__title" ng-bind="course.courseName">
                                     </a>
                                     <span class="kt-widget__desc">
-																	Creates Limitless possibilities
-																</span>
-                                  </div>
-                                </div>
-                                <div class="kt-widget__toolbar">
-                                  <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown"
-                                     aria-expanded="false">
-                                    <i class="flaticon-more-1"></i>
-                                  </a>
-                                  <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right"
-                                       x-placement="bottom-end"
-                                       style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(411px, 58px, 0px);">
-                                    <ul class="kt-nav">
-                                      <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link">
-                                          <i class="kt-nav__link-icon flaticon2-line-chart"></i>
-                                          <span class="kt-nav__link-text">Reports</span>
-                                        </a>
-                                      </li>
-                                      <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link">
-                                          <i class="kt-nav__link-icon flaticon2-send"></i>
-                                          <span class="kt-nav__link-text">Messages</span>
-                                        </a>
-                                      </li>
-                                      <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link">
-                                          <i class="kt-nav__link-icon flaticon2-pie-chart-1"></i>
-                                          <span class="kt-nav__link-text">Charts</span>
-                                        </a>
-                                      </li>
-                                      <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link">
-                                          <i class="kt-nav__link-icon flaticon2-avatar"></i>
-                                          <span class="kt-nav__link-text">Members</span>
-                                        </a>
-                                      </li>
-                                      <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link">
-                                          <i class="kt-nav__link-icon flaticon2-settings"></i>
-                                          <span class="kt-nav__link-text">Settings</span>
-                                        </a>
-                                      </li>
-                                    </ul>
+                                      \{{course.schoolName}} \{{course.teacherName}}
+                                    </span>
                                   </div>
                                 </div>
                               </div>
                               <div class="kt-widget__body">
-														<span class="kt-widget__text kt-margin-t-0 kt-padding-t-5">
-															I distinguish three main text objecttives.First
-															your objective could be merely
-														</span>
+                                <p class="kt-widget__text kt-margin-t-0 kt-padding-t-5 course-decs" ng-bind="course.courseIntroduction"></p>
                                 <div class="kt-widget__stats kt-margin-t-20">
                                   <div class="kt-widget__item d-flex align-items-center kt-margin-r-30">
-																<span class="kt-widget__date kt-padding-0 kt-margin-r-10">
-																	Start
-																</span>
+                                    <span class="kt-widget__date kt-padding-0 kt-margin-r-10">
+                                      开始
+                                    </span>
                                     <div class="kt-widget__label">
-                                      <span class="btn btn-label-brand btn-sm btn-bold btn-upper">07 may, 18</span>
+                                      <span class="btn btn-label-brand btn-sm btn-bold btn-upper" ng-bind="course.courseTimeBegin"></span>
                                     </div>
                                   </div>
                                   <div class="kt-widget__item d-flex align-items-center kt-padding-l-0">
-																<span class="kt-widget__date kt-padding-0 kt-margin-r-10 ">
-																	Due
-																</span>
+                                    <span class="kt-widget__date kt-padding-0 kt-margin-r-10 ">
+                                      结束
+                                    </span>
                                     <div class="kt-widget__label">
-                                      <span class="btn btn-label-danger btn-sm btn-bold btn-upper">07 0ct, 18</span>
+                                      <span class="btn btn-label-danger btn-sm btn-bold btn-upper" ng-bind="course.courseTimeEnd"></span>
                                     </div>
                                   </div>
                                 </div>
@@ -295,12 +246,13 @@
                                   <span class="kt-widget__subtitel">Progress</span>
                                   <div class="kt-widget__progress d-flex align-items-center flex-fill">
                                     <div class="progress" style="height: 5px;width: 100%;">
-                                      <div class="progress-bar kt-bg-success" role="progressbar" style="width: 78%;"
-                                           aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                      <div class="progress-bar kt-bg-success"
+                                           role="progressbar"
+                                           ng-style="{'width':course.courseProcess}">
+                                      </div>
                                     </div>
-                                    <span class="kt-widget__stat">
-																	78%
-																</span>
+                                    <span class="kt-widget__stat" ng-bind="course.courseProcess">
+																    </span>
                                   </div>
                                 </div>
                               </div>
@@ -308,135 +260,16 @@
                                 <div class="kt-widget__wrapper">
                                   <div class="kt-widget__section">
                                     <div class="kt-widget__blog">
-                                      <i class="flaticon2-list-1"></i>
-                                      <a href="#" class="kt-widget__value kt-font-brand">64 Tasks</a>
+                                      <i class="flaticon-list-3" style="color: #3d3d3e"></i>
+                                      <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+                                        覆盖知识点 \{{course.courseKnowledgeCount}}/\{{course.technologyKnowledgeCount}}
+                                      </a>
                                     </div>
                                     <div class="kt-widget__blog">
-                                      <i class="flaticon2-talk"></i>
-                                      <a href="#" class="kt-widget__value kt-font-brand">654 Comments</a>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <!--end::Widget -->
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-xl-4">
-                        <div class="kt-portlet kt-portlet--height-fluid">
-                          <div class="kt-portlet__body kt-portlet__body--fit">
-
-                            <!--begin::Widget -->
-                            <div class="kt-widget kt-widget--project-1">
-                              <div class="kt-widget__head d-flex">
-                                <div class="kt-widget__label">
-                                  <div class="kt-widget__media kt-widget__media--m">
-																<span class="kt-media kt-media--md kt-media--circle kt-hidden-">
-																	<img src="/media/project-logos/3.png" alt="image">
-																</span>
-                                    <span class="kt-media kt-media--md kt-media--circle kt-hidden">
-																	<img src="/media/users/100_12.jpg" alt="image">
-																</span>
-                                  </div>
-                                  <div class="kt-widget__info kt-padding-0 kt-margin-l-15">
-                                    <a href="#" class="kt-widget__title">
-                                      Nexa - Next generation SAAS
-                                    </a>
-                                    <span class="kt-widget__desc">
-																	Creates Limitless possibilities
-																</span>
-                                  </div>
-                                </div>
-                                <div class="kt-widget__toolbar">
-                                  <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown"
-                                     aria-expanded="false">
-                                    <i class="flaticon-more-1"></i>
-                                  </a>
-                                  <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right"
-                                       x-placement="bottom-end"
-                                       style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(411px, 58px, 0px);">
-                                    <ul class="kt-nav">
-                                      <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link">
-                                          <i class="kt-nav__link-icon flaticon2-line-chart"></i>
-                                          <span class="kt-nav__link-text">Reports</span>
-                                        </a>
-                                      </li>
-                                      <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link">
-                                          <i class="kt-nav__link-icon flaticon2-send"></i>
-                                          <span class="kt-nav__link-text">Messages</span>
-                                        </a>
-                                      </li>
-                                      <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link">
-                                          <i class="kt-nav__link-icon flaticon2-pie-chart-1"></i>
-                                          <span class="kt-nav__link-text">Charts</span>
-                                        </a>
-                                      </li>
-                                      <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link">
-                                          <i class="kt-nav__link-icon flaticon2-avatar"></i>
-                                          <span class="kt-nav__link-text">Members</span>
-                                        </a>
-                                      </li>
-                                      <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link">
-                                          <i class="kt-nav__link-icon flaticon2-settings"></i>
-                                          <span class="kt-nav__link-text">Settings</span>
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="kt-widget__body">
-														<span class="kt-widget__text kt-margin-t-0 kt-padding-t-5">
-															I distinguish three main text objecttives.First
-															your objective could be merely
-														</span>
-                                <div class="kt-widget__stats kt-margin-t-20">
-                                  <div class="kt-widget__item d-flex align-items-center kt-margin-r-30">
-																<span class="kt-widget__date kt-padding-0 kt-margin-r-10">
-																	Start
-																</span>
-                                    <div class="kt-widget__label">
-                                      <span class="btn btn-label-brand btn-sm btn-bold btn-upper">07 may, 18</span>
-                                    </div>
-                                  </div>
-                                  <div class="kt-widget__item d-flex align-items-center kt-padding-l-0">
-																<span class="kt-widget__date kt-padding-0 kt-margin-r-10 ">
-																	Due
-																</span>
-                                    <div class="kt-widget__label">
-                                      <span class="btn btn-label-danger btn-sm btn-bold btn-upper">07 0ct, 18</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="kt-widget__container">
-                                  <span class="kt-widget__subtitel">Progress</span>
-                                  <div class="kt-widget__progress d-flex align-items-center flex-fill">
-                                    <div class="progress" style="height: 5px;width: 100%;">
-                                      <div class="progress-bar kt-bg-success" role="progressbar" style="width: 78%;"
-                                           aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <span class="kt-widget__stat">
-																	78%
-																</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="kt-widget__footer">
-                                <div class="kt-widget__wrapper">
-                                  <div class="kt-widget__section">
-                                    <div class="kt-widget__blog">
-                                      <i class="flaticon2-list-1"></i>
-                                      <a href="#" class="kt-widget__value kt-font-brand">64 Tasks</a>
-                                    </div>
-                                    <div class="kt-widget__blog">
-                                      <i class="flaticon2-talk"></i>
-                                      <a href="#" class="kt-widget__value kt-font-brand">654 Comments</a>
+                                      <i class="flaticon-list" style="color: #3d3d3e"></i>
+                                      <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+                                        覆盖练习题 \{{course.courseKnowledgeExercisesCount}}
+                                      </a>
                                     </div>
                                   </div>
                                 </div>
@@ -447,94 +280,60 @@
                         </div>
                       </div>
                     </div>
+                    <div class="row" ng-if="model.courseProcessing4UniversityList.length > 0 && model.courseProcessing4UniversityList.length < model.courseProcessing4UniversityTotalCount">
+                      <div class="col-xl-12 text-center">
+                        <button type="button" class="btn btn-secondary btn-elevate btn-pill" ng-click="onLoadMoreCourseSelfUniversity()" ><i class="fa fa-sync-alt"></i>加载更多</button>
+                      </div>
+                    </div>
+                    <div class="row" ng-if="model.courseProcessing4UniversityList.length === 0">
+                      <div class="col-xl-12 text-center">
+                        <div class="alert alert-secondary" role="alert">
+                          <div class="alert-text">您所在的院校尚未开设该技术的相关课程</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div class="tab-pane" id="kt_portlet_base_demo_2_2_tab_content" role="tabpanel">
                     <div class="row">
-                      <div class="col-xl-4">
+                      <div class="col-xl-4" ng-repeat="course in model.courseProcessing4OtherUniversityList">
                         <div class="kt-portlet kt-portlet--height-fluid">
                           <div class="kt-portlet__body kt-portlet__body--fit">
-
                             <!--begin::Widget -->
                             <div class="kt-widget kt-widget--project-1">
                               <div class="kt-widget__head d-flex">
-                                <div class="kt-widget__label">
+                                <div class="kt-widget__label" style="margin-left: -15px">
                                   <div class="kt-widget__media kt-widget__media--m">
-																<span class="kt-media kt-media--md kt-media--circle kt-hidden-">
-																	<img src="/media/project-logos/4.png" alt="image">
-																</span>
-                                    <span class="kt-media kt-media--md kt-media--circle kt-hidden">
-																	<img src="/media/users/100_12.jpg" alt="image">
-																</span>
+                                    <span class="kt-media kt-media--md kt-media--circle kt-hidden-">
+                                      <img src="/media/users/teacher_default.png" ng-if="course.teacherPhotoUrl == ''" alt="image">
+                                      <img ng-src="\{{course.teacherPhotoUrl}}" ng-if="course.teacherPhotoUrl != ''" alt="image">
+                                    </span>
                                   </div>
                                   <div class="kt-widget__info kt-padding-0 kt-margin-l-15">
-                                    <a href="#" class="kt-widget__title">
-                                      B&amp;Q - Food Company
+                                    <a href="#" class="kt-widget__title" ng-bind="course.courseName">
                                     </a>
                                     <span class="kt-widget__desc">
-																	Tasty food for everyone
-																</span>
-                                  </div>
-                                </div>
-                                <div class="kt-widget__toolbar">
-                                  <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown">
-                                    <i class="flaticon-more-1"></i>
-                                  </a>
-                                  <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right">
-                                    <ul class="kt-nav">
-                                      <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link">
-                                          <i class="kt-nav__link-icon flaticon2-line-chart"></i>
-                                          <span class="kt-nav__link-text">Reports</span>
-                                        </a>
-                                      </li>
-                                      <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link">
-                                          <i class="kt-nav__link-icon flaticon2-send"></i>
-                                          <span class="kt-nav__link-text">正在进行的校内课程</span>
-                                        </a>
-                                      </li>
-                                      <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link">
-                                          <i class="kt-nav__link-icon flaticon2-pie-chart-1"></i>
-                                          <span class="kt-nav__link-text">Charts</span>
-                                        </a>
-                                      </li>
-                                      <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link">
-                                          <i class="kt-nav__link-icon flaticon2-avatar"></i>
-                                          <span class="kt-nav__link-text">Members</span>
-                                        </a>
-                                      </li>
-                                      <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link">
-                                          <i class="kt-nav__link-icon flaticon2-settings"></i>
-                                          <span class="kt-nav__link-text">Settings</span>
-                                        </a>
-                                      </li>
-                                    </ul>
+                                      \{{course.universityName}} \{{course.teacherName}}
+                                    </span>
                                   </div>
                                 </div>
                               </div>
                               <div class="kt-widget__body">
-														<span class="kt-widget__text kt-margin-t-0 kt-padding-t-5">
-															I distinguish three main text objecttives.First<br>
-															your objective could be merely
-														</span>
+                                <p class="kt-widget__text kt-margin-t-0 kt-padding-t-5 course-decs" ng-bind="course.courseIntroduction"></p>
                                 <div class="kt-widget__stats kt-margin-t-20">
                                   <div class="kt-widget__item d-flex align-items-center kt-margin-r-30">
-																<span class="kt-widget__date kt-padding-0 kt-margin-r-10">
-																	Start
-																</span>
+                                    <span class="kt-widget__date kt-padding-0 kt-margin-r-10">
+                                      开始
+                                    </span>
                                     <div class="kt-widget__label">
-                                      <span class="btn btn-label-brand btn-sm btn-bold btn-upper">20 aug, 18</span>
+                                      <span class="btn btn-label-brand btn-sm btn-bold btn-upper" ng-bind="course.courseTimeBegin"></span>
                                     </div>
                                   </div>
                                   <div class="kt-widget__item d-flex align-items-center kt-padding-l-0">
-																<span class="kt-widget__date kt-padding-0 kt-margin-r-10 ">
-																	Due
-																</span>
+                                    <span class="kt-widget__date kt-padding-0 kt-margin-r-10 ">
+                                      结束
+                                    </span>
                                     <div class="kt-widget__label">
-                                      <span class="btn btn-label-danger btn-sm btn-bold btn-upper">07 dec, 18</span>
+                                      <span class="btn btn-label-danger btn-sm btn-bold btn-upper" ng-bind="course.courseTimeEnd"></span>
                                     </div>
                                   </div>
                                 </div>
@@ -542,12 +341,13 @@
                                   <span class="kt-widget__subtitel">Progress</span>
                                   <div class="kt-widget__progress d-flex align-items-center flex-fill">
                                     <div class="progress" style="height: 5px;width: 100%;">
-                                      <div class="progress-bar kt-bg-success" role="progressbar" style="width: 92%;"
-                                           aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                      <div class="progress-bar kt-bg-success"
+                                           role="progressbar"
+                                           ng-style="{'width':course.courseProcess}">
+                                      </div>
                                     </div>
-                                    <span class="kt-widget__stat">
-																	92%
-																</span>
+                                    <span class="kt-widget__stat" ng-bind="course.courseProcess">
+																    </span>
                                   </div>
                                 </div>
                               </div>
@@ -555,20 +355,35 @@
                                 <div class="kt-widget__wrapper">
                                   <div class="kt-widget__section">
                                     <div class="kt-widget__blog">
-                                      <i class="flaticon2-list-1"></i>
-                                      <a href="#" class="kt-widget__value kt-font-brand">32 Tasks</a>
+                                      <i class="flaticon-list-3" style="color: #3d3d3e"></i>
+                                      <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+                                        覆盖知识点 \{{course.courseKnowledgeCount}}/\{{course.technologyKnowledgeCount}}
+                                      </a>
                                     </div>
                                     <div class="kt-widget__blog">
-                                      <i class="flaticon2-talk"></i>
-                                      <a href="#" class="kt-widget__value kt-font-brand">534 Comments</a>
+                                      <i class="flaticon-list" style="color: #3d3d3e"></i>
+                                      <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+                                        覆盖练习题 \{{course.courseKnowledgeExercisesCount}}
+                                      </a>
                                     </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
-
                             <!--end::Widget -->
                           </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row" ng-if="model.courseProcessing4OtherUniversityList.length > 0 && model.courseProcessing4OtherUniversityList.length < model.courseProcessing4OtherUniversityTotalCount">
+                      <div class="col-xl-12 text-center">
+                        <button type="button" class="btn btn-secondary btn-elevate btn-pill" ng-click="onLoadMoreCourseOtherUniversity()" ><i class="fa fa-sync-alt"></i>加载更多</button>
+                      </div>
+                    </div>
+                    <div class="row" ng-if="model.courseProcessing4OtherUniversityList.length === 0">
+                      <div class="col-xl-12 text-center">
+                        <div class="alert alert-secondary" role="alert">
+                          <div class="alert-text">其他院校尚未开设该技术的相关课程</div>
                         </div>
                       </div>
                     </div>

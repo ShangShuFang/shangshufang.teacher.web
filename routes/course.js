@@ -39,10 +39,12 @@ router.get('/list', (req, res, next) => {
   let universityCode = req.query.universityCode;
   let schoolID = req.query.schoolID;
   let teacherID = req.query.teacherID;
+  let technologyID = req.query.technologyID;
   let courseTimeBegin = req.query.courseTimeBegin;
   let dataStatus = req.query.dataStatus;
+  let isSelf = req.query.isSelf;
 
-  let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${teacherID}/${courseTimeBegin}/${dataStatus}`;
+  let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${teacherID}/${technologyID}/${courseTimeBegin}/${dataStatus}/${isSelf}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {

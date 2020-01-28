@@ -63,15 +63,8 @@
 .shs-cursor-hand{
   cursor: pointer;
 }
-
-
-
 .course-decs{
   max-width: 550px;
-  /*overflow: hidden;*/
-  /*text-overflow:ellipsis;*/
-  /*white-space: nowrap;*/
-  
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

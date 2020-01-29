@@ -34,21 +34,6 @@
   flex: auto;
 }
 
-/*.top-student .item{*/
-/*  border: 1px solid red;*/
-/*}*/
-
-/*.top-student .item ul{*/
-/*  display: flex;*/
-/*  flex-direction: row;*/
-/*  flex-wrap: wrap;*/
-/*}*/
-/*.top-student .item ul li{*/
-/*  margin: 0px;*/
-/*  padding: 0px;*/
-/*  list-style: none;*/
-/*}*/
-
 .top-student .item ul li img{
   border-radius: 50%;
   max-width: 100%;
@@ -62,12 +47,4 @@
 }
 .shs-cursor-hand{
   cursor: pointer;
-}
-.course-decs{
-  max-width: 550px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
 }

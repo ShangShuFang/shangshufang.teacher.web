@@ -136,7 +136,10 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
         return false;
       }
 
-      $scope.model.courseProcessing4UniversityList = response.data.dataContent.dataList;
+      response.data.dataContent.dataList.forEach(function (data) {
+        $scope.model.courseProcessing4UniversityList.push(data);
+      });
+      //$scope.model.courseProcessing4UniversityList = response.data.dataContent.dataList;
       $scope.model.courseProcessing4UniversityTotalCount = response.data.dataContent.totalCount;
       $scope.model.courseProcessing4UniversityPageNumber = response.data.dataContent.currentPageNum;
       $scope.model.courseProcessingTotalCount = $scope.model.courseProcessing4UniversityTotalCount + $scope.model.courseProcessing4OtherUniversityTotalCount;
@@ -167,7 +170,11 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
         return false;
       }
 
-      $scope.model.courseProcessing4OtherUniversityList = response.data.dataContent.dataList;
+      response.data.dataContent.dataList.forEach(function (data) {
+        $scope.model.courseProcessing4OtherUniversityList.push(data);
+      });
+
+      //$scope.model.courseProcessing4OtherUniversityList = response.data.dataContent.dataList;
       $scope.model.courseProcessing4OtherUniversityTotalCount = response.data.dataContent.totalCount;
       $scope.model.courseProcessing4OtherUniversityPageNumber = response.data.dataContent.currentPageNum;
       $scope.model.courseProcessingTotalCount = $scope.model.courseProcessing4UniversityTotalCount + $scope.model.courseProcessing4OtherUniversityTotalCount;

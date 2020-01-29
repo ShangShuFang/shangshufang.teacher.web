@@ -198,8 +198,9 @@
               </div>
               <div class="kt-portlet__body">
                 <div class="tab-content">
+                  <!-- begin:: 正在进行中的本校课程 -->
                   <div class="tab-pane active" id="kt_portlet_base_demo_2_3_tab_content" role="tabpanel">
-                    <div class="row" ng-if="model.courseProcessing4UniversityList.length > 0">
+                    <div class="row" ng-if="model.isLogin && model.courseProcessing4UniversityList.length > 0">
                       <div class="col-xl-4" ng-repeat="course in model.courseProcessing4UniversityList">
                         <div class="kt-portlet kt-portlet--height-fluid">
                           <div class="kt-portlet__body kt-portlet__body--fit">
@@ -280,21 +281,35 @@
                         </div>
                       </div>
                     </div>
-                    <div class="row" ng-if="model.courseProcessing4UniversityList.length > 0 && model.courseProcessing4UniversityList.length < model.courseProcessing4UniversityTotalCount">
+                    <div class="row" ng-if="model.isLogin && model.courseProcessing4UniversityList.length > 0 && model.courseProcessing4UniversityList.length < model.courseProcessing4UniversityTotalCount">
                       <div class="col-xl-12 text-center">
                         <button type="button" class="btn btn-secondary btn-elevate btn-pill" ng-click="onLoadMoreCourseSelfUniversity()" ><i class="fa fa-sync-alt"></i>加载更多</button>
                       </div>
                     </div>
-                    <div class="row" ng-if="model.courseProcessing4UniversityList.length === 0">
+                    <div class="row" ng-if="model.isLogin && model.courseProcessing4UniversityList.length === 0">
                       <div class="col-xl-12 text-center">
                         <div class="alert alert-secondary" role="alert">
                           <div class="alert-text">您所在的院校尚未开设该技术的相关课程</div>
                         </div>
                       </div>
                     </div>
+                    <div class="row" ng-if="model.isLogin == false">
+                      <div class="col-xl-12">
+                        <div class="kt-portlet">
+                          <div class="kt-portlet__body">
+                            <div class="kt-widget kt-widget--user-profile-3 text-center">
+                              您还没有登陆，<a class="kt-font-brand kt-link kt-font-bold" ng-href="/login?backUrl=/technology?technology=\{{model.technologyID}}">现在登陆</a>查看该技术本校开设的课程
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+                  <!-- end:: 正在进行中的本校课程 -->
+
+                  <!-- begin:: 正在进行中的外校课程 -->
                   <div class="tab-pane" id="kt_portlet_base_demo_2_2_tab_content" role="tabpanel">
-                    <div class="row">
+                    <div class="row" ng-if="model.isLogin && model.courseProcessing4OtherUniversityList.length > 0">
                       <div class="col-xl-4" ng-repeat="course in model.courseProcessing4OtherUniversityList">
                         <div class="kt-portlet kt-portlet--height-fluid">
                           <div class="kt-portlet__body kt-portlet__body--fit">
@@ -375,19 +390,31 @@
                         </div>
                       </div>
                     </div>
-                    <div class="row" ng-if="model.courseProcessing4OtherUniversityList.length > 0 && model.courseProcessing4OtherUniversityList.length < model.courseProcessing4OtherUniversityTotalCount">
+                    <div class="row" ng-if="model.isLogin && model.courseProcessing4OtherUniversityList.length > 0 && model.courseProcessing4OtherUniversityList.length < model.courseProcessing4OtherUniversityTotalCount">
                       <div class="col-xl-12 text-center">
                         <button type="button" class="btn btn-secondary btn-elevate btn-pill" ng-click="onLoadMoreCourseOtherUniversity()" ><i class="fa fa-sync-alt"></i>加载更多</button>
                       </div>
                     </div>
-                    <div class="row" ng-if="model.courseProcessing4OtherUniversityList.length === 0">
+                    <div class="row" ng-if="model.isLogin && model.courseProcessing4OtherUniversityList.length === 0">
                       <div class="col-xl-12 text-center">
                         <div class="alert alert-secondary" role="alert">
                           <div class="alert-text">其他院校尚未开设该技术的相关课程</div>
                         </div>
                       </div>
                     </div>
+                    <div class="row" ng-if="model.isLogin == false">
+                      <div class="col-xl-12">
+                        <div class="kt-portlet">
+                          <div class="kt-portlet__body">
+                            <div class="kt-widget kt-widget--user-profile-3 text-center">
+                              您还没有登陆，<a class="kt-font-brand kt-link kt-font-bold" ng-href="/login?backUrl=/technology?technology=\{{model.technologyID}}">现在登陆</a>查看该技术外校开设的课程
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+                  <!-- end:: 正在进行中的外校课程 -->
                 </div>
               </div>
             </div>

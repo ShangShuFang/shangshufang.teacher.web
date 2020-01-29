@@ -1,0 +1,209 @@
+<link href="/stylesheets/views/myCourse.css" rel="stylesheet" type="text/css" />
+<div class="kt-container kt-grid__item kt-grid__item--fluid" ng-app="pageApp" ng-controller="pageCtrl">
+  <div class="kt-subheader kt-grid__item">
+    <div class="kt-container">
+      <div class="kt-subheader__main">
+        <h3 class="kt-subheader__title"></h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- begin:: 未登录 -->
+  <div class="row" ng-if="model.isLogin == false">
+    <div class="col-xl-12">
+      <div class="kt-portlet">
+        <div class="kt-portlet__body">
+          <div class="kt-widget kt-widget--user-profile-3 text-center">
+            您还没有登陆，<a class="kt-font-brand kt-link kt-font-bold" href="/login?backUrl=/myCourse">现在登陆</a>查看我的课程
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end:: 未登录 -->
+
+  <!-- begin:: 查询条件 -->
+  <div class="kt-portlet" ng-if="model.isLogin">
+      <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title">
+            查询条件
+            <small class="count">
+              <strong>查询到<span ng-bind="model.courseTotalCount"></span>条数据</strong>
+            </small>
+          </h3>
+        </div>
+      </div>
+      <div class="kt-portlet__body">
+        <div class="row">
+          <div class="col-xl-3">
+            <div class="dropdown search-form-dropdown">
+              <button class="btn btn-secondary" type="button" data-toggle="dropdown">
+                <span ng-bind="model.selectedTime.timeText"></span>
+                <i class="flaticon2-down"></i>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start">
+                <a ng-repeat="data in model.timeList"
+                   class="dropdown-item"
+                   href="javascript:;"
+                   ng-click="onSelectedTime(data)"
+                   ng-bind="data.timeText"></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3">
+            <div class="dropdown search-form-dropdown">
+              <button class="btn btn-secondary" type="button" data-toggle="dropdown">
+                <span ng-bind="model.selectedDataStatus.statusText"></span>
+                <i class="flaticon2-down"></i>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start">
+                <a ng-repeat="data in model.dataStatusList"
+                   class="dropdown-item"
+                   href="javascript:;"
+                   ng-click="onSelectDataStatus(data)"
+                   ng-bind="data.statusText"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <!-- end:: 查询条件 -->
+
+  <div class="space-10"></div>
+
+  <!-- begin:: 未查询到数据 -->
+  <div class="row" ng-if="model.isLogin && model.courseTotalCount == 0">
+    <div class="col-xl-12">
+      <div class="kt-portlet">
+        <div class="kt-portlet__body">
+          <div class="kt-widget kt-widget--user-profile-3 text-center">
+            没有查询到满足条件的课程
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end:: 未查询到数据 -->
+
+  <!-- begin:: 课程数据 -->
+  <div class="kt-portlet" ng-repeat="course in model.courseList" ng-if="model.isLogin && model.courseTotalCount !== 0">
+    <div class="kt-portlet__body">
+      <div class="kt-widget kt-widget--user-profile-3">
+        <div class="kt-widget__top">
+          <div class="kt-widget__pic kt-font-boldest kt-font-light"
+               ng-class="{'kt-widget__pic--success kt-font-success': $index%2 == 0, 'kt-widget__pic--danger kt-font-danger': $index%2 != 0}"
+               ng-bind="course.technologyName">
+          </div>
+          <div class="kt-widget__content">
+            <div class="kt-widget__head">
+              <a href="#" class="kt-widget__username" ng-bind="course.courseName"></a>
+              <div class="kt-widget__action">
+                <button type="button" class="btn btn-brand btn-sm btn-upper">详细信息</button>
+                <button type="button" class="btn btn-label-success btn-sm btn-upper">批改作业</button>&nbsp;
+                <button type="button" class="btn btn-label-danger btn-sm btn-upper">结束课程</button>
+              </div>
+            </div>
+            <div class="kt-widget__subhead">
+                <span>
+                  <i class="flaticon-calendar-with-a-clock-time-tools"></i>
+                  <span ng-bind="course.courseTimeBegin"></span>
+                  <span>~</span>
+                  <span ng-bind="course.courseTimeEnd"></span>
+                </span>
+            </div>
+            <div class="kt-widget__info">
+              <div class="kt-widget__desc">
+                <p class="course-decs" title="\{{course.courseIntroduction}}" ng-bind="course.courseIntroduction">
+                </p>
+              </div>
+              <div class="kt-widget__progress">
+                <div class="kt-widget__text">
+                  Progress
+                </div>
+                <div class="progress" style="height: 5px;width: 100%;">
+                  <div class="progress-bar"
+                       role="progressbar"
+                       ng-class="{'kt-bg-success': $index%2 == 0, 'kt-bg-danger': $index%2 != 0}"
+                       ng-style="{'width':course.courseProcess}"></div>
+                </div>
+                <div class="kt-widget__stats" ng-bind="course.courseProcess">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="kt-widget__bottom">
+          <div class="kt-widget__item">
+            <div class="kt-widget__icon">
+              <i class="fa fa-handshake"></i>
+            </div>
+            <div class="kt-widget__details">
+              <span class="kt-widget__title">使用该技术的企业</span>
+              <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+                \{{course.courseTechnologyUsingCompanyCount}}家
+              </a>
+            </div>
+          </div>
+          <div class="kt-widget__item">
+            <div class="kt-widget__icon">
+              <i class="flaticon-list-3"></i>
+            </div>
+            <div class="kt-widget__details">
+              <span class="kt-widget__title">涵盖知识点</span>
+              <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+                \{{course.courseKnowledgeCount}}/\{{course.technologyKnowledgeCount}}
+              </a>
+            </div>
+          </div>
+          <div class="kt-widget__item">
+            <div class="kt-widget__icon">
+              <i class="flaticon-list"></i>
+            </div>
+            <div class="kt-widget__details">
+              <span class="kt-widget__title">涵盖练习题</span>
+              <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+                \{{course.courseKnowledgeExercisesCount}}
+              </a>
+            </div>
+          </div>
+          <div class="kt-widget__item">
+            <div class="kt-widget__icon">
+              <i class="flaticon2-user"></i>
+            </div>
+            <div class="kt-widget__details">
+              <span class="kt-widget__title">报名学生</span>
+              <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+                \{{course.courseSingUpCount}}
+              </a>
+            </div>
+          </div>
+          <div class="kt-widget__item">
+            <div class="kt-widget__icon">
+              <i class="flaticon-chat-1"></i>
+            </div>
+            <div class="kt-widget__details">
+              <span class="kt-widget__title">在线提问</span>
+              <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+                \{{course.courseQuestionFinish}}/\{{course.courseQuestion}}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end:: 课程数据 -->
+
+  <!-- begin:: 加载更多 -->
+  <div class="row" ng-if="model.isLogin && model.courseList.length > 0 && model.courseList.length < model.courseTotalCount">
+    <div class="col-xl-12 text-center">
+      <button type="button" class="btn btn-secondary btn-elevate btn-pill" ng-click="onLoadMoreCourse()" ><i class="fa fa-sync-alt"></i>加载更多</button>
+    </div>
+  </div>
+  <!-- end:: 加载更多 -->
+
+
+</div>
+<script src="/javascripts/views/myCourse.js" type="text/javascript"></script>

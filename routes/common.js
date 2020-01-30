@@ -188,6 +188,38 @@ router.get('/learningPhase', (req, res, next) => {
   });
 });
 
+router.post('/businessAnalyseLog', (req, res, next) => {
+  let service = new commonService.commonInvoke('businessAnalyseLog');
+  let data = {
+    cityIP: req.body.cityIP,
+    cityID: req.body.cityID,
+    cityName: req.body.cityName,
+    browser: req.body.browser,
+    portal: req.body.portal,
+    device: req.body.device,
+    pageName: req.body.pageName,
+    operation: req.body.operation,
+    memo: req.body.memo,
+    customerID: req.body.customerID
+  };
+
+  service.create(data, (result) => {
+    if(result.err){
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    }else{
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg
+      });
+    }
+  });
+});
+
 router.get('/verificationCode/generate', (req, res, next) => {
   let chars = ['0','1','2','3','4','5','6','7','8','9'];
   let maxIndex = chars.length - 1;

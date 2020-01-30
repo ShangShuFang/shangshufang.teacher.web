@@ -88,3 +88,78 @@ commonUtility.isLogin = function () {
   let login_cookie = commonUtility.getCookie(Constants.COOKIE_LOGIN_USER);
   return login_cookie !== null;
 };
+
+commonUtility.getIpAddress = function () {
+  return {
+    city_ip: returnCitySN["cip"],
+    city_id: returnCitySN["cid"],
+    city_name: returnCitySN["cname"]
+  }
+};
+
+commonUtility.getBrowserName = function () {
+  //取得浏览器的userAgent字符串
+  let userAgent = navigator.userAgent;
+  //判断是否Opera浏览器
+  let isOpera = userAgent.indexOf("Opera") > -1;
+  //判断是否IE浏览器
+  let isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera;
+  //判断是否IE的Edge浏览器
+  let isEdge = userAgent.indexOf("Edge") > -1;
+  //判断是否Firefox浏览器
+  let isFF = userAgent.indexOf("Firefox") > -1;
+  //判断是否Safari浏览器
+  let isSafari = userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") === -1;
+  //判断Chrome浏览器
+  let isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1;
+
+  if (isIE) {
+    let reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+    reIE.test(userAgent);
+    let fIEVersion = parseFloat(RegExp["$1"]);
+    if (fIEVersion === 7) {
+      return "IE7";
+    } else if (fIEVersion === 8) {
+      return "IE8";
+    } else if (fIEVersion === 9) {
+      return "IE9";
+    } else if (fIEVersion === 10) {
+      return "IE10";
+    } else if (fIEVersion === 11) {
+      return "IE11";
+    } else {
+      return "0";
+    }
+
+    //IE版本过低
+    return "IE";
+  }
+  if (isOpera) {
+    return "Opera";
+  }
+  if (isEdge) {
+    return "Edge";
+  }
+  if (isFF) {
+    return "FF";
+  }
+  if (isSafari) {
+    return "Safari";
+  }
+  if (isChrome) {
+    return "Chrome";
+  }
+};
+
+commonUtility.getDeviceName = function () {
+  let userAgentInfo = navigator.userAgent;
+  let agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+  let device = 'PC';
+  for (let v = 0; v < agents.length; v++) {
+    if (userAgentInfo.indexOf(agents[v]) > 0) {
+      device = agents[v];
+      break;
+    }
+  }
+  return device;
+};

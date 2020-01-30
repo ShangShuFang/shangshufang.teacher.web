@@ -1,6 +1,9 @@
 let pageApp = angular.module('pageApp', []);
 pageApp.controller('pageCtrl', function ($scope, $http) {
   $scope.model = {
+    logPageName: 'index',
+    logOperation: '',
+    logMemo: '',
     pageNumber: 1,
     technologyTotalCount: 0,
     technologyList: [],
@@ -79,7 +82,8 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.loadTechnologyList();
   };
 
-  $scope.onCreateCourse = function(technologyID){
+  $scope.onCreateCourse = function(technologyID) {
+    bizLogger.logInfo('index', 'add course', `technologyID: ${technologyID}`);
     if(technologyID !== undefined){
       localStorage.setItem(Constants.KEY_NEW_COURSE_TECHNOLOGY, technologyID);
     }

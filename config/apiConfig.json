@@ -69,7 +69,8 @@
 
       "course": "/api/course",
       "teachers": "/api/university/customer",
-      "checkCourse": "/api/course/checkCourse"
+      "checkCourse": "/api/course/checkCourse",
+      "businessAnalyseLog": "/api/businessAnalyseLog"
     }
   }
 }

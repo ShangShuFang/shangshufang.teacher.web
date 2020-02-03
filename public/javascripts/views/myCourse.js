@@ -17,6 +17,11 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   $scope.initPage = function () {
     $scope.model.isLogin = commonUtility.isLogin();
     $scope.model.loginUser = commonUtility.getLoginUser();
+    if($scope.model.isLogin){
+      bizLogger.logInfo('myCourse', 'load page', `customer: ${$scope.model.loginUser.customerID}`);
+    }else{
+      bizLogger.logInfo('myCourse', 'load page', `customer: guest`);
+    }
     $scope.setMenuActive();
     $scope.setDropdownList();
     $scope.loadCourseList();
@@ -58,6 +63,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       courseTimeBegin = dateUtils.addDateYear(currentDateString, $scope.model.selectedTime.timeCode) + ' 00:00:00';
     }
     let dataStatus = $scope.model.selectedDataStatus.statusCode;
+    bizLogger.logInfo('myCourse', 'load course', `time: ${$scope.model.selectedTime.timeText}, status: ${$scope.model.selectedDataStatus.statusCode}`);
     $http.get(`/course/list?pageNumber=${$scope.model.pageNumber}&universityCode=${universityCode}&schoolID=${schoolID}&teacherID=${teacherID}&technologyID=0&courseTimeBegin=${courseTimeBegin}&dataStatus=${dataStatus}&isSelf=true`).then(function successCallback (response) {
       if(response.data.err){
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
@@ -98,6 +104,17 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   $scope.onLoadMoreCourse = function() {
     $scope.model.pageNumber++;
     $scope.loadCourseList();
+  };
+
+  $scope.onOpenCourseDetail = function(course, option) {
+    let courseParam = JSON.stringify({
+      universityCode: course.universityCode,
+      schoolID: course.schoolID,
+      courseID: course.courseID
+    });
+    bizLogger.logInfo('myCourse', 'open course detail', `option: ${option}, courseParam: ${courseParam}`);
+    localStorage.setItem(Constants.KEY_INFO_COURSE_IDENTIFY, courseParam);
+    window.open('/course/detail');
   };
 
   $scope.initPage();

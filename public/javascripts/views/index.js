@@ -16,6 +16,12 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   $scope.initPage = function () {
     $scope.model.isLogin = commonUtility.isLogin();
     $scope.model.loginUser = commonUtility.getLoginUser();
+    if($scope.model.isLogin){
+      bizLogger.logInfo('index', 'load page', `customer: ${$scope.model.loginUser.customerID}`);
+    }else{
+      bizLogger.logInfo('index', 'load page', `customer: guest`);
+    }
+
     $scope.loadTechnologyList();
     $scope.loadCourseList();
   };
@@ -92,6 +98,17 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     }else{
       location.href = '/course';
     }
+  };
+
+  $scope.onOpenCourseDetail = function(course, option) {
+    let courseParam = JSON.stringify({
+      universityCode: course.universityCode,
+      schoolID: course.schoolID,
+      courseID: course.courseID
+    });
+    bizLogger.logInfo('index', 'open course detail', `option: ${option}, courseParam: ${courseParam}`);
+    localStorage.setItem(Constants.KEY_INFO_COURSE_IDENTIFY, courseParam);
+    window.open('/course/detail');
   };
 
   $scope.initPage();

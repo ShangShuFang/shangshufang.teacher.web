@@ -26,3 +26,4 @@ Constants.KEY_OPTION_UPLOAD = 'upd';
 Constants.KEY_UPD_EXERCISES = 'shs.teacher.upd.exercises';
 Constants.KEY_UPLOAD_EXERCISES = 'shs.teacher.upload.exercises';
 Constants.KEY_NEW_COURSE_TECHNOLOGY = 'shs.teacher.new.course.technology';
+Constants.KEY_INFO_COURSE_IDENTIFY = 'shs.teacher.info.course';

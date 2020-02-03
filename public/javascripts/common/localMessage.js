@@ -29,6 +29,7 @@ localMessage.CELLPHONE_REGISTERED = '您输入的手机号码已注册。';
 localMessage.VERIFICATION_CODE_INVALID = '您输入的验证码不正确。';
 
 localMessage.CELLPHONE_NOT_FOUND = '您输入的手机号码不存在。';
+localMessage.COURSE_NOT_FOUND = '该课程已被删除';
 
 
 localMessage.formatMessage = function (code, msg) {

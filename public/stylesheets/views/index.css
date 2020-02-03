@@ -48,3 +48,6 @@
 .shs-cursor-hand{
   cursor: pointer;
 }
+.kt-portlet .kt-portlet__head{
+  min-height: 40px;
+}

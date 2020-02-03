@@ -1,10 +1,6 @@
 .kt-widget__footer button{
   padding: 0.5rem !important;
 }
-.data-separate{
-  text-align: center;
-  padding-top: 0.6rem;
-}
 .separator--border-right{
   border-right: 1px solid #cccccc;
 }
@@ -74,10 +70,6 @@ a.knowledgeName{
 }
 .course-knowledge-technology{
   margin-right: 0.3rem;
-}
-.course-knowledge-technology img{
-  width: 40px;
-  border-radius: 50%;
 }
 .step-4 .kt-notification-v2 a{
   padding: 0.5rem 0.5rem 0.5rem 0;

@@ -6,7 +6,7 @@ let Constants = require('../constant/Constants');
 let parameterUtils = require('../common/parameterUtils');
 
 router.get('/', function(req, res, next) {
-  res.render('technology', { title: '市场热门技术', technologyID: req.query.technology });
+  res.render('technology', { title: '技术明细', technologyID: req.query.technology });
 });
 
 router.get('/technologyInfo', (req, res, next) => {

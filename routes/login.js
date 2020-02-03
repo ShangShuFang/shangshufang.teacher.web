@@ -5,7 +5,7 @@ let Constants = require('../constant/Constants');
 
 router.get('/', function(req, res, next) {
   let backUrl = req.query.backUrl;
-  res.render('login', { title: '系统登陆 上书房智慧教育教师端', backUrl: backUrl, layout: null });
+  res.render('login', { title: '系统登陆-上书房智慧教育教师端', backUrl: backUrl, layout: null });
 });
 
 router.post('/', function (req, res, next) {

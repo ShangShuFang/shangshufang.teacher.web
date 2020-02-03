@@ -65,6 +65,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       return false;
     }
     $scope.model.loginUser = commonUtility.getLoginUser();
+    bizLogger.logInfo('course', 'load page', `customer: ${$scope.model.loginUser.customerID}`);
     $scope.loadTechnologyList();
   };
 
@@ -424,6 +425,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       })
     });
 
+    bizLogger.logInfo('course', 'submit', `customer: ${$scope.model.loginUser.customerID}`);
     $http.post('/course', {
       universityCode: $scope.model.loginUser.universityCode,
       schoolID: $scope.model.loginUser.schoolID,
@@ -438,11 +440,13 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       loginUser: $scope.model.loginUser.customerID
     }).then(function successCallback(response) {
       if(response.data.err) {
+        bizLogger.logInfo('course', 'submit failed', `customer: ${$scope.model.loginUser.customerID}`);
         KTApp.unprogress(btn);
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
       }
       $scope.model.isSubmitSuccess = true;
+      bizLogger.logInfo('course', 'submit success', `customer: ${$scope.model.loginUser.customerID}`);
     }, function errorCallback(response) {
       bootbox.alert(localMessage.NETWORK_ERROR);
     });

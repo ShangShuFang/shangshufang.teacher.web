@@ -18,7 +18,7 @@ commonUtility.setNavActive = function () {
 };
 
 commonUtility.isEmpty = function (value) {
-  return value === '' || value === undefined;
+  return value === '' || value === undefined || value === null;
 };
 
 commonUtility.isEmptyList = function (list) {

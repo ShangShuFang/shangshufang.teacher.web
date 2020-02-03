@@ -40,7 +40,13 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.model.isLogin = commonUtility.isLogin();
     $scope.model.loginUser = commonUtility.getLoginUser();
     $scope.model.technologyID = $('#hidden_technologyID').val();
+    if($scope.model.isLogin){
+      bizLogger.logInfo('technology', 'load page', `customer: ${$scope.model.loginUser.customerID}`);
+    }else{
+      bizLogger.logInfo('technology', 'load page', `customer: guest`);
+    }
     if(commonUtility.isEmpty($scope.model.technologyID) || Number.isNaN($scope.model.technologyID)){
+      bizLogger.logInfo('technology', 'load page', `parameter error:  technologyID: ${$scope.model.technologyID}`);
       bootbox.alert(localMessage.NO_TECHNOLOGY_INFO);
       return false;
     }
@@ -195,6 +201,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     if($scope.model.technologyID !== 0){
       localStorage.setItem(Constants.KEY_NEW_COURSE_TECHNOLOGY, $scope.model.technologyID);
     }
+    bizLogger.logInfo('technology', 'create course', `technologyID = ${$scope.model.technologyID}`);
     location.href = '/course';
   };
 
@@ -206,6 +213,17 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   $scope.onLoadMoreCourseOtherUniversity = function() {
     $scope.model.courseProcessing4OtherUniversityPageNumber++;
     $scope.loadCourseOfOtherUniversityList();
+  };
+
+  $scope.onOpenCourseDetail = function(course, option) {
+    let courseParam = JSON.stringify({
+      universityCode: course.universityCode,
+      schoolID: course.schoolID,
+      courseID: course.courseID
+    });
+    bizLogger.logInfo('technology', 'open course detail', `option: ${option}, courseParam: ${courseParam}`);
+    localStorage.setItem(Constants.KEY_INFO_COURSE_IDENTIFY, courseParam);
+    window.open('/course/detail');
   };
 
   $scope.initPage();

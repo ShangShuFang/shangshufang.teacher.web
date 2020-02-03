@@ -68,6 +68,9 @@
 
 
       "course": "/api/course",
+      "changeCourseBaseInfo": "/api/course/courseBaseInfo",
+      "changeCourseSchedule": "/api/course/courseSchedule",
+      "changeCoursePlan": "/api/course/coursePlan",
       "teachers": "/api/university/customer",
       "checkCourse": "/api/course/checkCourse",
       "businessAnalyseLog": "/api/businessAnalyseLog"

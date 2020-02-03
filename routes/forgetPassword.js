@@ -3,7 +3,7 @@ let router = express.Router();
 let commonService = require('../service/commonService');
 
 router.get('/', function(req, res, next) {
-  res.render('forgetPassword', { title: '忘记密码 上书房智慧教育教师端', layout: null });
+  res.render('forgetPassword', { title: '忘记密码-上书房智慧教育教师端', layout: null });
 });
 
 router.get('/checkCellphone', function(req, res, next) {

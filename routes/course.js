@@ -65,6 +65,34 @@ router.get('/list', (req, res, next) => {
   });
 });
 
+router.get('/info', (req, res, next) => {
+  let service = new commonService.commonInvoke('course');
+  let universityCode = req.query.universityCode;
+  let schoolID = req.query.schoolID;
+  let courseID = req.query.courseID;
+  let dataStatus = req.query.dataStatus;
+
+  let parameter = `${universityCode}/${schoolID}/${courseID}/${dataStatus}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        totalCount: result.content.totalCount,
+        courseDetail: result.content.responseData
+      });
+    }
+  });
+});
+
 router.get('/knowledgeList', (req, res, next) => {
   let service = new commonService.commonInvoke('knowledge');
   let technologyID = parameterUtils.processNumberParameter(req.query.technologyID, Constants.TECHNOLOGY_DEFAULT_ID);

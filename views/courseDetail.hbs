@@ -1,0 +1,493 @@
+<link href="/stylesheets/views/courseDetail.css" rel="stylesheet" type="text/css" />
+<div class="kt-container kt-grid__item kt-grid__item--fluid" ng-app="pageApp" ng-controller="pageCtrl">
+  <div class="kt-subheader kt-grid__item">
+    <div class="kt-container">
+      <div class="kt-subheader__main">
+        <h3 class="kt-subheader__title"></h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="kt-portlet">
+    <div class="kt-portlet__body">
+      <div class="kt-widget kt-widget--user-profile-3">
+        <div class="kt-widget__top">
+          <div class="kt-widget__pic kt-widget__pic--success kt-font-success kt-font-boldest kt-font-light"
+               ng-bind="model.courseInfo.technologyName"></div>
+          <div class="kt-widget__content">
+            <div class="kt-widget__head">
+              <h4 ng-bind="model.courseInfo.courseName"></h4>
+              <div class="kt-widget__action">
+                <button type="button" class="btn btn-danger btn-sm btn-upper">删除课程</button>&nbsp;
+              </div>
+            </div>
+            <div class="kt-widget__subhead">
+              <span>
+                <i class="fa fa-home"></i>
+                <span ng-bind="model.courseInfo.universityName"></span>
+              </span> &nbsp;
+              <span>
+                <i class="fa fa-graduation-cap"></i>
+                <span ng-bind="model.courseInfo.schoolName"></span>
+              </span> &nbsp;
+              <span>
+                <i class="fa fa-chalkboard-teacher"></i>
+                <span ng-bind="model.courseInfo.teacherName"></span>
+              </span>
+            </div>
+            <div class="kt-widget__info">
+              <div class="kt-widget__desc course-decs-3" title="\{{model.courseInfo.courseIntroduction}}" ng-bind="model.courseInfo.courseIntroduction"></div>
+              <div class="kt-widget__stats d-flex align-items-center flex-fill">
+                <div class="kt-widget__item">
+                  <span class="kt-widget__date text-center">
+                    开始时间
+                  </span>
+                  <div class="kt-widget__label">
+                    <span class="btn btn-label-brand btn-sm btn-bold btn-upper" ng-bind="model.courseInfo.courseTimeBegin"></span>
+                  </div>
+                </div>
+                <div class="kt-widget__item">
+                  <span class="kt-widget__date text-center">
+                    结束时间
+                  </span>
+                  <div class="kt-widget__label">
+                    <span class="btn btn-label-danger btn-sm btn-bold btn-upper" ng-bind="model.courseInfo.courseTimeEnd"></span>
+                  </div>
+                </div>
+                <div class="kt-widget__item flex-fill">
+                  <span class="kt-widget__subtitel">课程进度</span>
+                  <div class="kt-widget__progress d-flex  align-items-center">
+                    <div class="progress" style="height: 5px;width: 100%;">
+                      <div class="progress-bar kt-bg-success"
+                           role="progressbar"
+                           ng-style="{'width': model.courseInfo.courseProcess}"
+                           aria-valuenow="100"
+                           aria-valuemin="0"
+                           aria-valuemax="100"></div>
+                    </div>
+                    <span class="kt-widget__stat" ng-bind="model.courseInfo.courseProcess"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="kt-widget__bottom">
+          <div class="kt-widget__item">
+            <div class="kt-widget__icon">
+              <i class="fa fa-handshake"></i>
+            </div>
+            <div class="kt-widget__details">
+              <span class="kt-widget__title">使用该技术的企业</span>
+              <span class="kt-widget__value">
+                \{{model.courseInfo.courseTechnologyUsingCompanyCount}}家
+              </span>
+            </div>
+          </div>
+          <div class="kt-widget__item">
+            <div class="kt-widget__icon">
+              <i class="flaticon-list-3"></i>
+            </div>
+            <div class="kt-widget__details">
+              <span class="kt-widget__title">涵盖知识点</span>
+              <span class="kt-widget__value">
+                \{{model.courseInfo.courseKnowledgeCount}}/\{{model.courseInfo.technologyKnowledgeCount}}
+              </span>
+            </div>
+          </div>
+          <div class="kt-widget__item">
+            <div class="kt-widget__icon">
+              <i class="flaticon-list"></i>
+            </div>
+            <div class="kt-widget__details">
+              <span class="kt-widget__title">涵盖练习题</span>
+              <span class="kt-widget__value">
+                \{{model.courseInfo.courseKnowledgeExercisesCount}}
+              </span>
+            </div>
+          </div>
+          <div class="kt-widget__item">
+            <div class="kt-widget__icon">
+              <i class="flaticon2-user"></i>
+            </div>
+            <div class="kt-widget__details">
+              <span class="kt-widget__title">报名学生</span>
+              <span class="kt-widget__value">
+                \{{model.courseInfo.courseSingUpCount}}
+              </span>
+            </div>
+          </div>
+          <div class="kt-widget__item">
+            <div class="kt-widget__icon">
+              <i class="flaticon-chat-1"></i>
+            </div>
+            <div class="kt-widget__details">
+              <span class="kt-widget__title">在线提问</span>
+              <span class="kt-widget__value">
+                \{{model.courseInfo.courseQuestionFinish}}/\{{model.courseInfo.courseQuestion}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="kt-portlet">
+        <div class="kt-portlet__head">
+          <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+              课程详细信息
+            </h3>
+          </div>
+        </div>
+        <div class="kt-portlet__body">
+          <ul class="nav nav-tabs  nav-tabs-line" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#kt_tabs_1">基本信息</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#kt_tabs_2" role="tab" aria-selected="false">课程表</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#kt_tabs_3" role="tab" aria-selected="false">授课计划</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#kt_tabs_1_2" role="tab" aria-selected="false">涵盖练习题</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#kt_tabs_1_3" role="tab" aria-selected="false">报名学生</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#kt_tabs_1_5" role="tab" aria-selected="false">学生练习</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#kt_tabs_1_4" role="tab" aria-selected="false">在线答疑</a>
+            </li>
+
+
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="kt_tabs_1" role="tabpanel">
+              <form name="baseForm" class="kt-form kt-form--label-right">
+                <div class="kt-portlet__body">
+                  <div class="form-group row">
+                    <label for="example-text-input" class="col-2 col-form-label">课程名称</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" name="courseName" ng-model="model.courseBaseInfo.courseName" required>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="example-search-input" class="col-2 col-form-label">授课时间</label>
+                    <div class="col-4">
+                      <input class="form-control" type="date" name="courseTimeBegin" ng-model="model.courseBaseInfo.courseTimeBegin" ng-change="onBeginDateChange(model.courseBaseInfo.courseTimeBegin)" required>
+                    </div>
+                    <div class="col-2">
+                      <div class="form-group data-separate">～
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <input class="form-control" type="date" name="courseTimeEnd" ng-model="model.courseBaseInfo.courseTimeEnd" ng-change="onEndDateChange(model.courseBaseInfo.courseTimeEnd)" required>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="example-email-input" class="col-2 col-form-label">课程简介</label>
+                    <div class="col-10">
+                      <textarea class="form-control" rows="6" name="courseIntroduction" ng-model="model.courseBaseInfo.courseIntroduction" required></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="kt-portlet__foot">
+                  <div class="kt-form__actions">
+                    <div class="row">
+                      <div class="col-12 text-center">
+                        <button type="reset"
+                                class="btn btn-success"
+                                id="btnSaveCourseInfo"
+                                ng-click="onSaveCourseInfo()"
+                                ng-disabled="(baseForm.courseName.$dirty && baseForm.courseName.$invalid)
+                                            || (baseForm.courseTimeBegin.$dirty && baseForm.courseTimeBegin.$invalid)
+                                            || (baseForm.courseTimeEnd.$dirty && baseForm.courseTimeEnd.$invalid)
+                                            || (baseForm.courseIntroduction.$dirty && baseForm.courseIntroduction.$invalid)">保存基本信息</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="tab-pane" id="kt_tabs_2" role="tabpanel">
+              <form class="kt-form">
+                <div class="kt-portlet__body" style="padding-top: 0">
+                  <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded" style="width: 100%; margin: 0 auto">
+                    <table class="kt-datatable__table" style="display: block;">
+                      <thead class="kt-datatable__head">
+                      <tr class="kt-datatable__row" style="left: 0; border-bottom: none">
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 15%"></th>
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 55%"></th>
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 15%">
+                          <a href="javascript:;" class="kt-font-brand kt-link kt-font-bold" ng-click="onShowCourseScheduleModal()"><i class="fa fa-plus"></i>添加</a>
+                        </th>
+                      </tr>
+                      </thead>
+                    </table>
+                  </div>
+                  <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded"
+                       style="width: 100%; margin: 0 auto">
+                    <table class="kt-datatable__table" style="display: block;">
+                      <thead class="kt-datatable__head">
+                      <tr class="kt-datatable__row" style="left: 0;">
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 15%">工作日</th>
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 55%">授课节次</th>
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 15%">操作</th>
+                      </tr>
+                      </thead>
+                      <tbody class="kt-datatable__body">
+                      <tr class="kt-datatable__row" style="left: 0;" ng-repeat="courseSchedule in model.courseScheduleList">
+                        <td class="kt-datatable__cell text-center" style="width: 15%" ng-bind="courseSchedule.weekday.dayText"></td>
+                        <td class="kt-datatable__cell text-center" style="width: 55%">
+                          <span ng-repeat="course in courseSchedule.schedule">\{{course.orderText}}(\{{course.time}})</span>
+                        </td>
+                        <td class="kt-datatable__cell text-center" style="width: 15%">
+                          <button type="button" class="btn btn-secondary btn-sm" ng-click="onCancelSchedule($index)">取消</button>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="kt-portlet__foot">
+                  <div class="kt-form__actions">
+                    <div class="row">
+                      <div class="col-12 text-center">
+                        <button type="reset" class="btn btn-success" id="btnSaveCourseSchedule" ng-disabled="model.courseScheduleList.length == 0" ng-click="onSaveCourseSchedule()">保存课程表信息</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="tab-pane" id="kt_tabs_3" role="tabpanel">
+              <form class="kt-form">
+                <div class="kt-portlet__body" style="padding-top: 0">
+                  <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded" style="width: 100%; margin: 0 auto">
+                    <table class="kt-datatable__table" style="display: block;">
+                      <thead class="kt-datatable__head">
+                      <tr class="kt-datatable__row" style="left: 0; border-bottom: none">
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 10%"></th>
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 10%"></th>
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 65%"></th>
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 15%">
+                          <a href="javascript:;" class="kt-font-brand kt-link kt-font-bold" ng-click="onShowCoursePlanModal()"><i class="fa fa-plus"></i>添加</a>
+                        </th>
+                      </tr>
+                      </thead>
+                    </table>
+                  </div>
+                  <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded"
+                       style="width: 100%; margin: 0 auto">
+                    <table class="kt-datatable__table" style="display: block;">
+                      <thead class="kt-datatable__head">
+                      <tr class="kt-datatable__row" style="left: 0;">
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 10%">节次</th>
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 10%">技术</th>
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 65%">所授知识点</th>
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 15%">操作</th>
+                      </tr>
+                      </thead>
+                      <tbody class="kt-datatable__body">
+                      <tr class="kt-datatable__row" style="left: 0;" ng-repeat="coursePlan in model.coursePlanList">
+                        <td class="kt-datatable__cell text-center" style="width: 10%" >第\{{coursePlan.courseOrder}}节</td>
+                        <td class="kt-datatable__cell text-center" style="width: 10%" >\{{coursePlan.technologyName}}</td>
+                        <td class="kt-datatable__cell text-center" style="width: 65%">
+                          <a href="javascript:;" class="kt-font-brand kt-link kt-font-bold knowledgeName" title="\{{coursePlan.knowledgeName}}" ng-bind="coursePlan.knowledgeName">
+                          </a>
+                        </td>
+                        <td class="kt-datatable__cell text-center" style="width: 15%">
+                          <button type="button" class="btn btn-info btn-sm">下发练习</button>
+                          <button type="button" class="btn btn-secondary btn-sm" ng-click="onCancelPlan($index)">取消</button>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="kt-portlet__foot">
+                  <div class="kt-form__actions">
+                    <div class="row">
+                      <div class="col-12 text-center">
+                        <button type="button"
+                                class="btn btn-success"
+                                id="btnSaveCoursePlan"
+                                ng-disabled="model.coursePlanList.length == 0"
+                                ng-click="onSaveCoursePlan()">
+                          保存授课计划信息
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="tab-pane" id="kt_tabs_1_1" role="tabpanel">
+              涵盖知识点涵盖知识点涵盖知识点涵盖知识点涵盖知识点涵盖知识点涵盖知识点涵盖知识点涵盖知识点
+            </div>
+            <div class="tab-pane" id="kt_tabs_1_2" role="tabpanel">
+              涵盖练习题涵盖练习题涵盖练习题涵盖练习题涵盖练习题涵盖练习题涵盖练习题涵盖练习题涵盖练习题涵盖练习题
+            </div>
+            <div class="tab-pane" id="kt_tabs_1_3" role="tabpanel">
+              报名学生报名学生报名学生报名学生报名学生报名学生报名学生报名学生报名学生报名学生报名学生报名学生报名学生报名学生报名学生
+            </div>
+            <div class="tab-pane" id="kt_tabs_1_4" role="tabpanel">
+              现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑
+            </div>
+            <div class="tab-pane" id="kt_tabs_1_5" role="tabpanel">
+              练习批改练习批改练习批改练习批改练习批改练习批改练习批改练习批改练习批改练习批改练习批改练习批改练习批改
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="kt_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+       aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form name="courseScheduleForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">添加课程表</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-xl-6 separator--border-right">
+                <div class="form-group">
+                  <label>每周哪天授课</label>
+                  <div class="kt-radio-list">
+                    <label class="kt-radio" ng-repeat="weekday in model.weeklyDayList">
+                      <input type="radio" name="weekday" ng-click="onChooseWeeklyDay(weekday)">
+                      \{{weekday.dayText}}
+                      <span></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6">
+                <div class="form-group">
+                  <label>哪几节课授课</label>
+                  <div class="kt-checkbox-list">
+                    <label class="kt-checkbox" ng-repeat="course in model.courseList">
+                      <input type="checkbox" name="courseTime" ng-click="onChooseCourse(course)">
+                      \{{course.orderText}}（\{{course.time}}）
+                      <span></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary" ng-click="onSelectCourseSchedule()"
+                    ng-disabled="model.selectWeekday == null || model.selectCourseList.length == 0">确定
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="kt_modal_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">添加授课计划(一门课程最多可创建300节课)</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          </button>
+        </div>
+        <form name="coursePlanForm" novalidate>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-xl-6">
+                <div class="form-group">
+                  <div class="dropdown search-form-dropdown">
+                    <input type="text"
+                           class="form-control"
+                           ng-model="model.courseInfo.technologyName"
+                           disabled
+                           required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <input type="number" class="form-control" min="1" max="300" maxlength="3" ng-model="model.courseOrder" placeholder="请输入第几节课" required>
+                </div>
+
+                <div class="form-group">
+                  <div class="dropdown search-form-dropdown">
+                    <button class="btn btn-secondary" type="button" data-toggle="dropdown">
+                      <span ng-bind="model.selectedLearningPhase.learningPhaseName"></span>
+                      <i class="flaticon2-down"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start">
+                      <a ng-repeat="data in model.learningPhaseList"
+                         class="dropdown-item"
+                         href="javascript:;"
+                         ng-click="onLearningPhase(data)"
+                         ng-bind="data.learningPhaseName"></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>这节课所包含的知识点</label>
+                  <div class="row">
+                    <div class="col-xl-12">
+                      <div class="kt-checkbox-list">
+                        <label class="kt-checkbox" ng-repeat="knowledge in model.knowledgeList">
+                          <input type="checkbox" name="technologyKnowledge" ng-click="onChooseKnowledge(knowledge,$event)"> \{{knowledge.knowledgeName}}
+                          <span></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6">
+                <div class="form-group">
+                  <label>第<span class="kt-font-danger font-weight-bolder" ng-bind="model.courseOrder"></span>节课讲授的知识点</label>
+                  <div class="kt-notification kt-notification--fit">
+
+                    <div class="kt-notification__item" ng-repeat="courseKnowledge in model.courseKnowledgeList">
+                      <div class="kt-notification__item-icon course-knowledge-technology">
+                        <img ng-src="\{{courseKnowledge.technologyThumbnail}}">
+                      </div>
+                      <div class="kt-notification__item-details">
+                        <div class="kt-notification__item-title" ng-bind="courseKnowledge.knowledgeName">
+                        </div>
+                        <div class="kt-notification__item-time" ng-bind="courseKnowledge.learningPhaseName">
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary" ng-click="onSetCoursePlan()" ng-disabled="
+                                                                                 model.courseOrder == undefined
+                                                                              || model.selectedLearningPhase.learningPhaseID == 0
+                                                                              || model.courseKnowledgeList.length == 0">确定</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/javascripts/views/courseDetail.js" type="text/javascript"></script>

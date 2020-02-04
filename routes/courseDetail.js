@@ -93,4 +93,31 @@ router.put('/coursePlan', (req, res, next) => {
   });
 });
 
+router.put('/finishClass', (req, res, next) => {
+  let service = new commonService.commonInvoke('finishClass');
+  let data = {
+    universityCode: req.body.universityCode,
+    schoolID: req.body.schoolID,
+    courseID: req.body.courseID,
+    courseClass: req.body.courseClass,
+    loginUser: req.body.loginUser
+  };
+
+  service.change(data, (result) => {
+    if(result.err){
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    }else{
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg
+      });
+    }
+  });
+});
+
 module.exports = router;

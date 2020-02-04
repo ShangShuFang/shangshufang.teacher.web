@@ -47,7 +47,8 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     selectedLearningPhase: {learningPhaseID: 0, learningPhaseName: '请选择学习阶段'},
     knowledgeList: [],
     courseKnowledgeList: [],
-    isClickAdd: false
+    isClickAdd: false,
+    noFinishClassCount: 0
 
     //endregion
   };
@@ -58,7 +59,6 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     }
 
     $scope.loadCourseInfo();
-
     $scope.loadCourseExercises();
     $scope.loadCourseStudent();
     $scope.loadCourseQuestion();
@@ -145,7 +145,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       buttons: {
         confirm: {
           label: '确认',
-          className: 'btn-danger'
+          className: 'btn-primary'
         },
         cancel: {
           label: '取消',
@@ -313,7 +313,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       buttons: {
         confirm: {
           label: '确认',
-          className: 'btn-danger'
+          className: 'btn-primary'
         },
         cancel: {
           label: '取消',
@@ -380,7 +380,8 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
           learningPhaseID: plan.learningPhaseID,
           learningPhaseName: plan.learningPhaseName,
           knowledgeIDArray: courseKnowledgeIDArray,
-          knowledgeName: courseKnowledgeNameArray.join(' | ')
+          knowledgeName: courseKnowledgeNameArray.join(' | '),
+          dataStatus: plan.dataStatus
         });
       }else {
         let currentCourseClass = plan.courseClass;
@@ -411,11 +412,13 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
             learningPhaseID: plan.learningPhaseID,
             learningPhaseName: plan.learningPhaseName,
             knowledgeIDArray: courseKnowledgeIDArray,
-            knowledgeName: courseKnowledgeNameArray.join(' | ')
+            knowledgeName: courseKnowledgeNameArray.join(' | '),
+            dataStatus: plan.dataStatus
           });
         }
       }
     });
+    $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {return obj.dataStatus !== 'F'}).length;
   };
 
   $scope.onShowCoursePlanModal = function(){
@@ -506,9 +509,13 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     let courseKnowledgeNameArray = $scope.model.courseKnowledgeList.map(obj => {return obj.knowledgeName});
 
     let index = -1;
+    let dataStatus = '';
+    let courseOrder = 0;
     for(let i = 0; i < $scope.model.coursePlanList.length; i++){
       if($scope.model.coursePlanList[i].courseOrder === $scope.model.courseOrder) {
         index = i;
+        dataStatus = $scope.model.coursePlanList[i].dataStatus;
+        courseOrder = $scope.model.coursePlanList[i].courseOrder;
         break;
       }
     }
@@ -522,9 +529,18 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
         learningPhaseID: $scope.model.selectedLearningPhase.learningPhaseID,
         learningPhaseName: $scope.model.selectedLearningPhase.learningPhaseName,
         knowledgeIDArray: courseKnowledgeIDArray,
-        knowledgeName: courseKnowledgeNameArray.join(' | ')
+        knowledgeName: courseKnowledgeNameArray.join(' | '),
+        dataStatus: ''
       });
+      $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {return obj.dataStatus !== 'F'}).length;
       $('#kt_modal_2').modal('hide');
+      return false;
+    }
+
+    if(index >= 0 && dataStatus === 'F'){
+
+      $('#kt_modal_2').modal('hide');
+      bootbox.alert(`第${courseOrder}节课已经授课完成，不能修改课程内容。`);
       return false;
     }
 
@@ -533,7 +549,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       buttons: {
         confirm: {
           label: '确认',
-          className: 'btn-danger'
+          className: 'btn-primary'
         },
         cancel: {
           label: '取消',
@@ -551,6 +567,50 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     });
   };
 
+  $scope.onFinishClass = function(coursePlan) {
+    bootbox.confirm({
+      message: `您确认下发第${coursePlan.courseOrder}节课的练习题吗？`,
+      buttons: {
+        confirm: {
+          label: '确认',
+          className: 'btn-primary'
+        },
+        cancel: {
+          label: '取消',
+          className: 'btn-secondary'
+        }
+      },
+      callback: function (result) {
+        if(result) {
+          $http.put('/course/detail/finishClass', {
+            universityCode: $scope.model.courseInfo.universityCode,
+            schoolID: $scope.model.courseInfo.schoolID,
+            courseID: $scope.model.courseInfo.courseID,
+            courseClass: coursePlan.courseOrder,
+            loginUser: $scope.model.loginUser.customerID
+          }).then(function successCallback(response) {
+            if(response.data.err) {
+              bizLogger.logInfo('courseDetail', 'change course info failed', `customer: ${$scope.model.loginUser.customerID}`);
+              bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+              return false;
+            }
+
+            for (let i = 0; i < $scope.model.coursePlanList.length ; i++) {
+              if($scope.model.coursePlanList[i].courseOrder === coursePlan.courseOrder){
+                $scope.model.coursePlanList[i].dataStatus = 'F';
+                break;
+              }
+            }
+            $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {return obj.dataStatus !== 'F'}).length;
+            bizLogger.logInfo('courseDetail', 'finish course class success', `customer: ${$scope.model.loginUser.customerID}`);
+          }, function errorCallback(response) {
+            bootbox.alert(localMessage.NETWORK_ERROR);
+          });
+        }
+      }
+    });
+  };
+
   $scope.onCancelPlan = function(index) {
     $scope.model.coursePlanList.splice(index, 1);
   };
@@ -561,7 +621,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       buttons: {
         confirm: {
           label: '确认',
-          className: 'btn-danger'
+          className: 'btn-primary'
         },
         cancel: {
           label: '取消',
@@ -581,7 +641,8 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
                 courseClass: coursePlan.courseOrder,
                 technologyID: $scope.model.courseInfo.technologyID,
                 learningPhaseID: coursePlan.learningPhaseID,
-                knowledgeID: knowledgeID
+                knowledgeID: knowledgeID,
+                dataStatus: coursePlan.dataStatus
               })
             })
           });
@@ -599,6 +660,11 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
               bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
               return false;
             }
+            $scope.model.coursePlanList.forEach(function (coursePlan) {
+              if(coursePlan.dataStatus === ''){
+                coursePlan.dataStatus = 'P';
+              }
+            });
             layer.msg(localMessage.SAVE_SUCCESS);
             KTApp.unprogress(btn);
             $(btn).removeAttr('disabled');

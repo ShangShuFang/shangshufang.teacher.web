@@ -68,6 +68,7 @@
 
 
       "course": "/api/course",
+      "changeCourseStatus": "/api/course/changeStatus",
       "changeCourseBaseInfo": "/api/course/courseBaseInfo",
       "changeCourseSchedule": "/api/course/courseSchedule",
       "changeCoursePlan": "/api/course/coursePlan",

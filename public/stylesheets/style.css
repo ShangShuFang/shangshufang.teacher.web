@@ -93,3 +93,6 @@ a.no-hand{
   width: 40px;
   border-radius: 50%;
 }
+.btn-option{
+  cursor: pointer;
+}

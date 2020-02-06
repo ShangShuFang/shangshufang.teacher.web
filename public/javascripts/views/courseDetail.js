@@ -48,8 +48,14 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     knowledgeList: [],
     courseKnowledgeList: [],
     isClickAdd: false,
-    noFinishClassCount: 0
+    noFinishClassCount: 0,
+    //endregion
 
+    //region 编程练习
+    exercisesList: [],
+    exercisesCourseClass: 0,
+    courseExercisesList: [],
+    courseExercisesFilterList: [],
     //endregion
   };
 
@@ -136,6 +142,52 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       $scope.model.courseBaseInfo.courseEndDateFormat = response.data.formatDate;
     }, function errorCallback(response) {
       bootbox.alert(localMessage.NETWORK_ERROR);
+    });
+  };
+
+  $scope.onOpenTechnologyInfo = function(technologyID) {
+    window.open(`/technology?technology=${technologyID}`);
+  };
+
+  $scope.onDeleteCourse = function() {
+    bootbox.confirm({
+      message: `您确认要删除该课程吗？`,
+      buttons: {
+        confirm: {
+          label: '确认',
+          className: 'btn-danger'
+        },
+        cancel: {
+          label: '取消',
+          className: 'btn-secondary'
+        }
+      },
+      callback: function (result) {
+        if(result) {
+          let btn = $('#btnDeleteCourse');
+          $(btn).attr('disabled',true);
+          KTApp.progress(btn);
+
+          $http.put('/course/detail/delete', {
+            universityCode: $scope.model.courseInfo.universityCode,
+            schoolID: $scope.model.courseInfo.schoolID,
+            teacherID: $scope.model.courseInfo.teacherID,
+            courseID: $scope.model.courseInfo.courseID,
+            loginUser: $scope.model.loginUser.customerID
+          }).then(function successCallback(response) {
+            if(response.data.err) {
+              bizLogger.logInfo('courseDetail', 'delete course failed', `customer: ${$scope.model.loginUser.customerID}`);
+              KTApp.unprogress(btn);
+              bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+              return false;
+            }
+            bizLogger.logInfo('courseDetail', 'delete course info success', `customer: ${$scope.model.loginUser.customerID}`);
+            location.href = '/index';
+          }, function errorCallback(response) {
+            bootbox.alert(localMessage.NETWORK_ERROR);
+          });
+        }
+      }
     });
   };
 
@@ -380,8 +432,9 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
           learningPhaseID: plan.learningPhaseID,
           learningPhaseName: plan.learningPhaseName,
           knowledgeIDArray: courseKnowledgeIDArray,
-          knowledgeName: courseKnowledgeNameArray.join(' | '),
-          dataStatus: plan.dataStatus
+          knowledgeNameArray: courseKnowledgeNameArray,
+          dataStatus: plan.dataStatus,
+          dataStatusText: plan.dataStatusText
         });
       }else {
         let currentCourseClass = plan.courseClass;
@@ -398,7 +451,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
           courseKnowledgeIDArray.push(plan.knowledgeID);
           courseKnowledgeNameArray.push(plan.knowledgeName);
           $scope.model.coursePlanList[isExistCurrentCourseClassIndex].knowledgeIDArray = courseKnowledgeIDArray;
-          $scope.model.coursePlanList[isExistCurrentCourseClassIndex].knowledgeName = courseKnowledgeNameArray.join(' | ');
+          $scope.model.coursePlanList[isExistCurrentCourseClassIndex].knowledgeNameArray = courseKnowledgeNameArray;
         }else{
           courseKnowledgeIDArray = [];
           courseKnowledgeNameArray = [];
@@ -412,8 +465,9 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
             learningPhaseID: plan.learningPhaseID,
             learningPhaseName: plan.learningPhaseName,
             knowledgeIDArray: courseKnowledgeIDArray,
-            knowledgeName: courseKnowledgeNameArray.join(' | '),
-            dataStatus: plan.dataStatus
+            knowledgeNameArray: courseKnowledgeNameArray,
+            dataStatus: plan.dataStatus,
+            dataStatusText: plan.dataStatusText
           });
         }
       }
@@ -567,9 +621,10 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     });
   };
 
-  $scope.onFinishClass = function(coursePlan) {
+  $scope.onFinishClass = function(exercises, flag) {
+    let message = flag === 'F' ? `您确认下发第${exercises.courseClass}节课的练习题吗？` : `您确认第${exercises.courseClass}节课已结束？`;
     bootbox.confirm({
-      message: `您确认下发第${coursePlan.courseOrder}节课的练习题吗？`,
+      message: message,
       buttons: {
         confirm: {
           label: '确认',
@@ -586,7 +641,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
             universityCode: $scope.model.courseInfo.universityCode,
             schoolID: $scope.model.courseInfo.schoolID,
             courseID: $scope.model.courseInfo.courseID,
-            courseClass: coursePlan.courseOrder,
+            courseClass: exercises.courseClass,
             loginUser: $scope.model.loginUser.customerID
           }).then(function successCallback(response) {
             if(response.data.err) {
@@ -596,11 +651,20 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
             }
 
             for (let i = 0; i < $scope.model.coursePlanList.length ; i++) {
-              if($scope.model.coursePlanList[i].courseOrder === coursePlan.courseOrder){
+              if($scope.model.coursePlanList[i].courseOrder === exercises.courseClass){
                 $scope.model.coursePlanList[i].dataStatus = 'F';
+                $scope.model.coursePlanList[i].dataStatusText = '已结束';
                 break;
               }
             }
+
+            for (let i = 0; i < $scope.model.exercisesList.length ; i++) {
+              if($scope.model.exercisesList[i].courseClass === exercises.courseClass){
+                $scope.model.exercisesList[i].dataStatus = 'F';
+                break;
+              }
+            }
+
             $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {return obj.dataStatus !== 'F'}).length;
             bizLogger.logInfo('courseDetail', 'finish course class success', `customer: ${$scope.model.loginUser.customerID}`);
           }, function errorCallback(response) {
@@ -656,6 +720,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
           }).then(function successCallback(response) {
             if(response.data.err) {
               bizLogger.logInfo('courseDetail', 'change course plan failed', `customer: ${$scope.model.loginUser.customerID}`);
+              $scope.model.isClickAdd = false;
               KTApp.unprogress(btn);
               bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
               return false;
@@ -663,8 +728,10 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
             $scope.model.coursePlanList.forEach(function (coursePlan) {
               if(coursePlan.dataStatus === ''){
                 coursePlan.dataStatus = 'P';
+                coursePlan.dataStatusText = '未开始';
               }
             });
+            $scope.model.isClickAdd = true;
             layer.msg(localMessage.SAVE_SUCCESS);
             KTApp.unprogress(btn);
             $(btn).removeAttr('disabled');
@@ -679,9 +746,122 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
 
   //endregion
 
+  //region 编程练习
   $scope.loadCourseExercises = function(){
+    let knowledgeArray = [];
+    let exercisesArray = [];
+    let exercisesDocumentArray = [];
 
+    $http.get(`/course/detail/exercises?universityCode=${$scope.model.universityCode}&schoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}`).then(function successCallback (response) {
+      if(response.data.err){
+        bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+        return false;
+      }
+      if(response.data.totalCount === 0){
+        return false;
+      }
+      response.data.exercisesList.forEach(function (exercises) {
+        if(exercises.documentList.length > 0){
+          $scope.model.courseExercisesList.push({
+            courseClass: exercises.courseClass,
+            exercisesName: exercises.exercisesName,
+            knowledgeID: exercises.knowledgeID,
+            knowledgeName: exercises.knowledgeName,
+            documentList: exercises.documentList
+          });
+        }
+
+        if($scope.model.exercisesList.length === 0) {
+          knowledgeArray.push({knowledgeID: exercises.knowledgeID, knowledgeName: exercises.knowledgeName});
+          if(exercises.exercisesID !== 0){
+            exercisesArray.push({exercisesID: exercises.exercisesID, exercisesName: exercises.exercisesName,});
+          }
+
+          if(exercises.documentList.length > 0){
+            exercises.documentList.forEach(function (document) {
+              exercisesDocumentArray.push(document);
+            });
+          }
+
+          $scope.model.exercisesList.push({
+            courseClass: exercises.courseClass,
+            technologyID: exercises.technologyID,
+            technologyName: exercises.technologyName,
+            exercisesID: exercises.exercisesID,
+            exercisesName: exercises.exercisesName,
+            knowledgeArray: knowledgeArray,
+            exercisesArray: exercisesArray,
+            documentList: exercisesDocumentArray,
+            dataStatus: exercises.dataStatus
+          });
+        }else {
+          let currentCourseClass = exercises.courseClass;
+          let isExistCurrentCourseClass = false;
+          let isExistCurrentCourseClassIndex = -1;
+          $scope.model.exercisesList.forEach(function (e,i) {
+            if(e.courseClass === currentCourseClass){
+              isExistCurrentCourseClass = true;
+              isExistCurrentCourseClassIndex = i;
+            }
+          });
+
+          if(isExistCurrentCourseClass){
+            knowledgeArray.push({knowledgeID: exercises.knowledgeID, knowledgeName: exercises.knowledgeName});
+
+            if(exercises.exercisesID !== 0){
+              exercisesArray.push({exercisesID: exercises.exercisesID, exercisesName: exercises.exercisesName,});
+            }
+
+            if(exercises.documentList.length > 0){
+              exercises.documentList.forEach(function (document) {
+                exercisesDocumentArray.push(document);
+              });
+            }
+
+            $scope.model.exercisesList[isExistCurrentCourseClassIndex].knowledgeArray = knowledgeArray;
+            $scope.model.exercisesList[isExistCurrentCourseClassIndex].exercisesArray = exercisesArray;
+            $scope.model.exercisesList[isExistCurrentCourseClassIndex].documentList = exercisesDocumentArray;
+          }else{
+            knowledgeArray = [];
+            exercisesArray = [];
+            exercisesDocumentArray = [];
+            knowledgeArray.push({knowledgeID: exercises.knowledgeID, knowledgeName: exercises.knowledgeName});
+            if(exercises.exercisesID !== 0){
+              exercisesArray.push({exercisesID: exercises.exercisesID, exercisesName: exercises.exercisesName,});
+            }
+
+            if(exercises.documentList.length > 0){
+              exercises.documentList.forEach(function (document) {
+                exercisesDocumentArray.push(document);
+              });
+            }
+            $scope.model.exercisesList.push({
+              courseClass: exercises.courseClass,
+              technologyID: exercises.technologyID,
+              technologyName: exercises.technologyName,
+              exercisesID: exercises.exercisesID,
+              exercisesName: exercises.exercisesName,
+              knowledgeArray: knowledgeArray,
+              exercisesArray: exercisesArray,
+              documentList: exercisesDocumentArray,
+              dataStatus: exercises.dataStatus
+            });
+          }
+        }
+      });
+    }, function errorCallback(response) {
+      bootbox.alert(localMessage.NETWORK_ERROR);
+    });
   };
+
+  $scope.onShowExercisesModal = function(courseClass) {
+    $scope.model.exercisesCourseClass = courseClass;
+    $scope.model.courseExercisesFilterList = $scope.model.courseExercisesList.filter((obj) => {return obj.courseClass === courseClass});
+    $('#kt_modal_3').modal('show');
+  };
+
+  //endregion
+
 
   $scope.loadCourseStudent = function(){
 

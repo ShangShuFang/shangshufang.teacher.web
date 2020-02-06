@@ -7,6 +7,33 @@ router.get('/', function(req, res, next) {
   res.render('courseDetail', { title: '课程明细' });
 });
 
+router.get('/exercises', function(req, res, next) {
+  let service = new commonService.commonInvoke('exercises');
+  let universityCode = req.query.universityCode;
+  let schoolID = req.query.schoolID;
+  let courseID = req.query.courseID;
+
+  let parameter = `${universityCode}/${schoolID}/${courseID}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        totalCount: result.content.totalCount,
+        exercisesList: result.content.responseData
+      });
+    }
+  });
+});
+
 router.put('/courseBaseInfo', (req, res, next) => {
   let service = new commonService.commonInvoke('changeCourseBaseInfo');
   let data = {
@@ -73,6 +100,34 @@ router.put('/coursePlan', (req, res, next) => {
     universityCode: req.body.universityCode,
     schoolID: req.body.schoolID,
     coursePlanJson: req.body.coursePlanJson,
+    loginUser: req.body.loginUser
+  };
+
+  service.change(data, (result) => {
+    if(result.err){
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    }else{
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg
+      });
+    }
+  });
+});
+
+router.put('/delete', (req, res, next) => {
+  let service = new commonService.commonInvoke('changeCourseStatus');
+  let data = {
+    universityCode: req.body.universityCode,
+    schoolID: req.body.schoolID,
+    teacherID: req.body.teacherID,
+    courseID: req.body.courseID,
+    dataStatus: 'D',
     loginUser: req.body.loginUser
   };
 

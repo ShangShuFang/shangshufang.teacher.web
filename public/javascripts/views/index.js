@@ -111,5 +111,9 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     window.open('/course/detail');
   };
 
+  $scope.onOpenTechnologyInfo = function(technologyID) {
+    window.open(`/technology?technology=${technologyID}`);
+  };
+
   $scope.initPage();
 });

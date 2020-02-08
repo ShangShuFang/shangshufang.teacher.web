@@ -125,7 +125,7 @@ router.get('/teacherList', (req, res, next) => {
   let schoolID = req.query.schoolID;
   let fullName = req.query.fullName;
 
-  let parameter = `${universityCode}/${schoolID}/T/${fullName}`;
+  let parameter = `${universityCode}/${schoolID}/${fullName}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {

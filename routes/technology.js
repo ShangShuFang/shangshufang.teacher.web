@@ -79,4 +79,30 @@ router.get('/developmentDirections', function(req, res, next) {
   });
 });
 
+router.get('/courseSignUp', function(req, res, next) {
+  let service = new commonService.commonInvoke('courseTechnologySignUp');
+  let pageNumber = parseInt(req.query.pageNumber);
+  let technologyID = parameterUtils.processNumberParameter(req.query.technologyID, Constants.TECHNOLOGY_DEFAULT_ID);;
+
+  let parameter = `${pageNumber}/${sysConfig.pageSize}/${technologyID}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      let dataContent = commonService.buildRenderData('报名学生', pageNumber, result);
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        dataContent: dataContent
+      });
+    }
+  });
+});
+
 module.exports = router;

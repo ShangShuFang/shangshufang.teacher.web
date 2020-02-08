@@ -431,7 +431,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       schoolID: $scope.model.loginUser.schoolID,
       technologyID: $scope.model.selectedTechnology.technologyID,
       courseName: $scope.model.courseName,
-      teacherID: '11',
+      teacherID: $scope.model.loginUser.customerID,
       courseTimeBegin: $scope.model.courseBeginDateFormat,
       courseTimeEnd: $scope.model.courseEndDateFormat,
       courseIntroduction: $scope.model.courseIntroduction,

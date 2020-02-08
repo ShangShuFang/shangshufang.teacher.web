@@ -1,4 +1,4 @@
-<link href="/stylesheets/views/courseDetail.css" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/views/courseDetail.css" rel="stylesheet" type="text/css"/>
 <div class="kt-container kt-grid__item kt-grid__item--fluid" ng-app="pageApp" ng-controller="pageCtrl">
   <div class="kt-subheader kt-grid__item">
     <div class="kt-container">
@@ -23,7 +23,8 @@
                         id="btnDeleteCourse"
                         class="btn btn-danger btn-sm btn-upper"
                         ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
-                        ng-click="onDeleteCourse()">删除课程</button>&nbsp;
+                        ng-click="onDeleteCourse()">删除课程
+                </button>&nbsp;
               </div>
             </div>
             <div class="kt-widget__subhead">
@@ -41,14 +42,16 @@
               </span>
             </div>
             <div class="kt-widget__info">
-              <div class="kt-widget__desc course-decs-3" title="\{{model.courseInfo.courseIntroduction}}" ng-bind="model.courseInfo.courseIntroduction"></div>
+              <div class="kt-widget__desc course-decs-3" title="\{{model.courseInfo.courseIntroduction}}"
+                   ng-bind="model.courseInfo.courseIntroduction"></div>
               <div class="kt-widget__stats d-flex align-items-center flex-fill">
                 <div class="kt-widget__item">
                   <span class="kt-widget__date text-center">
                     开始时间
                   </span>
                   <div class="kt-widget__label">
-                    <span class="btn btn-label-brand btn-sm btn-bold btn-upper" ng-bind="model.courseInfo.courseTimeBegin"></span>
+                    <span class="btn btn-label-brand btn-sm btn-bold btn-upper"
+                          ng-bind="model.courseInfo.courseTimeBegin"></span>
                   </div>
                 </div>
                 <div class="kt-widget__item">
@@ -56,7 +59,8 @@
                     结束时间
                   </span>
                   <div class="kt-widget__label">
-                    <span class="btn btn-label-danger btn-sm btn-bold btn-upper" ng-bind="model.courseInfo.courseTimeEnd"></span>
+                    <span class="btn btn-label-danger btn-sm btn-bold btn-upper"
+                          ng-bind="model.courseInfo.courseTimeEnd"></span>
                   </div>
                 </div>
                 <div class="kt-widget__item flex-fill">
@@ -164,7 +168,7 @@
               <a class="nav-link" data-toggle="tab" href="#kt_tabs_4" role="tab" aria-selected="false">编程练习</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="tab" href="#kt_tabs_1_3" role="tab" aria-selected="false">报名学生</a>
+              <a class="nav-link" data-toggle="tab" href="#kt_tabs_5" role="tab" aria-selected="false">报名学生</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#kt_tabs_1_5" role="tab" aria-selected="false">学生练习</a>
@@ -193,7 +197,8 @@
                              ng-bind="model.courseBaseInfo.courseName"></label>
                     </div>
                   </div>
-                  <div class="form-group row" ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID">
+                  <div class="form-group row"
+                       ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID">
                     <label for="example-search-input" class="col-2 col-form-label">授课时间</label>
                     <div class="col-4">
                       <input class="form-control"
@@ -208,11 +213,14 @@
                       </div>
                     </div>
                     <div class="col-4">
-                      <input class="form-control" type="date" name="courseTimeEnd" ng-model="model.courseBaseInfo.courseTimeEnd" ng-change="onEndDateChange(model.courseBaseInfo.courseTimeEnd)" required>
+                      <input class="form-control" type="date" name="courseTimeEnd"
+                             ng-model="model.courseBaseInfo.courseTimeEnd"
+                             ng-change="onEndDateChange(model.courseBaseInfo.courseTimeEnd)" required>
                     </div>
                   </div>
 
-                  <div class="form-group row" ng-if="!model.isLogin || model.loginUser.customerID != model.courseInfo.teacherID">
+                  <div class="form-group row"
+                       ng-if="!model.isLogin || model.loginUser.customerID != model.courseInfo.teacherID">
                     <label for="example-search-input" class="col-2 col-form-label">授课时间</label>
                     <div class="col-10">
                       <label class="col-form-label"
@@ -235,7 +243,9 @@
                                 ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
                                 ng-model="model.courseBaseInfo.courseIntroduction"
                                 required></textarea>
-                      <p class="col-form-label" ng-if="!model.isLogin || model.loginUser.customerID != model.courseInfo.teacherID" ng-bind="model.courseBaseInfo.courseIntroduction"></p>
+                      <p class="col-form-label"
+                         ng-if="!model.isLogin || model.loginUser.customerID != model.courseInfo.teacherID"
+                         ng-bind="model.courseBaseInfo.courseIntroduction"></p>
                     </div>
                   </div>
                 </div>
@@ -251,7 +261,9 @@
                                 ng-disabled="(baseForm.courseName.$dirty && baseForm.courseName.$invalid)
                                             || (baseForm.courseTimeBegin.$dirty && baseForm.courseTimeBegin.$invalid)
                                             || (baseForm.courseTimeEnd.$dirty && baseForm.courseTimeEnd.$invalid)
-                                            || (baseForm.courseIntroduction.$dirty && baseForm.courseIntroduction.$invalid)">保存基本信息</button>
+                                            || (baseForm.courseIntroduction.$dirty && baseForm.courseIntroduction.$invalid)">
+                          保存基本信息
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -261,7 +273,8 @@
             <div class="tab-pane" id="kt_tabs_2" role="tabpanel">
               <form class="kt-form">
                 <div class="kt-portlet__body" style="padding-top: 0">
-                  <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded" style="width: 100%; margin: 0 auto">
+                  <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded"
+                       style="width: 100%; margin: 0 auto">
                     <table class="kt-datatable__table" style="display: block;">
                       <thead class="kt-datatable__head">
                       <tr class="kt-datatable__row" style="left: 0; border-bottom: none">
@@ -286,21 +299,26 @@
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 55%">授课节次</th>
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center"
                             ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
-                            style="width: 15%">操作</th>
+                            style="width: 15%">操作
+                        </th>
                       </tr>
                       </thead>
                       <tbody class="kt-datatable__body">
-                      <tr class="kt-datatable__row" style="left: 0;" ng-repeat="courseSchedule in model.courseScheduleList">
-                        <td class="kt-datatable__cell text-center" style="width: 15%" ng-bind="courseSchedule.weekday.dayText"></td>
+                      <tr class="kt-datatable__row" style="left: 0;"
+                          ng-repeat="courseSchedule in model.courseScheduleList">
+                        <td class="kt-datatable__cell text-center" style="width: 15%"
+                            ng-bind="courseSchedule.weekday.dayText"></td>
                         <td class="kt-datatable__cell text-center" style="width: 55%">
-                          <span ng-repeat="course in courseSchedule.schedule">\{{course.orderText}}(\{{course.time}})</span>
+                          <span ng-repeat="course in courseSchedule.schedule">\{{course.orderText}}(\
+                            {{course.time}})</span>
                         </td>
                         <td class="kt-datatable__cell text-center"
                             ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
                             style="width: 15%">
                           <button type="button"
                                   class="btn btn-secondary btn-sm"
-                                  ng-click="onCancelSchedule($index)">取消</button>
+                                  ng-click="onCancelSchedule($index)">取消
+                          </button>
                         </td>
                       </tr>
                       </tbody>
@@ -316,7 +334,8 @@
                                 id="btnSaveCourseSchedule"
                                 ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
                                 ng-disabled="model.courseScheduleList.length == 0"
-                                ng-click="onSaveCourseSchedule()">保存课程表信息</button>
+                                ng-click="onSaveCourseSchedule()">保存课程表信息
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -326,7 +345,8 @@
             <div class="tab-pane" id="kt_tabs_3" role="tabpanel">
               <form class="kt-form">
                 <div class="kt-portlet__body" style="padding-top: 0">
-                  <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded" style="width: 100%; margin: 0 auto">
+                  <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded"
+                       style="width: 100%; margin: 0 auto">
                     <table class="kt-datatable__table" style="display: block;">
                       <thead class="kt-datatable__head">
                       <tr class="kt-datatable__row" style="left: 0; border-bottom: none">
@@ -347,40 +367,45 @@
                        style="width: 85%; margin: 0 auto">
                     <table class="kt-datatable__table" style="display: block;">
                       <thead class="kt-datatable__head">
-                        <tr class="kt-datatable__row" style="left: 0;">
-                          <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 10%">节次</th>
-                          <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 10%">技术</th>
-                          <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 52%">所授知识点</th>
-                          <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 8%">状态</th>
-                          <th class="kt-datatable__cell kt-datatable__cell--sort text-center"
-                              ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
-                              style="width: 15%">操作</th>
-                        </tr>
+                      <tr class="kt-datatable__row" style="left: 0;">
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 10%">节次</th>
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 10%">技术</th>
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 52%">所授知识点
+                        </th>
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 8%">状态</th>
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center"
+                            ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
+                            style="width: 15%">操作
+                        </th>
+                      </tr>
                       </thead>
                       <tbody class="kt-datatable__body">
-                        <tr class="kt-datatable__row" style="left: 0;" ng-repeat="coursePlan in model.coursePlanList">
-                          <td class="kt-datatable__cell text-center" style="width: 10%" >第\{{coursePlan.courseOrder}}节</td>
-                          <td class="kt-datatable__cell text-center" style="width: 10%" >\{{coursePlan.technologyName}}</td>
-                          <td class="kt-datatable__cell text-center" style="width: 52%">
-                            <span ng-repeat="knowledgeName in coursePlan.knowledgeNameArray" ng-bind="knowledgeName"></span>
-                          </td>
-                          <td class="kt-datatable__cell text-center" style="width: 8%" >
+                      <tr class="kt-datatable__row" style="left: 0;" ng-repeat="coursePlan in model.coursePlanList">
+                        <td class="kt-datatable__cell text-center" style="width: 10%">第\{{coursePlan.courseOrder}}节</td>
+                        <td class="kt-datatable__cell text-center" style="width: 10%">\{{coursePlan.technologyName}}
+                        </td>
+                        <td class="kt-datatable__cell text-center" style="width: 52%">
+                          <span ng-repeat="knowledgeName in coursePlan.knowledgeNameArray"
+                                ng-bind="knowledgeName"></span>
+                        </td>
+                        <td class="kt-datatable__cell text-center" style="width: 8%">
                              <span class="kt-badge kt-badge--inline kt-badge--pill"
                                    style="color: #ffffff; display: inline-flex; "
                                    ng-class="{'kt-badge--primary': coursePlan.dataStatus == 'P', 'kt-badge--success': coursePlan.dataStatus == 'F'}"
                                    ng-bind="coursePlan.dataStatusText">
                             </span>
-                          </td>
+                        </td>
 
-                          <td class="kt-datatable__cell text-center"
-                              ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
-                              style="width: 15%">
-                            <button type="button"
-                                    class="btn btn-secondary btn-sm"
-                                    ng-click="onCancelPlan($index)"
-                                    ng-if="coursePlan.dataStatus === 'P'">取消</button>
-                          </td>
-                        </tr>
+                        <td class="kt-datatable__cell text-center"
+                            ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
+                            style="width: 15%">
+                          <button type="button"
+                                  class="btn btn-secondary btn-sm"
+                                  ng-click="onCancelPlan($index)"
+                                  ng-if="coursePlan.dataStatus === 'P'">取消
+                          </button>
+                        </td>
+                      </tr>
                       </tbody>
                     </table>
                   </div>
@@ -413,22 +438,27 @@
                       <tr class="kt-datatable__row" style="left: 0;">
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 10%">节次</th>
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 10%">技术</th>
-                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 55%">覆盖知识点</th>
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 55%">覆盖知识点
+                        </th>
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 10%">编程习题</th>
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center"
                             ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
-                            style="width: 15%">操作</th>
+                            style="width: 15%">操作
+                        </th>
                       </tr>
                       </thead>
                       <tbody class="kt-datatable__body">
                       <tr class="kt-datatable__row" style="left: 0;" ng-repeat="exercises in model.exercisesList">
-                        <td class="kt-datatable__cell text-center" style="width: 10%" >第\{{exercises.courseClass}}节</td>
-                        <td class="kt-datatable__cell text-center" style="width: 10%" >\{{exercises.technologyName}}</td>
+                        <td class="kt-datatable__cell text-center" style="width: 10%">第\{{exercises.courseClass}}节</td>
+                        <td class="kt-datatable__cell text-center" style="width: 10%">\{{exercises.technologyName}}</td>
                         <td class="kt-datatable__cell text-center" style="width: 55%">
-                          <span ng-repeat="knowledge in exercises.knowledgeArray" ng-bind="knowledge.knowledgeName"></span>
+                          <span ng-repeat="knowledge in exercises.knowledgeArray"
+                                ng-bind="knowledge.knowledgeName"></span>
                         </td>
                         <td class="kt-datatable__cell text-center" style="width: 10%">
-                          <a href="javascript:;" class="kt-widget__value kt-font-brand" ng-if="exercises.documentList.length > 0" ng-click="onShowExercisesModal(exercises.courseClass)">\{{exercises.documentList.length}}个编程练习</a>
+                          <a href="javascript:;" class="kt-widget__value kt-font-brand"
+                             ng-if="exercises.documentList.length > 0"
+                             ng-click="onShowExercisesModal(exercises.courseClass)">\{{exercises.documentList.length}}个编程练习</a>
                           <span ng-if="exercises.documentList.length == 0">\{{exercises.documentList.length}}个编程练习</span>
                         </td>
 
@@ -436,14 +466,21 @@
                             ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
                             style="width: 15%">
                           <button type="button"
-                                  class="btn btn-info btn-sm" ng-click="onFinishClass(exercises, 'F')" ng-if="exercises.dataStatus === 'P' && exercises.documentList.length > 0">
+                                  class="btn btn-info btn-sm" ng-click="onFinishClass(exercises, 'F')"
+                                  ng-if="exercises.dataStatus === 'P' && exercises.documentList.length > 0">
                             下发练习
                           </button>
-                          <button type="button" class="btn btn-secondary btn-hover-brand btn-sm" ng-click="onFinishClass(exercises, 'C')" ng-if="exercises.dataStatus === 'P' && exercises.documentList.length === 0">
+                          <button type="button" class="btn btn-secondary btn-hover-brand btn-sm"
+                                  ng-click="onFinishClass(exercises, 'C')"
+                                  ng-if="exercises.dataStatus === 'P' && exercises.documentList.length === 0">
                             结束本节
                           </button>
-                          <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success" style="color: #ffffff; display: inline-flex; " ng-if="exercises.dataStatus === 'F' && exercises.documentList.length > 0">练习已下发</span>
-                          <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success" style="color: #ffffff; display: inline-flex; " ng-if="exercises.dataStatus === 'F' && exercises.documentList.length === 0">已结束</span>
+                          <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success"
+                                style="color: #ffffff; display: inline-flex; "
+                                ng-if="exercises.dataStatus === 'F' && exercises.documentList.length > 0">练习已下发</span>
+                          <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success"
+                                style="color: #ffffff; display: inline-flex; "
+                                ng-if="exercises.dataStatus === 'F' && exercises.documentList.length === 0">已结束</span>
                         </td>
                       </tr>
                       </tbody>
@@ -453,8 +490,139 @@
               </form>
             </div>
 
-            <div class="tab-pane" id="kt_tabs_1_3" role="tabpanel">
-              报名学生报名学生报名学生报名学生报名学生报名学生报名学生报名学生报名学生报名学生报名学生报名学生报名学生报名学生报名学生
+            <div class="tab-pane" id="kt_tabs_5" role="tabpanel">
+              <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded"
+                   id="kt_apps_user_list_datatable" style="width: 85%; margin: 0 auto">
+                <table class="kt-datatable__table" style="display: block;">
+                  <thead class="kt-datatable__head">
+                    <tr class="kt-datatable__row" style="left: 0px;">
+                      <th class="kt-datatable__cell kt-datatable__cell--sort">
+                        <span style="width: 150px;">报名学生</span>
+                      </th>
+                      <th class="kt-datatable__cell kt-datatable__cell--sort">
+                        <span style="width: 180px;">报名时间</span>
+                      </th>
+                      <th class="kt-datatable__cell kt-datatable__cell--sort">
+                        <span style="width: 150px;">就读院校</span>
+                      </th>
+                      <th class="kt-datatable__cell kt-datatable__cell--sort">
+                        <span style="width: 150px;">所在学院</span>
+                      </th>
+                      <th class="kt-datatable__cell kt-datatable__cell--sort">
+                        <span style="width: 120px;">手机号码</span>
+                      </th>
+                      <th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort">
+                        <span style="width: 100px;">入学年份</span>
+                      </th>
+                      <th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort">
+                        <span style="width: 100px;">报名状态</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="kt-datatable__body" style="">
+                    <tr class="kt-datatable__row" style="left: 0;" ng-repeat="data in model.dataList4SignUp">
+                      <td class="kt-datatable__cell">
+                          <span style="width: 150px;">
+                            <div class="kt-user-card-v2">
+                              <div class="kt-user-card-v2__pic">
+                                <img class="kt-badge kt-badge--xl" src="/media/users/teacher_default.png"
+                                     ng-if="data.studentPhoto == ''">
+                                <img class="kt-badge kt-badge--xl" ng-src="\{{data.studentPhoto}}"
+                                     ng-if="data.studentPhoto != ''">
+                              </div>
+
+  <!--                            1公士，2上造，3簪袅，4不更，5大夫，6官大夫，7公大夫，8公乘，9五大夫，10左庶长，11右庶长，12左更，13中更，14右更，15少上造，16大上造，17驷车，18大庶长，19关内候，20彻候-->
+
+                              <div class="kt-user-card-v2__details">
+                                <a class="kt-user-card-v2__name" href="javascript:;" ng-bind="data.studentName"></a>
+                                <span class="kt-user-card-v2__desc">500学分 公士</span>
+                              </div>
+                            </div>
+                          </span>
+                      </td>
+                      <td class="kt-datatable__cell">
+                        <span style="width: 180px;" ng-bind="data.createTime"></span>
+                      </td>
+                      <td class="kt-datatable__cell">
+                        <span style="width: 150px;" ng-bind="data.studentUniversityName"></span>
+                      </td>
+                      <td class="kt-datatable__cell">
+                        <span style="width: 150px;" ng-bind="data.studentSchoolName"></span>
+                      </td>
+                      <td class="kt-datatable__cell">
+                        <span style="width: 120px;" ng-bind="data.cellphone"></span>
+                      </td>
+                      <td class="kt-datatable__cell">
+                        <span style="width: 100px;">\{{data.enrollmentYear}}年</span>
+                      </td>
+                      <td class="kt-datatable__cell">
+                          <span style="width: 100px;">
+                            <span class="kt-badge kt-badge--inline kt-badge--pill"
+                                  ng-class="{'kt-badge--success': data.dataStatus == 'A', 'kt-badge--warning': data.dataStatus == 'C'}"
+                                  ng-bind="data.dataStatusText"></span>
+                          </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="kt-datatable__pager kt-datatable--paging-loaded">
+                  <ul class="kt-datatable__pager-nav">
+                    <li>
+                      <a title="第一页"
+                         class="kt-datatable__pager-link kt-datatable__pager-link--first"
+                         ng-class="{'kt-datatable__pager-link--disabled': model.prePageNum4SignUp == -1}"
+                         ng-disable = "model.prePageNum4SignUp == -1"
+                         ng-click="onFirstPage4SignUp()">
+                        <i class="flaticon2-fast-back"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a title="前一页"
+                         class="kt-datatable__pager-link kt-datatable__pager-link--prev"
+                         ng-class="{'kt-datatable__pager-link--disabled': model.prePageNum4SignUp == -1}"
+                         ng-disable = "model.prePageNum4SignUp == -1"
+                         ng-click="onPrePage4SignUp()">
+                        <i class="flaticon2-back"></i>
+                      </a>
+                    </li>
+
+                    <li ng-repeat="pageNumber in model.paginationArray4SignUp" >
+                      <a class="kt-datatable__pager-link kt-datatable__pager-link-number"
+                         ng-class="{'kt-datatable__pager-link--active': model.pageNumber4SignUp == pageNumber}"
+                         ng-click="onPagination4SignUp(pageNumber)"
+                         ng-bind="pageNumber">
+                      </a>
+                    </li>
+
+                    <li>
+                      <a title="下一页"
+                         class="kt-datatable__pager-link kt-datatable__pager-link--next"
+                         ng-class="{'kt-datatable__pager-link--disabled': model.nextPageNum4SignUp == -1}"
+                         ng-disable = "model.nextPageNum4SignUp == -1"
+                         ng-click="onNextPage4SignUp()"
+                         data-page="2">
+                        <i class="flaticon2-next"></i>
+                      </a>
+                    </li>
+
+                    <li>
+                      <a title="最后一页"
+                         class="kt-datatable__pager-link kt-datatable__pager-link--last"
+                         ng-class="{'kt-datatable__pager-link--disabled': model.nextPageNum4SignUp == -1}"
+                         ng-disable = "model.nextPageNum4SignUp == -1"
+                         ng-click="onLastPage4SignUp()"
+                         data-page="4">
+                        <i class="flaticon2-fast-next"></i>
+                      </a>
+                    </li>
+                  </ul>
+                  <div class="kt-datatable__pager-info">
+                    <span class="kt-datatable__pager-detail">
+                      显示第<span ng-bind="model.fromIndex4SignUp"></span>到第<span ng-bind="model.toIndex4SignUp"></span>条数据，共计<span ng-bind="model.totalCount4SignUp"></span>条数据
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="tab-pane" id="kt_tabs_1_4" role="tabpanel">
               现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑
@@ -540,7 +708,8 @@
                 </div>
 
                 <div class="form-group">
-                  <input type="number" class="form-control" min="1" max="300" maxlength="3" ng-model="model.courseOrder" placeholder="请输入第几节课" required>
+                  <input type="number" class="form-control" min="1" max="300" maxlength="3" ng-model="model.courseOrder"
+                         placeholder="请输入第几节课" required>
                 </div>
 
                 <div class="form-group">
@@ -564,7 +733,8 @@
                     <div class="col-xl-12">
                       <div class="kt-checkbox-list">
                         <label class="kt-checkbox" ng-repeat="knowledge in model.knowledgeList">
-                          <input type="checkbox" name="technologyKnowledge" ng-click="onChooseKnowledge(knowledge,$event)"> \{{knowledge.knowledgeName}}
+                          <input type="checkbox" name="technologyKnowledge"
+                                 ng-click="onChooseKnowledge(knowledge,$event)"> \{{knowledge.knowledgeName}}
                           <span></span>
                         </label>
                       </div>
@@ -574,7 +744,8 @@
               </div>
               <div class="col-xl-6">
                 <div class="form-group">
-                  <label>第<span class="kt-font-danger font-weight-bolder" ng-bind="model.courseOrder"></span>节课讲授的知识点</label>
+                  <label>第<span class="kt-font-danger font-weight-bolder"
+                                ng-bind="model.courseOrder"></span>节课讲授的知识点</label>
                   <div class="kt-notification kt-notification--fit">
 
                     <div class="kt-notification__item" ng-repeat="courseKnowledge in model.courseKnowledgeList">
@@ -599,7 +770,9 @@
             <button type="button" class="btn btn-primary" ng-click="onSetCoursePlan()" ng-disabled="
                                                                                  model.courseOrder == undefined
                                                                               || model.selectedLearningPhase.learningPhaseID == 0
-                                                                              || model.courseKnowledgeList.length == 0">确定</button>
+                                                                              || model.courseKnowledgeList.length == 0">
+              确定
+            </button>
           </div>
         </form>
       </div>
@@ -624,11 +797,15 @@
                   <div class="card" ng-repeat="courseExercises in model.courseExercisesFilterList">
                     <div class="card-header" id="headingOne\{{$index}}">
                       <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseOne\{{$index}}">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                             height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                           <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                             <polygon points="0 0 24 0 24 24 0 24"></polygon>
-                            <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"></path>
-                            <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "></path>
+                            <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                  fill="#000000" fill-rule="nonzero"></path>
+                            <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                  fill="#000000" fill-rule="nonzero" opacity="0.3"
+                                  transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "></path>
                           </g>
                         </svg>
                         <span ng-bind="courseExercises.knowledgeName"></span>
@@ -637,7 +814,7 @@
                     <div id="collapseOne\{{$index}}" class="collapse" style="">
                       <div class="card-body">
                         <div class="kt-widget4" ng-repeat="document in courseExercises.documentList">
-                          <div class="kt-widget4__item" >
+                          <div class="kt-widget4__item">
                             <div class="kt-widget4__pic kt-widget4__pic--icon">
                               <img src="/media/files/pdf.svg" alt="">
                             </div>
@@ -653,7 +830,6 @@
                             </div>
                           </div>
                         </div>
-
 
 
                       </div>

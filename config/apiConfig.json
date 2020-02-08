@@ -72,6 +72,12 @@
       "changeCourseBaseInfo": "/api/course/courseBaseInfo",
       "changeCourseSchedule": "/api/course/courseSchedule",
       "changeCoursePlan": "/api/course/coursePlan",
+      "courseSignUp": "/api/course/signUp/course",
+      "courseStudentSignUp": "/api/course/signUp/student",
+      "courseTechnologySignUp": "/api/course/signUp/technology",
+
+
+
       "finishClass": "/api/course/plan/finishClass",
       "teachers": "/api/university/customer",
       "checkCourse": "/api/course/checkCourse",

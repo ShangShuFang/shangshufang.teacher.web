@@ -34,6 +34,62 @@ router.get('/exercises', function(req, res, next) {
   });
 });
 
+router.get('/courseSignUp', function(req, res, next) {
+  let service = new commonService.commonInvoke('courseSignUp');
+  let pageNumber = parseInt(req.query.pageNumber);
+  let universityCode = req.query.universityCode;
+  let schoolID = req.query.schoolID;
+  let courseID = req.query.courseID;
+
+  let parameter = `${pageNumber}/${sysConfig.pageSize}/${universityCode}/${schoolID}/${courseID}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      let dataContent = commonService.buildRenderData('报名学生', pageNumber, result);
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        dataContent: dataContent
+      });
+    }
+  });
+});
+
+router.get('/courseStudentSignUp', function(req, res, next) {
+  let service = new commonService.commonInvoke('courseStudentSignUp');
+  let pageNumber = parseInt(req.query.pageNumber);
+  let universityCode = req.query.universityCode;
+  let schoolID = req.query.schoolID;
+  let studentID = req.query.studentID;
+
+  let parameter = `${pageNumber}/${sysConfig.pageSize}/${universityCode}/${schoolID}/${studentID}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      let dataContent = commonService.buildRenderData('报名课程', pageNumber, result);
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        dataContent: dataContent
+      });
+    }
+  });
+});
+
 router.put('/courseBaseInfo', (req, res, next) => {
   let service = new commonService.commonInvoke('changeCourseBaseInfo');
   let data = {

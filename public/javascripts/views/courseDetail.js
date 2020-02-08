@@ -57,6 +57,19 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     courseExercisesList: [],
     courseExercisesFilterList: [],
     //endregion
+
+    //region 报名学生
+    fromIndex4SignUp: 0,
+    toIndex4SignUp: 0,
+    pageNumber4SignUp: 1,
+    totalCount4SignUp: 0,
+    maxPageNumber4SignUp: 0,
+    dataList4SignUp: [],
+    paginationArray4SignUp: [],
+    prePageNum4SignUp: -1,
+    nextPageNum4SignUp: -1,
+    //endregion
+
   };
 
   $scope.initPage = function(){
@@ -859,13 +872,72 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.model.courseExercisesFilterList = $scope.model.courseExercisesList.filter((obj) => {return obj.courseClass === courseClass});
     $('#kt_modal_3').modal('show');
   };
-
   //endregion
 
-
+  //region 报名学生
   $scope.loadCourseStudent = function(){
-
+    $http.get(`/course/detail/courseSignUp?pageNumber=${$scope.model.pageNumber4SignUp}&universityCode=${$scope.model.universityCode}&schoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}`)
+        .then(function successCallback (response) {
+          if(response.data.err){
+            bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+            return false;
+          }
+          if(response.data.dataContent === null){
+            return false;
+          }
+          if(response.data.dataContent.dataList !== null && response.data.dataContent.dataList.length === 0 && $scope.model.pageNumber > 1){
+            $scope.model.pageNumber--;
+            $scope.loadCourseStudent();
+            return false;
+          }
+          $scope.model.totalCount4SignUp = response.data.dataContent.totalCount;
+          $scope.model.dataList4SignUp = response.data.dataContent.dataList;
+          $scope.model.pageNumber4SignUp = response.data.dataContent.currentPageNum;
+          $scope.model.maxPageNumber4SignUp = Math.ceil(response.data.dataContent.totalCount / response.data.dataContent.pageSize);
+          $scope.model.paginationArray4SignUp = response.data.dataContent.paginationArray;
+          $scope.model.prePageNum4SignUp = response.data.dataContent.prePageNum === undefined ? -1 : response.data.dataContent.prePageNum;
+          $scope.model.nextPageNum4SignUp = response.data.dataContent.nextPageNum === undefined ? -1 : response.data.dataContent.nextPageNum;
+          $scope.model.fromIndex4SignUp = response.data.dataContent.dataList === null ? 0 : ($scope.model.pageNumber4SignUp - 1) * Constants.PAGE_SIZE + 1;
+          $scope.model.toIndex4SignUp = response.data.dataContent.dataList === null ? 0 : ($scope.model.pageNumber4SignUp - 1) * Constants.PAGE_SIZE + $scope.model.dataList4SignUp.length;
+        }, function errorCallback(response) {
+          bootbox.alert(localMessage.NETWORK_ERROR);
+        });
   };
+
+  $scope.onFirstPage4SignUp = function() {
+    $scope.model.pageNumber4SignUp = 1;
+    $scope.loadCourseStudent();
+  };
+
+  $scope.onPrePage4SignUp = function(){
+    if($scope.model.pageNumber4SignUp === 1){
+      return false;
+    }
+    $scope.model.pageNumber4SignUp--;
+    $scope.loadCourseStudent();
+  };
+
+  $scope.onPagination4SignUp = function(pageNumber){
+    if($scope.model.pageNumber4SignUp === pageNumber){
+      return false;
+    }
+    $scope.model.pageNumber4SignUp = pageNumber;
+    $scope.loadCourseStudent();
+  };
+
+  $scope.onNextPage4SignUp = function(){
+    if($scope.model.pageNumber4SignUp === $scope.model.maxPageNumber4SignUp){
+      return false;
+    }
+    $scope.model.pageNumber4SignUp++;
+    $scope.loadCourseStudent();
+  };
+
+  $scope.onLastPage4SignUp = function() {
+    $scope.model.pageNumber4SignUp = $scope.model.maxPageNumber4SignUp;
+    $scope.loadCourseStudent();
+  };
+  //endregion
 
   $scope.loadCourseQuestion = function(){
 

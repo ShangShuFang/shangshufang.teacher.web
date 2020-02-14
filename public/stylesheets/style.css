@@ -96,3 +96,12 @@ a.no-hand{
 .btn-option{
   cursor: pointer;
 }
+.shs-top-line{
+  border-top: 1px solid #ebedf2;
+}
+.shs-under-line{
+  border-bottom: 1px solid #ebedf2;
+}
+.shs-padding-top-2{
+  padding-top: 2px;
+}

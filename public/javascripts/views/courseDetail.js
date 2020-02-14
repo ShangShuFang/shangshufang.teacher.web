@@ -70,8 +70,22 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     nextPageNum4SignUp: -1,
     //endregion
 
+    //region 批改练习
+    filterStatus: 'NULL',
+    fromIndex4Exercises: 0,
+    toIndex4Exercises: 0,
+    pageNumber4Exercises: 1,
+    totalCount4Exercises: 0,
+    maxPageNumber4Exercises: 0,
+    dataList4Exercises: [],
+    paginationArray4Exercises: [],
+    prePageNum4Exercises: -1,
+    nextPageNum4Exercises: -1,
+    //endregion
+
   };
 
+  //region 页面初始化
   $scope.initPage = function(){
     if(!$scope.loadParameter()){
       return false;
@@ -80,8 +94,8 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.loadCourseInfo();
     $scope.loadCourseExercises();
     $scope.loadCourseStudent();
-    $scope.loadCourseQuestion();
     $scope.loadCourseStudentExercises();
+    $scope.loadCourseQuestion();
   };
 
   $scope.loadParameter = function(){
@@ -98,6 +112,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.model.loginUser = commonUtility.getLoginUser();
     return true;
   };
+  //endregion
 
   //region 课程基本信息
   $scope.loadCourseInfo = function(){
@@ -634,60 +649,6 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     });
   };
 
-  $scope.onFinishClass = function(exercises, flag) {
-    let message = flag === 'F' ? `您确认下发第${exercises.courseClass}节课的练习题吗？` : `您确认第${exercises.courseClass}节课已结束？`;
-    bootbox.confirm({
-      message: message,
-      buttons: {
-        confirm: {
-          label: '确认',
-          className: 'btn-primary'
-        },
-        cancel: {
-          label: '取消',
-          className: 'btn-secondary'
-        }
-      },
-      callback: function (result) {
-        if(result) {
-          $http.put('/course/detail/finishClass', {
-            universityCode: $scope.model.courseInfo.universityCode,
-            schoolID: $scope.model.courseInfo.schoolID,
-            courseID: $scope.model.courseInfo.courseID,
-            courseClass: exercises.courseClass,
-            loginUser: $scope.model.loginUser.customerID
-          }).then(function successCallback(response) {
-            if(response.data.err) {
-              bizLogger.logInfo('courseDetail', 'change course info failed', `customer: ${$scope.model.loginUser.customerID}`);
-              bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
-              return false;
-            }
-
-            for (let i = 0; i < $scope.model.coursePlanList.length ; i++) {
-              if($scope.model.coursePlanList[i].courseOrder === exercises.courseClass){
-                $scope.model.coursePlanList[i].dataStatus = 'F';
-                $scope.model.coursePlanList[i].dataStatusText = '已结束';
-                break;
-              }
-            }
-
-            for (let i = 0; i < $scope.model.exercisesList.length ; i++) {
-              if($scope.model.exercisesList[i].courseClass === exercises.courseClass){
-                $scope.model.exercisesList[i].dataStatus = 'F';
-                break;
-              }
-            }
-
-            $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {return obj.dataStatus !== 'F'}).length;
-            bizLogger.logInfo('courseDetail', 'finish course class success', `customer: ${$scope.model.loginUser.customerID}`);
-          }, function errorCallback(response) {
-            bootbox.alert(localMessage.NETWORK_ERROR);
-          });
-        }
-      }
-    });
-  };
-
   $scope.onCancelPlan = function(index) {
     $scope.model.coursePlanList.splice(index, 1);
   };
@@ -872,6 +833,123 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.model.courseExercisesFilterList = $scope.model.courseExercisesList.filter((obj) => {return obj.courseClass === courseClass});
     $('#kt_modal_3').modal('show');
   };
+
+  $scope.onFinishClass = function(exercises, flag) {
+    let message = `您确认第${exercises.courseClass}节课已结束？`;
+    bootbox.confirm({
+      message: message,
+      buttons: {
+        confirm: {
+          label: '确认',
+          className: 'btn-primary'
+        },
+        cancel: {
+          label: '取消',
+          className: 'btn-secondary'
+        }
+      },
+      callback: function (result) {
+        if(result) {
+          $http.put('/course/detail/finishClass', {
+            universityCode: $scope.model.courseInfo.universityCode,
+            schoolID: $scope.model.courseInfo.schoolID,
+            courseID: $scope.model.courseInfo.courseID,
+            courseClass: exercises.courseClass,
+            loginUser: $scope.model.loginUser.customerID
+          }).then(function successCallback(response) {
+            if(response.data.err) {
+              bizLogger.logInfo('courseDetail', 'change course info failed', `customer: ${$scope.model.loginUser.customerID}`);
+              bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+              return false;
+            }
+
+            for (let i = 0; i < $scope.model.coursePlanList.length ; i++) {
+              if($scope.model.coursePlanList[i].courseOrder === exercises.courseClass){
+                $scope.model.coursePlanList[i].dataStatus = 'F';
+                $scope.model.coursePlanList[i].dataStatusText = '已结束';
+                break;
+              }
+            }
+
+            for (let i = 0; i < $scope.model.exercisesList.length ; i++) {
+              if($scope.model.exercisesList[i].courseClass === exercises.courseClass){
+                $scope.model.exercisesList[i].dataStatus = 'F';
+                break;
+              }
+            }
+
+            $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {return obj.dataStatus !== 'F'}).length;
+            bizLogger.logInfo('courseDetail', 'finish course class success', `customer: ${$scope.model.loginUser.customerID}`);
+          }, function errorCallback(response) {
+            bootbox.alert(localMessage.NETWORK_ERROR);
+          });
+        }
+      }
+    });
+  };
+
+  $scope.onAssignExercises = function(exercises) {
+    let message = `您确认第${exercises.courseClass}节课已结束并下发练习吗？`;
+    bootbox.confirm({
+      message: message,
+      buttons: {
+        confirm: {
+          label: '确认',
+          className: 'btn-primary'
+        },
+        cancel: {
+          label: '取消',
+          className: 'btn-secondary'
+        }
+      },
+      callback: function (result) {
+        if(result) {
+          let btn = $(`#btnAssignExercises${exercises.courseClass}`);
+          $(btn).attr('disabled',true);
+          KTApp.progress(btn);
+
+          $http.post('/course/detail/classExercises', {
+            universityCode: $scope.model.courseInfo.universityCode,
+            schoolID: $scope.model.courseInfo.schoolID,
+            courseID: $scope.model.courseInfo.courseID,
+            courseClass: exercises.courseClass,
+            assignCount: 3,
+            loginUser: $scope.model.loginUser.customerID
+          }).then(function successCallback(response) {
+            if(response.data.err) {
+              bizLogger.logInfo('courseDetail', 'assign course exercises failed', `customer: ${$scope.model.loginUser.customerID}`);
+              KTApp.unprogress(btn);
+              $(btn).removeAttr('disabled');
+              bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+              return false;
+            }
+
+            for (let i = 0; i < $scope.model.coursePlanList.length ; i++) {
+              if($scope.model.coursePlanList[i].courseOrder === exercises.courseClass){
+                $scope.model.coursePlanList[i].dataStatus = 'F';
+                $scope.model.coursePlanList[i].dataStatusText = '已结束';
+                break;
+              }
+            }
+
+            for (let i = 0; i < $scope.model.exercisesList.length ; i++) {
+              if($scope.model.exercisesList[i].courseClass === exercises.courseClass){
+                $scope.model.exercisesList[i].dataStatus = 'F';
+                break;
+              }
+            }
+
+            KTApp.unprogress(btn);
+            $(btn).removeAttr('disabled');
+            $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {return obj.dataStatus !== 'F'}).length;
+            bizLogger.logInfo('courseDetail', 'assign course exercises success', `customer: ${$scope.model.loginUser.customerID}`);
+          }, function errorCallback(response) {
+            bootbox.alert(localMessage.NETWORK_ERROR);
+          });
+        }
+      }
+    });
+  };
   //endregion
 
   //region 报名学生
@@ -885,8 +963,8 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
           if(response.data.dataContent === null){
             return false;
           }
-          if(response.data.dataContent.dataList !== null && response.data.dataContent.dataList.length === 0 && $scope.model.pageNumber > 1){
-            $scope.model.pageNumber--;
+          if(response.data.dataContent.dataList !== null && response.data.dataContent.dataList.length === 0 && $scope.model.pageNumber4SignUp > 1){
+            $scope.model.pageNumber4SignUp--;
             $scope.loadCourseStudent();
             return false;
           }
@@ -939,13 +1017,80 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
   //endregion
 
+  //region 批改练习
+  $scope.loadCourseStudentExercises = function(){
+    $http.get(`/course/detail/courseStudentExercises?pageNumber=${$scope.model.pageNumber4Exercises}&universityCode=${$scope.model.universityCode}&schoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}&dataStatus=${$scope.model.filterStatus}`)
+        .then(function successCallback (response) {
+          if(response.data.err){
+            bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+            return false;
+          }
+          if(response.data.dataContent === null){
+            return false;
+          }
+          if(response.data.dataContent.dataList !== null && response.data.dataContent.dataList.length === 0 && $scope.model.pageNumber4Exercises > 1){
+            $scope.model.pageNumber4Exercises--;
+            $scope.loadCourseStudent();
+            return false;
+          }
+          $scope.model.totalCount4Exercises = response.data.dataContent.totalCount;
+          $scope.model.dataList4Exercises = response.data.dataContent.dataList;
+          $scope.model.pageNumber4Exercises = response.data.dataContent.currentPageNum;
+          $scope.model.maxPageNumber4Exercises = Math.ceil(response.data.dataContent.totalCount / response.data.dataContent.pageSize);
+          $scope.model.paginationArray4Exercises = response.data.dataContent.paginationArray;
+          $scope.model.prePageNum4Exercises = response.data.dataContent.prePageNum === undefined ? -1 : response.data.dataContent.prePageNum;
+          $scope.model.nextPageNum4Exercises = response.data.dataContent.nextPageNum === undefined ? -1 : response.data.dataContent.nextPageNum;
+          $scope.model.fromIndex4Exercises = response.data.dataContent.dataList === null ? 0 : ($scope.model.pageNumber4Exercises - 1) * Constants.PAGE_SIZE + 1;
+          $scope.model.toIndex4Exercises = response.data.dataContent.dataList === null ? 0 : ($scope.model.pageNumber4Exercises - 1) * Constants.PAGE_SIZE + $scope.model.dataList4Exercises.length;
+        }, function errorCallback(response) {
+          bootbox.alert(localMessage.NETWORK_ERROR);
+        });
+  };
+
+  $scope.onFirstPage4Exercises = function() {
+    $scope.model.pageNumber4Exercises = 1;
+    $scope.loadCourseStudentExercises();
+  };
+
+  $scope.onPrePage4Exercises = function(){
+    if($scope.model.pageNumber4Exercises === 1){
+      return false;
+    }
+    $scope.model.pageNumber4Exercises--;
+    $scope.loadCourseStudentExercises();
+  };
+
+  $scope.onPagination4Exercises = function(pageNumber){
+    if($scope.model.pageNumber4Exercises === pageNumber){
+      return false;
+    }
+    $scope.model.pageNumber4Exercises = pageNumber;
+    $scope.loadCourseStudentExercises();
+  };
+
+  $scope.onNextPage4Exercises = function(){
+    if($scope.model.pageNumber4Exercises === $scope.model.maxPageNumber4Exercises){
+      return false;
+    }
+    $scope.model.pageNumber4Exercises++;
+    $scope.loadCourseStudentExercises();
+  };
+
+  $scope.onLastPage4Exercises = function() {
+    $scope.model.pageNumber4Exercises = $scope.model.maxPageNumber4Exercises;
+    $scope.loadCourseStudentExercises();
+  };
+
+  $scope.onFilterCourseStudentExercises = function(filterStatus) {
+    $scope.model.filterStatus = filterStatus;
+    $scope.loadCourseStudentExercises();
+  };
+  //endregion
   $scope.loadCourseQuestion = function(){
 
   };
 
-  $scope.loadCourseStudentExercises = function(){
 
-  };
 
   $scope.initPage();
 });

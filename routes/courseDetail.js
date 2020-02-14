@@ -90,6 +90,35 @@ router.get('/courseStudentSignUp', function(req, res, next) {
   });
 });
 
+router.get('/courseStudentExercises', function(req, res, next) {
+  let service = new commonService.commonInvoke('classExercises');
+  let pageNumber = parseInt(req.query.pageNumber);
+  let universityCode = req.query.universityCode;
+  let schoolID = req.query.schoolID;
+  let courseID = req.query.courseID;
+  let dataStatus = req.query.dataStatus;
+
+  let parameter = `${pageNumber}/${sysConfig.pageSize}/${universityCode}/${schoolID}/${courseID}/${dataStatus}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      let dataContent = commonService.buildRenderData('学生练习', pageNumber, result);
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        dataContent: dataContent
+      });
+    }
+  });
+});
+
 router.put('/courseBaseInfo', (req, res, next) => {
   let service = new commonService.commonInvoke('changeCourseBaseInfo');
   let data = {
@@ -188,6 +217,34 @@ router.put('/delete', (req, res, next) => {
   };
 
   service.change(data, (result) => {
+    if(result.err){
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    }else{
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg
+      });
+    }
+  });
+});
+
+router.post('/classExercises', (req, res, next) => {
+  let service = new commonService.commonInvoke('classExercisesAssign');
+  let data = {
+    courseUniversityCode: req.body.universityCode,
+    courseSchoolID: req.body.schoolID,
+    courseID: req.body.courseID,
+    courseClass: req.body.courseClass,
+    assignCount: req.body.assignCount,
+    loginUser: req.body.loginUser
+  };
+
+  service.create(data, (result) => {
     if(result.err){
       res.json({
         err: true,

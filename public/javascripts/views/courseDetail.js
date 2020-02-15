@@ -103,6 +103,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       reviewMemo: ''
     },
     reviewHistory: {
+      studentExercisesID: 0,
       pageNumber: 1,
       totalCount: 0,
       maxPageNumber: 0,
@@ -1177,8 +1178,8 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     });
   };
 
-  $scope.onShowReviewHistory = function(data) {
-    $http.get(`/course/detail/exercisesReviewHistory?pageNumber=${$scope.model.reviewHistory.pageNumber}&studentExercisesID=${data.studentExercisesID}`).then(function successCallback (response) {
+  $scope.loadReviewHistory = function() {
+    $http.get(`/course/detail/exercisesReviewHistory?pageNumber=${$scope.model.reviewHistory.pageNumber}&studentExercisesID=${$scope.model.reviewHistory.studentExercisesID}`).then(function successCallback (response) {
       if(response.data.err){
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
@@ -1198,15 +1199,34 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
         return false;
       }
       $scope.model.reviewHistory.totalCount = response.data.dataContent.totalCount;
-      $scope.model.reviewHistory.dataList = response.data.dataContent.dataList;
       $scope.model.reviewHistory.pageNumber = response.data.dataContent.currentPageNum;
       $scope.model.reviewHistory.maxPageNumber = Math.ceil(response.data.dataContent.totalCount / response.data.dataContent.pageSize);
+      response.data.dataContent.dataList.forEach(function (data) {
+        $scope.model.reviewHistory.dataList.push(data);
+      });
+
     }, function errorCallback(response) {
       bootbox.alert(localMessage.NETWORK_ERROR);
     });
+  };
+
+  $scope.onShowReviewHistory = function(data) {
+    $scope.model.reviewHistory.studentExercisesID = data.studentExercisesID;
+    $scope.model.reviewHistory.totalCount = 0;
+    $scope.model.reviewHistory.maxPageNumber = 0;
+    $scope.model.reviewHistory.pageNumber = 1;
+    $scope.model.reviewHistory.dataList.splice(0, $scope.model.reviewHistory.dataList.length);
+    $scope.loadReviewHistory();
     $('#kt_modal_review_list').modal('show');
   };
+
+  $scope.onLoadMoreReviewHistory = function() {
+    $scope.model.reviewHistory.pageNumber++;
+    $scope.loadReviewHistory();
+  };
   //endregion
+
+
 
   $scope.loadCourseQuestion = function(){
 

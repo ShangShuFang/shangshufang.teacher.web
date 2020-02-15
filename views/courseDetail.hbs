@@ -306,8 +306,7 @@
                         <td class="kt-datatable__cell text-center" style="width: 15%"
                             ng-bind="courseSchedule.weekday.dayText"></td>
                         <td class="kt-datatable__cell text-center" style="width: 55%">
-                          <span ng-repeat="course in courseSchedule.schedule">\{{course.orderText}}(\
-                            {{course.time}})</span>
+                          <span ng-repeat="course in courseSchedule.schedule">\{{course.orderText}}(\{{course.time}})</span>
                         </td>
                         <td class="kt-datatable__cell text-center"
                             ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
@@ -1770,15 +1769,14 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">批改历史</h5>
+          <h5 class="modal-title" id="exampleModalLabel">批改历史(共计\{{model.reviewHistory.totalCount}}条批改历史)</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           </button>
         </div>
         <div class="modal-body">
           <div class="kt-scroll ps ps--active-y"
                data-scroll="true"
-               data-height="500"
-               style="height: 500px; overflow: hidden;" ng-if="model.reviewHistory.totalCount > 0">
+               style="min-height: 200px; max-height: 500px; overflow: hidden;">
             <div class="kt-notes">
               <div class="kt-notes__items">
                 <div class="kt-notes__item" ng-repeat="review in model.reviewHistory.dataList">
@@ -1837,6 +1835,11 @@
                       </div>
 										</span>
                   </div>
+                </div>
+                <div class="text-center" ng-if="model.reviewHistory.dataList.length < model.reviewHistory.totalCount">
+                  <button type="button" class="btn btn-link" ng-click="onLoadMoreReviewHistory()">
+                    + 加载更多
+                  </button>
                 </div>
               </div>
             </div>

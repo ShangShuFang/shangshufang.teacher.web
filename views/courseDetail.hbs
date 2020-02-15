@@ -169,15 +169,12 @@
             <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#kt_tabs_5" role="tab" aria-selected="false">布置练习</a>
             </li>
-
             <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#kt_tabs_6" role="tab" aria-selected="false">批改练习</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#kt_tabs_7" role="tab" aria-selected="false">在线答疑</a>
             </li>
-
-
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="kt_tabs_1" role="tabpanel">
@@ -635,7 +632,7 @@
                            class="btn btn-elevate btn-square btn-sm"
                            ng-class="{'btn-brand': model.filterStatus == 'NULL', 'btn-outline-hover-info': model.filterStatus != 'NULL'}"
                            ng-click="onFilterCourseStudentExercises('NULL')">
-                          全部状态
+                          全部
                         </a>
                         <a href=""
                            class="btn btn-elevate btn-square btn-sm"
@@ -647,27 +644,25 @@
                            class="btn btn-outline-hover-info btn-elevate btn-square btn-sm"
                            ng-class="{'btn-brand': model.filterStatus == 'W', 'btn-outline-hover-info': model.filterStatus != 'W'}"
                            ng-click="onFilterCourseStudentExercises('W')">
-                          待检查
+                          待批改
                         </a>
                         <a href=""
                            class="btn btn-outline-hover-info btn-elevate btn-square btn-sm"
                            ng-class="{'btn-brand': model.filterStatus == 'R', 'btn-outline-hover-info': model.filterStatus != 'R'}"
                            ng-click="onFilterCourseStudentExercises('R')">
-                          已检查
+                          待修改
                         </a>
                         <a href=""
                            class="btn btn-outline-hover-info btn-elevate btn-square btn-sm"
                            ng-class="{'btn-brand': model.filterStatus == 'S', 'btn-outline-hover-info': model.filterStatus != 'S'}"
                            ng-click="onFilterCourseStudentExercises('S')">
-                          检查通过
+                          已通过
                         </a>
                       </div>
                     </div>
                   </div>
                 </form>
               </div>
-
-
               <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded" style="width: 100%; margin: 0 auto">
                 <table class="kt-datatable__table" style="display: block;">
                   <thead class="kt-datatable__head">
@@ -678,12 +673,7 @@
                     <th class="kt-datatable__cell kt-datatable__cell--sort">
                       <span style="width: 130px;">就读院校</span>
                     </th>
-<!--                    <th class="kt-datatable__cell kt-datatable__cell--sort">-->
-<!--                      <span style="width: 100px;">所在学院</span>-->
-<!--                    </th>-->
-                    <th class="kt-datatable__cell kt-datatable__cell--sort">
-                      <span style="width: 120px;">提交时间</span>
-                    </th>
+
                     <th class="kt-datatable__cell kt-datatable__cell--sort">
                       <span style="width: 60px;">练习节次</span>
                     </th>
@@ -697,7 +687,7 @@
                       <span style="width: 100px;">练习习题</span>
                     </th>
                     <th class="kt-datatable__cell kt-datatable__cell--sort">
-                      <span style="width: 80px;">练习内容</span>
+                      <span style="width: 120px;">提交时间</span>
                     </th>
                     <th class="kt-datatable__cell kt-datatable__cell--sort">
                       <span style="width: 80px;">批改人</span>
@@ -706,90 +696,91 @@
                       <span style="width: 60px;">当前状态</span>
                     </th>
                     <th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort">
-                      <span style="width: 60px;">操作</span>
+                      <span style="width: 100px;">操作</span>
                     </th>
                   </tr>
                   </thead>
                   <tbody class="kt-datatable__body" style="">
-                  <tr class="kt-datatable__row" style="left: 0;" ng-repeat="data in model.dataList4Exercises">
-                    <td class="kt-datatable__cell">
-                          <span style="width: 140px;">
-                            <div class="kt-user-card-v2">
-                              <div class="kt-user-card-v2__pic">
-                                <img class="kt-badge kt-badge--xl" src="/media/users/teacher_default.png"
-                                     ng-if="data.studentPhoto == ''">
-                                <img class="kt-badge kt-badge--xl" ng-src="\{{data.studentPhoto}}"
-                                     ng-if="data.studentPhoto != ''">
+                    <tr class="kt-datatable__row" style="left: 0;" ng-repeat="data in model.dataList4Exercises">
+                      <td class="kt-datatable__cell">
+                            <span style="width: 140px;">
+                              <div class="kt-user-card-v2">
+                                <div class="kt-user-card-v2__pic">
+                                  <img class="kt-badge kt-badge--xl" src="/media/users/teacher_default.png"
+                                       ng-if="data.studentPhoto == ''">
+                                  <img class="kt-badge kt-badge--xl" ng-src="\{{data.studentPhoto}}"
+                                       ng-if="data.studentPhoto != ''">
+                                </div>
+
+                                <!--                            1公士，2上造，3簪袅，4不更，5大夫，6官大夫，7公大夫，8公乘，9五大夫，10左庶长，11右庶长，12左更，13中更，14右更，15少上造，16大上造，17驷车，18大庶长，19关内候，20彻候-->
+
+                                <div class="kt-user-card-v2__details">
+                                  <a class="kt-user-card-v2__name" href="javascript:;" ng-bind="data.studentName"></a>
+                                  <span class="kt-user-card-v2__desc">500学分 公士</span>
+                                </div>
                               </div>
-
-                              <!--                            1公士，2上造，3簪袅，4不更，5大夫，6官大夫，7公大夫，8公乘，9五大夫，10左庶长，11右庶长，12左更，13中更，14右更，15少上造，16大上造，17驷车，18大庶长，19关内候，20彻候-->
-
-                              <div class="kt-user-card-v2__details">
-                                <a class="kt-user-card-v2__name" href="javascript:;" ng-bind="data.studentName"></a>
-                                <span class="kt-user-card-v2__desc">500学分 公士</span>
-                              </div>
-                            </div>
-                          </span>
-                    </td>
-                    <td class="kt-datatable__cell">
-                      <span style="width: 130px;">
-                        \{{data.studentUniversityName}} <br> \{{data.studentSchoolName}}
-                      </span>
-                    </td>
-                    <td class="kt-datatable__cell">
-                      <span style="width: 120px;" ng-bind="data.updateTime"></span>
-                    </td>
-                    <td class="kt-datatable__cell">
-                      <span style="width: 60px;">第\{{data.courseClass}}节</span>
-                    </td>
-                    <td class="kt-datatable__cell">
-                      <span style="width: 80px;" ng-bind="data.learningPhaseName"></span>
-                    </td>
-                    <td class="kt-datatable__cell">
-                      <span style="width: 100px;" ng-bind="data.knowledgeName"></span>
-                    </td>
-                    <td class="kt-datatable__cell">
-                      <span style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"  >
-                        <a ng-href="\{{data.exercisesDocumentUrl}}"
-                           target="_blank"
-                           title="\{{data.exercisesDocumentUrl}}"
-                           class="kt-widget4__title"
-                           ng-bind="data.exercisesDocumentUrl.substr(data.exercisesDocumentUrl.lastIndexOf('/') + 1)"></a>
-                      </span>
-                    </td>
-                    <td class="kt-datatable__cell">
-                      <span style="width: 80px;" ng-if="data.sourceCodeGitUrl == ''">
-                        尚未上传
-                      </span>
-                      <span style="width: 80px;" ng-if="data.sourceCodeGitUrl != ''">
-                        <a ng-href="\{{data.sourceCodeGitUrl}}" target="_blank" >查看内容</a>
-                      </span>
-                    </td>
-                    <td class="kt-datatable__cell">
-                      <span style="width: 80px;">迪丽热巴</span>
-                    </td>
-                    <td class="kt-datatable__cell">
-                          <span style="width: 60px;">
-                            <span class="kt-badge kt-badge--inline kt-badge--pill"
-                                  ng-class="{'kt-badge--success': data.dataStatus == 'R', 'kt-badge--warning': data.dataStatus == 'W', 'kt-badge--primary': data.dataStatus == 'P'}"
-                                  ng-bind="data.dataStatusText">
-
                             </span>
-                          </span>
-                    </td>
+                      </td>
+                      <td class="kt-datatable__cell">
+                        <span style="width: 130px;">
+                          \{{data.studentUniversityName}} <br> \{{data.studentSchoolName}}
+                        </span>
+                      </td>
 
-
-                    <td class="kt-datatable__cell">
-                      <span style="overflow: visible; position: relative; width: 60px;" ng-if="data.dataStatus == 'W'">
-                        <a href="javascript:;" title="批改练习" class="btn btn-sm btn-clean btn-icon btn-icon-md" ng-click="onReview(data)">
-                          <i class="la la-edit"></i>
-                        </a>
-                      </span>
-                      <span style="overflow: visible; position: relative; width: 60px;" ng-if="data.dataStatus != 'W'">
-                        &nbsp;
-                      </span>
-                    </td>
-                  </tr>
+                      <td class="kt-datatable__cell">
+                        <span style="width: 60px;">第\{{data.courseClass}}节</span>
+                      </td>
+                      <td class="kt-datatable__cell">
+                        <span style="width: 80px;" ng-bind="data.learningPhaseName"></span>
+                      </td>
+                      <td class="kt-datatable__cell">
+                        <span style="width: 100px;" ng-bind="data.knowledgeName"></span>
+                      </td>
+                      <td class="kt-datatable__cell">
+                        <span style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"  >
+                          <a ng-href="\{{data.exercisesDocumentUrl}}"
+                             target="_blank"
+                             title="\{{data.exercisesDocumentUrl}}"
+                             class="kt-widget4__title"
+                             ng-bind="data.exercisesDocumentUrl.substr(data.exercisesDocumentUrl.lastIndexOf('/') + 1)"></a>
+                        </span>
+                      </td>
+                      <td class="kt-datatable__cell">
+                        <span style="width: 120px;" ng-if="data.dataStatus == 'P'">&nbsp;</span>
+                        <span style="width: 120px;" ng-bind="data.updateTime" ng-if="data.dataStatus != 'P'"></span>
+                      </td>
+                      <td class="kt-datatable__cell">
+                        <span style="width: 80px;" ng-if="data.reviewerType == 'T'" ng-bind="data.reviewerNameTeacher"></span>
+                        <span style="width: 80px;" ng-if="data.reviewerType == 'S'" ng-bind="data.reviewerNameStudent"></span>
+                        <span style="width: 80px;" ng-if="data.reviewerType == null">&nbsp;</span>
+                      </td>
+                      <td class="kt-datatable__cell">
+                            <span style="width: 60px;">
+                              <span class="kt-badge kt-badge--inline kt-badge--pill"
+                                    ng-class="{'kt-badge--primary': data.dataStatus == 'P', 'kt-badge--warning': data.dataStatus == 'W', 'kt-badge--danger': data.dataStatus == 'R', 'kt-badge--success': data.dataStatus == 'S'}"
+                                    ng-bind="data.dataStatusText">
+                              </span>
+                            </span>
+                      </td>
+                      <td class="kt-datatable__cell">
+                        <span ng-if="data.dataStatus == 'W'" style="width: 100px;">
+                          <a href="javascript:;" title="批改练习" class="btn btn-sm btn-clean btn-icon btn-icon-md" ng-click="onShowReview(data)">
+                            <i class="la la-edit"></i>
+                          </a>
+                          <a href="javascript:;" title="批改历史" class="btn btn-sm btn-clean btn-icon btn-icon-md" ng-click="onShowReviewHistory(data)">
+                            <i class="la la-search"></i>
+                          </a>
+                        </span>
+                        <span ng-if="data.dataStatus == 'R' || data.dataStatus == 'S'" style="width: 100px;">
+                          <a href="javascript:;" title="批改历史" class="btn btn-sm btn-clean btn-icon btn-icon-md" ng-click="onShowReviewHistory(data)">
+                            <i class="la la-search"></i>
+                          </a>
+                        </span>
+                        <span style="overflow: visible; position: relative; width: 100px;" ng-if="data.dataStatus == 'P'">
+                          &nbsp;
+                        </span>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
                 <div class="kt-datatable__pager kt-datatable--paging-loaded">
@@ -851,11 +842,438 @@
                 </div>
               </div>
             </div>
-
             <div class="tab-pane" id="kt_tabs_7" role="tabpanel">
-              现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑现在答疑
+              <div class="kt-notes kt-scroll kt-scroll--pull ps ps--active-y" data-scroll="true" style="height: 700px; overflow: hidden;">
+                <div class="kt-notes__items">
+                  <div class="kt-notes__item">
+                    <div class="kt-notes__media">
+                      <img class="kt-hidden-" src="assets/media/users/100_3.jpg" alt="image">
+                      <span class="kt-notes__icon kt-font-boldest kt-hidden">
+																			<i class="flaticon2-cup"></i>
+																		</span>
+                      <h3 class="kt-notes__user kt-font-boldest kt-hidden">
+                        N S
+                      </h3>
+                    </div>
+                    <div class="kt-notes__content">
+                      <div class="kt-notes__section">
+                        <div class="kt-notes__info">
+                          <a href="#" class="kt-notes__title">
+                            New order
+                          </a>
+                          <span class="kt-notes__desc">
+																					9:30AM 16 June, 2015
+																				</span>
+                          <span class="kt-badge kt-badge--success kt-badge--inline">new</span>
+                        </div>
+                        <div class="kt-notes__dropdown">
+                          <a href="#" class="btn btn-sm btn-icon-md btn-icon" data-toggle="dropdown" aria-expanded="false">
+                            <i class="flaticon-more-1 kt-font-brand"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(786px, 33px, 0px);">
+                            <ul class="kt-nav">
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-line-chart"></i>
+                                  <span class="kt-nav__link-text">Reports</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-send"></i>
+                                  <span class="kt-nav__link-text">Messages</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-pie-chart-1"></i>
+                                  <span class="kt-nav__link-text">Charts</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-avatar"></i>
+                                  <span class="kt-nav__link-text">Members</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-settings"></i>
+                                  <span class="kt-nav__link-text">Settings</span>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <span class="kt-notes__body">
+																			Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+																		</span>
+                    </div>
+                  </div>
+                  <div class="kt-notes__item">
+                    <div class="kt-notes__media">
+																		<span class="kt-notes__icon">
+																			<i class="flaticon2-rocket kt-font-danger"></i>
+																		</span>
+                    </div>
+                    <div class="kt-notes__content">
+                      <div class="kt-notes__section">
+                        <div class="kt-notes__info">
+                          <a href="#" class="kt-notes__title">
+                            Notification
+                          </a>
+                          <span class="kt-notes__desc">
+																					10:30AM 23 May, 2013
+																				</span>
+                        </div>
+                        <div class="kt-notes__dropdown">
+                          <a href="#" class="btn btn-sm btn-icon-md btn-icon" data-toggle="dropdown">
+                            <i class="flaticon2-rectangular kt-font-brand"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <ul class="kt-nav">
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-line-chart"></i>
+                                  <span class="kt-nav__link-text">Reports</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-send"></i>
+                                  <span class="kt-nav__link-text">Messages</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-pie-chart-1"></i>
+                                  <span class="kt-nav__link-text">Charts</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-avatar"></i>
+                                  <span class="kt-nav__link-text">Members</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-settings"></i>
+                                  <span class="kt-nav__link-text">Settings</span>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <span class="kt-notes__body">
+																			Sed ut perspiciatis unde omnis iste natus error sit voluptatem, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+																		</span>
+                    </div>
+                  </div>
+                  <div class="kt-notes__item">
+                    <div class="kt-notes__media">
+                      <h3 class="kt-notes__user kt-font-brand kt-font-boldest">
+                        DS
+                      </h3>
+                    </div>
+                    <div class="kt-notes__content">
+                      <div class="kt-notes__section">
+                        <div class="kt-notes__info">
+                          <a href="#" class="kt-notes__title">
+                            System alert
+                          </a>
+                          <span class="kt-notes__desc">
+																					7:10AM 21 February, 2016
+																				</span>
+                        </div>
+                        <div class="kt-notes__dropdown">
+                          <a href="#" class="btn btn-sm btn-icon-md btn-icon" data-toggle="dropdown">
+                            <i class="flaticon2-note kt-font-brand"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <ul class="kt-nav">
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-line-chart"></i>
+                                  <span class="kt-nav__link-text">Reports</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-send"></i>
+                                  <span class="kt-nav__link-text">Messages</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-pie-chart-1"></i>
+                                  <span class="kt-nav__link-text">Charts</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-avatar"></i>
+                                  <span class="kt-nav__link-text">Members</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-settings"></i>
+                                  <span class="kt-nav__link-text">Settings</span>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <span class="kt-notes__body">
+																			Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+																		</span>
+                    </div>
+                  </div>
+                  <div class="kt-notes__item">
+                    <div class="kt-notes__media">
+																		<span class="kt-notes__icon">
+																			<i class="flaticon2-poll-symbol kt-font-success"></i>
+																		</span>
+                    </div>
+                    <div class="kt-notes__content">
+                      <div class="kt-notes__section">
+                        <div class="kt-notes__info">
+                          <a href="#" class="kt-notes__title">
+                            New order
+                          </a>
+                          <span class="kt-notes__desc">
+																					10:30AM 23 May, 2013
+																				</span>
+                        </div>
+                        <div class="kt-notes__dropdown">
+                          <a href="#" class="btn btn-sm btn-icon-md btn-icon" data-toggle="dropdown">
+                            <i class="flaticon2-gear kt-font-brand"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <ul class="kt-nav">
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-line-chart"></i>
+                                  <span class="kt-nav__link-text">Reports</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-send"></i>
+                                  <span class="kt-nav__link-text">Messages</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-pie-chart-1"></i>
+                                  <span class="kt-nav__link-text">Charts</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-avatar"></i>
+                                  <span class="kt-nav__link-text">Members</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-settings"></i>
+                                  <span class="kt-nav__link-text">Settings</span>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <span class="kt-notes__body">
+																			Sed ut perspiciatis unde omnis iste natus error sit voluptatem, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+																		</span>
+                    </div>
+                  </div>
+                  <div class="kt-notes__item">
+                    <div class="kt-notes__media">
+																		<span class="kt-notes__icon">
+																			<i class="flaticon2-box-1 kt-font-brand"></i>
+																		</span>
+                    </div>
+                    <div class="kt-notes__content">
+                      <div class="kt-notes__section">
+                        <div class="kt-notes__info">
+                          <a href="#" class="kt-notes__title">
+                            Notification
+                          </a>
+                          <span class="kt-notes__desc">
+																					10:30AM 23 May, 2013
+																				</span>
+                        </div>
+                        <div class="kt-notes__dropdown">
+                          <a href="#" class="btn btn-sm btn-icon-md btn-icon" data-toggle="dropdown">
+                            <i class="flaticon2-sort kt-font-brand"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <ul class="kt-nav">
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-line-chart"></i>
+                                  <span class="kt-nav__link-text">Reports</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-send"></i>
+                                  <span class="kt-nav__link-text">Messages</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-pie-chart-1"></i>
+                                  <span class="kt-nav__link-text">Charts</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-avatar"></i>
+                                  <span class="kt-nav__link-text">Members</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-settings"></i>
+                                  <span class="kt-nav__link-text">Settings</span>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <span class="kt-notes__body">
+																			Sed ut perspiciatis unde omnis iste natus error sit voluptatem, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+																		</span>
+                    </div>
+                  </div>
+                  <div class="kt-notes__item">
+                    <div class="kt-notes__media">
+																		<span class="kt-notes__icon">
+																			<i class="flaticon2-rocket kt-font-danger"></i>
+																		</span>
+                    </div>
+                    <div class="kt-notes__content">
+                      <div class="kt-notes__section">
+                        <div class="kt-notes__info">
+                          <a href="#" class="kt-notes__title">
+                            Notification
+                          </a>
+                          <span class="kt-notes__desc">
+																					10:30AM 23 May, 2013
+																				</span>
+                        </div>
+                        <div class="kt-notes__dropdown">
+                          <a href="#" class="btn btn-sm btn-icon-md btn-icon" data-toggle="dropdown">
+                            <i class="flaticon2-rectangular kt-font-brand"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right">
+                            <ul class="kt-nav">
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-line-chart"></i>
+                                  <span class="kt-nav__link-text">Reports</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-send"></i>
+                                  <span class="kt-nav__link-text">Messages</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-pie-chart-1"></i>
+                                  <span class="kt-nav__link-text">Charts</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-avatar"></i>
+                                  <span class="kt-nav__link-text">Members</span>
+                                </a>
+                              </li>
+                              <li class="kt-nav__item">
+                                <a href="#" class="kt-nav__link">
+                                  <i class="kt-nav__link-icon flaticon2-settings"></i>
+                                  <span class="kt-nav__link-text">Settings</span>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <span class="kt-notes__body">
+																			Sed ut perspiciatis unde omnis iste natus error sit voluptatem, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+																		</span>
+                    </div>
+                  </div>
+                  <div class="kt-notes__item kt-notes__item--clean">
+                    <div class="kt-notes__media">
+                      <img class="kt-hidden" src="assets/media/users/100_1.jpg" alt="image">
+                      <span class="kt-notes__icon kt-font-boldest kt-hidden">
+																			<i class="flaticon2-cup"></i>
+																		</span>
+                      <h3 class="kt-notes__user kt-font-boldest kt-hidden">
+                        M E
+                      </h3>
+                      <span class="kt-notes__circle kt-hidden-"></span>
+                    </div>
+                    <div class="kt-notes__content">
+                      <div class="kt-notes__section">
+                        <div class="kt-notes__info">
+                          <a href="#" class="kt-notes__title">
+                            Order
+                          </a>
+                          <span class="kt-notes__desc">
+																					11:40AM 14 March, 2012
+																				</span>
+                          <span class="kt-badge kt-badge--danger kt-badge--inline">important</span>
+                        </div>
+                      </div>
+                      <span class="kt-notes__body">
+																			Sed ut sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+																		</span>
+                    </div>
+                  </div>
+                  <div class="kt-notes__item kt-notes__item--clean">
+                    <div class="kt-notes__media">
+                      <img class="kt-hidden" src="assets/media/users/100_1.jpg" alt="image">
+                      <span class="kt-notes__icon kt-font-boldest kt-hidden">
+																			<i class="flaticon2-cup"></i>
+																		</span>
+                      <h3 class="kt-notes__user kt-font-boldest kt-hidden">
+                        N B
+                      </h3>
+                      <span class="kt-notes__circle kt-hidden-"></span>
+                    </div>
+                    <div class="kt-notes__content">
+                      <div class="kt-notes__section">
+                        <div class="kt-notes__info">
+                          <a href="#" class="kt-notes__title">
+                            Remarks
+                          </a>
+                          <span class="kt-notes__desc">
+																					10:30AM 23 April, 2013
+																				</span>
+                        </div>
+                      </div>
+                      <span class="kt-notes__body">
+																			Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.
+																		</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 700px; right: -2px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 300px;"></div></div></div>
             </div>
-
           </div>
         </div>
       </div>
@@ -1071,6 +1489,369 @@
             <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="kt_modal_review" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+       aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" role="document" style="max-width: 550px">
+      <div class="modal-content">
+        <form name="reviewForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">练习批改</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            </button>
+          </div>
+          <div class="modal-body shs-form-label">
+            <div class="kt-section">
+              <h3 class="kt-section__title">
+                学生信息
+              </h3>
+              <div class="kt-section__content">
+                <div class="row">
+                  <div class="col-3 text-right">
+                    <span>姓名：</span>
+                  </div>
+                  <div class="col-9">
+                    <span ng-bind="model.reviewData.studentName"></span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-3 text-right">
+                    <span>院校：</span>
+                  </div>
+                  <div class="col-9">
+                    <span>
+                      \{{model.reviewData.studentUniversityName}}
+                      \{{model.reviewData.studentSchoolName}}
+                    </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-3 text-right">
+                    <span>练习内容：</span>
+                  </div>
+                  <div class="col-9">
+                    <span>
+                      \{{model.reviewData.technologyName}}
+                      \{{model.reviewData.learningPhaseName}}
+                      \{{model.reviewData.knowledgeName}}
+                    </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-3 text-right">
+                    <span>练习作业：</span>
+                  </div>
+                  <div class="col-9">
+                    <a ng-href="\{{model.reviewData.exercisesDocumentUrl}}"
+                       target="_blank"
+                       class="kt-widget__username kt-font-brand kt-link kt-font-bold"
+                       ng-bind="model.reviewData.exercisesDocumentName">
+                    </a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-3 text-right">
+                    <span>提交时间：</span>
+                  </div>
+                  <div class="col-9">
+                    <span ng-bind="model.reviewData.updateTime"></span> &nbsp;
+                    <a ng-href="\{{model.reviewData.sourceCodeGitUrl}}"
+                       target="_blank"
+                       class="kt-widget__username kt-font-brand kt-link kt-font-bold">
+                      查看作业
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="kt-separator kt-separator--dashed"></div>
+            <div class="kt-section">
+              <h3 class="kt-section__title">
+                练习批改
+              </h3>
+              <div class="kt-section__content">
+                  <div class="row">
+                    <div class="col-3 text-right">
+                      <span>编译结果：</span>
+                    </div>
+                    <div class="col-9">
+                      <div class="kt-radio-inline">
+                        <label class="kt-radio">
+                          <input type="radio"
+                                 name="compilation"
+                                 value="1"
+                                 ng-checked="model.reviewData.compilationResult == 1"
+                                 ng-model="model.reviewData.compilationResult"> 成功
+                          <span></span>
+                        </label>
+                        <label class="kt-radio">
+                          <input type="radio"
+                                 name="compilation"
+                                 value="0"
+                                 ng-checked="model.reviewData.compilationResult == 0"
+                                 ng-model="model.reviewData.compilationResult"> 失败
+                          <span></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-3 text-right">
+                      <span>运行结果：</span>
+                    </div>
+                    <div class="col-9">
+                      <div class="kt-radio-inline">
+                        <label class="kt-radio">
+                          <input type="radio"
+                                 name="run"
+                                 value="1"
+                                 ng-checked="model.reviewData.runResult == 1"
+                                 ng-model="model.reviewData.runResult"> 正确
+                          <span></span>
+                        </label>
+                        <label class="kt-radio">
+                          <input type="radio"
+                                 name="run"
+                                 value="0"
+                                 ng-checked="model.reviewData.runResult == 0"
+                                 ng-model="model.reviewData.runResult"> 错误
+                          <span></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-3 text-right">
+                      <a href="javascript:;" class="kt-widget__username kt-font-brand kt-link kt-font-bold">代码规范：</a>
+                    </div>
+                    <div class="col-9">
+                      <div class="kt-radio-inline">
+                        <label class="kt-radio">
+                          <input type="radio"
+                                 name="score"
+                                 value="1"
+                                 ng-checked="model.reviewData.score == 1"
+                                 ng-model="model.reviewData.score"> 1分
+                          <span></span>
+                        </label>
+                        <label class="kt-radio">
+                          <input type="radio"
+                                 name="score"
+                                 value="2"
+                                 ng-checked="model.reviewData.score == 2"
+                                 ng-model="model.reviewData.score"> 2分
+                          <span></span>
+                        </label>
+                        <label class="kt-radio">
+                          <input type="radio"
+                                 name="score"
+                                 value="3"
+                                 ng-checked="model.reviewData.score == 3"
+                                 ng-model="model.reviewData.score"> 3分
+                          <span></span>
+                        </label>
+                        <label class="kt-radio">
+                          <input type="radio"
+                                 name="score"
+                                 value="4"
+                                 ng-checked="model.reviewData.score == 4"
+                                 ng-model="model.reviewData.score"> 4分
+                          <span></span>
+                        </label>
+                        <label class="kt-radio">
+                          <input type="radio"
+                                 name="score"
+                                 value="5"
+                                 ng-checked="model.reviewData.score == 5"
+                                 ng-model="model.reviewData.score"> 5分
+                          <span></span>
+                        </label>
+                        <label class="kt-radio">
+                          <input type="radio"
+                                 name="score"
+                                 value="6"
+                                 ng-checked="model.reviewData.score == 6"
+                                 ng-model="model.reviewData.score"> 6分
+                          <span></span>
+                        </label>
+                        <label class="kt-radio">
+                          <input type="radio"
+                                 name="score"
+                                 value="7"
+                                 ng-checked="model.reviewData.score == 7"
+                                 ng-model="model.reviewData.score"> 7分
+                          <span></span>
+                        </label>
+                        <label class="kt-radio">
+                          <input type="radio"
+                                 name="score"
+                                 value="8"
+                                 ng-checked="model.reviewData.score == 8"
+                                 ng-model="model.reviewData.score"> 8分
+                          <span></span>
+                        </label>
+                        <label class="kt-radio">
+                          <input type="radio"
+                                 name="score"
+                                 value="9"
+                                 ng-checked="model.reviewData.score == 9"
+                                 ng-model="model.reviewData.score"> 9分
+                          <span></span>
+                        </label>
+                        <label class="kt-radio">
+                          <input type="radio"
+                                 name="score"
+                                 value="10"
+                                 ng-checked="model.reviewData.score == 10"
+                                 ng-model="model.reviewData.score"> 10分
+                          <span></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-3 text-right">
+                      <span>综合评定：</span>
+                    </div>
+                    <div class="col-9">
+                      <div class="kt-radio-inline">
+                        <label class="kt-radio">
+                          <input type="radio"
+                                 name="result"
+                                 value="1"
+                                 ng-checked="model.reviewData.reviewResult == 1"
+                                 ng-model="model.reviewData.reviewResult"> 通过
+                          <span></span>
+                        </label>
+                        <label class="kt-radio">
+                          <input type="radio"
+                                 name="result"
+                                 value="0"
+                                 ng-checked="model.reviewData.reviewResult == 0"
+                                 ng-model="model.reviewData.reviewResult"> 不通过
+                          <span></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-3 text-right">
+                      <span>批改评语：</span>
+                    </div>
+                    <div class="col-9">
+                      <textarea class="form-control" name="reviewMemo" rows="5" maxlength="500" ng-model="model.reviewData.reviewMemo"></textarea>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            <button type="button"
+                    id="btnReviewSubmit"
+                    class="btn btn-primary"
+                    ng-disabled="model.reviewData.compilationResult == -1
+                              || model.reviewData.runResult == -1
+                              || model.reviewData.score == 0
+                              || model.reviewData.reviewResult == -1"
+                    ng-click="onReviewSubmit()">
+              提交批改结果
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="kt_modal_review_list" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">批改历史</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="kt-scroll ps ps--active-y"
+               data-scroll="true"
+               data-height="500"
+               style="height: 500px; overflow: hidden;" ng-if="model.reviewHistory.totalCount > 0">
+            <div class="kt-notes">
+              <div class="kt-notes__items">
+                <div class="kt-notes__item" ng-repeat="review in model.reviewHistory.dataList">
+                  <div class="kt-notes__media">
+                    <img ng-src="\{{review.reviewerTeacherPhoto}}" ng-if="review.reviewerType == 'T' && review.reviewerTeacherPhoto.length != 0" alt="image">
+                    <img src="/media/users/teacher_default.png" ng-if="review.reviewerType == 'T' && review.reviewerTeacherPhoto.length == 0" alt="image">
+                    <img ng-src="\{{review.reviewerStudentPhoto}}" ng-if="review.reviewerType == 'S' && review.reviewerStudentPhoto.length != 0" alt="image">
+                    <img src="/media/users/teacher_default.png" ng-if="review.reviewerType == 'S' && review.reviewerStudentPhoto.length == 0" alt="image">
+                  </div>
+                  <div class="kt-notes__content">
+                    <div class="kt-notes__section">
+                      <div class="kt-notes__info">
+                        <a href="" class="kt-notes__title" ng-bind="review.reviewerName"></a>
+                        <span class="kt-notes__desc" ng-bind="review.createTime"></span>
+                      </div>
+                    </div>
+                    <span class="kt-notes__body">
+                      <div class="row">
+                        <div class="col-xl-6">
+                          <span>编译结果：</span>
+                          <span class="kt-badge kt-badge--inline kt-badge--pill"
+                                ng-class="{'kt-badge--danger': review.compilationResult == 'N', 'kt-badge--success': review.compilationResult == 'S'}"
+                                ng-bind="review.compilationResultText">
+                          </span>
+                        </div>
+                        <div class="col-xl-6">
+                          <span>运行结果：</span>
+                          <span class="kt-badge kt-badge--inline kt-badge--pill"
+                                ng-class="{'kt-badge--danger': review.runResult == 'N', 'kt-badge--success': review.runResult == 'S'}"
+                                ng-bind="review.runResultText">
+                          </span>
+                        </div>
+                      </div>
+                      <div class="space-5"></div>
+                      <div class="row">
+                        <div class="col-xl-6">
+                          <span>代码规范：</span>
+                          <span class="kt-badge kt-badge--inline kt-badge--pill"
+                                ng-class="{'kt-badge--danger': review.codeStandardsScore < 6, 'kt-badge--warning': review.codeStandardsScore >= 6 && review.codeStandardsScore < 8, 'kt-badge--success': review.codeStandardsScore >= 8}">
+                            \{{review.codeStandardsScore}}分
+                          </span>
+                        </div>
+                        <div class="col-xl-6">
+                          <span>综合结果：</span>
+                          <span class="kt-badge kt-badge--inline kt-badge--pill"
+                                ng-class="{'kt-badge--danger': review.reviewResult == 'N', 'kt-badge--success': review.reviewResult == 'S'}"
+                                ng-bind="review.reviewResultText">
+                          </span>
+                        </div>
+                      </div>
+                      <div class="space-5"></div>
+                      <div class="row">
+                        <div class="col-xl-12">
+                          <p ng-bind="review.reviewMemo"></p>
+                        </div>
+                      </div>
+										</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="alert alert-secondary" role="alert" ng-if="model.reviewHistory.totalCount == 0">
+            <div class="alert-text">
+              该习题暂没有批改历史！
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+        </div>
       </div>
     </div>
   </div>

@@ -79,6 +79,7 @@
       "finishClass": "/api/course/plan/finishClass",
       "classExercises": "/api/university/student/exercises",
       "classExercisesAssign": "/api/university/student/exercises/assign",
+      "classExercisesReview": "/api/university/student/exercises/review",
       "teachers": "/api/university/customer",
       "checkCourse": "/api/course/checkCourse",
       "businessAnalyseLog": "/api/businessAnalyseLog"

@@ -119,6 +119,62 @@ router.get('/courseStudentExercises', function(req, res, next) {
   });
 });
 
+router.get('/courseStudentExercisesReview', function(req, res, next) {
+  let service = new commonService.commonInvoke('classExercisesReview');
+  let pageNumber = parseInt(req.query.pageNumber);
+  let studentExercisesID = req.query.studentExercisesID;
+
+  let parameter = `${pageNumber}/${sysConfig.pageSize}/${studentExercisesID}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      let dataContent = commonService.buildRenderData('学生练习批改', pageNumber, result);
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        dataContent: dataContent
+      });
+    }
+  });
+});
+
+router.get('/exercisesReviewHistory', function(req, res, next) {
+  let service = new commonService.commonInvoke('classExercisesReview');
+  let pageNumber = parseInt(req.query.pageNumber);
+  let studentExercisesID = req.query.studentExercisesID;
+
+  let parameter = `${pageNumber}/${sysConfig.reviewHistory}/${studentExercisesID}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      let dataContent = commonService.buildRenderData('批改历史', pageNumber, result);
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        dataContent: dataContent
+      });
+    }
+  });
+});
+
+
+
+
+
 router.put('/courseBaseInfo', (req, res, next) => {
   let service = new commonService.commonInvoke('changeCourseBaseInfo');
   let data = {
@@ -261,6 +317,43 @@ router.post('/classExercises', (req, res, next) => {
   });
 });
 
+router.post('/exercisesReview', (req, res, next) => {
+  let service = new commonService.commonInvoke('classExercisesReview');
+  let data = {
+    courseUniversityCode: req.body.courseUniversityCode,
+    courseSchoolID: req.body.courseSchoolID,
+    courseID: req.body.courseID,
+    courseClass: req.body.courseClass,
+    studentExercisesID: req.body.studentExercisesID,
+    reviewerID: req.body.reviewerID,
+    reviewerUniversityCode: req.body.reviewerUniversityCode,
+    reviewerSchoolID: req.body.reviewerSchoolID,
+    reviewerType: req.body.reviewerType,
+    compilationResult: req.body.compilationResult,
+    runResult: req.body.runResult,
+    codeStandardsScore: req.body.codeStandardsScore,
+    reviewResult: req.body.reviewResult,
+    reviewMemo: req.body.reviewMemo,
+    loginUser: req.body.loginUser
+  };
+
+  service.create(data, (result) => {
+    if(result.err){
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    }else{
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg
+      });
+    }
+  });
+});
+
 router.put('/finishClass', (req, res, next) => {
   let service = new commonService.commonInvoke('finishClass');
   let data = {
@@ -268,6 +361,33 @@ router.put('/finishClass', (req, res, next) => {
     schoolID: req.body.schoolID,
     courseID: req.body.courseID,
     courseClass: req.body.courseClass,
+    loginUser: req.body.loginUser
+  };
+
+  service.change(data, (result) => {
+    if(result.err){
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    }else{
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg
+      });
+    }
+  });
+});
+
+router.put('/exercisesReview', (req, res, next) => {
+  let service = new commonService.commonInvoke('classExercisesReview');
+  let data = {
+    reviewID: req.body.reviewID,
+    reviewerID: req.body.reviewerID,
+    reviewerUniversityCode: req.body.reviewerUniversityCode,
+    reviewerSchoolID: req.body.reviewerSchoolID,
     loginUser: req.body.loginUser
   };
 

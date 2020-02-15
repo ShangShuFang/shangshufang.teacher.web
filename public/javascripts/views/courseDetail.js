@@ -81,6 +81,33 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     paginationArray4Exercises: [],
     prePageNum4Exercises: -1,
     nextPageNum4Exercises: -1,
+    reviewData: {
+      courseUniversityCode: 0,
+      courseSchoolID: 0,
+      courseID: 0,
+      courseClass: 0,
+      exercisesID: 0,
+      studentName: '',
+      studentUniversityName: '',
+      studentSchoolName: '',
+      technologyName: '',
+      learningPhaseName: '',
+      knowledgeName: '',
+      exercisesDocumentUrl: '',
+      exercisesDocumentName: '',
+      sourceCodeGitUrl: '',
+      compilationResult: -1,
+      runResult: -1,
+      score: 0,
+      reviewResult: -1,
+      reviewMemo: ''
+    },
+    reviewHistory: {
+      pageNumber: 1,
+      totalCount: 0,
+      maxPageNumber: 0,
+      dataList: [],
+    }
     //endregion
 
   };
@@ -1085,12 +1112,105 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.model.filterStatus = filterStatus;
     $scope.loadCourseStudentExercises();
   };
+
+  $scope.onShowReview = function(data) {
+    $scope.model.reviewData.courseUniversityCode = data.courseUniversityCode;
+    $scope.model.reviewData.courseSchoolID = data.courseSchoolID;
+    $scope.model.reviewData.courseID = data.courseID;
+    $scope.model.reviewData.courseClass = data.courseClass;
+    $scope.model.reviewData.exercisesID = data.studentExercisesID;
+    $scope.model.reviewData.studentName = data.studentName;
+    $scope.model.reviewData.studentUniversityName = data.studentUniversityName;
+    $scope.model.reviewData.studentSchoolName = data.studentSchoolName;
+    $scope.model.reviewData.technologyName = data.technologyName;
+    $scope.model.reviewData.learningPhaseName = data.learningPhaseName;
+    $scope.model.reviewData.knowledgeName = data.knowledgeName;
+    $scope.model.reviewData.exercisesDocumentName = data.exercisesDocumentUrl.substr(data.exercisesDocumentUrl.lastIndexOf('/') + 1);
+    $scope.model.reviewData.exercisesDocumentUrl = data.exercisesDocumentUrl;
+    $scope.model.reviewData.updateTime = data.updateTime;
+    $scope.model.reviewData.sourceCodeGitUrl = data.sourceCodeGitUrl;
+    $scope.model.reviewData.compilationResult = -1;
+    $scope.model.reviewData.runResult = -1;
+    $scope.model.reviewData.score = 0;
+    $scope.model.reviewData.reviewResult = -1;
+    $scope.model.reviewData.reviewMemo = '';
+
+    $('#kt_modal_review').modal('show');
+  };
+
+  $scope.onReviewSubmit = function() {
+    let btn = $('#btnReviewSubmit');
+    $(btn).attr('disabled',true);
+    KTApp.progress(btn);
+
+    $http.post('/course/detail/exercisesReview', {
+      courseUniversityCode: $scope.model.reviewData.courseUniversityCode,
+      courseSchoolID: $scope.model.reviewData.courseSchoolID,
+      courseID: $scope.model.reviewData.courseID,
+      courseClass: $scope.model.reviewData.courseClass,
+      studentExercisesID: $scope.model.reviewData.exercisesID,
+      reviewerID: $scope.model.loginUser.customerID,
+      reviewerUniversityCode: $scope.model.loginUser.universityCode,
+      reviewerSchoolID: $scope.model.loginUser.schoolID,
+      reviewerType: 'T',
+      compilationResult: parseInt($scope.model.reviewData.compilationResult) === 1 ? 'S' : 'N',
+      runResult: parseInt($scope.model.reviewData.runResult) === 1 ? 'S' : 'N',
+      codeStandardsScore: $scope.model.reviewData.score,
+      reviewResult: parseInt($scope.model.reviewData.reviewResult) === 1 ? 'S' : 'N',
+      reviewMemo: $scope.model.reviewData.reviewMemo,
+      loginUser: $scope.model.loginUser.customerID
+    }).then(function successCallback(response) {
+      if(response.data.err) {
+        bizLogger.logInfo('courseDetail', 'review exercises failed', `customer: ${$scope.model.loginUser.customerID}`);
+        KTApp.unprogress(btn);
+        $(btn).removeAttr('disabled');
+        bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+        return false;
+      }
+      KTApp.unprogress(btn);
+      $(btn).removeAttr('disabled');
+      $scope.loadCourseStudentExercises();
+      $('#kt_modal_review').modal('hide');
+      bizLogger.logInfo('courseDetail', 'review exercises success', `customer: ${$scope.model.loginUser.customerID}`);
+    }, function errorCallback(response) {
+      bootbox.alert(localMessage.NETWORK_ERROR);
+    });
+  };
+
+  $scope.onShowReviewHistory = function(data) {
+    $http.get(`/course/detail/exercisesReviewHistory?pageNumber=${$scope.model.reviewHistory.pageNumber}&studentExercisesID=${data.studentExercisesID}`).then(function successCallback (response) {
+      if(response.data.err){
+        bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+        return false;
+      }
+
+      if(response.data.dataContent === null){
+        $scope.model.reviewHistory.totalCount = 0;
+        $scope.model.reviewHistory.maxPageNumber = 0;
+        $scope.model.reviewHistory.pageNumber = 1;
+        $scope.model.reviewHistory.dataList = [];
+        return false;
+      }
+      if(response.data.dataContent.dataList !== null
+          && response.data.dataContent.dataList.length === 0
+          && $scope.model.reviewHistory.pageNumber > 1){
+        $scope.model.reviewHistory.pageNumber--;
+        return false;
+      }
+      $scope.model.reviewHistory.totalCount = response.data.dataContent.totalCount;
+      $scope.model.reviewHistory.dataList = response.data.dataContent.dataList;
+      $scope.model.reviewHistory.pageNumber = response.data.dataContent.currentPageNum;
+      $scope.model.reviewHistory.maxPageNumber = Math.ceil(response.data.dataContent.totalCount / response.data.dataContent.pageSize);
+    }, function errorCallback(response) {
+      bootbox.alert(localMessage.NETWORK_ERROR);
+    });
+    $('#kt_modal_review_list').modal('show');
+  };
   //endregion
+
   $scope.loadCourseQuestion = function(){
 
   };
-
-
 
   $scope.initPage();
 });

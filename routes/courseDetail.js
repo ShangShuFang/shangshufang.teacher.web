@@ -171,9 +171,34 @@ router.get('/exercisesReviewHistory', function(req, res, next) {
   });
 });
 
+router.get('/courseQuestion', function(req, res, next) {
+  let service = new commonService.commonInvoke('courseQuestion');
+  let pageNumber = parseInt(req.query.pageNumber);
 
+  let courseUniversityCode = req.query.courseUniversityCode;
+  let courseSchoolID = req.query.courseSchoolID;
+  let courseID = req.query.courseID;
 
+  let parameter = `${pageNumber}/${sysConfig.pageSize}/${courseUniversityCode}/${courseSchoolID}/${courseID}`;
 
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      let dataContent = commonService.buildRenderData('课程问题列表', pageNumber, result);
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        dataContent: dataContent
+      });
+    }
+  });
+});
 
 router.put('/courseBaseInfo', (req, res, next) => {
   let service = new commonService.commonInvoke('changeCourseBaseInfo');
@@ -334,6 +359,35 @@ router.post('/exercisesReview', (req, res, next) => {
     codeStandardsScore: req.body.codeStandardsScore,
     reviewResult: req.body.reviewResult,
     reviewMemo: req.body.reviewMemo,
+    loginUser: req.body.loginUser
+  };
+
+  service.create(data, (result) => {
+    if(result.err){
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    }else{
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg
+      });
+    }
+  });
+});
+
+router.post('/leaveMessage', (req, res, next) => {
+  let service = new commonService.commonInvoke('courseQuestionLeaveMessage');
+  let data = {
+    questionID: req.body.questionID,
+    commenterUniversityCode: req.body.commenterUniversityCode,
+    commenterSchoolID: req.body.commenterSchoolID,
+    commenterID: req.body.commenterID,
+    commenterType: req.body.commenterType,
+    messageContent: req.body.messageContent,
     loginUser: req.body.loginUser
   };
 

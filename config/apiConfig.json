@@ -76,6 +76,9 @@
       "courseStudentSignUp": "/api/course/signUp/student",
       "courseTechnologySignUp": "/api/course/signUp/technology",
 
+      "courseQuestion": "/api/course/question",
+      "courseQuestionLeaveMessage": "/api/course/question/leaveMessage",
+
       "finishClass": "/api/course/plan/finishClass",
       "classExercises": "/api/university/student/exercises",
       "classExercisesAssign": "/api/university/student/exercises/assign",

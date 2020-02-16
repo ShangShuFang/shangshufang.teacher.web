@@ -1,5 +1,5 @@
 let pageApp = angular.module('pageApp', []);
-pageApp.controller('pageCtrl', function ($scope, $http) {
+pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
   $scope.model = {
     //region 课程基本信息
     universityCode: 0,
@@ -108,9 +108,26 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       totalCount: 0,
       maxPageNumber: 0,
       dataList: [],
-    }
+    },
     //endregion
 
+    //region 在线答疑
+    courseQuestion: {
+      pageNumber: 1,
+      totalCount: 0,
+      maxPageNumber: 0,
+      dataList: []
+    },
+    leaveMessage: {
+      questionID: 0,
+      questionerName: '',
+      commenterUniversityCode: 0,
+      commenterSchoolID: 0,
+      commenterID: 0,
+      commenterType: 'T',
+      messageContent: ''
+    }
+    //endregion
   };
 
   //region 页面初始化
@@ -1053,7 +1070,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
             bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
             return false;
           }
-          if(response.data.dataContent === null){
+          if(response.data.dataContent === null || response.data.dataContent.dataList === null){
             return false;
           }
           if(response.data.dataContent.dataList !== null && response.data.dataContent.dataList.length === 0 && $scope.model.pageNumber4Exercises > 1){
@@ -1226,11 +1243,95 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
   //endregion
 
-
-
+  //region 在线答疑
   $scope.loadCourseQuestion = function(){
+    $http.get(`/course/detail/courseQuestion?pageNumber=${$scope.model.courseQuestion.pageNumber}&courseUniversityCode=${$scope.model.universityCode}&courseSchoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}`).then(function successCallback (response) {
+      if(response.data.err){
+        bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+        return false;
+      }
 
+      if(response.data.dataContent === null || response.data.dataContent.dataList === null){
+        $scope.model.courseQuestion.totalCount = 0;
+        $scope.model.courseQuestion.maxPageNumber = 0;
+        $scope.model.courseQuestion.pageNumber = 1;
+        $scope.model.courseQuestion.dataList = [];
+        return false;
+      }
+      if(response.data.dataContent.dataList !== null
+          && response.data.dataContent.dataList.length === 0
+          && $scope.model.courseQuestion.pageNumber > 1){
+        $scope.model.courseQuestion.pageNumber--;
+        return false;
+      }
+      $scope.model.courseQuestion.totalCount = response.data.dataContent.totalCount;
+      $scope.model.courseQuestion.pageNumber = response.data.dataContent.currentPageNum;
+      $scope.model.courseQuestion.maxPageNumber = Math.ceil(response.data.dataContent.totalCount / response.data.dataContent.pageSize);
+      response.data.dataContent.dataList.forEach(function (data) {
+        data.questionContent = $sce.trustAsHtml(data.questionContent.replace(/\n/g, '<br />'));
+        data.leaveMessageList.forEach(function (leaveMessage) {
+          leaveMessage.messageContent = $sce.trustAsHtml(leaveMessage.messageContent.replace(/\n/g, '<br />'));
+        });
+        $scope.model.courseQuestion.dataList.push(data);
+      });
+
+    }, function errorCallback(response) {
+      bootbox.alert(localMessage.NETWORK_ERROR);
+    });
   };
+
+  $scope.onLoadMoreCourseQuestion = function() {
+    $scope.model.courseQuestion.pageNumber++;
+    $scope.loadCourseQuestion();
+  };
+
+  $scope.onShowLeaveMessageModal = function(question) {
+    $scope.model.leaveMessage.questionID = question.questionID;
+    $scope.model.leaveMessage.questionerName = question.questionerName;
+    $scope.model.leaveMessage.commenterUniversityCode = $scope.model.loginUser.universityCode;
+    $scope.model.leaveMessage.commenterSchoolID = $scope.model.loginUser.schoolID;
+    $scope.model.leaveMessage.commenterID = $scope.model.loginUser.customerID;
+    $scope.model.leaveMessage.messageContent = '';
+    $('#kt_modal_leave_message').modal('show');
+  };
+
+  $scope.onSubmitAnswerMessage = function() {
+    let btn = $('#btnSubmitAnswerMessage');
+    $(btn).attr('disabled',true);
+    KTApp.progress(btn);
+    $http.post('/course/detail/leaveMessage', {
+      questionID: $scope.model.leaveMessage.questionID,
+      commenterUniversityCode: $scope.model.leaveMessage.commenterUniversityCode,
+      commenterSchoolID: $scope.model.leaveMessage.commenterSchoolID,
+      commenterID: $scope.model.leaveMessage.commenterID,
+      commenterType: $scope.model.leaveMessage.commenterType,
+      messageContent: $scope.model.leaveMessage.messageContent,
+      loginUser: $scope.model.loginUser.customerID
+    }).then(function successCallback(response) {
+      if(response.data.err) {
+        bizLogger.logInfo('courseDetail', 'send answer message failed', `customer: ${$scope.model.loginUser.customerID}`);
+        KTApp.unprogress(btn);
+        $(btn).removeAttr('disabled');
+        bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+        return false;
+      }
+
+      KTApp.unprogress(btn);
+      $(btn).removeAttr('disabled');
+      $('#kt_modal_leave_message').modal('hide');
+
+      $scope.model.courseQuestion.totalCount = 0;
+      $scope.model.courseQuestion.maxPageNumber = 0;
+      $scope.model.courseQuestion.pageNumber = 1;
+      $scope.model.courseQuestion.dataList = [];
+      $scope.loadCourseQuestion();
+
+      bizLogger.logInfo('courseDetail', 'assign course exercises success', `customer: ${$scope.model.loginUser.customerID}`);
+    }, function errorCallback(response) {
+      bootbox.alert(localMessage.NETWORK_ERROR);
+    });
+  };
+  //endregion
 
   $scope.initPage();
 });

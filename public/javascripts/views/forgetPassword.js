@@ -146,6 +146,6 @@ pageApp.controller('pageCtrl', function ($scope, $http, $timeout) {
   };
 
   //endregion
-
-
 });
+
+angular.bootstrap(document.querySelector('[ng-app="pageApp"]'), ['pageApp']);

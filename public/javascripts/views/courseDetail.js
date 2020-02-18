@@ -141,6 +141,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     $scope.loadCourseStudent();
     $scope.loadCourseStudentExercises();
     $scope.loadCourseQuestion();
+    $scope.setDefaultTab();
   };
 
   $scope.loadParameter = function(){
@@ -156,6 +157,19 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     $scope.model.isLogin = commonUtility.isLogin();
     $scope.model.loginUser = commonUtility.getLoginUser();
     return true;
+  };
+
+  $scope.setDefaultTab = function() {
+    let tabIndex = $('#hidden_tabIndex').val();
+    if(tabIndex === '' || isNaN(tabIndex)){
+      return false;
+    }
+    $('.tab-course-detail li a').removeClass('active');
+    $(`.tab-course-detail li:nth-child(${tabIndex}) a`).addClass('active');
+
+    $('.course-detail .tab-pane').removeClass('active');
+    $(`.course-detail .tab-pane:nth-child(${tabIndex})`).addClass('active');
+
   };
   //endregion
 
@@ -1335,3 +1349,4 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 
   $scope.initPage();
 });
+angular.bootstrap(document.querySelector('[ng-app="pageApp"]'), ['pageApp']);

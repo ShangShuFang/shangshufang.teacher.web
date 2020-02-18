@@ -203,3 +203,5 @@ pageApp.controller('pageCtrl', function ($scope, $http, $timeout) {
 
   $scope.initPage();
 });
+
+angular.bootstrap(document.querySelector('[ng-app="pageApp"]'), ['pageApp']);

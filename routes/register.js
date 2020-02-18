@@ -29,6 +29,28 @@ router.get('/checkCellphone', function(req, res, next) {
   });
 });
 
+router.get('/checkEmail', function(req, res, next) {
+  let service = new commonService.commonInvoke('checkCustomerEmail');
+  let email = req.query.email;
+
+  service.queryWithParameter(email, function (result) {
+    if(result.err){
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    }else{
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        result: result.content.responseData
+      });
+    }
+  });
+});
+
 router.post('/', (req, res, next) => {
   let service = new commonService.commonInvoke('universityAccount');
   let data = {

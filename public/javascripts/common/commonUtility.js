@@ -84,6 +84,14 @@ commonUtility.isCellphoneNumber = function (cellphone) {
   return true;
 };
 
+commonUtility.isEmail = function (email) {
+  let reg = /^\w{3,}(\.\w+)*@[A-z0-9]+(\.[A-z]{2,5}){1,2}$/;
+  if(!reg.test(email)){
+    return false;
+  }
+  return true;
+};
+
 commonUtility.isLogin = function () {
   let login_cookie = commonUtility.getCookie(Constants.COOKIE_LOGIN_USER);
   return login_cookie !== null;

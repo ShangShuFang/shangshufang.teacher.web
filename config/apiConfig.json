@@ -9,6 +9,7 @@
 
       "universityAccount": "/api/university/account",
       "checkUniversityAccountCellphone": "/api/university/account/checkCellphone",
+      "checkCustomerEmail": "/api/university/customer/checkEmail",
       "checkChangePasswordCellphone": "/api/university/account/changePassword/checkCellphone",
       "changePassword": "/api/university/account/changePassword",
 

@@ -50,3 +50,5 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
 		});
 	};
 });
+
+angular.bootstrap(document.querySelector('[ng-app="pageApp"]'), ['pageApp']);

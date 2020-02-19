@@ -33,7 +33,7 @@ router.put('/changePassword', (req, res, next) => {
   let data = {
     cellphone: req.body.cellphone,
     password: req.body.password,
-    loginUser: 1
+    loginUser: req.body.loginUser
   };
 
   service.change(data, (result) => {

@@ -134,14 +134,14 @@
                             <label for="example-text-input" class="col-2 col-form-label">姓名：</label>
                             <div class="col-10">
                               <input class="form-control"
-                                     ng-class="{'is-invalid': model.customerName.length === 0 || model.customerName == undefined, 'is-valid': model.customerName.length > 0}"
+                                     ng-class="{'is-invalid': userForm.customerName.$dirty && userForm.customerName.$invalid , 'is-valid': !(userForm.customerName.$dirty && userForm.customerName.$invalid)}"
                                      type="text"
                                      maxlength="15"
                                      name="customerName"
                                      ng-model="model.customerName"
                                      placeholder="请输入您的姓名"
                                      required>
-                              <div class="invalid-feedback" ng-if="model.customerName == '' || model.customerName == undefined">请输入您的姓名</div>
+                              <div class="invalid-feedback" ng-if="userForm.customerName.$dirty && userForm.customerName.$invalid">请输入您的姓名</div>
                             </div>
                           </div>
                           <div class="form-group row">
@@ -163,7 +163,7 @@
                             <label for="example-text-input" class="col-2 col-form-label">手机号码：</label>
                             <div class="col-10">
                               <input class="form-control"
-                                     ng-class="{'is-invalid': model.isCellphoneInvalid == 1, 'is-valid': model.isCellphoneInvalid == 0}"
+                                     ng-class="{'is-invalid': (userForm.cellphone.$dirty && userForm.cellphone.$invalid) || model.isCellphoneInvalid == 1, 'is-valid': model.isCellphoneInvalid == 0}"
                                      type="tel"
                                      name="cellphone"
                                      ng-model="model.customerCellphone"
@@ -171,7 +171,8 @@
                                      ng-blur="onCellphoneBlur()"
                                      placeholder="请输入您的手机号码"
                                      required>
-                              <div class="invalid-feedback" ng-if="model.isCellphoneInvalid == 1" ng-bind="model.checkCellphoneAlterMessage"></div>
+                              <div class="invalid-feedback" ng-if="userForm.cellphone.$dirty && userForm.cellphone.$invalid">请输入手机号码</div>
+                              <div class="invalid-feedback" ng-if="model.isCellphoneInvalid === 1 && !(userForm.cellphone.$dirty && userForm.cellphone.$invalid)" ng-bind="model.checkCellphoneAlterMessage"></div>
                             </div>
                           </div>
                           <div class="form-group row">

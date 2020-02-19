@@ -33,6 +33,13 @@ localMessage.EMAIL_INVALID = '您输入的内容不是有效的电子邮件地�
 localMessage.EMAIL_ERROR = '您输入的内容不是有效的电子邮件地址。';
 localMessage.EMAIL_REGISTERED = '您输入的电子邮箱已存在。';
 
+localMessage.PASSWORD_OLD_EMPTY = '请输入您的原始密码。';
+localMessage.PASSWORD_OLD_ERROR = '您输入的原始密码不正确。';
+localMessage.PASSWORD_NEW_EMPTY = '请输入您的新密码。';
+localMessage.PASSWORD_NEW_ERROR = '您输入的新密码不正确。';
+
+localMessage.PASSWORD_CHANGE_SUCCESS = '密码修改成功。';
+
 localMessage.CELLPHONE_NOT_FOUND = '您输入的手机号码不存在。';
 localMessage.COURSE_NOT_FOUND = '该课程已被删除';
 

@@ -14,6 +14,7 @@ router.put('/', (req, res, next) => {
     universityCode: req.body.universityCode,
     schoolID: req.body.schoolID,
     customerID: req.body.customerID,
+    accountID: req.body.accountID,
     fullName: req.body.fullName,
     sex: req.body.sex,
     birth: req.body.birth,

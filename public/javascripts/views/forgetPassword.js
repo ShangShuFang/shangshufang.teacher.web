@@ -133,7 +133,8 @@ pageApp.controller('pageCtrl', function ($scope, $http, $timeout) {
   $scope.onChangePassword = function(){
     $http.put('/forgetPassword/changePassword', {
       cellphone: $scope.model.cellphone,
-      password: $scope.model.password
+      password: $scope.model.password,
+      loginUser: 1
     }).then(function successCallback(response) {
       if(response.data.err){
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));

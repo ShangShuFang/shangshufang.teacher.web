@@ -63,8 +63,8 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   $scope.onCellphoneBlur = function() {
     if(commonUtility.isEmpty($scope.model.customerCellphone)
         || $scope.model.customerCellphone === $scope.model.customerCellphoneTitle){
-      $scope.model.isCellphoneInvalid = Constants.CHECK_INVALID.INVALID;
-      $scope.model.checkCellphoneAlterMessage = localMessage.CELLPHONE_EMPTY;
+      // $scope.model.isCellphoneInvalid = Constants.CHECK_INVALID.INVALID;
+      // $scope.model.checkCellphoneAlterMessage = localMessage.CELLPHONE_EMPTY;
       return false;
     }
     if(!commonUtility.isCellphoneNumber($scope.model.customerCellphone)){
@@ -149,6 +149,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       universityCode: $scope.model.loginUser.universityCode,
       schoolID: $scope.model.loginUser.schoolID,
       customerID: $scope.model.loginUser.customerID,
+      accountID: $scope.model.loginUser.accountID,
       fullName: $scope.model.customerName,
       sex: $scope.model.customerSex,
       birth: $scope.model.customerBirth,

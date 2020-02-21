@@ -1,9 +1,23 @@
 let pageApp = angular.module('pageApp', []);
 pageApp.controller('pageCtrl', function ($scope, $http) {
   $scope.model = {
-    logPageName: 'index',
-    logOperation: '',
-    logMemo: '',
+    bizLog: {
+      pageName: 'index',
+      operationName: {
+        PAGE_LOAD: 'PL',
+        TECHNOLOGY_IMAGE_LINK:'TIL',
+        TECHNOLOGY_TEXT_LINK: 'TTL',
+        TECHNOLOGY_STUDENT_TOP: 'TST',
+        TECHNOLOGY_CREATE_COURSE: 'TCC',
+        CREATE_COURSE_LINK: 'CCL',
+        COURSE_IMAGE_LINK: 'CIL',
+        COURSE_TEXT_LINK: 'CTL',
+        COURSE_REDIRECT_INFO: 'CRI',
+        COURSE_REDIRECT_REVIEW: 'CRR',
+        COURSE_CHANGE_FINISH: 'CCF',
+      },
+      logMemo: '',
+    },
     pageNumber: 1,
     technologyTotalCount: 0,
     technologyList: [],
@@ -14,14 +28,13 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.initPage = function () {
+    bizLogger.logInfo(
+        $scope.model.bizLog.pageName,
+        $scope.model.bizLog.operationName.PAGE_LOAD,
+        bizLogger.OPERATION_TYPE.LOAD,
+        bizLogger.OPERATION_RESULT.SUCCESS);
     $scope.model.isLogin = commonUtility.isLogin();
     $scope.model.loginUser = commonUtility.getLoginUser();
-    if($scope.model.isLogin){
-      bizLogger.logInfo('index', 'load page', `customer: ${$scope.model.loginUser.customerID}`);
-    }else{
-      bizLogger.logInfo('index', 'load page', `customer: guest`);
-    }
-
     $scope.loadTechnologyList();
     $scope.loadCourseList();
   };
@@ -88,9 +101,20 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.loadTechnologyList();
   };
 
-  $scope.onCreateCourse = function(technologyID) {
-    bizLogger.logInfo('index', 'add course', `technologyID: ${technologyID}`);
-    if(technologyID !== undefined){
+  $scope.onCreateCourse = function(technologyID, optionFlag) {
+    let operationName = '';
+    if (optionFlag === 0) {
+      operationName = $scope.model.bizLog.operationName.TECHNOLOGY_CREATE_COURSE;
+    } else {
+      operationName = $scope.model.bizLog.operationName.CREATE_COURSE_LINK;
+    }
+    bizLogger.logInfo(
+        $scope.model.bizLog.pageName,
+        operationName,
+        bizLogger.OPERATION_TYPE.REDIRECT,
+        bizLogger.OPERATION_RESULT.SUCCESS);
+
+    if(technologyID !== 0){
       localStorage.setItem(Constants.KEY_NEW_COURSE_TECHNOLOGY, technologyID);
     }
     if(!commonUtility.isLogin()){
@@ -100,18 +124,67 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     }
   };
 
-  $scope.onOpenCourseDetail = function(course, option) {
+  $scope.onOpenCourseDetail = function(course, optionFlag, tabIndex) {
+    let operationName = '';
+    switch (optionFlag) {
+      case 0:
+        operationName = $scope.model.bizLog.operationName.COURSE_TEXT_LINK;
+        break;
+      case 1:
+        operationName = $scope.model.bizLog.operationName.COURSE_REDIRECT_INFO;
+        break;
+      default:
+        operationName = $scope.model.bizLog.operationName.COURSE_REDIRECT_REVIEW;
+        break;
+    }
+
+    bizLogger.logInfo(
+        $scope.model.bizLog.pageName,
+        operationName,
+        bizLogger.OPERATION_TYPE.REDIRECT,
+        bizLogger.OPERATION_RESULT.SUCCESS);
+
     let courseParam = JSON.stringify({
       universityCode: course.universityCode,
       schoolID: course.schoolID,
       courseID: course.courseID
     });
-    bizLogger.logInfo('index', 'open course detail', `option: ${option}, courseParam: ${courseParam}`);
+
     localStorage.setItem(Constants.KEY_INFO_COURSE_IDENTIFY, courseParam);
+    if(tabIndex !== undefined){
+      window.open(`/course/detail?tabIndex=${tabIndex}`);
+
+    }
     window.open('/course/detail');
   };
 
-  $scope.onOpenTechnologyInfo = function(technologyID) {
+  $scope.onFinishCourse = function(course) {
+    bizLogger.logInfo(
+        $scope.model.bizLog.pageName,
+        $scope.model.bizLog.operationName.COURSE_CHANGE_FINISH,
+        bizLogger.OPERATION_TYPE.UPDATE,
+        bizLogger.OPERATION_RESULT.SUCCESS);
+  };
+
+  $scope.onOpenTechnologyInfo = function(technologyID, optionFlag) {
+    let operationName = '';
+    switch (optionFlag) {
+      case 0:
+        operationName = $scope.model.bizLog.operationName.TECHNOLOGY_IMAGE_LINK;
+        break;
+      case 1:
+        operationName = $scope.model.bizLog.operationName.TECHNOLOGY_TEXT_LINK;
+        break;
+      default:
+        operationName = $scope.model.bizLog.operationName.COURSE_IMAGE_LINK;
+        break;
+    }
+    bizLogger.logInfo(
+        $scope.model.bizLog.pageName,
+        operationName,
+        bizLogger.OPERATION_TYPE.REDIRECT,
+        bizLogger.OPERATION_RESULT.SUCCESS);
+
     window.open(`/technology?technology=${technologyID}`);
   };
 

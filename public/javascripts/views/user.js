@@ -1,6 +1,14 @@
 let pageApp = angular.module('pageApp', []);
 pageApp.controller('pageCtrl', function ($scope, $http) {
   $scope.model = {
+    bizLog: {
+      pageName: 'user',
+      operationName: {
+        PAGE_LOAD: 'PL',
+        CHANGE_USER_INFO: 'CUI',
+      },
+      logMemo: '',
+    },
     customerPhoto: '',
     customerNameTitle: '',
     customerName: '',
@@ -29,6 +37,12 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       location.href = '/';
       return false;
     }
+
+    bizLogger.logInfo(
+        $scope.model.bizLog.pageName,
+        $scope.model.bizLog.operationName.PAGE_LOAD,
+        bizLogger.OPERATION_TYPE.LOAD,
+        bizLogger.OPERATION_RESULT.SUCCESS);
 
     $scope.initUploadPlugin();
     $scope.loadCustomerInfo();
@@ -63,8 +77,6 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   $scope.onCellphoneBlur = function() {
     if(commonUtility.isEmpty($scope.model.customerCellphone)
         || $scope.model.customerCellphone === $scope.model.customerCellphoneTitle){
-      // $scope.model.isCellphoneInvalid = Constants.CHECK_INVALID.INVALID;
-      // $scope.model.checkCellphoneAlterMessage = localMessage.CELLPHONE_EMPTY;
       return false;
     }
     if(!commonUtility.isCellphoneNumber($scope.model.customerCellphone)){
@@ -159,11 +171,21 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       loginUser: $scope.model.loginUser.customerID
     }).then(function successCallback(response) {
       if(response.data.err){
+        bizLogger.logInfo(
+            $scope.model.bizLog.pageName,
+            $scope.model.bizLog.operationName.CHANGE_USER_INFO,
+            bizLogger.OPERATION_TYPE.UPDATE,
+            bizLogger.OPERATION_RESULT.FAILED);
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
       }
       commonUtility.setCookie(Constants.COOKIE_LOGIN_USER, JSON.stringify($scope.model.loginUser));
       layer.msg(localMessage.SAVE_SUCCESS);
+      bizLogger.logInfo(
+          $scope.model.bizLog.pageName,
+          $scope.model.bizLog.operationName.CHANGE_USER_INFO,
+          bizLogger.OPERATION_TYPE.UPDATE,
+          bizLogger.OPERATION_RESULT.SUCCESS);
     }, function errorCallback(response) {
       bootbox.alert(localMessage.NETWORK_ERROR);
     });

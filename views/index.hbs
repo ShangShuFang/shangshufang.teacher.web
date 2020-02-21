@@ -36,13 +36,19 @@
           <div class="kt-widget kt-widget--user-profile-2 ">
             <div class="kt-widget__head">
               <div class="kt-widget__media">
-                <a ng-href="/technology?technology=\{{data.technologyID}}" target="_blank" class="kt-widget__username kt-font-brand kt-font-bold">
-                  <img class="kt-widget__img" ng-src="\{{data.technologyThumbnail}}" alt="image">
+                <a href="javascript:;"
+                   class="kt-widget__username kt-font-brand kt-font-bold"
+                   ng-click='onOpenTechnologyInfo(data.technologyID, 0)'>
+                  <img class="kt-widget__img"
+                       ng-src="\{{data.technologyThumbnail}}" alt="image">
                 </a>
               </div>
 
               <div class="kt-widget__info">
-                <a ng-href="/technology?technology=\{{data.technologyID}}" ng-bind="data.technologyName" target="_blank" class="kt-widget__username kt-font-brand kt-link kt-font-bold"></a>
+                <a href="javascript:;"
+                   ng-click='onOpenTechnologyInfo(data.technologyID, 1)'
+                   ng-bind="data.technologyName"
+                   class="kt-widget__username kt-font-brand kt-link kt-font-bold"></a>
                 <span class="kt-widget__desc">
 								  <i class="la" ng-class="{'la-star-o': data.technologyStars < 1, 'la-star star-selected': data.technologyStars >= 1}"></i>
 								  <i class="la" ng-class="{'la-star-o': data.technologyStars < 2, 'la-star star-selected': data.technologyStars >= 2}"></i>
@@ -95,7 +101,7 @@
               </div>
             </div>
             <div class="kt-widget__footer">
-              <button type="button" class="btn btn-label-brand btn-lg btn-upper" ng-click="onCreateCourse(data.technologyID)">创建课程</button>
+              <button type="button" class="btn btn-label-brand btn-lg btn-upper" ng-click="onCreateCourse(data.technologyID, 0)">创建课程</button>
             </div>
           </div>
         </div>
@@ -132,7 +138,7 @@
       <div class="kt-portlet">
         <div class="kt-portlet__body">
           <div class="kt-widget kt-widget--user-profile-3 text-center">
-            您还没有正在进行的课程，<a class="kt-font-brand kt-link kt-font-bold" href="javascript:;" ng-click="onCreateCourse()">
+            您还没有正在进行的课程，<a class="kt-font-brand kt-link kt-font-bold" href="javascript:;" ng-click="onCreateCourse(0, 1)">
             现在创建 <i class="fa fa-angle-right"></i></a>
           </div>
         </div>
@@ -150,17 +156,17 @@
 
                   <div class="kt-widget__pic kt-font-boldest kt-font-light btn-option"
                        ng-class="{'kt-widget__pic--success kt-font-success': $index%2 == 0, 'kt-widget__pic--danger kt-font-danger': $index%2 != 0}"
-                       ng-bind="course.technologyName" ng-click="onOpenTechnologyInfo(course.technologyID)">
+                       ng-bind="course.technologyName" ng-click="onOpenTechnologyInfo(course.technologyID, 2)">
                   </div>
 
 
                 <div class="kt-widget__content">
                   <div class="kt-widget__head">
-                    <a href="javascript:;" class="kt-widget__username kt-font-brand kt-link kt-font-bold" ng-bind="course.courseName" ng-click="onOpenCourseDetail(course, 'link')"></a>
+                    <a href="javascript:;" class="kt-widget__username kt-font-brand kt-link kt-font-bold" ng-bind="course.courseName" ng-click="onOpenCourseDetail(course, 0)"></a>
                     <div class="kt-widget__action">
-                      <button type="button" class="btn btn-brand btn-sm btn-upper" ng-click="onOpenCourseDetail(course, 'button')">课程明细</button>
-                      <button type="button" class="btn btn-label-success btn-sm btn-upper" onclick="location.href='/course/detail?tabIndex=6'">批改作业</button>&nbsp;
-                      <button type="button" class="btn btn-label-danger btn-sm btn-upper">结束课程</button>
+                      <button type="button" class="btn btn-brand btn-sm btn-upper" ng-click="onOpenCourseDetail(course, 1)">课程明细</button>
+                      <button type="button" class="btn btn-label-success btn-sm btn-upper" ng-click="onOpenCourseDetail(course, 2, 6)">批改作业</button>&nbsp;
+                      <button type="button" class="btn btn-label-danger btn-sm btn-upper" ng-click="onFinishCourse(course)">结束课程</button>
                     </div>
                   </div>
                   <div class="kt-widget__subhead">

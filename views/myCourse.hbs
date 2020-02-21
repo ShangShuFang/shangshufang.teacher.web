@@ -94,15 +94,16 @@
         <div class="kt-widget__top">
           <div class="kt-widget__pic kt-font-boldest kt-font-light"
                ng-class="{'kt-widget__pic--success kt-font-success': $index%2 == 0, 'kt-widget__pic--danger kt-font-danger': $index%2 != 0}"
+               ng-click="onOpenTechnologyInfo(course.technologyID)"
                ng-bind="course.technologyName">
           </div>
           <div class="kt-widget__content">
             <div class="kt-widget__head">
-              <a href="javascript:;" class="kt-widget__username" ng-bind="course.courseName" ng-click="onOpenCourseDetail(course, 'link')"></a>
+              <a href="javascript:;" class="kt-widget__username" ng-bind="course.courseName" ng-click="onOpenCourseDetail(course, 0)"></a>
               <div class="kt-widget__action">
-                <button type="button" class="btn btn-brand btn-sm btn-upper" ng-click="onOpenCourseDetail(course, 'button')">课程明细</button>
-                <button type="button" class="btn btn-label-success btn-sm btn-upper" onclick="location.href='/course/detail?tabIndex=6'">批改作业</button>&nbsp;
-                <button type="button" class="btn btn-label-danger btn-sm btn-upper">结束课程</button>
+                <button type="button" class="btn btn-brand btn-sm btn-upper" ng-click="onOpenCourseDetail(course, 1)">课程明细</button>
+                <button type="button" class="btn btn-label-success btn-sm btn-upper" ng-click="onOpenCourseDetail(course, 2, 6)">批改作业</button>&nbsp;
+                <button type="button" class="btn btn-label-danger btn-sm btn-upper" ng-click="onFinishCourse(course)">结束课程</button>
               </div>
             </div>
             <div class="kt-widget__subhead">

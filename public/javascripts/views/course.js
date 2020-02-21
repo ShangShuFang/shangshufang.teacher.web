@@ -1,6 +1,15 @@
 let pageApp = angular.module('pageApp', []);
 pageApp.controller('pageCtrl', function ($scope, $http) {
   $scope.model = {
+    bizLog: {
+      pageName: 'course',
+      operationName: {
+        PAGE_LOAD: 'PL',
+        SAVE_COURSE: 'SC'
+      },
+      logMemo: '',
+    },
+
     //region step1: 选择所属技术
     pageNumber: 1,
     technologyTotalCount: 0,
@@ -60,12 +69,16 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.initPage = function () {
+    bizLogger.logInfo(
+        $scope.model.bizLog.pageName,
+        $scope.model.bizLog.operationName.PAGE_LOAD,
+        bizLogger.OPERATION_TYPE.LOAD,
+        bizLogger.OPERATION_RESULT.SUCCESS);
     if(!commonUtility.isLogin()){
       location.href = '/login?backUrl=/course';
       return false;
     }
     $scope.model.loginUser = commonUtility.getLoginUser();
-    bizLogger.logInfo('course', 'load page', `customer: ${$scope.model.loginUser.customerID}`);
     $scope.loadTechnologyList();
   };
 
@@ -377,6 +390,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     if(!$scope.checkCourseDate()){
       return false;
     }
+
     $http.get(`/course/checkCourse?universityCode=${$scope.model.loginUser.universityCode}&schoolID=${$scope.model.loginUser.schoolID}&courseName=${$scope.model.courseName}&courseTimeBegin=${$scope.model.courseBeginDateFormat}&courseTimeEnd=${$scope.model.courseEndDateFormat}`).then(function successCallback (response) {
       if(response.data.err){
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
@@ -425,7 +439,6 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       })
     });
 
-    bizLogger.logInfo('course', 'submit', `customer: ${$scope.model.loginUser.customerID}`);
     $http.post('/course', {
       universityCode: $scope.model.loginUser.universityCode,
       schoolID: $scope.model.loginUser.schoolID,
@@ -440,13 +453,21 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       loginUser: $scope.model.loginUser.customerID
     }).then(function successCallback(response) {
       if(response.data.err) {
-        bizLogger.logInfo('course', 'submit failed', `customer: ${$scope.model.loginUser.customerID}`);
+        bizLogger.logInfo(
+            $scope.model.bizLog.pageName,
+            $scope.model.bizLog.operationName.SAVE_COURSE,
+            bizLogger.OPERATION_TYPE.INSERT,
+            bizLogger.OPERATION_RESULT.FAILED);
         KTApp.unprogress(btn);
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
       }
       $scope.model.isSubmitSuccess = true;
-      bizLogger.logInfo('course', 'submit success', `customer: ${$scope.model.loginUser.customerID}`);
+      bizLogger.logInfo(
+          $scope.model.bizLog.pageName,
+          $scope.model.bizLog.operationName.SAVE_COURSE,
+          bizLogger.OPERATION_TYPE.INSERT,
+          bizLogger.OPERATION_RESULT.SUCCESS);
     }, function errorCallback(response) {
       bootbox.alert(localMessage.NETWORK_ERROR);
     });

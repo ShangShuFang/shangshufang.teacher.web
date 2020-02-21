@@ -1,6 +1,23 @@
 let pageApp = angular.module('pageApp', []);
 pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
   $scope.model = {
+    bizLog: {
+      pageName: 'courseDetail',
+      operationName: {
+        PAGE_LOAD: 'PL',
+        CHANGE_COURSE_INFO:'CCI',
+        CHANGE_COURSE_SCHEDULE: 'CCS',
+        CHANGE_COURSE_PLAN: 'CCP',
+        ASSIGN_CLASS_EXERCISES: 'ACE',
+        CHANGE_CLASS_FINISH: 'CCF',
+        FILTER_CLASS_EXERCISES: 'FCE',
+        REVIEW_CLASS_EXERCISES: 'RCE',
+        SHOW_REVIEW_HISTORY: 'SRH',
+        REPLY_STUDENT_QUESTION: 'RSQ',
+        DELETE_COURSE: 'DC'
+      },
+      logMemo: ''
+    },
     //region 课程基本信息
     universityCode: 0,
     schoolID: 0,
@@ -147,6 +164,13 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
   $scope.loadParameter = function(){
     let courseInfoJson = localStorage.getItem(Constants.KEY_INFO_COURSE_IDENTIFY);
     if(commonUtility.isEmpty(courseInfoJson)){
+      $scope.model.bizLog.logMemo = `${localMessage.PARAMETER_ERROR}, courseInfoJson: ${courseInfoJson}`;
+      bizLogger.logInfo(
+          $scope.model.bizLog.pageName,
+          $scope.model.bizLog.operationName.PAGE_LOAD,
+          bizLogger.OPERATION_TYPE.LOAD,
+          bizLogger.OPERATION_RESULT.FAILED,
+          $scope.model.bizLog.logMemo);
       bootbox.alert(localMessage.PARAMETER_ERROR);
       return false;
     }
@@ -156,6 +180,13 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     $scope.model.courseID = courseInfo.courseID;
     $scope.model.isLogin = commonUtility.isLogin();
     $scope.model.loginUser = commonUtility.getLoginUser();
+
+    bizLogger.logInfo(
+        $scope.model.bizLog.pageName,
+        $scope.model.bizLog.operationName.PAGE_LOAD,
+        bizLogger.OPERATION_TYPE.LOAD,
+        bizLogger.OPERATION_RESULT.SUCCESS);
+
     return true;
   };
 
@@ -263,12 +294,20 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             loginUser: $scope.model.loginUser.customerID
           }).then(function successCallback(response) {
             if(response.data.err) {
-              bizLogger.logInfo('courseDetail', 'delete course failed', `customer: ${$scope.model.loginUser.customerID}`);
+              bizLogger.logInfo(
+                  $scope.model.bizLog.pageName,
+                  $scope.model.bizLog.operationName.DELETE_COURSE,
+                  bizLogger.OPERATION_TYPE.DELETE,
+                  bizLogger.OPERATION_RESULT.FAILED);
               KTApp.unprogress(btn);
               bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
               return false;
             }
-            bizLogger.logInfo('courseDetail', 'delete course info success', `customer: ${$scope.model.loginUser.customerID}`);
+            bizLogger.logInfo(
+                $scope.model.bizLog.pageName,
+                $scope.model.bizLog.operationName.DELETE_COURSE,
+                bizLogger.OPERATION_TYPE.DELETE,
+                bizLogger.OPERATION_RESULT.SUCCESS);
             location.href = '/index';
           }, function errorCallback(response) {
             bootbox.alert(localMessage.NETWORK_ERROR);
@@ -310,7 +349,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             loginUser: $scope.model.loginUser.customerID
           }).then(function successCallback(response) {
             if(response.data.err) {
-              bizLogger.logInfo('courseDetail', 'change course info failed', `customer: ${$scope.model.loginUser.customerID}`);
+              bizLogger.logInfo(
+                  $scope.model.bizLog.pageName,
+                  $scope.model.bizLog.operationName.CHANGE_COURSE_INFO,
+                  bizLogger.OPERATION_TYPE.UPDATE,
+                  bizLogger.OPERATION_RESULT.FAILED);
               KTApp.unprogress(btn);
               bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
               return false;
@@ -322,7 +365,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             layer.msg(localMessage.SAVE_SUCCESS);
             KTApp.unprogress(btn);
             $(btn).removeAttr('disabled');
-            bizLogger.logInfo('courseDetail', 'change course info success', `customer: ${$scope.model.loginUser.customerID}`);
+            bizLogger.logInfo(
+                $scope.model.bizLog.pageName,
+                $scope.model.bizLog.operationName.CHANGE_COURSE_INFO,
+                bizLogger.OPERATION_TYPE.UPDATE,
+                bizLogger.OPERATION_RESULT.SUCCESS);
           }, function errorCallback(response) {
             bootbox.alert(localMessage.NETWORK_ERROR);
           });
@@ -484,7 +531,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             loginUser: $scope.model.loginUser.customerID
           }).then(function successCallback(response) {
             if(response.data.err) {
-              bizLogger.logInfo('courseDetail', 'change course schedule failed', `customer: ${$scope.model.loginUser.customerID}`);
+              bizLogger.logInfo(
+                  $scope.model.bizLog.pageName,
+                  $scope.model.bizLog.operationName.CHANGE_COURSE_SCHEDULE,
+                  bizLogger.OPERATION_TYPE.UPDATE,
+                  bizLogger.OPERATION_RESULT.FAILED);
               KTApp.unprogress(btn);
               bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
               return false;
@@ -492,7 +543,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             layer.msg(localMessage.SAVE_SUCCESS);
             KTApp.unprogress(btn);
             $(btn).removeAttr('disabled');
-            bizLogger.logInfo('courseDetail', 'change course schedule success', `customer: ${$scope.model.loginUser.customerID}`);
+            bizLogger.logInfo(
+                $scope.model.bizLog.pageName,
+                $scope.model.bizLog.operationName.CHANGE_COURSE_SCHEDULE,
+                bizLogger.OPERATION_TYPE.UPDATE,
+                bizLogger.OPERATION_RESULT.SUCCESS);
           }, function errorCallback(response) {
             bootbox.alert(localMessage.NETWORK_ERROR);
           });
@@ -752,7 +807,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             loginUser: $scope.model.loginUser.customerID
           }).then(function successCallback(response) {
             if(response.data.err) {
-              bizLogger.logInfo('courseDetail', 'change course plan failed', `customer: ${$scope.model.loginUser.customerID}`);
+              bizLogger.logInfo(
+                  $scope.model.bizLog.pageName,
+                  $scope.model.bizLog.operationName.CHANGE_COURSE_PLAN,
+                  bizLogger.OPERATION_TYPE.UPDATE,
+                  bizLogger.OPERATION_RESULT.FAILED);
               $scope.model.isClickAdd = false;
               KTApp.unprogress(btn);
               bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
@@ -768,7 +827,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             layer.msg(localMessage.SAVE_SUCCESS);
             KTApp.unprogress(btn);
             $(btn).removeAttr('disabled');
-            bizLogger.logInfo('courseDetail', 'change course plan success', `customer: ${$scope.model.loginUser.customerID}`);
+            bizLogger.logInfo(
+                $scope.model.bizLog.pageName,
+                $scope.model.bizLog.operationName.CHANGE_COURSE_PLAN,
+                bizLogger.OPERATION_TYPE.UPDATE,
+                bizLogger.OPERATION_RESULT.SUCCESS);
           }, function errorCallback(response) {
             bootbox.alert(localMessage.NETWORK_ERROR);
           });
@@ -917,7 +980,12 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             loginUser: $scope.model.loginUser.customerID
           }).then(function successCallback(response) {
             if(response.data.err) {
-              bizLogger.logInfo('courseDetail', 'change course info failed', `customer: ${$scope.model.loginUser.customerID}`);
+              bizLogger.logInfo(
+                  $scope.model.bizLog.pageName,
+                  $scope.model.bizLog.operationName.CHANGE_CLASS_FINISH,
+                  bizLogger.OPERATION_TYPE.UPDATE,
+                  bizLogger.OPERATION_RESULT.FAILED);
+
               bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
               return false;
             }
@@ -938,7 +1006,12 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             }
 
             $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {return obj.dataStatus !== 'F'}).length;
-            bizLogger.logInfo('courseDetail', 'finish course class success', `customer: ${$scope.model.loginUser.customerID}`);
+
+            bizLogger.logInfo(
+                $scope.model.bizLog.pageName,
+                $scope.model.bizLog.operationName.CHANGE_CLASS_FINISH,
+                bizLogger.OPERATION_TYPE.UPDATE,
+                bizLogger.OPERATION_RESULT.SUCCESS);
           }, function errorCallback(response) {
             bootbox.alert(localMessage.NETWORK_ERROR);
           });
@@ -976,7 +1049,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             loginUser: $scope.model.loginUser.customerID
           }).then(function successCallback(response) {
             if(response.data.err) {
-              bizLogger.logInfo('courseDetail', 'assign course exercises failed', `customer: ${$scope.model.loginUser.customerID}`);
+              bizLogger.logInfo(
+                  $scope.model.bizLog.pageName,
+                  $scope.model.bizLog.operationName.ASSIGN_CLASS_EXERCISES,
+                  bizLogger.OPERATION_TYPE.INSERT,
+                  bizLogger.OPERATION_RESULT.FAILED);
               KTApp.unprogress(btn);
               $(btn).removeAttr('disabled');
               bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
@@ -1001,7 +1078,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             KTApp.unprogress(btn);
             $(btn).removeAttr('disabled');
             $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {return obj.dataStatus !== 'F'}).length;
-            bizLogger.logInfo('courseDetail', 'assign course exercises success', `customer: ${$scope.model.loginUser.customerID}`);
+            bizLogger.logInfo(
+                $scope.model.bizLog.pageName,
+                $scope.model.bizLog.operationName.ASSIGN_CLASS_EXERCISES,
+                bizLogger.OPERATION_TYPE.INSERT,
+                bizLogger.OPERATION_RESULT.SUCCESS);
           }, function errorCallback(response) {
             bootbox.alert(localMessage.NETWORK_ERROR);
           });
@@ -1143,6 +1224,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
   $scope.onFilterCourseStudentExercises = function(filterStatus) {
     $scope.model.filterStatus = filterStatus;
     $scope.loadCourseStudentExercises();
+    bizLogger.logInfo(
+        $scope.model.bizLog.pageName,
+        $scope.model.bizLog.operationName.FILTER_CLASS_EXERCISES,
+        bizLogger.OPERATION_TYPE.SEARCH,
+        bizLogger.OPERATION_RESULT.SUCCESS);
   };
 
   $scope.onShowReview = function(data) {
@@ -1193,7 +1279,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
       loginUser: $scope.model.loginUser.customerID
     }).then(function successCallback(response) {
       if(response.data.err) {
-        bizLogger.logInfo('courseDetail', 'review exercises failed', `customer: ${$scope.model.loginUser.customerID}`);
+        bizLogger.logInfo(
+            $scope.model.bizLog.pageName,
+            $scope.model.bizLog.operationName.REVIEW_CLASS_EXERCISES,
+            bizLogger.OPERATION_TYPE.UPDATE,
+            bizLogger.OPERATION_RESULT.FAILED);
         KTApp.unprogress(btn);
         $(btn).removeAttr('disabled');
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
@@ -1203,7 +1293,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
       $(btn).removeAttr('disabled');
       $scope.loadCourseStudentExercises();
       $('#kt_modal_review').modal('hide');
-      bizLogger.logInfo('courseDetail', 'review exercises success', `customer: ${$scope.model.loginUser.customerID}`);
+      bizLogger.logInfo(
+          $scope.model.bizLog.pageName,
+          $scope.model.bizLog.operationName.REVIEW_CLASS_EXERCISES,
+          bizLogger.OPERATION_TYPE.UPDATE,
+          bizLogger.OPERATION_RESULT.SUCCESS);
     }, function errorCallback(response) {
       bootbox.alert(localMessage.NETWORK_ERROR);
     });
@@ -1212,6 +1306,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
   $scope.loadReviewHistory = function() {
     $http.get(`/course/detail/exercisesReviewHistory?pageNumber=${$scope.model.reviewHistory.pageNumber}&studentExercisesID=${$scope.model.reviewHistory.studentExercisesID}`).then(function successCallback (response) {
       if(response.data.err){
+        bizLogger.logInfo(
+            $scope.model.bizLog.pageName,
+            $scope.model.bizLog.operationName.SHOW_REVIEW_HISTORY,
+            bizLogger.OPERATION_TYPE.SEARCH,
+            bizLogger.OPERATION_RESULT.FAILED);
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
       }
@@ -1235,6 +1334,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
       response.data.dataContent.dataList.forEach(function (data) {
         $scope.model.reviewHistory.dataList.push(data);
       });
+      bizLogger.logInfo(
+          $scope.model.bizLog.pageName,
+          $scope.model.bizLog.operationName.SHOW_REVIEW_HISTORY,
+          bizLogger.OPERATION_TYPE.SEARCH,
+          bizLogger.OPERATION_RESULT.SUCCESS);
 
     }, function errorCallback(response) {
       bootbox.alert(localMessage.NETWORK_ERROR);
@@ -1323,7 +1427,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
       loginUser: $scope.model.loginUser.customerID
     }).then(function successCallback(response) {
       if(response.data.err) {
-        bizLogger.logInfo('courseDetail', 'send answer message failed', `customer: ${$scope.model.loginUser.customerID}`);
+        bizLogger.logInfo(
+            $scope.model.bizLog.pageName,
+            $scope.model.bizLog.operationName.REPLY_STUDENT_QUESTION,
+            bizLogger.OPERATION_TYPE.INSERT,
+            bizLogger.OPERATION_RESULT.FAILED);
         KTApp.unprogress(btn);
         $(btn).removeAttr('disabled');
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
@@ -1339,8 +1447,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
       $scope.model.courseQuestion.pageNumber = 1;
       $scope.model.courseQuestion.dataList = [];
       $scope.loadCourseQuestion();
-
-      bizLogger.logInfo('courseDetail', 'assign course exercises success', `customer: ${$scope.model.loginUser.customerID}`);
+      bizLogger.logInfo(
+          $scope.model.bizLog.pageName,
+          $scope.model.bizLog.operationName.REPLY_STUDENT_QUESTION,
+          bizLogger.OPERATION_TYPE.INSERT,
+          bizLogger.OPERATION_RESULT.SUCCESS);
     }, function errorCallback(response) {
       bootbox.alert(localMessage.NETWORK_ERROR);
     });

@@ -198,7 +198,9 @@ router.post('/businessAnalyseLog', (req, res, next) => {
     portal: req.body.portal,
     device: req.body.device,
     pageName: req.body.pageName,
-    operation: req.body.operation,
+    operationName: req.body.operationName,
+    operationResult: req.body.operationResult,
+    operationType: req.body.operationType,
     memo: req.body.memo,
     customerID: req.body.customerID
   };

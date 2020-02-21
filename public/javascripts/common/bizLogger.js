@@ -1,5 +1,19 @@
 let bizLogger = {};
-bizLogger.logInfo = function (pageName, operation, memo) {
+bizLogger.OPERATION_RESULT = {
+  SUCCESS: 'S',
+  FAILED: 'F'
+};
+
+bizLogger.OPERATION_TYPE = {
+  LOAD: 'L',
+  SEARCH: 'S',
+  UPDATE: 'U',
+  INSERT: 'I',
+  DELETE: 'D',
+  REDIRECT: 'R'
+};
+
+bizLogger.logInfo = function (pageName, operationName, operationType, operationResult, memo) {
   let ipAddress = commonUtility.getIpAddress();
   let browser = commonUtility.getBrowserName();
   let device = commonUtility.getDeviceName();
@@ -15,8 +29,10 @@ bizLogger.logInfo = function (pageName, operation, memo) {
       portal: portal,
       device: device,
       pageName: pageName,
-      operation: operation,
-      memo: memo,
+      operationName: operationName,
+      operationResult: operationResult === undefined ? '' : operationResult,
+      operationType: operationType,
+      memo: memo === undefined ? '' : memo,
       customerID: loginUser
     },
     function(data,status){

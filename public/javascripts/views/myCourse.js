@@ -1,7 +1,22 @@
 let pageApp = angular.module('pageApp', []);
 pageApp.controller('pageCtrl', function ($scope, $http) {
   $scope.model = {
+    bizLog: {
+      pageName: 'myCourse',
+      operationName: {
+        PAGE_LOAD: 'PL',
+        FILTER_COURSE_YEAR:'FCY',
+        FILTER_COURSE_STATUS:'FCS',
 
+        LOAD_MORE_COURSE:'LMC',
+        COURSE_IMAGE_LINK: 'CIL',
+        COURSE_TEXT_LINK: 'CTL',
+        COURSE_REDIRECT_INFO: 'CRI',
+        COURSE_REDIRECT_REVIEW: 'CRR',
+        COURSE_CHANGE_FINISH: 'CCF',
+      },
+      logMemo: '',
+    },
     selectedTime: {},
     timeList: [],
     selectedDataStatus: {},
@@ -15,13 +30,13 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.initPage = function () {
+    bizLogger.logInfo(
+        $scope.model.bizLog.pageName,
+        $scope.model.bizLog.operationName.PAGE_LOAD,
+        bizLogger.OPERATION_TYPE.LOAD,
+        bizLogger.OPERATION_RESULT.SUCCESS);
     $scope.model.isLogin = commonUtility.isLogin();
     $scope.model.loginUser = commonUtility.getLoginUser();
-    if($scope.model.isLogin){
-      bizLogger.logInfo('myCourse', 'load page', `customer: ${$scope.model.loginUser.customerID}`);
-    }else{
-      bizLogger.logInfo('myCourse', 'load page', `customer: guest`);
-    }
     $scope.setMenuActive();
     $scope.setDropdownList();
     $scope.loadCourseList();
@@ -92,29 +107,85 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.onSelectedTime = function(data) {
+    bizLogger.logInfo(
+        $scope.model.bizLog.pageName,
+        $scope.model.bizLog.operationName.FILTER_COURSE_YEAR,
+        bizLogger.OPERATION_TYPE.SEARCH,
+        bizLogger.OPERATION_RESULT.SUCCESS);
     $scope.model.selectedTime = data;
     $scope.loadCourseList();
   };
 
   $scope.onSelectDataStatus = function(data) {
+    bizLogger.logInfo(
+        $scope.model.bizLog.pageName,
+        $scope.model.bizLog.operationName.FILTER_COURSE_STATUS,
+        bizLogger.OPERATION_TYPE.SEARCH,
+        bizLogger.OPERATION_RESULT.SUCCESS);
     $scope.model.selectedDataStatus = data;
     $scope.loadCourseList();
   };
 
   $scope.onLoadMoreCourse = function() {
+    bizLogger.logInfo(
+        $scope.model.bizLog.pageName,
+        $scope.model.bizLog.operationName.LOAD_MORE_COURSE,
+        bizLogger.OPERATION_TYPE.SEARCH,
+        bizLogger.OPERATION_RESULT.SUCCESS);
     $scope.model.pageNumber++;
     $scope.loadCourseList();
   };
 
-  $scope.onOpenCourseDetail = function(course, option) {
+  $scope.onOpenTechnologyInfo = function(technologyID){
+    bizLogger.logInfo(
+        $scope.model.bizLog.pageName,
+        $scope.model.bizLog.operationName.COURSE_IMAGE_LINK,
+        bizLogger.OPERATION_TYPE.REDIRECT,
+        bizLogger.OPERATION_RESULT.SUCCESS);
+
+    window.open(`/technology?technology=${technologyID}`);
+  };
+
+  $scope.onOpenCourseDetail = function(course, flag, tabIndex) {
+    let operationName = '';
+    switch (flag) {
+      case 0:
+        operationName = $scope.model.bizLog.operationName.COURSE_TEXT_LINK;
+        break;
+      case 1:
+        operationName = $scope.model.bizLog.operationName.COURSE_REDIRECT_INFO;
+        break;
+      default:
+        operationName = $scope.model.bizLog.operationName.COURSE_REDIRECT_REVIEW;
+        break;
+    }
+
+    bizLogger.logInfo(
+        $scope.model.bizLog.pageName,
+        operationName,
+        bizLogger.OPERATION_TYPE.REDIRECT,
+        bizLogger.OPERATION_RESULT.SUCCESS);
+
     let courseParam = JSON.stringify({
       universityCode: course.universityCode,
       schoolID: course.schoolID,
       courseID: course.courseID
     });
-    bizLogger.logInfo('myCourse', 'open course detail', `option: ${option}, courseParam: ${courseParam}`);
+
     localStorage.setItem(Constants.KEY_INFO_COURSE_IDENTIFY, courseParam);
+    if(tabIndex !== undefined){
+      window.open(`/course/detail?tabIndex=${tabIndex}`);
+
+    }
     window.open('/course/detail');
+  };
+
+  $scope.onFinishCourse = function(course) {
+    bizLogger.logInfo(
+        $scope.model.bizLog.pageName,
+        $scope.model.bizLog.operationName.COURSE_CHANGE_FINISH,
+        bizLogger.OPERATION_TYPE.UPDATE,
+        bizLogger.OPERATION_RESULT.SUCCESS);
   };
 
   $scope.initPage();

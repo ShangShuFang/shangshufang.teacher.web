@@ -1,16 +1,6 @@
 <link href="/stylesheets/views/index.css" rel="stylesheet" type="text/css" />
-<!-- begin:: Subheader -->
-<div class="kt-subheader   kt-grid__item" id="kt_subheader">
-  <div class="kt-container ">
-    <div class="kt-subheader__main">
-      <h3 class="kt-subheader__title"></h3>
-    </div>
-  </div>
-</div>
-<!-- end:: Subheader -->
-
-<div class="kt-container kt-grid__item kt-grid__item--fluid">
-  <img src="/media/banner/temp.jpeg" class="shs-banner">
+<div class="kt-container--fluid kt-grid__item kt-grid__item--fluid">
+  <img src="/images/banner_home_1.png" class="shs-banner">
 </div>
 
 <div class="kt-subheader kt-grid__item" id="kt_subheader">
@@ -24,7 +14,7 @@
 <!-- begin:: Content -->
 <div class="kt-container kt-grid__item kt-grid__item--fluid" ng-app="pageApp" ng-controller="pageCtrl">
   <div class="row">
-    <div class="col-xl-3" ng-repeat="data in model.technologyList">
+    <div class="col-md-3 col-sm-3 col-xl-3" ng-repeat="data in model.technologyList">
       <div class="kt-portlet kt-portlet--height-fluid">
         <div class="kt-portlet__head kt-portlet__head--noborder">
           <div class="kt-portlet__head-label">

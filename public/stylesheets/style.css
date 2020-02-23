@@ -112,3 +112,9 @@ a.no-hand{
 .shs-form-label .row{
   margin-bottom: 10px;
 }
+.dropdown-menu.dropdown-menu-xl{
+  width: 300px;
+}
+.website-logo{
+  width: 280px;
+}

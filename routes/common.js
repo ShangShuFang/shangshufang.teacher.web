@@ -37,7 +37,7 @@ router.get('/chinaRegion', (req, res, next) => {
 
 router.get('/university', (req, res, next) => {
   let service = new commonService.commonInvoke('university');
-  let parameter = '1/9999/0/0';
+  let parameter = '1/9999/0/0/A';
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {
@@ -60,7 +60,7 @@ router.get('/university', (req, res, next) => {
 router.get('/school', (req, res, next) => {
   let service = new commonService.commonInvoke('school');
   let universityCode = req.query.universityCode;
-  let parameter = `1/9999/${universityCode}`;
+  let parameter = `1/9999/${universityCode}/A`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {

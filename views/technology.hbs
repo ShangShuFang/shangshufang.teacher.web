@@ -13,7 +13,9 @@
                 <div class="kt-widget__top">
                   <div class="kt-font-boldest kt-font-light technology-name">
                     <input type="hidden" value="{{technologyID}}" id="hidden_technologyID">
-                    <h3 ng-bind="model.technologyInfo.technologyName"></h3>
+                    <div class="kt-widget__media kt-hidden-">
+                      <img ng-src="\{{model.technologyInfo.technologyThumbnail}}" alt="image">
+                    </div>
                     <span class="kt-widget__desc">
                       <i class="la" ng-class="{'la-star-o': model.technologyInfo.technologyStars < 1, 'la-star star-selected': model.technologyInfo.technologyStars >= 1}"></i>
                       <i class="la" ng-class="{'la-star-o': model.technologyInfo.technologyStars < 2, 'la-star star-selected': model.technologyInfo.technologyStars >= 2}"></i>

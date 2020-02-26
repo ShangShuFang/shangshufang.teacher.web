@@ -294,6 +294,11 @@
             <!-- begin:: Header Topbar -->
             <div class="kt-header__topbar">
               <!--begin: User bar -->
+
+              <div class="kt-header__topbar-item kt-header__topbar-item--user">
+                <a href="https://www.baidu.com" class="kt-widget__username kt-font-brand kt-link kt-font-bold" target="_blank">进入官网</a>
+              </div>
+
               <div class="kt-header__topbar-item kt-header__topbar-item--user" ng-if="model.isLogin">
                 <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,10px">
                   <img alt="Pic" ng-src="\{{model.loginUser.photo}}" class="img-circle" style="border-radius: 50%" ng-if="model.loginUser.photo !== ''" />
@@ -313,32 +318,6 @@
                   <!--end: Head -->
                   <!--begin: Navigation -->
                   <div class="kt-notification">
-<!--                    <a href="/course/detail?tabIndex=6" class="kt-notification__item">-->
-<!--                      <div class="kt-notification__item-icon">-->
-<!--                        <i class="fa fa-laptop-code kt-font-danger"></i>-->
-<!--                      </div>-->
-<!--                      <div class="kt-notification__item-details">-->
-<!--                        <div class="kt-notification__item-title kt-font-bold">-->
-<!--                          批改习题-->
-<!--                        </div>-->
-<!--                        <div class="kt-notification__item-time">-->
-<!--                          批改学生提交的习题-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                    </a>-->
-<!--                    <a href="/course/detail?tabIndex=7" class="kt-notification__item">-->
-<!--                      <div class="kt-notification__item-icon">-->
-<!--                        <i class="fa fa-comment-dots kt-font-brand"></i>-->
-<!--                      </div>-->
-<!--                      <div class="kt-notification__item-details">-->
-<!--                        <div class="kt-notification__item-title kt-font-bold">-->
-<!--                          在线答疑-->
-<!--                        </div>-->
-<!--                        <div class="kt-notification__item-time">-->
-<!--                          在线回复学生的咨询问题-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                    </a>-->
                     <a href="/user" class="kt-notification__item">
                       <div class="kt-notification__item-icon">
                         <i class="flaticon2-calendar-3 kt-font-success"></i>
@@ -411,6 +390,12 @@
                       <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
                   </li>
+                  <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel">
+                    <a href="javascript:;" class="kt-menu__link">
+                      <span class="kt-menu__link-text">职场私塾（笔记）</span>
+                      <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -432,65 +417,32 @@
         <div class="kt-footer__top">
           <div class="kt-container ">
             <div class="row">
-              <div class="col-lg-4">
+              <div class="col-lg-12 text-center">
                 <div class="kt-footer__section">
-                  <h3 class="kt-footer__title">About</h3>
                   <div class="kt-footer__content">
-                    Whatever method you chosse,these nine will
-                    make you re-think theway you craft healines
-                    Why? Because they all have points in that are
-                    worth from a point of view.
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="kt-footer__section">
-                  <h3 class="kt-footer__title">Quick Links</h3>
-                  <div class="kt-footer__content">
-                    <div class="kt-footer__nav">
-                      <div class="kt-footer__nav-section">
-                        <a href="#">General Reports</a>
-                        <a href="#">Dashboart Widgets</a>
-                        <a href="#">Custom Pages</a>
-                      </div>
-                      <div class="kt-footer__nav-section">
-                        <a href="#">User Setting</a>
-                        <a href="#">Custom Pages</a>
-                        <a href="#">Intranet Settings</a>
-                      </div>
+                    <div>
+                      <a href="#">关于我们</a>
+                      <span class="split"> | </span>
+                      <a href="#">联系我们</a>
+                      <span class="split"> | </span>
+                      <a href="#">客户合作</a>
+                      <span class="split"> | </span>
+                      <a href="#">加入我们</a>
+                      <span class="split"> | </span>
+                      <a href="#">意见反馈</a>
+                      <span class="split"> | </span>
+                      <a href="#">常见问题</a>
+                    </div>
+                    <div>
+                      <span>联系电话：18182505299</span>
+                      <span>&copy; 2020 <a href="http://keenthemes.com/metronic" class="kt-link kt-link--brand" target="_blank">西安樱桃谷信息技术有限公司</a></span>
+
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-lg-4">
-                <div class="kt-footer__section">
-                  <h3 class="kt-footer__title">Get In Touch</h3>
-                  <div class="kt-footer__content">
-                    <form action="" class="kt-footer__subscribe">
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Enter Your Email">
-                        <div class="input-group-append">
-                          <button class="btn btn-brand" type="button">Join</button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="kt-footer__bottom">
-          <div class="kt-container ">
-            <div class="kt-footer__wrapper">
-              <div class="kt-footer__copyright">
-                &copy; 2019 <a href="http://keenthemes.com/metronic" target="_blank">Keenthemes</a>
-              </div>
-              <div class="kt-footer__menu">
-                <a href="http://keenthemes.com/metronic" target="_blank">Purchase Lisence</a>
-                <a href="http://keenthemes.com/metronic" target="_blank">Team</a>
-                <a href="http://keenthemes.com/metronic" target="_blank">Contact</a>
-              </div>
+
+
             </div>
           </div>
         </div>

@@ -116,5 +116,18 @@ a.no-hand{
   width: 300px;
 }
 .website-logo{
-  width: 280px;
+  width: 220px;
+}
+/*.kt-header--fixed.kt-header--minimize .kt-header{*/
+/*  position: relative;*/
+/*}*/
+.kt-footer{
+  background-color: #383840;
+  color: #999999;
+}
+.kt-footer a{
+  color: #999999;
+}
+.kt-footer .split{
+  margin: 0 8px;
 }

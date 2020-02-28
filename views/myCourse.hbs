@@ -36,7 +36,7 @@
       </div>
       <div class="kt-portlet__body">
         <div class="row">
-          <div class="col-xl-3">
+          <div class="col-md-3">
             <div class="dropdown search-form-dropdown">
               <button class="btn btn-secondary" type="button" data-toggle="dropdown">
                 <span ng-bind="model.selectedTime.timeText"></span>
@@ -51,7 +51,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xl-3">
+          <div class="col-md-3">
             <div class="dropdown search-form-dropdown">
               <button class="btn btn-secondary" type="button" data-toggle="dropdown">
                 <span ng-bind="model.selectedDataStatus.statusText"></span>
@@ -92,18 +92,19 @@
     <div class="kt-portlet__body">
       <div class="kt-widget kt-widget--user-profile-3">
         <div class="kt-widget__top">
-          <div class="kt-widget__pic kt-font-boldest kt-font-light"
+          <div class="kt-widget__pic kt-font-boldest kt-font-light btn-option"
                ng-class="{'kt-widget__pic--success kt-font-success': $index%2 == 0, 'kt-widget__pic--danger kt-font-danger': $index%2 != 0}"
                ng-click="onOpenTechnologyInfo(course.technologyID)"
                ng-bind="course.technologyName">
           </div>
           <div class="kt-widget__content">
             <div class="kt-widget__head">
-              <a href="javascript:;" class="kt-widget__username" ng-bind="course.courseName" ng-click="onOpenCourseDetail(course, 0)"></a>
+              <a href="javascript:;" class="kt-widget__username kt-font-brand kt-link kt-font-bold" ng-bind="course.courseName" ng-click="onOpenCourseDetail(course, 0)"></a>
               <div class="kt-widget__action">
-                <button type="button" class="btn btn-brand btn-sm btn-upper" ng-click="onOpenCourseDetail(course, 1)">课程明细</button>
-                <button type="button" class="btn btn-label-success btn-sm btn-upper" ng-click="onOpenCourseDetail(course, 2, 6)">批改作业</button>&nbsp;
-                <button type="button" class="btn btn-label-danger btn-sm btn-upper" ng-click="onFinishCourse(course)">结束课程</button>
+                <span class="kt-badge kt-badge--inline kt-badge--info" ng-if="course.dataStatus == 'P'">未开始</span>
+                <span class="kt-badge kt-badge--inline kt-badge--success" ng-if="course.dataStatus == 'F'">已结束</span>
+                <button type="button" class="btn btn-label-success btn-sm btn-upper" ng-click="onOpenCourseDetail(course, 2, 6)" ng-if="course.dataStatus == 'A'">批改作业</button>&nbsp;
+                <button type="button" class="btn btn-label-danger btn-sm btn-upper" ng-click="onFinishCourse(course)" ng-if="course.dataStatus == 'A'">结束课程</button>
               </div>
             </div>
             <div class="kt-widget__subhead">
@@ -142,7 +143,7 @@
             </div>
             <div class="kt-widget__details">
               <span class="kt-widget__title">使用该技术的企业</span>
-              <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+              <a href="javascript:;" class="kt-widget__value no-hand">
                 \{{course.courseTechnologyUsingCompanyCount}}家
               </a>
             </div>
@@ -153,7 +154,7 @@
             </div>
             <div class="kt-widget__details">
               <span class="kt-widget__title">涵盖知识点</span>
-              <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+              <a href="javascript:;" class="kt-widget__value no-hand">
                 \{{course.courseKnowledgeCount}}/\{{course.technologyKnowledgeCount}}
               </a>
             </div>
@@ -164,7 +165,7 @@
             </div>
             <div class="kt-widget__details">
               <span class="kt-widget__title">涵盖练习题</span>
-              <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+              <a href="javascript:;" class="kt-widget__value no-hand">
                 \{{course.courseKnowledgeExercisesCount}}
               </a>
             </div>
@@ -175,7 +176,7 @@
             </div>
             <div class="kt-widget__details">
               <span class="kt-widget__title">报名学生</span>
-              <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+              <a href="javascript:;" class="kt-widget__value no-hand">
                 \{{course.courseSingUpCount}}
               </a>
             </div>
@@ -186,7 +187,7 @@
             </div>
             <div class="kt-widget__details">
               <span class="kt-widget__title">在线提问</span>
-              <a href="javascript:;" class="kt-widget__value kt-font-brand no-hand">
+              <a href="javascript:;" class="kt-widget__value no-hand">
                 \{{course.courseQuestionFinish}}/\{{course.courseQuestion}}
               </a>
             </div>

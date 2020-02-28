@@ -22,7 +22,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     universityCode: 0,
     schoolID: 0,
     courseID: 0,
-    courseStatus: 'A',
+    courseStatus: 'NULL',
     courseInfo: null,
     courseBaseInfo: {},
     courseBeginDateFormat: '',
@@ -207,7 +207,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
   //region 课程基本信息
   $scope.loadCourseInfo = function(){
     $http.get(`/course/info?universityCode=${$scope.model.universityCode}&schoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}&dataStatus=${$scope.model.courseStatus}`).then(function successCallback (response) {
-      if(response.data.err){
+      if(response.data.err) {
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
       }

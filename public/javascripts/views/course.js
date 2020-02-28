@@ -18,10 +18,6 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
 
     //region step2: 课程基本信息
     courseName: '',
-    teacherName: '',
-    courseTeacher: {teacherID: 0, teacherName: ''},
-    teacherList: [],
-    isShowTeacherList: false,
     courseBeginDate: '',
     courseBeginDateFormat: '',
     courseEndDate: '',
@@ -151,35 +147,6 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $('input[name="weekday"]').prop('checked',false);
     $('input[name="courseTime"]').prop('checked',false);
     $('#kt_modal_1').modal('show');
-  };
-
-  $scope.onTeacherChange = function() {
-    if(commonUtility.isEmpty($scope.model.teacherName)){
-      $scope.model.isShowTeacherList = false;
-      return false;
-    }
-    $http.get(`/course/teacherList?universityCode=${$scope.model.loginUser.universityCode}&schoolID=0&fullName=${$scope.model.teacherName}`).then(function successCallback (response) {
-      if(response.data.err){
-        bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
-        return false;
-      }
-      $scope.model.teacherList.splice(0, $scope.model.teacherList.length);
-      if(response.data.teacherList === null){
-        $scope.model.teacherList.push({customerID: 0, fullName: `${$scope.model.teacherName}的信息不存在`});
-        $scope.model.isShowTeacherList = true;
-        return false;
-      }
-      $scope.model.teacherList = response.data.teacherList;
-      $scope.model.isShowTeacherList = true;
-    }, function errorCallback(response) {
-      bootbox.alert(localMessage.NETWORK_ERROR);
-    });
-  };
-
-  $scope.onSelectCourseTeacher = function(teacher) {
-    $scope.model.courseTeacher = {teacherID: teacher.customerID, teacherName: teacher.fullName};
-    $scope.model.teacherName = teacher.fullName;
-    $scope.model.isShowTeacherList = false;
   };
 
   $scope.onBeginDateChange = function(beginDate) {
@@ -352,7 +319,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       learningPhaseID: $scope.model.selectedLearningPhase.learningPhaseID,
       learningPhaseName: $scope.model.selectedLearningPhase.learningPhaseName,
       knowledgeIDArray: courseKnowledgeIDArray,
-      knowledgeName: courseKnowledgeNameArray.join(' | ')
+      knowledgeNameArray: courseKnowledgeNameArray
     });
     $('#kt_modal_2').modal('hide');
   };

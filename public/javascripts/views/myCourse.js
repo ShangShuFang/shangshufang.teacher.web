@@ -78,7 +78,6 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       courseTimeBegin = dateUtils.addDateYear(currentDateString, $scope.model.selectedTime.timeCode) + ' 00:00:00';
     }
     let dataStatus = $scope.model.selectedDataStatus.statusCode;
-    bizLogger.logInfo('myCourse', 'load course', `time: ${$scope.model.selectedTime.timeText}, status: ${$scope.model.selectedDataStatus.statusCode}`);
     $http.get(`/course/list?pageNumber=${$scope.model.pageNumber}&universityCode=${universityCode}&schoolID=${schoolID}&teacherID=${teacherID}&technologyID=0&courseTimeBegin=${courseTimeBegin}&dataStatus=${dataStatus}&isSelf=true`).then(function successCallback (response) {
       if(response.data.err){
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
@@ -95,10 +94,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
         return false;
       }
 
-      response.data.dataContent.dataList.forEach(function (data) {
-        $scope.model.courseList.push(data);
-      });
-
+      $scope.model.courseList = response.data.dataContent.dataList;
       $scope.model.courseTotalCount = response.data.dataContent.totalCount;
       $scope.model.pageNumber = response.data.dataContent.currentPageNum;
     }, function errorCallback(response) {

@@ -918,7 +918,7 @@
           </div>
           <div class="modal-body">
             <div class="row">
-              <div class="col-xl-6 separator--border-right">
+              <div class="col-md-6 separator--border-right">
                 <div class="form-group">
                   <label>每周哪天授课</label>
                   <div class="kt-radio-list">
@@ -930,7 +930,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-xl-6">
+              <div class="col-md-6">
                 <div class="form-group">
                   <label>哪几节课授课</label>
                   <div class="kt-checkbox-list">
@@ -966,7 +966,7 @@
         <form name="coursePlanForm" novalidate>
           <div class="modal-body">
             <div class="row">
-              <div class="col-xl-6">
+              <div class="col-md-6">
                 <div class="form-group">
                   <div class="dropdown search-form-dropdown">
                     <input type="text"
@@ -1012,7 +1012,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-xl-6">
+              <div class="col-md-6">
                 <div class="form-group">
                   <label>第<span class="kt-font-danger font-weight-bolder"
                                 ng-bind="model.courseOrder"></span>节课讲授的知识点</label>
@@ -1422,14 +1422,14 @@
                     </div>
                     <span class="kt-notes__body">
                       <div class="row">
-                        <div class="col-xl-6">
+                        <div class="col-md-6">
                           <span>编译结果：</span>
                           <span class="kt-badge kt-badge--inline kt-badge--pill"
                                 ng-class="{'kt-badge--danger': review.compilationResult == 'N', 'kt-badge--success': review.compilationResult == 'S'}"
                                 ng-bind="review.compilationResultText">
                           </span>
                         </div>
-                        <div class="col-xl-6">
+                        <div class="col-md-6">
                           <span>运行结果：</span>
                           <span class="kt-badge kt-badge--inline kt-badge--pill"
                                 ng-class="{'kt-badge--danger': review.runResult == 'N', 'kt-badge--success': review.runResult == 'S'}"
@@ -1439,14 +1439,14 @@
                       </div>
                       <div class="space-5"></div>
                       <div class="row">
-                        <div class="col-xl-6">
+                        <div class="col-md-6">
                           <span>代码规范：</span>
                           <span class="kt-badge kt-badge--inline kt-badge--pill"
                                 ng-class="{'kt-badge--danger': review.codeStandardsScore < 6, 'kt-badge--warning': review.codeStandardsScore >= 6 && review.codeStandardsScore < 8, 'kt-badge--success': review.codeStandardsScore >= 8}">
                             \{{review.codeStandardsScore}}分
                           </span>
                         </div>
-                        <div class="col-xl-6">
+                        <div class="col-md-6">
                           <span>综合结果：</span>
                           <span class="kt-badge kt-badge--inline kt-badge--pill"
                                 ng-class="{'kt-badge--danger': review.reviewResult == 'N', 'kt-badge--success': review.reviewResult == 'S'}"
@@ -1456,7 +1456,7 @@
                       </div>
                       <div class="space-5"></div>
                       <div class="row">
-                        <div class="col-xl-12">
+                        <div class="col-md-12">
                           <p ng-bind="review.reviewMemo"></p>
                         </div>
                       </div>

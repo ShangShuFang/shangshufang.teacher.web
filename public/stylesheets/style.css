@@ -131,3 +131,14 @@ a.no-hand{
 .kt-footer .split{
   margin: 0 8px;
 }
+.shs-progress{
+  max-width: 430px !important;
+}
+.course-decs-3{
+  max-height: 56px;
+}
+.shs-login-left{
+  background-image: url(/images/banner_login.png);
+  background-size:100% 100% !important;
+  -moz-background-size:100% 100% !important;
+}

@@ -133,8 +133,8 @@
                       <form class="kt-form kt-form--label-left">
                         <div class="kt-portlet__body user-info">
                           <div class="form-group row">
-                            <label for="example-text-input" class="col-2 col-form-label">姓名：</label>
-                            <div class="col-10">
+                            <label for="example-text-input" class="col-3 col-form-label">姓名：</label>
+                            <div class="col-9">
                               <input class="form-control"
                                      ng-class="{'is-invalid': userForm.customerName.$dirty && userForm.customerName.$invalid , 'is-valid': !(userForm.customerName.$dirty && userForm.customerName.$invalid)}"
                                      type="text"
@@ -147,8 +147,8 @@
                             </div>
                           </div>
                           <div class="form-group row">
-                            <label for="example-text-input" class="col-2 col-form-label">性别：</label>
-                            <div class="col-10" style="text-align: right">
+                            <label for="example-text-input" class="col-3 col-form-label">性别：</label>
+                            <div class="col-9" style="text-align: right">
                               <div class="kt-radio-inline">
                                 <label class="kt-radio">
                                   <input type="radio" name="sex" value="M" ng-model="model.customerSex" ng-checked="model.customerSex == 'M'"> 男
@@ -162,8 +162,8 @@
                             </div>
                           </div>
                           <div class="form-group row">
-                            <label for="example-text-input" class="col-2 col-form-label">手机号码：</label>
-                            <div class="col-10">
+                            <label for="example-text-input" class="col-3 col-form-label">手机号码：</label>
+                            <div class="col-9">
                               <input class="form-control"
                                      ng-class="{'is-invalid': (userForm.cellphone.$dirty && userForm.cellphone.$invalid) || model.isCellphoneInvalid == 1, 'is-valid': model.isCellphoneInvalid == 0}"
                                      type="tel"
@@ -178,8 +178,8 @@
                             </div>
                           </div>
                           <div class="form-group row">
-                            <label for="example-text-input" class="col-2 col-form-label">电子邮箱：</label>
-                            <div class="col-10">
+                            <label for="example-text-input" class="col-3 col-form-label">电子邮箱：</label>
+                            <div class="col-9">
                               <input class="form-control"
                                      ng-class="{'is-invalid': model.isEmailInvalid == 1, 'is-valid': model.isEmailInvalid == 0}"
                                      type="email"

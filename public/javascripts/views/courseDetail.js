@@ -267,9 +267,9 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     window.open(`/technology?technology=${technologyID}`);
   };
 
-  $scope.onDeleteCourse = function() {
+  $scope.onFinishCourse = function() {
     bootbox.confirm({
-      message: `您确认要删除该课程吗？`,
+      message: `${$scope.model.loginUser.customerName}老师，请确认该课程已经授课完成吗？`,
       buttons: {
         confirm: {
           label: '确认',
@@ -282,11 +282,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
       },
       callback: function (result) {
         if(result) {
-          let btn = $('#btnDeleteCourse');
+          let btn = $('#btnFinishCourse');
           $(btn).attr('disabled',true);
           KTApp.progress(btn);
 
-          $http.put('/course/detail/delete', {
+          $http.put('/course/detail/finish', {
             universityCode: $scope.model.courseInfo.universityCode,
             schoolID: $scope.model.courseInfo.schoolID,
             teacherID: $scope.model.courseInfo.teacherID,
@@ -296,8 +296,8 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             if(response.data.err) {
               bizLogger.logInfo(
                   $scope.model.bizLog.pageName,
-                  $scope.model.bizLog.operationName.DELETE_COURSE,
-                  bizLogger.OPERATION_TYPE.DELETE,
+                  $scope.model.bizLog.operationName.CHANGE_CLASS_FINISH,
+                  bizLogger.OPERATION_TYPE.UPDATE,
                   bizLogger.OPERATION_RESULT.FAILED);
               KTApp.unprogress(btn);
               bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
@@ -305,10 +305,10 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             }
             bizLogger.logInfo(
                 $scope.model.bizLog.pageName,
-                $scope.model.bizLog.operationName.DELETE_COURSE,
-                bizLogger.OPERATION_TYPE.DELETE,
+                $scope.model.bizLog.operationName.CHANGE_CLASS_FINISH,
+                bizLogger.OPERATION_TYPE.UPDATE,
                 bizLogger.OPERATION_RESULT.SUCCESS);
-            location.href = '/index';
+            $scope.loadCourseInfo();
           }, function errorCallback(response) {
             bootbox.alert(localMessage.NETWORK_ERROR);
           });
@@ -561,6 +561,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
   $scope.loadCoursePlan = function(){
     let courseKnowledgeIDArray = [];
     let courseKnowledgeNameArray = [];
+    $scope.model.coursePlanList = [];
 
     $scope.model.courseInfo.coursePlanList.forEach(function (plan) {
       if($scope.model.coursePlanList.length === 0) {
@@ -1012,6 +1013,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
                 $scope.model.bizLog.operationName.CHANGE_CLASS_FINISH,
                 bizLogger.OPERATION_TYPE.UPDATE,
                 bizLogger.OPERATION_RESULT.SUCCESS);
+            $scope.loadCourseInfo();
           }, function errorCallback(response) {
             bootbox.alert(localMessage.NETWORK_ERROR);
           });
@@ -1083,6 +1085,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
                 $scope.model.bizLog.operationName.ASSIGN_CLASS_EXERCISES,
                 bizLogger.OPERATION_TYPE.INSERT,
                 bizLogger.OPERATION_RESULT.SUCCESS);
+            $scope.loadCourseInfo();
           }, function errorCallback(response) {
             bootbox.alert(localMessage.NETWORK_ERROR);
           });

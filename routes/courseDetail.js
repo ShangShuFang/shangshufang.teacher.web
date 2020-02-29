@@ -286,14 +286,14 @@ router.put('/coursePlan', (req, res, next) => {
   });
 });
 
-router.put('/delete', (req, res, next) => {
+router.put('/finish', (req, res, next) => {
   let service = new commonService.commonInvoke('changeCourseStatus');
   let data = {
     universityCode: req.body.universityCode,
     schoolID: req.body.schoolID,
     teacherID: req.body.teacherID,
     courseID: req.body.courseID,
-    dataStatus: 'D',
+    dataStatus: 'F',
     loginUser: req.body.loginUser
   };
 

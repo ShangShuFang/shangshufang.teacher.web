@@ -104,7 +104,7 @@
                 <span class="kt-badge kt-badge--inline kt-badge--info" ng-if="course.dataStatus == 'P'">未开始</span>
                 <span class="kt-badge kt-badge--inline kt-badge--success" ng-if="course.dataStatus == 'F'">已结束</span>
                 <button type="button" class="btn btn-label-success btn-sm btn-upper" ng-click="onOpenCourseDetail(course, 2, 6)" ng-if="course.dataStatus == 'A'">批改作业</button>&nbsp;
-                <button type="button" class="btn btn-label-danger btn-sm btn-upper" ng-click="onFinishCourse(course)" ng-if="course.dataStatus == 'A'">结束课程</button>
+                <button type="button" class="btn btn-label-danger btn-sm btn-upper" ng-click="onFinishCourse(course)" ng-if="course.dataStatus == 'A'">授课完成</button>
               </div>
             </div>
             <div class="kt-widget__subhead">
@@ -120,7 +120,7 @@
                 <p class="course-decs" title="\{{course.courseIntroduction}}" ng-bind="course.courseIntroduction">
                 </p>
               </div>
-              <div class="kt-widget__progress">
+              <div class="kt-widget__progress shs-progress">
                 <div class="kt-widget__text">
                   Progress
                 </div>

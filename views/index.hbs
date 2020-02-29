@@ -51,7 +51,7 @@
             <div class="kt-widget__body">
               <div class="kt-widget__item">
                 <div class="kt-widget__contact">
-                  <span class="kt-widget__label">市场应用方向:</span>
+                  <span class="kt-widget__label">应用方向:</span>
                   <span class="shs-desc-briefly shs-cursor-hand kt-font-bold" ng-attr-title="\{{data.directionNames}}" ng-bind="data.directionNames"></span>
                 </div>
                 <div class="kt-widget__contact">
@@ -155,7 +155,7 @@
                     <a href="javascript:;" class="kt-widget__username kt-font-brand kt-link kt-font-bold" ng-bind="course.courseName" ng-click="onOpenCourseDetail(course, 0)"></a>
                     <div class="kt-widget__action">
                       <button type="button" class="btn btn-label-success btn-sm btn-upper" ng-click="onOpenCourseDetail(course, 2, 6)">批改作业</button>&nbsp;
-                      <button type="button" class="btn btn-label-danger btn-sm btn-upper" ng-click="onFinishCourse(course)">结束课程</button>
+                      <button type="button" class="btn btn-label-danger btn-sm btn-upper" ng-click="onFinishCourse(course)">授课完成</button>
                     </div>
                   </div>
                   <div class="kt-widget__subhead">
@@ -171,7 +171,7 @@
                       <p class="course-decs" title="\{{course.courseIntroduction}}" ng-bind="course.courseIntroduction">
                       </p>
                     </div>
-                    <div class="kt-widget__progress">
+                    <div class="kt-widget__progress shs-progress">
                       <div class="kt-widget__text">
                         Progress
                       </div>

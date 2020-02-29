@@ -19,12 +19,17 @@
             <div class="kt-widget__head">
               <h4 ng-bind="model.courseInfo.courseName"></h4>
               <div class="kt-widget__action">
+
+                <span class="kt-badge kt-badge--inline kt-badge--info" ng-if="model.courseInfo.dataStatus == 'P'">未开始</span>
+                <span class="kt-badge kt-badge--inline kt-badge--success" ng-if="model.courseInfo.dataStatus == 'F'">已结束</span>
+
                 <button type="button"
-                        id="btnDeleteCourse"
-                        class="btn btn-danger btn-sm btn-upper"
-                        ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
-                        ng-click="onDeleteCourse()">删除课程
+                        id="btnFinishCourse"
+                        class="btn btn-label-danger btn-sm btn-upper"
+                        ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID && model.courseInfo.dataStatus == 'A'"
+                        ng-click="onFinishCourse()">授课完成
                 </button>&nbsp;
+
               </div>
             </div>
             <div class="kt-widget__subhead">
@@ -253,12 +258,13 @@
                         <button type="reset"
                                 class="btn btn-success"
                                 id="btnSaveCourseInfo"
-                                ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
+                                ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID && model.courseInfo.dataStatus != 'F'"
                                 ng-click="onSaveCourseInfo()"
                                 ng-disabled="(baseForm.courseName.$dirty && baseForm.courseName.$invalid)
                                             || (baseForm.courseTimeBegin.$dirty && baseForm.courseTimeBegin.$invalid)
                                             || (baseForm.courseTimeEnd.$dirty && baseForm.courseTimeEnd.$invalid)
-                                            || (baseForm.courseIntroduction.$dirty && baseForm.courseIntroduction.$invalid)">
+                                            || (baseForm.courseIntroduction.$dirty && baseForm.courseIntroduction.$invalid)
+                                            || model.noFinishClassCount == 0">
                           保存基本信息
                         </button>
                       </div>
@@ -280,7 +286,7 @@
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 15%">
                           <a href="javascript:;"
                              class="kt-font-brand kt-link kt-font-bold"
-                             ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
+                             ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID && model.courseInfo.dataStatus != 'F'"
                              ng-click="onShowCourseScheduleModal()"><i class="fa fa-edit"></i>修改</a>
                         </th>
                       </tr>
@@ -295,7 +301,7 @@
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 15%">工作日</th>
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 55%">授课节次</th>
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center"
-                            ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
+                            ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID && model.courseInfo.dataStatus == 'A'"
                             style="width: 15%">操作
                         </th>
                       </tr>
@@ -309,7 +315,7 @@
                           <span ng-repeat="course in courseSchedule.schedule">\{{course.orderText}}(\{{course.time}})</span>
                         </td>
                         <td class="kt-datatable__cell text-center"
-                            ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
+                            ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID && model.courseInfo.dataStatus == 'A'"
                             style="width: 15%">
                           <button type="button"
                                   class="btn btn-secondary btn-sm"
@@ -328,8 +334,8 @@
                         <button type="button"
                                 class="btn btn-success"
                                 id="btnSaveCourseSchedule"
-                                ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
-                                ng-disabled="model.courseScheduleList.length == 0"
+                                ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID && model.courseInfo.dataStatus != 'F'"
+                                ng-disabled="model.courseScheduleList.length == 0 || model.noFinishClassCount === 0"
                                 ng-click="onSaveCourseSchedule()">保存课程表信息
                         </button>
                       </div>
@@ -352,7 +358,7 @@
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 15%">
                           <a href="javascript:;"
                              class="kt-font-brand kt-link kt-font-bold"
-                             ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
+                             ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID && model.courseInfo.dataStatus != 'F'"
                              ng-click="onShowCoursePlanModal()"><i class="fa fa-edit"></i>修改</a>
                         </th>
                       </tr>
@@ -370,7 +376,7 @@
                         </th>
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 8%">状态</th>
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center"
-                            ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
+                            ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID && model.courseInfo.dataStatus != 'F'"
                             style="width: 15%">操作
                         </th>
                       </tr>
@@ -393,7 +399,7 @@
                         </td>
 
                         <td class="kt-datatable__cell text-center"
-                            ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
+                            ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID && model.courseInfo.dataStatus != 'F'"
                             style="width: 15%">
                           <button type="button"
                                   class="btn btn-secondary btn-sm"
@@ -413,7 +419,7 @@
                         <button type="button"
                                 class="btn btn-success"
                                 id="btnSaveCoursePlan"
-                                ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
+                                ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID && model.courseInfo.dataStatus != 'F'"
                                 ng-disabled="model.noFinishClassCount === 0"
                                 ng-click="onSaveCoursePlan()">
                           保存授课计划信息
@@ -598,12 +604,12 @@
                           <button type="button"
                                   id="btnAssignExercises\{{exercises.courseClass}}"
                                   class="btn btn-info btn-sm" ng-click="onAssignExercises(exercises)"
-                                  ng-if="exercises.dataStatus === 'P' && exercises.documentList.length > 0">
+                                  ng-if="exercises.dataStatus === 'P' && exercises.documentList.length > 0 && model.courseInfo.dataStatus == 'A' && model.courseInfo.courseSingUpCount > 0">
                             下发练习
                           </button>
                           <button type="button" class="btn btn-secondary btn-hover-brand btn-sm"
                                   ng-click="onFinishClass(exercises)"
-                                  ng-if="exercises.dataStatus === 'P' && exercises.documentList.length === 0">
+                                  ng-if="exercises.dataStatus === 'P' && exercises.documentList.length === 0 && model.courseInfo.dataStatus == 'A' && model.courseInfo.courseSingUpCount > 0">
                             结束本节
                           </button>
                           <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success"

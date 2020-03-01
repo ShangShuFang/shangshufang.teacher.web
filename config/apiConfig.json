@@ -86,7 +86,10 @@
       "classExercisesReview": "/api/university/student/exercises/review",
       "teachers": "/api/university/customer",
       "checkCourse": "/api/course/checkCourse",
-      "businessAnalyseLog": "/api/businessAnalyseLog"
+      "businessAnalyseLog": "/api/businessAnalyseLog",
+
+      "suggestType": "/api/suggest/type",
+      "suggest": "/api/suggest"
     }
   }
 }

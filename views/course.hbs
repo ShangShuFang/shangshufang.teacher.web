@@ -93,13 +93,13 @@
                             <div class="kt-widget__media">
                               <a ng-href="/technology?technology=\{{data.technologyID}}" target="_blank"
                               class="kt-widget__username kt-font-brand kt-font-bold">
-                              <img class="kt-widget__img" ng-src="\{{data.technologyThumbnail}}" alt="image">
+                              <img class="kt-widget__img course-create-widget-img" ng-src="\{{data.technologyThumbnail}}" alt="image">
                               </a>
                             </div>
 
                             <div class="kt-widget__info">
                               <a ng-href="/technology?technology=\{{data.technologyID}}" ng-bind="data.technologyName"
-                              target="_blank" class="kt-widget__username kt-font-brand kt-link kt-font-bold"></a>
+                              target="_blank" class="kt-widget__username kt-font-brand kt-link kt-font-bold course-create-username"></a>
                               <span class="kt-widget__desc">
                                 <i class="la"
                                    ng-class="{'la-star-o': data.technologyStars < 1, 'la-star star-selected': data.technologyStars >= 1}"></i>

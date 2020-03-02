@@ -56,7 +56,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.model.dataStatusList.push({statusCode: 'NULL', statusText: '全部'});
     $scope.model.dataStatusList.push({statusCode: 'P', statusText: '未开始'});
     $scope.model.dataStatusList.push({statusCode: 'A', statusText: '进行中'});
-    $scope.model.dataStatusList.push({statusCode: 'S', statusText: '暂停'});
+    // $scope.model.dataStatusList.push({statusCode: 'S', statusText: '暂停'});
     $scope.model.dataStatusList.push({statusCode: 'F', statusText: '已结束'});
 
     $scope.model.selectedTime = $scope.model.timeList[0];

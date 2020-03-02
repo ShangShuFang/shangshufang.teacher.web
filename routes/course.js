@@ -43,8 +43,9 @@ router.get('/list', (req, res, next) => {
   let courseTimeBegin = req.query.courseTimeBegin;
   let dataStatus = req.query.dataStatus;
   let isSelf = req.query.isSelf;
+  let searchType = req.query.searchType === undefined ? 'H' : req.query.searchType;
 
-  let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${teacherID}/${technologyID}/${courseTimeBegin}/${dataStatus}/${isSelf}`;
+  let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${teacherID}/${technologyID}/${courseTimeBegin}/${dataStatus}/${isSelf}/${searchType}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {

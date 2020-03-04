@@ -726,8 +726,9 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         learningPhaseID: $scope.model.selectedLearningPhase.learningPhaseID,
         learningPhaseName: $scope.model.selectedLearningPhase.learningPhaseName,
         knowledgeIDArray: courseKnowledgeIDArray,
-        knowledgeName: courseKnowledgeNameArray.join(' | '),
-        dataStatus: ''
+        knowledgeNameArray: courseKnowledgeNameArray,
+        dataStatus: 'P',
+        dataStatusText: '未结束'
       });
       $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {return obj.dataStatus !== 'F'}).length;
       $('#kt_modal_2').modal('hide');
@@ -756,7 +757,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
       callback: function (result) {
         if(result) {
           $scope.model.coursePlanList[index].knowledgeIDArray = courseKnowledgeIDArray;
-          $scope.model.coursePlanList[index].knowledgeName = courseKnowledgeNameArray.join(' | ');
+          $scope.model.coursePlanList[index].knowledgeNameArray = courseKnowledgeNameArray;
           $scope.$apply();
           $('#kt_modal_2').modal('hide');
         }

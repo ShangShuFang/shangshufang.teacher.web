@@ -142,3 +142,6 @@ a.no-hand{
   background-size:100% 100% !important;
   -moz-background-size:100% 100% !important;
 }
+.pre-wrap{
+  white-space: pre-wrap;
+}

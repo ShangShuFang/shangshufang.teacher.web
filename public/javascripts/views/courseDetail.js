@@ -68,7 +68,9 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     noFinishClassCount: 0,
     //endregion
 
-    //region 编程练习
+    //region 布置练习
+    assignCount: 3,
+    assignExercises: null,
     exercisesList: [],
     exercisesCourseClass: 0,
     courseExercisesList: [],
@@ -844,7 +846,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 
   //endregion
 
-  //region 编程练习
+  //region 布置练习
   $scope.loadCourseExercises = function(){
     let knowledgeArray = [];
     let exercisesArray = [];
@@ -1023,75 +1025,64 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     });
   };
 
-  $scope.onAssignExercises = function(exercises) {
-    let message = `您确认第${exercises.courseClass}节课已结束并下发练习吗？`;
-    bootbox.confirm({
-      message: message,
-      buttons: {
-        confirm: {
-          label: '确认',
-          className: 'btn-primary'
-        },
-        cancel: {
-          label: '取消',
-          className: 'btn-secondary'
-        }
-      },
-      callback: function (result) {
-        if(result) {
-          let btn = $(`#btnAssignExercises${exercises.courseClass}`);
-          $(btn).attr('disabled',true);
-          KTApp.progress(btn);
+  $scope.onShowAssignExercisesModal = function(exercises) {
+    $scope.model.assignExercises = exercises;
+    $('#kt_modal_send_exercises').modal('show');
+  };
 
-          $http.post('/course/detail/classExercises', {
-            universityCode: $scope.model.courseInfo.universityCode,
-            schoolID: $scope.model.courseInfo.schoolID,
-            courseID: $scope.model.courseInfo.courseID,
-            courseClass: exercises.courseClass,
-            assignCount: 3,
-            loginUser: $scope.model.loginUser.customerID
-          }).then(function successCallback(response) {
-            if(response.data.err) {
-              bizLogger.logInfo(
-                  $scope.model.bizLog.pageName,
-                  $scope.model.bizLog.operationName.ASSIGN_CLASS_EXERCISES,
-                  bizLogger.OPERATION_TYPE.INSERT,
-                  bizLogger.OPERATION_RESULT.FAILED);
-              KTApp.unprogress(btn);
-              $(btn).removeAttr('disabled');
-              bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
-              return false;
-            }
+  $scope.onAssignExercises = function() {
+    let btn = $('#btnSendExercises');
+    $(btn).attr('disabled',true);
+    KTApp.progress(btn);
 
-            for (let i = 0; i < $scope.model.coursePlanList.length ; i++) {
-              if($scope.model.coursePlanList[i].courseOrder === exercises.courseClass){
-                $scope.model.coursePlanList[i].dataStatus = 'F';
-                $scope.model.coursePlanList[i].dataStatusText = '已结束';
-                break;
-              }
-            }
+    $http.post('/course/detail/classExercises', {
+      universityCode: $scope.model.courseInfo.universityCode,
+      schoolID: $scope.model.courseInfo.schoolID,
+      courseID: $scope.model.courseInfo.courseID,
+      courseClass: $scope.model.assignExercises.courseClass,
+      assignCount: $scope.model.assignCount,
+      loginUser: $scope.model.loginUser.customerID
+    }).then(function successCallback(response) {
+      if(response.data.err) {
+        bizLogger.logInfo(
+            $scope.model.bizLog.pageName,
+            $scope.model.bizLog.operationName.ASSIGN_CLASS_EXERCISES,
+            bizLogger.OPERATION_TYPE.INSERT,
+            bizLogger.OPERATION_RESULT.FAILED);
+        KTApp.unprogress(btn);
+        $(btn).removeAttr('disabled');
+        bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+        return false;
+      }
 
-            for (let i = 0; i < $scope.model.exercisesList.length ; i++) {
-              if($scope.model.exercisesList[i].courseClass === exercises.courseClass){
-                $scope.model.exercisesList[i].dataStatus = 'F';
-                break;
-              }
-            }
-
-            KTApp.unprogress(btn);
-            $(btn).removeAttr('disabled');
-            $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {return obj.dataStatus !== 'F'}).length;
-            bizLogger.logInfo(
-                $scope.model.bizLog.pageName,
-                $scope.model.bizLog.operationName.ASSIGN_CLASS_EXERCISES,
-                bizLogger.OPERATION_TYPE.INSERT,
-                bizLogger.OPERATION_RESULT.SUCCESS);
-            $scope.loadCourseInfo();
-          }, function errorCallback(response) {
-            bootbox.alert(localMessage.NETWORK_ERROR);
-          });
+      for (let i = 0; i < $scope.model.coursePlanList.length ; i++) {
+        if($scope.model.coursePlanList[i].courseOrder === $scope.model.assignExercises.courseClass){
+          $scope.model.coursePlanList[i].dataStatus = 'F';
+          $scope.model.coursePlanList[i].dataStatusText = '已结束';
+          break;
         }
       }
+
+      for (let i = 0; i < $scope.model.exercisesList.length ; i++) {
+        if($scope.model.exercisesList[i].courseClass === $scope.model.assignExercises.courseClass){
+          $scope.model.exercisesList[i].dataStatus = 'F';
+          break;
+        }
+      }
+
+      KTApp.unprogress(btn);
+      $(btn).removeAttr('disabled');
+      $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {return obj.dataStatus !== 'F'}).length;
+      bizLogger.logInfo(
+          $scope.model.bizLog.pageName,
+          $scope.model.bizLog.operationName.ASSIGN_CLASS_EXERCISES,
+          bizLogger.OPERATION_TYPE.INSERT,
+          bizLogger.OPERATION_RESULT.SUCCESS);
+      $scope.model.assignExercises = null;
+      $('#kt_modal_send_exercises').modal('hide');
+      $scope.loadCourseInfo();
+    }, function errorCallback(response) {
+      bootbox.alert(localMessage.NETWORK_ERROR);
     });
   };
   //endregion
@@ -1170,13 +1161,22 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             return false;
           }
           if(response.data.dataContent === null || response.data.dataContent.dataList === null){
+            if($scope.model.pageNumber4Exercises > 1){
+              $scope.model.pageNumber4Exercises--;
+            }else {
+              $scope.model.pageNumber4Exercises = 1;
+            }
+            $scope.model.totalCount4Exercises = 0;
+            $scope.model.dataList4Exercises = [];
+            $scope.model.maxPageNumber4Exercises = 0;
+            $scope.model.paginationArray4Exercises = [];
+            $scope.model.prePageNum4Exercises = -1;
+            $scope.model.nextPageNum4Exercises = -1;
+            $scope.model.fromIndex4Exercises = 0;
+            $scope.model.toIndex4Exercises = 0;
             return false;
           }
-          if(response.data.dataContent.dataList !== null && response.data.dataContent.dataList.length === 0 && $scope.model.pageNumber4Exercises > 1){
-            $scope.model.pageNumber4Exercises--;
-            $scope.loadCourseStudent();
-            return false;
-          }
+
           $scope.model.totalCount4Exercises = response.data.dataContent.totalCount;
           $scope.model.dataList4Exercises = response.data.dataContent.dataList;
           $scope.model.pageNumber4Exercises = response.data.dataContent.currentPageNum;

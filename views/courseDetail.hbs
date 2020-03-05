@@ -506,7 +506,7 @@
                   </tr>
                   </tbody>
                 </table>
-                <div class="kt-datatable__pager kt-datatable--paging-loaded">
+                <div class="kt-datatable__pager kt-datatable--paging-loaded" ng-if="model.totalCount4SignUp > 0">
                   <ul class="kt-datatable__pager-nav">
                     <li>
                       <a title="第一页"
@@ -577,7 +577,7 @@
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 10%">技术</th>
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 55%">覆盖知识点
                         </th>
-                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 10%">编程习题</th>
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 10%">习题库数量</th>
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center"
                             ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
                             style="width: 15%">操作
@@ -595,8 +595,8 @@
                         <td class="kt-datatable__cell text-center" style="width: 10%">
                           <a href="javascript:;" class="kt-widget__value kt-font-brand"
                              ng-if="exercises.documentList.length > 0"
-                             ng-click="onShowExercisesModal(exercises.courseClass)">\{{exercises.documentList.length}}个编程练习</a>
-                          <span ng-if="exercises.documentList.length == 0">\{{exercises.documentList.length}}个编程练习</span>
+                             ng-click="onShowExercisesModal(exercises.courseClass)">共计\{{exercises.documentList.length}}个编程练习</a>
+                          <span ng-if="exercises.documentList.length == 0">共计\{{exercises.documentList.length}}个编程练习</span>
                         </td>
 
                         <td class="kt-datatable__cell text-center"
@@ -604,7 +604,7 @@
                             style="width: 15%">
                           <button type="button"
                                   id="btnAssignExercises\{{exercises.courseClass}}"
-                                  class="btn btn-info btn-sm" ng-click="onAssignExercises(exercises)"
+                                  class="btn btn-info btn-sm" ng-click="onShowAssignExercisesModal(exercises)"
                                   ng-if="exercises.dataStatus === 'P' && exercises.documentList.length > 0 && model.courseInfo.dataStatus == 'A' && model.courseInfo.courseSingUpCount > 0">
                             下发练习
                           </button>
@@ -793,7 +793,7 @@
                     </tr>
                   </tbody>
                 </table>
-                <div class="kt-datatable__pager kt-datatable--paging-loaded">
+                <div class="kt-datatable__pager kt-datatable--paging-loaded" ng-if="model.totalCount4Exercises > 0">
                   <ul class="kt-datatable__pager-nav">
                     <li>
                       <a title="第一页"
@@ -963,7 +963,7 @@
   </div>
 
     <div class="modal fade" id="kt_modal_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">修改授课计划(一门课程最多可创建300节课)</h5>
@@ -1054,77 +1054,77 @@
         </form>
       </div>
     </div>
-  </div>
+    </div>
 
     <div class="modal fade" id="kt_modal_3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">第\{{model.exercisesCourseClass}}节课练习题</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          </button>
-        </div>
-        <form name="courseExercisesForm" novalidate>
-          <div class="modal-body">
-            <div class="kt-portlet ">
-              <div class="kt-portlet__body">
-                <!--begin::Accordion-->
-                <div class="accordion accordion-light  accordion-svg-icon" id="accordionExample7">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">第\{{model.exercisesCourseClass}}节课练习题</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            </button>
+          </div>
+          <form name="courseExercisesForm" novalidate>
+            <div class="modal-body">
+              <div class="kt-portlet ">
+                <div class="kt-portlet__body">
+                  <!--begin::Accordion-->
+                  <div class="accordion accordion-light  accordion-svg-icon" id="accordionExample7">
 
-                  <div class="card" ng-repeat="courseExercises in model.courseExercisesFilterList">
-                    <div class="card-header" id="headingOne\{{$index}}">
-                      <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseOne\{{$index}}">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                             height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
-                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <polygon points="0 0 24 0 24 24 0 24"></polygon>
-                            <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
-                                  fill="#000000" fill-rule="nonzero"></path>
-                            <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
-                                  fill="#000000" fill-rule="nonzero" opacity="0.3"
-                                  transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "></path>
-                          </g>
-                        </svg>
-                        <span ng-bind="courseExercises.knowledgeName"></span>
+                    <div class="card" ng-repeat="courseExercises in model.courseExercisesFilterList">
+                      <div class="card-header" id="headingOne\{{$index}}">
+                        <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseOne\{{$index}}">
+                          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                               height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                              <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                              <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                    fill="#000000" fill-rule="nonzero"></path>
+                              <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                    fill="#000000" fill-rule="nonzero" opacity="0.3"
+                                    transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "></path>
+                            </g>
+                          </svg>
+                          <span ng-bind="courseExercises.knowledgeName"></span>
+                        </div>
                       </div>
-                    </div>
-                    <div id="collapseOne\{{$index}}" class="collapse" style="">
-                      <div class="card-body">
-                        <div class="kt-widget4" ng-repeat="document in courseExercises.documentList">
-                          <div class="kt-widget4__item">
-                            <div class="kt-widget4__pic kt-widget4__pic--icon">
-                              <img src="/media/files/pdf.svg" alt="">
-                            </div>
-                            <a ng-href="\{{document.documentUrl}}"
-                               target="_blank"
-                               class="kt-widget4__title"
-                               ng-bind="document.documentUrl.substr(document.documentUrl.lastIndexOf('/') + 1)">
-                            </a>
-                            <div class="kt-widget4__tools">
-                              <a ng-href="\{{document.answerUrl}}" target="_blank" class="btn btn-clean">
-                                参考示例
+                      <div id="collapseOne\{{$index}}" class="collapse" style="">
+                        <div class="card-body">
+                          <div class="kt-widget4" ng-repeat="document in courseExercises.documentList">
+                            <div class="kt-widget4__item">
+                              <div class="kt-widget4__pic kt-widget4__pic--icon">
+                                <img src="/media/files/pdf.svg" alt="">
+                              </div>
+                              <a ng-href="\{{document.documentUrl}}"
+                                 target="_blank"
+                                 class="kt-widget4__title"
+                                 ng-bind="document.documentUrl.substr(document.documentUrl.lastIndexOf('/') + 1)">
                               </a>
+                              <div class="kt-widget4__tools">
+                                <a ng-href="\{{document.answerUrl}}" target="_blank" class="btn btn-clean">
+                                  参考示例
+                                </a>
+                              </div>
                             </div>
                           </div>
+
+
                         </div>
-
-
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <!--end::Accordion-->
+                  <!--end::Accordion-->
+                </div>
               </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-          </div>
-        </form>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
 
     <div class="modal fade" id="kt_modal_review" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
        aria-hidden="true" style="display: none;">
@@ -1400,7 +1400,7 @@
   </div>
 
     <div class="modal fade" id="kt_modal_review_list" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-    <div class="modal-dialog" role="document">
+      <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">批改历史(共计\{{model.reviewHistory.totalCount}}条批改历史)</h5>
@@ -1410,6 +1410,7 @@
         <div class="modal-body">
           <div class="kt-scroll ps ps--active-y"
                data-scroll="true"
+               ng-if="model.reviewHistory.totalCount > 0"
                style="min-height: 200px; max-height: 500px; overflow: hidden;">
             <div class="kt-notes">
               <div class="kt-notes__items">
@@ -1464,7 +1465,7 @@
                       <div class="space-5"></div>
                       <div class="row">
                         <div class="col-md-12">
-                          <p ng-bind="review.reviewMemo"></p>
+                          <p ng-bind="review.reviewMemo" class="pre-wrap"></p>
                         </div>
                       </div>
 										</span>
@@ -1491,7 +1492,7 @@
         </div>
       </div>
     </div>
-  </div>
+    </div>
 
     <div class="modal fade" id="kt_modal_leave_message" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true" style="display: none;">
@@ -1517,6 +1518,37 @@
                       id="btnSubmitAnswerMessage"
                       ng-click="onSubmitAnswerMessage()"
                       ng-disabled="leaveMessageForm.answerMessage.$pristine || (leaveMessageForm.answerMessage.$dirty && leaveMessageForm.answerMessage.$invalid)">回复
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="kt_modal_send_exercises" tabindex="-1" role="dialog" style="display: none;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form name="sendExercisesForm" novalidate>
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">请填写每个知识点最多下发的习题数量</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-12">
+                  <input type="number" class="form-control" name="assignCount" maxlength="2" min="1" max="99" value="3" ng-model="model.assignCount" required>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+              <button type="button"
+                      class="btn btn-info"
+                      id="btnSendExercises"
+                      ng-click="onAssignExercises()"
+                      ng-disabled="sendExercisesForm.assignCount.$dirty && sendExercisesForm.assignCount.$invalid">
+                发送
               </button>
             </div>
           </form>

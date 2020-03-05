@@ -575,9 +575,9 @@
                       <tr class="kt-datatable__row" style="left: 0;">
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 10%">节次</th>
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 10%">技术</th>
-                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 55%">覆盖知识点
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 45%">覆盖知识点
                         </th>
-                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 10%">习题库数量</th>
+                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 20%">习题库数量</th>
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center"
                             ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
                             style="width: 15%">操作
@@ -588,11 +588,11 @@
                       <tr class="kt-datatable__row" style="left: 0;" ng-repeat="exercises in model.exercisesList">
                         <td class="kt-datatable__cell text-center" style="width: 10%">第\{{exercises.courseClass}}节</td>
                         <td class="kt-datatable__cell text-center" style="width: 10%">\{{exercises.technologyName}}</td>
-                        <td class="kt-datatable__cell text-center" style="width: 55%">
+                        <td class="kt-datatable__cell text-center" style="width: 45%">
                           <span ng-repeat="knowledge in exercises.knowledgeArray"
                                 ng-bind="knowledge.knowledgeName"></span>
                         </td>
-                        <td class="kt-datatable__cell text-center" style="width: 10%">
+                        <td class="kt-datatable__cell text-center" style="width: 20%">
                           <a href="javascript:;" class="kt-widget__value kt-font-brand"
                              ng-if="exercises.documentList.length > 0"
                              ng-click="onShowExercisesModal(exercises.courseClass)">共计\{{exercises.documentList.length}}个编程练习</a>
@@ -1410,8 +1410,7 @@
         <div class="modal-body">
           <div class="kt-scroll ps ps--active-y"
                data-scroll="true"
-               ng-if="model.reviewHistory.totalCount > 0"
-               style="min-height: 200px; max-height: 500px; overflow: hidden;">
+               style="max-height: 500px; overflow: hidden;">
             <div class="kt-notes">
               <div class="kt-notes__items">
                 <div class="kt-notes__item" ng-repeat="review in model.reviewHistory.dataList">

@@ -745,7 +745,7 @@ Licensed under the BSD-2-Clause License.
       pointStrokeColors: ['#ffffff'],
       pointFillColors: [],
       smooth: true,
-      xLabels: 'auto',
+      xLabels: 'month',
       xLabelFormat: null,
       xLabelMargin: 24,
       hideHover: false

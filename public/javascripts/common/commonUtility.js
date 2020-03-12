@@ -25,6 +25,14 @@ commonUtility.isEmptyList = function (list) {
   return list === null || list.length === 0;
 };
 
+commonUtility.isNumber = function (value) {
+  if(commonUtility.isEmpty(value)){
+    return false;
+  }
+  return !isNaN(value);
+
+};
+
 commonUtility.setCookie = function (name, value) {
   let days = 30;
   let exp = new Date();
@@ -78,18 +86,14 @@ commonUtility.buildSystemRemoteUri = function (serviceUrl, dirJson) {
 
 commonUtility.isCellphoneNumber = function (cellphone) {
   let reg = /^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1})|(19[0-9]{1}))+\d{8})$/;
-  if(!reg.test(cellphone)){
-    return false;
-  }
-  return true;
+  return reg.test(cellphone);
+
 };
 
 commonUtility.isEmail = function (email) {
   let reg = /^\w{3,}(\.\w+)*@[A-z0-9]+(\.[A-z]{2,5}){1,2}$/;
-  if(!reg.test(email)){
-    return false;
-  }
-  return true;
+  return reg.test(email);
+
 };
 
 commonUtility.isLogin = function () {

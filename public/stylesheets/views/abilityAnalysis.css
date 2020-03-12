@@ -1,0 +1,13 @@
+.code-standard-analysis ul{
+  list-style: none;
+  padding: 0;
+}
+
+.code-standard-analysis ul li{
+  float: left;
+  width: 130px !important;
+  height: 38px !important;
+  padding: 8px !important;
+  margin-left: 3px;
+  margin-bottom: 3px;
+}

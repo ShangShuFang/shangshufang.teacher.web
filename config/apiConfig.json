@@ -51,6 +51,7 @@
       "knowledge": "/api/technology/knowledge",
       "checkKnowledgeNameExist": "/api/technology/knowledge/checkKnowledgeName",
       "changeKnowledgeStatus": "/api/technology/knowledge/changeStatus",
+      "learningTechnology": "/api/technology/learning",
 
       "learningPhase": "/api/learningPhase",
 
@@ -85,11 +86,16 @@
       "classExercisesAssign": "/api/university/student/exercises/assign",
       "classExercisesReview": "/api/university/student/exercises/review",
       "teachers": "/api/university/customer",
+      "student": "/api/university/student",
       "checkCourse": "/api/course/checkCourse",
       "businessAnalyseLog": "/api/businessAnalyseLog",
 
       "suggestType": "/api/suggest/type",
-      "suggest": "/api/suggest"
+      "suggest": "/api/suggest",
+
+      "knowledgeAnalysis": "/api/student/ability/analysis/knowledge",
+      "exerciseAnalysis": "/api/student/ability/analysis/exercise",
+      "exercisePercentAnalysis": "/api/student/ability/analysis/exercisePercent"
     }
   }
 }

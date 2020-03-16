@@ -7,8 +7,8 @@ router.get('/', function(req, res, next) {
   res.render('courseDetail', { title: '课程明细', tabIndex: req.query.tabIndex});
 });
 
-router.get('/exercises', function(req, res, next) {
-  let service = new commonService.commonInvoke('exercises');
+router.get('/knowledgeExercises', function(req, res, next) {
+  let service = new commonService.commonInvoke('knowledgeExercises');
   let universityCode = req.query.universityCode;
   let schoolID = req.query.schoolID;
   let courseID = req.query.courseID;
@@ -28,7 +28,7 @@ router.get('/exercises', function(req, res, next) {
         code: result.code,
         msg: result.msg,
         totalCount: result.content.totalCount,
-        exercisesList: result.content.responseData
+        courseExercisesList: result.content.responseData
       });
     }
   });
@@ -166,6 +166,30 @@ router.get('/exercisesReviewHistory', function(req, res, next) {
         code: result.code,
         msg: result.msg,
         dataContent: dataContent
+      });
+    }
+  });
+});
+
+router.get('/codeStandard', function(req, res, next) {
+  let service = new commonService.commonInvoke('codeStandard');
+  let technologyID = req.query.technologyID;
+
+  let parameter = `1/999/${technologyID}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        dataList: result.content.responseData
       });
     }
   });
@@ -356,7 +380,8 @@ router.post('/exercisesReview', (req, res, next) => {
     reviewerType: req.body.reviewerType,
     compilationResult: req.body.compilationResult,
     runResult: req.body.runResult,
-    codeStandardsScore: req.body.codeStandardsScore,
+    codeStandardResult: req.body.codeStandardResult,
+    codeStandardErrorListJson: req.body.codeStandardErrorListJson,
     reviewResult: req.body.reviewResult,
     reviewMemo: req.body.reviewMemo,
     loginUser: req.body.loginUser

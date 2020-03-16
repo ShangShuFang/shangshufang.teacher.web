@@ -60,7 +60,7 @@
       "usingLearningPhase": "/api/learningPath/learningPhase",
       "usingKnowledge": "/api/learningPath/knowledge",
 
-      "exercises": "/api/exercises",
+      "knowledgeExercises": "/api/knowledge/exercises/courseAssign",
       "checkExercisesCode": "/api/exercises/checkExercisesCode",
       "exercisesKnowledgeList": "/api/exercises/knowledge",
       "exercisesFile": "/api/exercises/file",
@@ -95,7 +95,8 @@
 
       "knowledgeAnalysis": "/api/student/ability/analysis/knowledge",
       "exerciseAnalysis": "/api/student/ability/analysis/exercise",
-      "exercisePercentAnalysis": "/api/student/ability/analysis/exercisePercent"
+      "exercisePercentAnalysis": "/api/student/ability/analysis/exercisePercent",
+      "codeStandard": "/api/codeStandard"
     }
   }
 }

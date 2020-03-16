@@ -589,14 +589,14 @@
                         <td class="kt-datatable__cell text-center" style="width: 10%">第\{{exercises.courseClass}}节</td>
                         <td class="kt-datatable__cell text-center" style="width: 10%">\{{exercises.technologyName}}</td>
                         <td class="kt-datatable__cell text-center" style="width: 45%">
-                          <span ng-repeat="knowledge in exercises.knowledgeArray"
+                          <span ng-repeat="knowledge in exercises.knowledgeList"
                                 ng-bind="knowledge.knowledgeName"></span>
                         </td>
                         <td class="kt-datatable__cell text-center" style="width: 20%">
                           <a href="javascript:;" class="kt-widget__value kt-font-brand"
-                             ng-if="exercises.documentList.length > 0"
-                             ng-click="onShowExercisesModal(exercises.courseClass)">共计\{{exercises.documentList.length}}个编程练习</a>
-                          <span ng-if="exercises.documentList.length == 0">共计\{{exercises.documentList.length}}个编程练习</span>
+                             ng-if="exercises.exercisesTotalCount > 0"
+                             ng-click="onShowExercisesModal(exercises.courseClass)">共计\{{exercises.exercisesTotalCount}}个编程练习</a>
+                          <span ng-if="exercises.exercisesTotalCount == 0">共计\{{exercises.exercisesTotalCount}}个编程练习</span>
                         </td>
 
                         <td class="kt-datatable__cell text-center"
@@ -605,20 +605,21 @@
                           <button type="button"
                                   id="btnAssignExercises\{{exercises.courseClass}}"
                                   class="btn btn-info btn-sm" ng-click="onShowAssignExercisesModal(exercises)"
-                                  ng-if="exercises.dataStatus === 'P' && exercises.documentList.length > 0 && model.courseInfo.dataStatus == 'A' && model.courseInfo.courseSingUpCount > 0">
+                                  ng-if="exercises.dataStatus === 'P' && exercises.exercisesTotalCount > 0 && model.courseInfo.dataStatus == 'A' && model.courseInfo.courseSingUpCount > 0">
                             下发练习
                           </button>
+
                           <button type="button" class="btn btn-secondary btn-hover-brand btn-sm"
                                   ng-click="onFinishClass(exercises)"
-                                  ng-if="exercises.dataStatus === 'P' && exercises.documentList.length === 0 && model.courseInfo.dataStatus == 'A' && model.courseInfo.courseSingUpCount > 0">
+                                  ng-if="exercises.dataStatus === 'P' && exercises.exercisesTotalCount == 0 && model.courseInfo.dataStatus == 'A' && model.courseInfo.courseSingUpCount > 0">
                             结束本节
                           </button>
                           <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success"
                                 style="color: #ffffff; display: inline-flex; "
-                                ng-if="exercises.dataStatus === 'F' && exercises.documentList.length > 0">练习已下发</span>
+                                ng-if="exercises.dataStatus === 'F' && exercises.exercisesTotalCount > 0">练习已下发</span>
                           <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success"
                                 style="color: #ffffff; display: inline-flex; "
-                                ng-if="exercises.dataStatus === 'F' && exercises.documentList.length === 0">已结束</span>
+                                ng-if="exercises.dataStatus === 'F' && exercises.exercisesTotalCount === 0">已结束</span>
                         </td>
                       </tr>
                       </tbody>
@@ -1071,7 +1072,7 @@
                   <!--begin::Accordion-->
                   <div class="accordion accordion-light  accordion-svg-icon" id="accordionExample7">
 
-                    <div class="card" ng-repeat="courseExercises in model.courseExercisesFilterList">
+                    <div class="card" ng-repeat="knowledge in model.courseExercisesFilterList">
                       <div class="card-header" id="headingOne\{{$index}}">
                         <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseOne\{{$index}}">
                           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -1085,23 +1086,23 @@
                                     transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "></path>
                             </g>
                           </svg>
-                          <span ng-bind="courseExercises.knowledgeName"></span>
+                          <span ng-bind="knowledge.knowledgeName"></span>
                         </div>
                       </div>
                       <div id="collapseOne\{{$index}}" class="collapse" style="">
                         <div class="card-body">
-                          <div class="kt-widget4" ng-repeat="document in courseExercises.documentList">
+                          <div class="kt-widget4" ng-repeat="knowledgeExercises in knowledge.knowledgeExercisesList">
                             <div class="kt-widget4__item">
                               <div class="kt-widget4__pic kt-widget4__pic--icon">
                                 <img src="/media/files/pdf.svg" alt="">
                               </div>
-                              <a ng-href="\{{document.documentUrl}}"
+                              <a ng-href="\{{knowledgeExercises.documentUrl}}"
                                  target="_blank"
                                  class="kt-widget4__title"
-                                 ng-bind="document.documentUrl.substr(document.documentUrl.lastIndexOf('/') + 1)">
+                                 ng-bind="knowledgeExercises.documentUrl.substr(knowledgeExercises.documentUrl.lastIndexOf('/') + 1)">
                               </a>
                               <div class="kt-widget4__tools">
-                                <a ng-href="\{{document.answerUrl}}" target="_blank" class="btn btn-clean">
+                                <a ng-href="\{{knowledgeExercises.answerUrl}}" target="_blank" class="btn btn-clean">
                                   参考示例
                                 </a>
                               </div>
@@ -1264,84 +1265,35 @@
                       <div class="kt-radio-inline">
                         <label class="kt-radio">
                           <input type="radio"
-                                 name="score"
+                                 name="codeStandard"
                                  value="1"
-                                 ng-checked="model.reviewData.score == 1"
-                                 ng-model="model.reviewData.score"> 1分
+                                 ng-checked="model.reviewData.codeStandardResult == 1"
+                                 ng-model="model.reviewData.codeStandardResult"
+                                 ng-change="onCodeStandardResultChange()"> 很好
                           <span></span>
                         </label>
                         <label class="kt-radio">
                           <input type="radio"
-                                 name="score"
-                                 value="2"
-                                 ng-checked="model.reviewData.score == 2"
-                                 ng-model="model.reviewData.score"> 2分
+                                 name="codeStandard"
+                                 value="0"
+                                 ng-checked="model.reviewData.codeStandardResult == 0"
+                                 ng-model="model.reviewData.codeStandardResult"
+                                 ng-change="onCodeStandardResultChange()"> 不规范
                           <span></span>
                         </label>
-                        <label class="kt-radio">
-                          <input type="radio"
-                                 name="score"
-                                 value="3"
-                                 ng-checked="model.reviewData.score == 3"
-                                 ng-model="model.reviewData.score"> 3分
+                      </div>
+                      <div class="kt-checkbox-list" ng-if="model.reviewData.isShowCodeStandardList" style="margin-top: 15px">
+
+                        <label class="kt-checkbox kt-checkbox--tick kt-checkbox--danger"
+                               ng-repeat="codeStandard in model.reviewData.codeStandardList">
+                          <input type="checkbox"
+                                 name="codeStandard"
+                                 ng-value="codeStandard.codeStandardID"
+                                 ng-click="onCodeStandardChange($event,codeStandard.codeStandardID)">
+                          \{{codeStandard.codeStandardName}}
                           <span></span>
                         </label>
-                        <label class="kt-radio">
-                          <input type="radio"
-                                 name="score"
-                                 value="4"
-                                 ng-checked="model.reviewData.score == 4"
-                                 ng-model="model.reviewData.score"> 4分
-                          <span></span>
-                        </label>
-                        <label class="kt-radio">
-                          <input type="radio"
-                                 name="score"
-                                 value="5"
-                                 ng-checked="model.reviewData.score == 5"
-                                 ng-model="model.reviewData.score"> 5分
-                          <span></span>
-                        </label>
-                        <label class="kt-radio">
-                          <input type="radio"
-                                 name="score"
-                                 value="6"
-                                 ng-checked="model.reviewData.score == 6"
-                                 ng-model="model.reviewData.score"> 6分
-                          <span></span>
-                        </label>
-                        <label class="kt-radio">
-                          <input type="radio"
-                                 name="score"
-                                 value="7"
-                                 ng-checked="model.reviewData.score == 7"
-                                 ng-model="model.reviewData.score"> 7分
-                          <span></span>
-                        </label>
-                        <label class="kt-radio">
-                          <input type="radio"
-                                 name="score"
-                                 value="8"
-                                 ng-checked="model.reviewData.score == 8"
-                                 ng-model="model.reviewData.score"> 8分
-                          <span></span>
-                        </label>
-                        <label class="kt-radio">
-                          <input type="radio"
-                                 name="score"
-                                 value="9"
-                                 ng-checked="model.reviewData.score == 9"
-                                 ng-model="model.reviewData.score"> 9分
-                          <span></span>
-                        </label>
-                        <label class="kt-radio">
-                          <input type="radio"
-                                 name="score"
-                                 value="10"
-                                 ng-checked="model.reviewData.score == 10"
-                                 ng-model="model.reviewData.score"> 10分
-                          <span></span>
-                        </label>
+
                       </div>
                     </div>
                   </div>
@@ -1388,7 +1340,8 @@
                     class="btn btn-primary"
                     ng-disabled="model.reviewData.compilationResult == -1
                               || model.reviewData.runResult == -1
-                              || model.reviewData.score == 0
+                              || model.reviewData.codeStandardResult == -1
+                              || (model.reviewData.codeStandardResult == 0 && model.reviewData.codeStandardErrorList.length == 0)
                               || model.reviewData.reviewResult == -1"
                     ng-click="onReviewSubmit()">
               提交批改结果
@@ -1430,14 +1383,14 @@
                     <span class="kt-notes__body">
                       <div class="row">
                         <div class="col-md-6">
-                          <span>编译结果：</span>
+                          <span class="kt-font-bold">编译结果：</span>
                           <span class="kt-badge kt-badge--inline kt-badge--pill"
                                 ng-class="{'kt-badge--danger': review.compilationResult == 'N', 'kt-badge--success': review.compilationResult == 'S'}"
                                 ng-bind="review.compilationResultText">
                           </span>
                         </div>
                         <div class="col-md-6">
-                          <span>运行结果：</span>
+                          <span class="kt-font-bold">运行结果：</span>
                           <span class="kt-badge kt-badge--inline kt-badge--pill"
                                 ng-class="{'kt-badge--danger': review.runResult == 'N', 'kt-badge--success': review.runResult == 'S'}"
                                 ng-bind="review.runResultText">
@@ -1447,14 +1400,14 @@
                       <div class="space-5"></div>
                       <div class="row">
                         <div class="col-md-6">
-                          <span>代码规范：</span>
+                          <span class="kt-font-bold">编码规范：</span>
                           <span class="kt-badge kt-badge--inline kt-badge--pill"
-                                ng-class="{'kt-badge--danger': review.codeStandardsScore < 6, 'kt-badge--warning': review.codeStandardsScore >= 6 && review.codeStandardsScore < 8, 'kt-badge--success': review.codeStandardsScore >= 8}">
-                            \{{review.codeStandardsScore}}分
+                                ng-class="{'kt-badge--danger': review.codeStandardResult == 'N', 'kt-badge--success': review.codeStandardResult == 'S'}"
+                                ng-bind="review.codeStandardResultText">
                           </span>
                         </div>
                         <div class="col-md-6">
-                          <span>综合结果：</span>
+                          <span class="kt-font-bold">综合结果：</span>
                           <span class="kt-badge kt-badge--inline kt-badge--pill"
                                 ng-class="{'kt-badge--danger': review.reviewResult == 'N', 'kt-badge--success': review.reviewResult == 'S'}"
                                 ng-bind="review.reviewResultText">
@@ -1464,6 +1417,23 @@
                       <div class="space-5"></div>
                       <div class="row">
                         <div class="col-md-12">
+                          <span class="kt-font-bold">编码规范问题：</span>
+                          <div class="kt-list-timeline">
+													<div class="kt-list-timeline__items">
+														<div class="kt-list-timeline__item" ng-repeat="codeStandard in review.codeStandardErrorList">
+															<span class="kt-list-timeline__badge"></span>
+															<span class="kt-list-timeline__text" ng-bind="codeStandard.codeStandardName"></span>
+														</div>
+													</div>
+												</div>
+
+                        </div>
+                      </div>
+                      <div class="space-5"></div>
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <span class="kt-font-bold">批改评语：</span>
                           <p ng-bind="review.reviewMemo" class="pre-wrap"></p>
                         </div>
                       </div>
@@ -1527,18 +1497,20 @@
     <div class="modal fade" id="kt_modal_send_exercises" tabindex="-1" role="dialog" style="display: none;">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <form name="sendExercisesForm" novalidate>
+          <form class="kt-form kt-form--label-right" name="sendExercisesForm" novalidate>
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">请填写每个知识点最多下发的习题数量</h5>
+              <h5 class="modal-title" id="exampleModalLabel">下发第\{{model.exercisesCourseClass}}节课习题</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               </button>
             </div>
             <div class="modal-body">
-              <div class="row">
-                <div class="col-12">
+              <div class="form-group row kt-margin-0">
+                <label for="example-number-input" class="col-4 col-form-label">每个知识点习题数量</label>
+                <div class="col-8">
                   <input type="number" class="form-control" name="assignCount" maxlength="2" min="1" max="99" value="3" ng-model="model.assignCount" required>
                 </div>
               </div>
+
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>

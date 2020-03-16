@@ -106,9 +106,13 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
       courseID: 0,
       courseClass: 0,
       exercisesID: 0,
+      studentID: '',
       studentName: '',
+      studentUniversityCode: 0,
       studentUniversityName: '',
+      studentSchoolID: 0,
       studentSchoolName: '',
+      technologyID: 0,
       technologyName: '',
       learningPhaseName: '',
       knowledgeName: '',
@@ -117,7 +121,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
       sourceCodeGitUrl: '',
       compilationResult: -1,
       runResult: -1,
-      score: 0,
+      // score: 0,
+      codeStandardResult: -1,
+      isShowCodeStandardList: false,
+      codeStandardList: [],
+      codeStandardErrorList: [],
       reviewResult: -1,
       reviewMemo: ''
     },
@@ -226,6 +234,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
       $scope.loadCourseSchedule();
       $scope.loadCoursePlan();
       $scope.loadLearningPhase();
+      $scope.loadCodeStandardList();
     }, function errorCallback(response) {
       bootbox.alert(localMessage.NETWORK_ERROR);
     });
@@ -852,7 +861,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     let exercisesArray = [];
     let exercisesDocumentArray = [];
 
-    $http.get(`/course/detail/exercises?universityCode=${$scope.model.universityCode}&schoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}`).then(function successCallback (response) {
+    $http.get(`/course/detail/knowledgeExercises?universityCode=${$scope.model.universityCode}&schoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}`).then(function successCallback (response) {
       if(response.data.err){
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
@@ -860,95 +869,15 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
       if(response.data.totalCount === 0){
         return false;
       }
-      response.data.exercisesList.forEach(function (exercises) {
-        if(exercises.documentList.length > 0){
-          $scope.model.courseExercisesList.push({
-            courseClass: exercises.courseClass,
-            exercisesName: exercises.exercisesName,
-            knowledgeID: exercises.knowledgeID,
-            knowledgeName: exercises.knowledgeName,
-            documentList: exercises.documentList
-          });
-        }
-
-        if($scope.model.exercisesList.length === 0) {
-          knowledgeArray.push({knowledgeID: exercises.knowledgeID, knowledgeName: exercises.knowledgeName});
-          if(exercises.exercisesID !== 0){
-            exercisesArray.push({exercisesID: exercises.exercisesID, exercisesName: exercises.exercisesName,});
-          }
-
-          if(exercises.documentList.length > 0){
-            exercises.documentList.forEach(function (document) {
-              exercisesDocumentArray.push(document);
-            });
-          }
-
-          $scope.model.exercisesList.push({
-            courseClass: exercises.courseClass,
-            technologyID: exercises.technologyID,
-            technologyName: exercises.technologyName,
-            exercisesID: exercises.exercisesID,
-            exercisesName: exercises.exercisesName,
-            knowledgeArray: knowledgeArray,
-            exercisesArray: exercisesArray,
-            documentList: exercisesDocumentArray,
-            dataStatus: exercises.dataStatus
-          });
-        }else {
-          let currentCourseClass = exercises.courseClass;
-          let isExistCurrentCourseClass = false;
-          let isExistCurrentCourseClassIndex = -1;
-          $scope.model.exercisesList.forEach(function (e,i) {
-            if(e.courseClass === currentCourseClass){
-              isExistCurrentCourseClass = true;
-              isExistCurrentCourseClassIndex = i;
-            }
-          });
-
-          if(isExistCurrentCourseClass){
-            knowledgeArray.push({knowledgeID: exercises.knowledgeID, knowledgeName: exercises.knowledgeName});
-
-            if(exercises.exercisesID !== 0){
-              exercisesArray.push({exercisesID: exercises.exercisesID, exercisesName: exercises.exercisesName,});
-            }
-
-            if(exercises.documentList.length > 0){
-              exercises.documentList.forEach(function (document) {
-                exercisesDocumentArray.push(document);
-              });
-            }
-
-            $scope.model.exercisesList[isExistCurrentCourseClassIndex].knowledgeArray = knowledgeArray;
-            $scope.model.exercisesList[isExistCurrentCourseClassIndex].exercisesArray = exercisesArray;
-            $scope.model.exercisesList[isExistCurrentCourseClassIndex].documentList = exercisesDocumentArray;
-          }else{
-            knowledgeArray = [];
-            exercisesArray = [];
-            exercisesDocumentArray = [];
-            knowledgeArray.push({knowledgeID: exercises.knowledgeID, knowledgeName: exercises.knowledgeName});
-            if(exercises.exercisesID !== 0){
-              exercisesArray.push({exercisesID: exercises.exercisesID, exercisesName: exercises.exercisesName,});
-            }
-
-            if(exercises.documentList.length > 0){
-              exercises.documentList.forEach(function (document) {
-                exercisesDocumentArray.push(document);
-              });
-            }
-            $scope.model.exercisesList.push({
-              courseClass: exercises.courseClass,
-              technologyID: exercises.technologyID,
-              technologyName: exercises.technologyName,
-              exercisesID: exercises.exercisesID,
-              exercisesName: exercises.exercisesName,
-              knowledgeArray: knowledgeArray,
-              exercisesArray: exercisesArray,
-              documentList: exercisesDocumentArray,
-              dataStatus: exercises.dataStatus
-            });
-          }
-        }
+      $scope.model.exercisesList = [];
+      response.data.courseExercisesList.forEach(function (courseExercises) {
+        let exercisesTotalCount = 0;
+        courseExercises.knowledgeList.forEach(function (knowledge) {
+          exercisesTotalCount += knowledge.knowledgeExercisesList.length;
+        });
+        courseExercises.exercisesTotalCount = exercisesTotalCount;
       });
+      $scope.model.exercisesList = response.data.courseExercisesList;
     }, function errorCallback(response) {
       bootbox.alert(localMessage.NETWORK_ERROR);
     });
@@ -956,7 +885,12 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 
   $scope.onShowExercisesModal = function(courseClass) {
     $scope.model.exercisesCourseClass = courseClass;
-    $scope.model.courseExercisesFilterList = $scope.model.courseExercisesList.filter((obj) => {return obj.courseClass === courseClass});
+    for (let i = 0; i < $scope.model.exercisesList.length; i++) {
+      if($scope.model.exercisesList[i].courseClass === courseClass){
+        $scope.model.courseExercisesFilterList = $scope.model.exercisesList[i].knowledgeList;
+        break;
+      }
+    }
     $('#kt_modal_3').modal('show');
   };
 
@@ -1027,6 +961,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 
   $scope.onShowAssignExercisesModal = function(exercises) {
     $scope.model.assignExercises = exercises;
+    $scope.model.exercisesCourseClass = exercises.courseClass;
     $('#kt_modal_send_exercises').modal('show');
   };
 
@@ -1191,6 +1126,20 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         });
   };
 
+  $scope.loadCodeStandardList = function() {
+    $http.get(`/course/detail/codeStandard?technologyID=${$scope.model.courseInfo.technologyID}`)
+        .then(function successCallback (response) {
+          if(response.data.err){
+            bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+            return false;
+          }
+
+          $scope.model.reviewData.codeStandardList = response.data.dataList;
+        }, function errorCallback(response) {
+          bootbox.alert(localMessage.NETWORK_ERROR);
+        });
+  };
+
   $scope.onFirstPage4Exercises = function() {
     $scope.model.pageNumber4Exercises = 1;
     $scope.loadCourseStudentExercises();
@@ -1241,9 +1190,14 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     $scope.model.reviewData.courseID = data.courseID;
     $scope.model.reviewData.courseClass = data.courseClass;
     $scope.model.reviewData.exercisesID = data.studentExercisesID;
+
+    $scope.model.reviewData.studentID = data.studentID;
     $scope.model.reviewData.studentName = data.studentName;
+    $scope.model.reviewData.studentUniversityCode = data.studentUniversityCode;
     $scope.model.reviewData.studentUniversityName = data.studentUniversityName;
+    $scope.model.reviewData.studentSchoolID = data.studentSchoolID;
     $scope.model.reviewData.studentSchoolName = data.studentSchoolName;
+    $scope.model.reviewData.technologyID = data.technologyID;
     $scope.model.reviewData.technologyName = data.technologyName;
     $scope.model.reviewData.learningPhaseName = data.learningPhaseName;
     $scope.model.reviewData.knowledgeName = data.knowledgeName;
@@ -1260,10 +1214,40 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     $('#kt_modal_review').modal('show');
   };
 
+  $scope.onCodeStandardResultChange = function() {
+    if($scope.model.reviewData.codeStandardResult === '0') {
+      $scope.model.reviewData.isShowCodeStandardList = true;
+    }else{
+      $scope.model.reviewData.isShowCodeStandardList = false;
+    }
+  };
+
+  $scope.onCodeStandardChange = function($event, codeStandardID) {
+    let checkbox = $event.target;
+    if(checkbox.checked){
+      $scope.model.reviewData.codeStandardErrorList.push(codeStandardID);
+    }else{
+      let index = $scope.model.reviewData.codeStandardErrorList.indexOf(codeStandardID);
+      if(index >= 0){
+        $scope.model.reviewData.codeStandardErrorList.splice(index, 1);
+      }
+    }
+  };
+
   $scope.onReviewSubmit = function() {
     let btn = $('#btnReviewSubmit');
     $(btn).attr('disabled',true);
     KTApp.progress(btn);
+    let codeStandardErrorList = [];
+    $scope.model.reviewData.codeStandardErrorList.forEach(function (standardID) {
+      codeStandardErrorList.push({
+        studentUniversityCode: $scope.model.reviewData.studentUniversityCode,
+        studentSchoolID: $scope.model.reviewData.studentSchoolID,
+        studentID: $scope.model.reviewData.studentID,
+        technologyID: $scope.model.reviewData.technologyID,
+        codeStandardID: standardID,
+      });
+    });
 
     $http.post('/course/detail/exercisesReview', {
       courseUniversityCode: $scope.model.reviewData.courseUniversityCode,
@@ -1277,7 +1261,8 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
       reviewerType: 'T',
       compilationResult: parseInt($scope.model.reviewData.compilationResult) === 1 ? 'S' : 'N',
       runResult: parseInt($scope.model.reviewData.runResult) === 1 ? 'S' : 'N',
-      codeStandardsScore: $scope.model.reviewData.score,
+      codeStandardResult: parseInt($scope.model.reviewData.codeStandardResult) === 1 ? 'S' : 'N',
+      codeStandardErrorListJson: JSON.stringify(codeStandardErrorList),
       reviewResult: parseInt($scope.model.reviewData.reviewResult) === 1 ? 'S' : 'N',
       reviewMemo: $scope.model.reviewData.reviewMemo,
       loginUser: $scope.model.loginUser.customerID
@@ -1319,7 +1304,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         return false;
       }
 
-      if(response.data.dataContent === null){
+      if(response.data.dataContent === null || response.data.dataContent.dataList === null){
         $scope.model.reviewHistory.totalCount = 0;
         $scope.model.reviewHistory.maxPageNumber = 0;
         $scope.model.reviewHistory.pageNumber = 1;

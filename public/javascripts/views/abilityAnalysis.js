@@ -153,7 +153,7 @@ $(document).ready(function () {
                           <div id="knowledgeAnalysis${data.technologyID}" style="height: 280px;"></div>
                         </div>
                         <div class="kt-widget12__info">
-                          <span class="kt-widget12__desc text-center">代码规范性分析</span>
+                          <span class="kt-widget12__desc text-center">代码规范出错率分析</span>
                           <div id="codeStandardAnalysis${data.technologyID}" class="code-standard-analysis" style="height: 280px;">
                             <ul>
                               <li class="kt-badge kt-badge--inline kt-badge--success">

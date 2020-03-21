@@ -41,6 +41,7 @@
 
       "technologyList": "/api/technology/client",
       "technology": "/api/technology",
+      "technologySimple": "/api/technology/simple",
       "checkTechnologyNameExist": "/api/technology/checkTechnologyName",
       "changeTechnologyStatus": "/api/technology/changeStatus",
       "changeTechnologyThumbnail": "/api/technology/changeThumbnail",
@@ -93,6 +94,7 @@
       "suggestType": "/api/suggest/type",
       "suggest": "/api/suggest",
 
+      "studentAbilityAnalysis": "/api/student/ability",
       "knowledgeAnalysis": "/api/student/ability/analysis/knowledge",
       "exerciseAnalysis": "/api/student/ability/analysis/exercise",
       "exercisePercentAnalysis": "/api/student/ability/analysis/exercisePercent",

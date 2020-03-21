@@ -4,7 +4,7 @@ let sysConfig = require('../config/sysConfig');
 let commonService = require('../service/commonService');
 
 router.get('/', function(req, res, next) {
-  res.render('abilityAnalysisList', { title: '学生专业能力分析' });
+  res.render('growUpTrack', { title: '学生能力成长轨迹' });
 });
 
 module.exports = router;

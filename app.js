@@ -12,13 +12,15 @@ let technologyRouter = require('./routes/technology');
 let courseRouter = require('./routes/course');
 let courseDetailRouter = require('./routes/courseDetail');
 let myCourseRouter = require('./routes/myCourse');
-
 let userRouter = require('./routes/user');
 let changePasswordRouter = require('./routes/changePassword');
 let suggestRouter = require('./routes/suggest');
-let abilityAnalysisListRouter = require('./routes/abilityAnalysisList');
 let abilityAnalysisRouter = require('./routes/abilityAnalysis');
 
+let abilityPortraitRouter = require('./routes/abilityPortrait');
+let growUpTrackRouter = require('./routes/growUpTrack');
+
+let abilityDetailRouter = require('./routes/abilityDetail');
 let commonRouter = require('./routes/common');
 
 let app = express();
@@ -45,8 +47,10 @@ app.use('/myCourse', myCourseRouter);
 app.use('/user', userRouter);
 app.use('/changePassword', changePasswordRouter);
 app.use('/suggest', suggestRouter);
-app.use('/abilityAnalysisList', abilityAnalysisListRouter);
-app.use('/abilityAnalysis', abilityAnalysisRouter);
+app.use('/ability/analysis', abilityAnalysisRouter);
+app.use('/ability/portrait', abilityPortraitRouter);
+app.use('/growUp/track', growUpTrackRouter);
+app.use('/ability/detail', abilityDetailRouter);
 app.use('/common', commonRouter);
 
 // catch 404 and forward to error handler

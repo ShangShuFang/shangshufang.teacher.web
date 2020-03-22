@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/studentInfo', (req, res, next) => {
-  let service = new commonService.commonInvoke('student');
+  let service = new commonService.commonInvoke('studentAbilityAnalysis');
   let studentUniversityCode = req.query.studentUniversityCode;
   let studentSchoolID = req.query.studentSchoolID;
   let studentID = req.query.studentID;
@@ -62,6 +62,32 @@ router.get('/learningTechnology', (req, res, next) => {
   });
 });
 
+router.get('/technologyAnalysis', (req, res, next) => {
+  let service = new commonService.commonInvoke('technologyAnalysis');
+  let studentUniversityCode = req.query.studentUniversityCode;
+  let studentSchoolID = req.query.studentSchoolID;
+  let studentID = req.query.studentID;
+  let technologyID = req.query.technologyID;
+  let parameter = `${studentUniversityCode}/${studentSchoolID}/${studentID}/${technologyID}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        data: result.content.responseData
+      });
+    }
+  });
+});
+
 router.get('/knowledgeAnalysis', (req, res, next) => {
   let service = new commonService.commonInvoke('knowledgeAnalysis');
   let studentUniversityCode = req.query.studentUniversityCode;
@@ -83,6 +109,32 @@ router.get('/knowledgeAnalysis', (req, res, next) => {
         code: result.code,
         msg: result.msg,
         data: result.content.responseData
+      });
+    }
+  });
+});
+
+router.get('/codeStandardAnalysis', (req, res, next) => {
+  let service = new commonService.commonInvoke('codeStandardAnalysis');
+  let studentUniversityCode = req.query.studentUniversityCode;
+  let studentSchoolID = req.query.studentSchoolID;
+  let studentID = req.query.studentID;
+  let technologyID = req.query.technologyID;
+  let parameter = `${studentUniversityCode}/${studentSchoolID}/${studentID}/${technologyID}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        dataList: result.content.responseData
       });
     }
   });

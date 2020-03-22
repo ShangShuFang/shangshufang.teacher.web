@@ -95,6 +95,8 @@
       "suggest": "/api/suggest",
 
       "studentAbilityAnalysis": "/api/student/ability",
+      "technologyAnalysis": "/api/student/ability/technology",
+      "codeStandardAnalysis": "/api/student/ability/codeStandard",
       "knowledgeAnalysis": "/api/student/ability/analysis/knowledge",
       "exerciseAnalysis": "/api/student/ability/analysis/exercise",
       "exercisePercentAnalysis": "/api/student/ability/analysis/exercisePercent",

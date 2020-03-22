@@ -30,11 +30,6 @@
   height: 0.6rem;
   margin-top: 3px
 }
-.ability-level{
-  font-size: 2rem;
-  font-weight: bold;
-  margin-left: 0.5rem;
-}
 .finish-knowledge-percent{
   color: #1ec9b7 !important;
 }
@@ -58,32 +53,4 @@
   color: #93a2dd !important;
   background: #f0f3ff !important;
   opacity: 0.3 !important;
-}
-
-.ability-level-1 {
-  color: #7e8c8d;
-}
-.ability-level-2 {
-  color: #2296f3;
-}
-.ability-level-3 {
-  color: #ff9704;
-}
-.ability-level-4 {
-  color: #9d27b3;
-}
-.ability-level-5 {
-  color: #6bb07f;
-}
-.ability-level-6 {
-  color: #f67bb1;
-}
-.ability-level-7 {
-  color: #fb5920;
-}
-.ability-level-8 {
-  color: #ff1c00;
-}
-.position-site {
-  color: #e71d62;
 }

@@ -49,7 +49,7 @@ $(document).ready(function () {
     model.isParameterValid = true;
   }
 
-  function loadStudentInfo() {
+  function loadStudentInfo(){
     $.ajax({
       type: "GET",
       url: "/ability/detail/studentInfo",
@@ -72,12 +72,15 @@ $(document).ready(function () {
         }
         $('.student-university').text(result.studentInfo.universityName);
         $('.student-school').text(result.studentInfo.schoolName);
-        $('.student-enrollment-year').text(result.studentInfo.enrollmentYear + '级');
+        $('.student-enrollment-year').text(result.studentInfo.enrollmentYear + '年');
         $('.student-cellphone').text(result.studentInfo.cellphone);
         $('.student-email').text(result.studentInfo.email);
         if(!commonUtility.isEmpty(result.studentInfo.photo)){
           $('.student-photo').attr('src', result.studentInfo.photo);
         }
+        $('.online-question-count').text(result.studentInfo.onlineQuestionCount);
+        $('.online-answer-count').text(result.studentInfo.onlineAnswerCount);
+        $('.project-count').text(result.studentInfo.joinProjectCount);
       },
       error : function(e){
         bootbox.alert(localMessage.NETWORK_ERROR);
@@ -101,9 +104,11 @@ $(document).ready(function () {
           return false;
         }
         if(commonUtility.isEmptyList(result.dataList)){
+          $('.learning-technology-count').text(0);
           return false;
         }
 
+        $('.learning-technology-count').text(result.dataList.length);
         result.dataList.forEach(function (data) {
           $('div.technology-analysis-detail').append(
               `<div class="kt-portlet kt-portlet--collapse" data-technology-id="${data.technologyID}" data-ktportlet="true">
@@ -128,9 +133,8 @@ $(document).ready(function () {
                         <div class="kt-widget12__info">
                           <span class="kt-widget12__desc">专业能力</span>
                           <span class="kt-widget12__value">
-                            上造
-                            <small>超过校内58%的同学</small>
-                            <small>超过校外20%的同学</small>
+                            <span class="ability-level technology${data.technologyID}-level"></span>
+                            <span>超过站内<span class="position-site technology${data.technologyID}-position"></span>的同学</span>
                           </span>
                         </div>
                         <div class="kt-widget12__info">
@@ -154,69 +158,7 @@ $(document).ready(function () {
                         </div>
                         <div class="kt-widget12__info">
                           <span class="kt-widget12__desc text-center">代码规范出错率分析</span>
-                          <div id="codeStandardAnalysis${data.technologyID}" class="code-standard-analysis" style="height: 280px;">
-                            <ul>
-                              <li class="kt-badge kt-badge--inline kt-badge--success">
-                                <i class="fa fa-check"></i> &nbsp;
-                                代码规范性一
-                              </li>
-                              <li class="kt-badge kt-badge--inline kt-badge--danger">
-                                <i class="fa fa-exclamation"></i> &nbsp;
-                                代码规范性二
-                              </li>
-                              <li class="kt-badge kt-badge--inline kt-badge--success">
-                                <i class="fa fa-check"></i> &nbsp;
-                                代码规范性三
-                              </li>
-                              <li class="kt-badge kt-badge--inline kt-badge--success">
-                                <i class="fa fa-check"></i> &nbsp;
-                                代码规范性四
-                              </li>
-                              <li class="kt-badge kt-badge--inline kt-badge--success">
-                                <i class="fa fa-check"></i> &nbsp;
-                                代码规范性五
-                              </li>
-                              <li class="kt-badge kt-badge--inline kt-badge--success">
-                                <i class="fa fa-check"></i> &nbsp;
-                                代码规范性六
-                              </li>
-                              <li class="kt-badge kt-badge--inline kt-badge--danger">
-                                <i class="fa fa-exclamation"></i> &nbsp;
-                                代码规范性七
-                              </li>
-                              <li class="kt-badge kt-badge--inline kt-badge--danger">
-                                <i class="fa fa-exclamation"></i> &nbsp;
-                                代码规范性八
-                              </li>
-                              <li class="kt-badge kt-badge--inline kt-badge--success">
-                                <i class="fa fa-check"></i> &nbsp;
-                                代码规范性九
-                              </li>
-                              <li class="kt-badge kt-badge--inline kt-badge--success">
-                                <i class="fa fa-check"></i> &nbsp;
-                                代码规范性十
-                              </li>
-                              <li class="kt-badge kt-badge--inline kt-badge--success">
-                                <i class="fa fa-check"></i> &nbsp;
-                                代码规范性十
-                              </li>
-                              <li class="kt-badge kt-badge--inline kt-badge--success">
-                                <i class="fa fa-check"></i> &nbsp;
-                                代码规范性十
-                              </li><li class="kt-badge kt-badge--inline kt-badge--success">
-                              <i class="fa fa-check"></i> &nbsp;
-                              代码规范性十
-                            </li>
-                              <li class="kt-badge kt-badge--inline kt-badge--success">
-                                <i class="fa fa-check"></i> &nbsp;
-                                代码规范性十
-                              </li>
-                              <li class="kt-badge kt-badge--inline kt-badge--success">
-                                <i class="fa fa-check"></i> &nbsp;
-                                代码规范性十
-                              </li>
-                            </ul>
-                          </div>
+                          <div id="codeStandardAnalysis${data.technologyID}" style="height: 280px;"></div>
                         </div>
                       </div>
                       <div class="kt-widget12__item">
@@ -234,7 +176,7 @@ $(document).ready(function () {
   
                       <div class="kt-widget12__item">
                         <div class="kt-widget12__info">
-                          <span class="kt-widget12__desc text-center">已完成的综合练习</span>
+                          <span class="kt-widget12__desc text-center">已完成综合练习累计数量</span>
                           <div id="onlineAnswerAnalysis${data.technologyID}" style="max-height:300px;"></div>
                         </div>
                       </div>
@@ -251,6 +193,8 @@ $(document).ready(function () {
 
               let technologyID = $(this).attr('data-technology-id');
               if($(rootElement).find(`#knowledgeAnalysis${technologyID}`).children().length === 0){
+                loadTechnologyAnalysis(technologyID);
+                loadCodeStandardAnalysis(technologyID);
                 loadKnowledgeAnalysis(technologyID);
                 loadExerciseAnalysis(technologyID);
                 loadExercisePercentAnalysis(technologyID);
@@ -269,6 +213,147 @@ $(document).ready(function () {
     });
   }
 
+  function loadTechnologyAnalysis(technologyID) {
+    $.ajax({
+      type: "GET",
+      url: "/ability/detail/technologyAnalysis",
+      data: {
+        studentUniversityCode: model.universityCode,
+        studentSchoolID: model.schoolID,
+        studentID: model.studentID,
+        technologyID: technologyID,
+      },
+      dataType: "JSON",
+      success: function(result) {
+        if(result.err){
+          bootbox.alert(localMessage.formatMessage(result.code, result.msg));
+          return false;
+        }
+
+        $(`span.technology${technologyID}-level`).text(result.data.abilityLevel);
+        $(`span.technology${technologyID}-position`).text(`${result.data.positionSite}%`);
+        //technology
+        switch (result.data.abilityLevel) {
+          case "L1":
+            $(`span.technology${technologyID}-level`).addClass('ability-level-1');
+            break;
+          case "L2":
+            $(`span.technology${technologyID}-level`).addClass('ability-level-2');
+            break;
+          case "L3":
+            $(`span.technology${technologyID}-level`).addClass('ability-level-3');
+            break;
+          case "L4":
+            $(`span.technology${technologyID}-level`).addClass('ability-level-4');
+            break;
+          case "L5":
+            $(`span.technology${technologyID}-level`).addClass('ability-level-5');
+            break;
+          case "L6":
+            $(`span.technology${technologyID}-level`).addClass('ability-level-6');
+            break;
+          case "L7":
+            $(`span.technology${technologyID}-level`).addClass('ability-level-7');
+            break;
+          case "L8":
+            $(`span.technology${technologyID}-level`).addClass('ability-level-8');
+            break;
+          default:
+            break;
+        }
+
+
+      },
+      error : function(e){
+        bootbox.alert(localMessage.NETWORK_ERROR);
+      }
+    });
+  }
+
+  function loadCodeStandardAnalysis(technologyID) {
+    $.ajax({
+      type: "GET",
+      url: "/ability/detail/codeStandardAnalysis",
+      data: {
+        studentUniversityCode: model.universityCode,
+        studentSchoolID: model.schoolID,
+        studentID: model.studentID,
+        technologyID: technologyID,
+      },
+      dataType: "JSON",
+      success: function(result) {
+        if(result.err){
+          bootbox.alert(localMessage.formatMessage(result.code, result.msg));
+          return false;
+        }
+        let codeStandardAnalysisList = [];
+        if (result.dataList === null) {
+          return false;
+        }
+        let stateColorIndex = 0;
+        let colorStateKeyArray = [
+          "brand",
+          "light",
+          "dark",
+          "primary",
+          "success",
+          "info",
+          "warning",
+          "danger",
+          "colors9",
+          "colors10",
+          "colors11",
+          "colors12",
+          "colors13",
+          "colors14",
+          "colors15",
+          "colors16",
+          "colors17",
+          "colors18",
+          "colors19",
+          "colors20"
+        ];
+        result.dataList.forEach(function (codeStandard) {
+          if(stateColorIndex > colorStateKeyArray.length - 1){
+            stateColorIndex = 0;
+          }
+          codeStandardAnalysisList.push({
+            label: codeStandard.codeStandardName,
+            data: codeStandard.codeStandardCount,
+            color:  KTApp.getStateColor(colorStateKeyArray[stateColorIndex])
+          });
+          stateColorIndex++;
+        });
+
+
+        $.plot($(`#codeStandardAnalysis${technologyID}`), codeStandardAnalysisList, {
+          series: {
+            pie: {
+              show: true,
+              radius: 1,
+              label: {
+                show: true,
+                radius: 1,
+                formatter: function(label, series) {
+                  return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';
+                },
+                background: {
+                  opacity: 0.8
+                }
+              }
+            }
+          },
+          legend: {
+            show: false
+          }
+        });
+
+      },
+      error : function(e){
+        bootbox.alert(localMessage.NETWORK_ERROR);
+      }
+    });
+  }
   function loadKnowledgeAnalysis(technologyID) {
     $.ajax({
       type: "GET",

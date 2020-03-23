@@ -21,6 +21,7 @@ let abilityPortraitRouter = require('./routes/abilityPortrait');
 let growUpTrackRouter = require('./routes/growUpTrack');
 
 let abilityDetailRouter = require('./routes/abilityDetail');
+let abilityLevelRouter = require('./routes/abilityLevel');
 let commonRouter = require('./routes/common');
 
 let app = express();
@@ -51,6 +52,7 @@ app.use('/ability/analysis', abilityAnalysisRouter);
 app.use('/ability/portrait', abilityPortraitRouter);
 app.use('/growUp/track', growUpTrackRouter);
 app.use('/ability/detail', abilityDetailRouter);
+app.use('/ability/level', abilityLevelRouter);
 app.use('/common', commonRouter);
 
 // catch 404 and forward to error handler

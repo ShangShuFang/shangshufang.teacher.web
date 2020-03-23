@@ -14,7 +14,12 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     if(commonUtility.isLogin()){
       $scope.model.loginUserID = commonUtility.getLoginUser().customerID;
     }
+    $scope.setMenuActive();
     $scope.loadSuggestTypeList();
+  };
+
+  $scope.setMenuActive = function () {
+    $('ul.kt-menu__nav li').removeClass('kt-menu__item--here');
   };
 
   $scope.loadSuggestTypeList = function(){

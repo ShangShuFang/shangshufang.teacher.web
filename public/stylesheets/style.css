@@ -152,28 +152,28 @@ a.no-hand{
   margin-left: 0.5rem;
 }
 .ability-level-1 {
-  color: #7e8c8d;
+  color: #7e8c8d !important;
 }
 .ability-level-2 {
-  color: #2296f3;
+  color: #2296f3 !important;;
 }
 .ability-level-3 {
-  color: #ff9704;
+  color: #ff9704 !important;;
 }
 .ability-level-4 {
-  color: #9d27b3;
+  color: #9d27b3 !important;;
 }
 .ability-level-5 {
-  color: #6bb07f;
+  color: #6bb07f !important;;
 }
 .ability-level-6 {
-  color: #f67bb1;
+  color: #f67bb1 !important;;
 }
 .ability-level-7 {
-  color: #fb5920;
+  color: #fb5920 !important;;
 }
 .ability-level-8 {
-  color: #ff1c00;
+  color: #ff1c00 !important;;
 }
 .position-site {
   color: #e71d62;

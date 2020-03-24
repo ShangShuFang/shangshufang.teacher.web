@@ -17,7 +17,6 @@
       "checkUniversityCustomerCellphone": "/api/university/customer/checkCellphone",
       "checkUniversityCustomerEmail": "/api/university/customer/checkEmail",
 
-      "company": "/api/company",
       "checkCompanyNameExist": "/api/company/checkCompanyNameExist",
       "checkCellphoneExist": "/api/company/checkCellphoneExist",
       "changeCompanyNameStatus": "/api/company/changeStatus",
@@ -25,7 +24,6 @@
       "changeCompanyMemo": "/api/company/changeMemo",
       "usingTechnology": "/api/technology/using",
 
-      "companyUsingKnowledge": "/api/technology/knowledge/using",
       "companyUsingKnowledgeRelatedTechnology": "/api/technology/knowledge/using/technology",
       "companyUsingKnowledgeRelatedLearningPhase": "/api/technology/knowledge/using/learningPhase",
       "companyUsingKnowledgeRelatedList": "/api/technology/knowledge/using/knowledge",
@@ -100,7 +98,10 @@
       "knowledgeAnalysis": "/api/student/ability/analysis/knowledge",
       "exerciseAnalysis": "/api/student/ability/analysis/exercise",
       "exercisePercentAnalysis": "/api/student/ability/analysis/exercisePercent",
-      "codeStandard": "/api/codeStandard"
+      "codeStandard": "/api/codeStandard",
+      "company": "/api/company/client",
+      "companyUsingTechnology": "/api/technology/using",
+      "companyUsingKnowledge": "/api/technology/knowledge/using/client"
     }
   }
 }

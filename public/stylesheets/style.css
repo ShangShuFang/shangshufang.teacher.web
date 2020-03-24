@@ -147,8 +147,8 @@ a.no-hand{
 }
 
 .ability-level{
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 2rem !important;
+  font-weight: bold !important;
   margin-left: 0.5rem;
 }
 .ability-level-1 {

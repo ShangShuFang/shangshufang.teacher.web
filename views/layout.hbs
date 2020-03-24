@@ -308,13 +308,18 @@
             <div class="kt-header__topbar">
               <!--begin: User bar -->
 
-              <div class="kt-header__topbar-item kt-header__topbar-item--user">
-                <a href="https://www.baidu.com" class="kt-widget__username kt-font-brand kt-link kt-font-bold" target="_blank">进入官网</a>
+              <div class="kt-header__topbar-item dropdown" ng-if="model.isLogin">
+                <div class="kt-header__topbar-wrapper" data-offset="10px,10px">
+                  <a href="/approve" target="_blank">
+                    <img src="/media/icons/check.png" style="width: 37px" title="账号审批" />
+                  </a>
+                </div>
+
               </div>
 
               <div class="kt-header__topbar-item kt-header__topbar-item--user" ng-if="model.isLogin">
                 <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,10px">
-                  <img alt="Pic" ng-src="\{{model.loginUser.photo}}" class="img-circle" style="border-radius: 50%" ng-if="model.loginUser.photo !== ''" />
+                  <img alt="Pic" ng-src="\{{model.loginUser.photo}}" ng-if="model.loginUser.photo !== ''" />
                   <img alt="Pic" src="/media/users/teacher_default.png" class="img-circle" style="border-radius: 50%" ng-if="model.loginUser.photo == ''"/>
                 </div>
                 <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
@@ -365,10 +370,10 @@
                 </div>
               </div>
 
-              <div class="kt-header__topbar-item" ng-if="model.isLogin">
-                <span ng-bind="model.loginUser.customerName"></span>
-                <span>老师好</span>
-              </div>
+<!--              <div class="kt-header__topbar-item" ng-if="model.isLogin">-->
+<!--                <span ng-bind="model.loginUser.customerName"></span>-->
+<!--                <span>老师好</span>-->
+<!--              </div>-->
 
               <div class="kt-header__topbar-item kt-header__topbar-item--user" ng-if="!model.isLogin">
                 <button type="button" class="btn btn-outline-hover-info btn-elevate btn-pill" onclick="location.href='/login'">登 陆</button>
@@ -476,6 +481,9 @@
 <!-- end::Scrolltop -->
 <!-- begin::Sticky Toolbar -->
 <ul class="kt-sticky-toolbar" style="margin-top: 30px;">
+  <li class="kt-sticky-toolbar__item kt-sticky-toolbar__item--brand" data-toggle="kt-tooltip" title="" data-placement="left" data-original-title="前往官网">
+    <a href="https://www.baidu.com" target="_blank"><i class="flaticon2-website"></i></a>
+  </li>
   <li class="kt-sticky-toolbar__item kt-sticky-toolbar__item--warning" data-toggle="kt-tooltip" title="级别标准说明" data-placement="left">
     <a href="/ability/level" target="_blank"><i class="flaticon2-telegram-logo"></i></a>
   </li>

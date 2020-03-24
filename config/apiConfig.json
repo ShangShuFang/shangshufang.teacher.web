@@ -8,6 +8,8 @@
       "school": "/api/school",
 
       "universityAccount": "/api/university/account",
+      "approveAccount": "/api/university/account/client",
+      "changeUniversityAccountStatus": "/api/university/account/changeStatus",
       "checkUniversityAccountCellphone": "/api/university/account/checkCellphone",
       "checkCustomerEmail": "/api/university/customer/checkEmail",
       "checkChangePasswordCellphone": "/api/university/account/changePassword/checkCellphone",

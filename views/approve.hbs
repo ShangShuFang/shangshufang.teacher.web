@@ -1,0 +1,151 @@
+<!--<link href="stylesheets/views/approve.css" rel="stylesheet" type="text/css"/>-->
+<div class="kt-container kt-grid__item kt-grid__item--fluid" ng-app="pageApp" ng-controller="pageCtrl">
+  <div class="kt-subheader kt-grid__item">
+    <div class="kt-container">
+      <div class="kt-subheader__main">
+        <h3 class="kt-subheader__title"></h3>
+      </div>
+    </div>
+  </div>
+  <div class="kt-portlet kt-portlet--height-fluid">
+    <div class="kt-portlet__body">
+      <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded" id="local_data" style="">
+        <table class="kt-datatable__table kt-datatable__row--hover table-hover" style="display: block;">
+          <thead class="kt-datatable__head">
+            <tr class="kt-datatable__row" style="left: 0px;">
+              <th data-field="OrderID" class="kt-datatable__cell kt-datatable__cell--sort">
+                <span style="width: 148px;">姓名</span>
+              </th>
+              <th data-field="Country" class="kt-datatable__cell kt-datatable__cell--sort">
+                <span style="width: 148px;">高校</span>
+              </th>
+              <th data-field="ShipDate" class="kt-datatable__cell kt-datatable__cell--sort">
+                <span style="width: 148px;">学院</span>
+              </th>
+              <th data-field="CompanyName" class="kt-datatable__cell kt-datatable__cell--sort">
+                <span style="width: 148px;">手机号码</span></th>
+              <th data-field="CompanyName" class="kt-datatable__cell kt-datatable__cell--sort">
+                <span style="width: 148px;">角色</span></th>
+              <th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort">
+                <span style="width: 148px;">账户状态</span>
+              </th>
+              <th data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
+                <span style="width: 110px;">操作</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="kt-datatable__body" style="">
+            <tr data-row="0" class="kt-datatable__row" style="left: 0px;" ng-repeat="data in model.dataList">
+              <td data-field="OrderID" class="kt-datatable__cell">
+                <span style="width: 148px;" ng-bind="data.customerName"></span>
+              </td>
+              <td data-field="Country" class="kt-datatable__cell">
+                <span style="width: 148px;" ng-bind="data.universityName"></span>
+              </td>
+              <td data-field="ShipDate" class="kt-datatable__cell">
+                <span style="width: 148px;" ng-bind="data.schoolName"></span>
+              </td>
+              <td data-field="CompanyName" class="kt-datatable__cell">
+                <span style="width: 148px;" ng-bind="data.cellphone"></span>
+              </td>
+              <td data-field="Type" data-autohide-disabled="false" class="kt-datatable__cell">
+                <span style="width: 148px;">
+                  <span class="kt-badge kt-badge--dot"
+                        ng-class="{'kt-badge--primary': data.accountRole == 'S', 'kt-badge--success': data.accountRole == 'T'}"></span>&nbsp;
+                  <span class="kt-font-bold"
+                        ng-class="{'kt-font-primary': data.accountRole == 'S', 'kt-font-success': data.accountRole == 'T'}"
+                        ng-bind="data.accountRoleText"></span>
+                </span>
+              </td>
+              <td data-field="Status" class="kt-datatable__cell">
+                  <span style="width: 148px;">
+                    <span class="kt-badge kt-badge--inline kt-badge--pill"
+                          ng-class="{'kt-badge--brand': data.dataStatus == 'P', 'kt-badge--success': data.dataStatus == 'A', 'kt-badge--warning': data.dataStatus == 'N', 'kt-badge--danger': data.dataStatus == 'D'}"
+                          ng-bind="data.dataStatusText"></span>
+                  </span>
+              </td>
+              <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">
+                  <span style="overflow: visible; position: relative; width: 110px;">
+                    <button type="button"
+                            class="btn btn-success btn-sm"
+                            ng-if="data.dataStatus == 'P' || data.dataStatus == 'N' || data.dataStatus == 'D'"
+                            ng-click="onChangeStatus(data, 'A')">
+                      激活
+                    </button>
+                    <button type="button"
+                            class="btn btn-warning btn-sm"
+                            ng-if="data.dataStatus == 'P'"
+                            ng-click="onChangeStatus(data, 'N')">
+                      驳回
+                    </button>
+                    <button type="button"
+                            class="btn btn-danger btn-sm"
+                            ng-if="data.dataStatus == 'A'"
+                            ng-click="onChangeStatus(data, 'D')">
+                      禁用
+                    </button>
+                  </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="kt-datatable__pager kt-datatable--paging-loaded">
+          <ul class="kt-datatable__pager-nav">
+            <li>
+              <a title="第一页"
+                 class="kt-datatable__pager-link kt-datatable__pager-link--first"
+                 ng-class="{'kt-datatable__pager-link--disabled': model.prePageNum == -1}"
+                 ng-disable = "model.prePageNum == -1"
+                 ng-click="onFirstPage()">
+                <i class="flaticon2-fast-back"></i>
+              </a>
+            </li>
+            <li>
+              <a title="前一页"
+                 class="kt-datatable__pager-link kt-datatable__pager-link--prev"
+                 ng-class="{'kt-datatable__pager-link--disabled': model.prePageNum == -1}"
+                 ng-disable = "model.prePageNum == -1"
+                 ng-click="onPrePage()">
+                <i class="flaticon2-back"></i>
+              </a>
+            </li>
+            <li ng-repeat="pageNumber in model.paginationArray" >
+              <a class="kt-datatable__pager-link kt-datatable__pager-link-number"
+                 ng-class="{'kt-datatable__pager-link--active': model.pageNumber == pageNumber}"
+                 ng-click="onPagination(pageNumber)"
+                 ng-bind="pageNumber">
+              </a>
+            </li>
+            <li>
+              <a title="下一页"
+                 class="kt-datatable__pager-link kt-datatable__pager-link--next"
+                 ng-class="{'kt-datatable__pager-link--disabled': model.nextPageNum == -1}"
+                 ng-disable = "model.nextPageNum == -1"
+                 ng-click="onNextPage()">
+                <i class="flaticon2-next"></i>
+              </a>
+            </li>
+
+            <li>
+              <a title="最后一页"
+                 class="kt-datatable__pager-link kt-datatable__pager-link--last"
+                 ng-class="{'kt-datatable__pager-link--disabled': model.nextPageNum == -1}"
+                 ng-disable = "model.nextPageNum == -1"
+                 ng-click="onLastPage()">
+                <i class="flaticon2-fast-next"></i>
+              </a>
+            </li>
+          </ul>
+          <div class="kt-datatable__pager-info">
+            <span class="kt-datatable__pager-detail">
+              显示第<span ng-bind="model.fromIndex"></span>到第<span ng-bind="model.toIndex"></span>条数据，共计<span ng-bind="model.totalCount"></span>条数据
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="/javascripts/views/approve.js" type="text/javascript"></script>

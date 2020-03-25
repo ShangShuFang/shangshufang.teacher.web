@@ -5,9 +5,12 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
       pageName: 'courseDetail',
       operationName: {
         PAGE_LOAD: 'PL',
-        CHANGE_COURSE_INFO:'CCI',
+        CHANGE_COURSE_INFO: 'CCI',
         CHANGE_COURSE_SCHEDULE: 'CCS',
         CHANGE_COURSE_PLAN: 'CCP',
+
+        SET_STUDENT_ASSISTANT: 'SSA',
+
         ASSIGN_CLASS_EXERCISES: 'ACE',
         CHANGE_CLASS_FINISH: 'CCF',
         FILTER_CLASS_EXERCISES: 'FCE',
@@ -33,23 +36,23 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 
     //region 课程表信息
     weeklyDayList: [
-      {day:1, dayText: '周一'},
-      {day:2, dayText: '周二'},
-      {day:3, dayText: '周三'},
-      {day:4, dayText: '周四'},
-      {day:5, dayText: '周五'},
-      {day:6, dayText: '周六'},
-      {day:7, dayText: '周日'},
+      {day: 1, dayText: '周一'},
+      {day: 2, dayText: '周二'},
+      {day: 3, dayText: '周三'},
+      {day: 4, dayText: '周四'},
+      {day: 5, dayText: '周五'},
+      {day: 6, dayText: '周六'},
+      {day: 7, dayText: '周日'},
     ],
     courseList: [
-      {order:1, orderText: '第一节', time: '08:00~08:45'},
-      {order:2, orderText: '第二节', time: '09:00~09:45'},
-      {order:3, orderText: '第三节', time: '10:00~10:45'},
-      {order:4, orderText: '第四节', time: '11:00~11:45'},
-      {order:5, orderText: '第五节', time: '14:00~14:45'},
-      {order:6, orderText: '第六节', time: '15:00~15:45'},
-      {order:7, orderText: '第七节', time: '16:00~16:45'},
-      {order:8, orderText: '第八节', time: '17:00~17:45'}
+      {order: 1, orderText: '第一节', time: '08:00~08:45'},
+      {order: 2, orderText: '第二节', time: '09:00~09:45'},
+      {order: 3, orderText: '第三节', time: '10:00~10:45'},
+      {order: 4, orderText: '第四节', time: '11:00~11:45'},
+      {order: 5, orderText: '第五节', time: '14:00~14:45'},
+      {order: 6, orderText: '第六节', time: '15:00~15:45'},
+      {order: 7, orderText: '第七节', time: '16:00~16:45'},
+      {order: 8, orderText: '第八节', time: '17:00~17:45'}
     ],
     selectWeekday: null,
     selectCourseList: [],
@@ -158,8 +161,8 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
   };
 
   //region 页面初始化
-  $scope.initPage = function(){
-    if(!$scope.loadParameter()){
+  $scope.initPage = function () {
+    if (!$scope.loadParameter()) {
       return false;
     }
 
@@ -171,9 +174,9 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     $scope.setDefaultTab();
   };
 
-  $scope.loadParameter = function(){
+  $scope.loadParameter = function () {
     let courseInfoJson = localStorage.getItem(Constants.KEY_INFO_COURSE_IDENTIFY);
-    if(commonUtility.isEmpty(courseInfoJson)){
+    if (commonUtility.isEmpty(courseInfoJson)) {
       $scope.model.bizLog.logMemo = `${localMessage.PARAMETER_ERROR}, courseInfoJson: ${courseInfoJson}`;
       bizLogger.logInfo(
           $scope.model.bizLog.pageName,
@@ -200,9 +203,9 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     return true;
   };
 
-  $scope.setDefaultTab = function() {
+  $scope.setDefaultTab = function () {
     let tabIndex = $('#hidden_tabIndex').val();
-    if(tabIndex === '' || isNaN(tabIndex)){
+    if (tabIndex === '' || isNaN(tabIndex)) {
       return false;
     }
     $('.tab-course-detail li a').removeClass('active');
@@ -215,18 +218,18 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
   //endregion
 
   //region 课程基本信息
-  $scope.loadCourseInfo = function(){
-    $http.get(`/course/info?universityCode=${$scope.model.universityCode}&schoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}&dataStatus=${$scope.model.courseStatus}`).then(function successCallback (response) {
-      if(response.data.err) {
+  $scope.loadCourseInfo = function () {
+    $http.get(`/course/info?universityCode=${$scope.model.universityCode}&schoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}&dataStatus=${$scope.model.courseStatus}`).then(function successCallback(response) {
+      if (response.data.err) {
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
       }
-      if(response.data.totalCount === 0){
+      if (response.data.totalCount === 0) {
         layer.msg(localMessage.COURSE_NOT_FOUND);
         return false;
       }
       $scope.model.courseInfo = response.data.courseDetail;
-      if(!commonUtility.isEmptyList(response.data.courseDetail.coursePlanList)){
+      if (!commonUtility.isEmptyList(response.data.courseDetail.coursePlanList)) {
         $scope.model.courseOrder = response.data.courseDetail.coursePlanList[response.data.courseDetail.coursePlanList.length - 1].courseClass + 1;
       }
 
@@ -240,7 +243,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     });
   };
 
-  $scope.loadCourseBaseInfo = function() {
+  $scope.loadCourseBaseInfo = function () {
     $scope.model.courseBaseInfo.courseID = $scope.model.courseInfo.courseID;
     $scope.model.courseBaseInfo.courseName = $scope.model.courseInfo.courseName;
     $scope.model.courseBaseInfo.courseTimeBegin = new Date($scope.model.courseInfo.courseTimeBegin);
@@ -250,9 +253,9 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     $scope.model.courseBaseInfo.courseIntroduction = $scope.model.courseInfo.courseIntroduction;
   };
 
-  $scope.onBeginDateChange = function(beginDate) {
-    $http.get(`/common/dateFormat?utcDate=${beginDate}`).then(function successCallback (response) {
-      if(response.data.err){
+  $scope.onBeginDateChange = function (beginDate) {
+    $http.get(`/common/dateFormat?utcDate=${beginDate}`).then(function successCallback(response) {
+      if (response.data.err) {
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
       }
@@ -262,9 +265,9 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     });
   };
 
-  $scope.onEndDateChange = function(courseEndDate) {
-    $http.get(`/common/dateFormat?utcDate=${courseEndDate}`).then(function successCallback (response) {
-      if(response.data.err){
+  $scope.onEndDateChange = function (courseEndDate) {
+    $http.get(`/common/dateFormat?utcDate=${courseEndDate}`).then(function successCallback(response) {
+      if (response.data.err) {
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
       }
@@ -274,11 +277,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     });
   };
 
-  $scope.onOpenTechnologyInfo = function(technologyID) {
+  $scope.onOpenTechnologyInfo = function (technologyID) {
     window.open(`/technology?technology=${technologyID}`);
   };
 
-  $scope.onFinishCourse = function() {
+  $scope.onFinishCourse = function () {
     bootbox.confirm({
       message: `${$scope.model.loginUser.customerName}老师，请确认该课程已经授课完成吗？`,
       buttons: {
@@ -292,9 +295,9 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         }
       },
       callback: function (result) {
-        if(result) {
+        if (result) {
           let btn = $('#btnFinishCourse');
-          $(btn).attr('disabled',true);
+          $(btn).attr('disabled', true);
           KTApp.progress(btn);
 
           $http.put('/course/detail/finish', {
@@ -304,7 +307,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             courseID: $scope.model.courseInfo.courseID,
             loginUser: $scope.model.loginUser.customerID
           }).then(function successCallback(response) {
-            if(response.data.err) {
+            if (response.data.err) {
               bizLogger.logInfo(
                   $scope.model.bizLog.pageName,
                   $scope.model.bizLog.operationName.CHANGE_CLASS_FINISH,
@@ -328,7 +331,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     });
   };
 
-  $scope.onSaveCourseInfo = function(){
+  $scope.onSaveCourseInfo = function () {
     bootbox.confirm({
       message: `您确认要修改课程的基本信息吗？`,
       buttons: {
@@ -342,9 +345,9 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         }
       },
       callback: function (result) {
-        if(result) {
+        if (result) {
           let btn = $('#btnSaveCourseInfo');
-          $(btn).attr('disabled',true);
+          $(btn).attr('disabled', true);
           KTApp.progress(btn);
 
           $http.put('/course/detail/courseBaseInfo', {
@@ -359,7 +362,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             courseIntroduction: $scope.model.courseBaseInfo.courseIntroduction,
             loginUser: $scope.model.loginUser.customerID
           }).then(function successCallback(response) {
-            if(response.data.err) {
+            if (response.data.err) {
               bizLogger.logInfo(
                   $scope.model.bizLog.pageName,
                   $scope.model.bizLog.operationName.CHANGE_COURSE_INFO,
@@ -391,8 +394,8 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
   //endregion
 
   //region 公用方法
-  $scope.convertNumberToCh = function(num) {
-    if(isNaN(num) || num > 10){
+  $scope.convertNumberToCh = function (num) {
+    if (isNaN(num) || num > 10) {
       return '';
     }
     let chArr = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
@@ -401,20 +404,20 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
   //endregion
 
   //region 课程表
-  $scope.getWeekdayObject = function(day) {
+  $scope.getWeekdayObject = function (day) {
     let mapWeekDay = null;
     $scope.model.weeklyDayList.forEach(function (obj) {
-      if(obj.day === day){
+      if (obj.day === day) {
         mapWeekDay = obj;
       }
     });
     return mapWeekDay;
   };
 
-  $scope.getCourseArray = function(courseOrder, arr) {
+  $scope.getCourseArray = function (courseOrder, arr) {
     let mapCourse = null;
     $scope.model.courseList.forEach(function (obj) {
-      if(obj.order === courseOrder){
+      if (obj.order === courseOrder) {
         mapCourse = obj;
       }
     });
@@ -422,31 +425,31 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     return arr;
   };
 
-  $scope.loadCourseSchedule = function() {
-    if(commonUtility.isEmptyList($scope.model.courseInfo.courseScheduleList)){
+  $scope.loadCourseSchedule = function () {
+    if (commonUtility.isEmptyList($scope.model.courseInfo.courseScheduleList)) {
       return false;
     }
     let courseScheduleArr = [];
     $scope.model.courseInfo.courseScheduleList.forEach(function (schedule) {
-      if($scope.model.courseScheduleList.length === 0) {
+      if ($scope.model.courseScheduleList.length === 0) {
         $scope.model.courseScheduleList.push({
           weekday: $scope.getWeekdayObject(schedule.weekday),
           schedule: $scope.getCourseArray(schedule.weekdayClass, courseScheduleArr),
         });
-      }else {
+      } else {
         let currentWeekday = schedule.weekday;
         let isExistCurrentWeekday = false;
         let isExistCurrentWeekdayIndex = -1;
-        $scope.model.courseScheduleList.forEach(function (s,i) {
-          if(s.weekday.day === currentWeekday){
+        $scope.model.courseScheduleList.forEach(function (s, i) {
+          if (s.weekday.day === currentWeekday) {
             isExistCurrentWeekday = true;
             isExistCurrentWeekdayIndex = i;
           }
         });
 
-        if(isExistCurrentWeekday) {
+        if (isExistCurrentWeekday) {
           $scope.model.courseScheduleList[isExistCurrentWeekdayIndex].schedule = $scope.getCourseArray(schedule.weekdayClass, courseScheduleArr)
-        }else{
+        } else {
           courseScheduleArr = [];
           $scope.model.courseScheduleList.push({
             weekday: $scope.getWeekdayObject(schedule.weekday),
@@ -457,40 +460,40 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     });
   };
 
-  $scope.onShowCourseScheduleModal = function() {
+  $scope.onShowCourseScheduleModal = function () {
     $scope.model.selectWeekday = null;
     $scope.model.selectCourseList.splice(0, $scope.model.selectCourseList.length);
-    $('input[name="weekday"]').prop('checked',false);
-    $('input[name="courseTime"]').prop('checked',false);
+    $('input[name="weekday"]').prop('checked', false);
+    $('input[name="courseTime"]').prop('checked', false);
     $('#kt_modal_1').modal('show');
   };
 
-  $scope.onCancelSchedule = function(index) {
+  $scope.onCancelSchedule = function (index) {
     $scope.model.courseScheduleList.splice(index, 1);
   };
 
-  $scope.onChooseWeeklyDay = function(weekday) {
+  $scope.onChooseWeeklyDay = function (weekday) {
     $scope.model.selectWeekday = weekday;
   };
 
-  $scope.onChooseCourse = function(course) {
+  $scope.onChooseCourse = function (course) {
     let isExists = false;
     let index = -1;
     $scope.model.selectCourseList.forEach(function (selectCourse, i) {
-      if(selectCourse.order === course.order) {
+      if (selectCourse.order === course.order) {
         isExists = true;
         index = i;
       }
     });
-    if(isExists){
+    if (isExists) {
       $scope.model.selectCourseList.splice(index, 1);
-    }else{
+    } else {
       $scope.model.selectCourseList.push(course);
     }
   };
 
-  $scope.onSelectCourseSchedule = function(){
-    if($scope.model.selectWeekday !== null && $scope.model.selectCourseList.length > 0){
+  $scope.onSelectCourseSchedule = function () {
+    if ($scope.model.selectWeekday !== null && $scope.model.selectCourseList.length > 0) {
       let courseList = [];
       $scope.model.selectCourseList.forEach(function (selectCourse) {
         courseList.push(selectCourse);
@@ -504,7 +507,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     $('#kt_modal_1').modal('hide');
   };
 
-  $scope.onSaveCourseSchedule = function() {
+  $scope.onSaveCourseSchedule = function () {
     bootbox.confirm({
       message: `您确认要修改课程表吗？`,
       buttons: {
@@ -518,9 +521,9 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         }
       },
       callback: function (result) {
-        if(result) {
+        if (result) {
           let btn = $('#btnSaveCourseSchedule');
-          $(btn).attr('disabled',true);
+          $(btn).attr('disabled', true);
           KTApp.progress(btn);
 
           let courseScheduleEntityList = [];
@@ -541,7 +544,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             courseScheduleJson: JSON.stringify(courseScheduleEntityList),
             loginUser: $scope.model.loginUser.customerID
           }).then(function successCallback(response) {
-            if(response.data.err) {
+            if (response.data.err) {
               bizLogger.logInfo(
                   $scope.model.bizLog.pageName,
                   $scope.model.bizLog.operationName.CHANGE_COURSE_SCHEDULE,
@@ -569,13 +572,13 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
   //endregion
 
   //region 授课计划
-  $scope.loadCoursePlan = function(){
+  $scope.loadCoursePlan = function () {
     let courseKnowledgeIDArray = [];
     let courseKnowledgeNameArray = [];
     $scope.model.coursePlanList = [];
 
     $scope.model.courseInfo.coursePlanList.forEach(function (plan) {
-      if($scope.model.coursePlanList.length === 0) {
+      if ($scope.model.coursePlanList.length === 0) {
         courseKnowledgeIDArray.push(plan.knowledgeID);
         courseKnowledgeNameArray.push(plan.knowledgeName);
         $scope.model.coursePlanList.push({
@@ -590,23 +593,23 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
           dataStatus: plan.dataStatus,
           dataStatusText: plan.dataStatusText
         });
-      }else {
+      } else {
         let currentCourseClass = plan.courseClass;
         let isExistCurrentCourseClass = false;
         let isExistCurrentCourseClassIndex = -1;
-        $scope.model.coursePlanList.forEach(function (p,i) {
-          if(p.courseOrder === currentCourseClass){
+        $scope.model.coursePlanList.forEach(function (p, i) {
+          if (p.courseOrder === currentCourseClass) {
             isExistCurrentCourseClass = true;
             isExistCurrentCourseClassIndex = i;
           }
         });
 
-        if(isExistCurrentCourseClass){
+        if (isExistCurrentCourseClass) {
           courseKnowledgeIDArray.push(plan.knowledgeID);
           courseKnowledgeNameArray.push(plan.knowledgeName);
           $scope.model.coursePlanList[isExistCurrentCourseClassIndex].knowledgeIDArray = courseKnowledgeIDArray;
           $scope.model.coursePlanList[isExistCurrentCourseClassIndex].knowledgeNameArray = courseKnowledgeNameArray;
-        }else{
+        } else {
           courseKnowledgeIDArray = [];
           courseKnowledgeNameArray = [];
           courseKnowledgeIDArray.push(plan.knowledgeID);
@@ -626,29 +629,31 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         }
       }
     });
-    $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {return obj.dataStatus !== 'F'}).length;
+    $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {
+      return obj.dataStatus !== 'F'
+    }).length;
   };
 
-  $scope.onShowCoursePlanModal = function(){
-    if($scope.model.isClickAdd){
+  $scope.onShowCoursePlanModal = function () {
+    if ($scope.model.isClickAdd) {
       $scope.model.courseOrder++;
     }
-    $('input[name="technologyKnowledge"]').prop('checked',false);
+    $('input[name="technologyKnowledge"]').prop('checked', false);
     $scope.model.courseKnowledgeList.splice(0, $scope.model.courseKnowledgeList.length);
     $('#kt_modal_2').modal('show');
   };
 
   $scope.loadLearningPhase = function () {
-    $http.get(`/course/learningPhase?technologyID=${$scope.model.courseInfo.technologyID}`).then(function successCallback (response) {
-      if(response.data.err){
+    $http.get(`/course/learningPhase?technologyID=${$scope.model.courseInfo.technologyID}`).then(function successCallback(response) {
+      if (response.data.err) {
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
       }
-      if(commonUtility.isEmptyList(response.data.dataList)){
+      if (commonUtility.isEmptyList(response.data.dataList)) {
         return false;
       }
       $scope.model.learningPhaseList = response.data.dataList;
-      if($scope.model.learningPhaseList.length > 0){
+      if ($scope.model.learningPhaseList.length > 0) {
         $scope.model.selectedLearningPhase = {
           learningPhaseID: $scope.model.learningPhaseList[0].learningPhaseID,
           learningPhaseName: $scope.model.learningPhaseList[0].learningPhaseName
@@ -660,8 +665,8 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     });
   };
 
-  $scope.onLearningPhase = function(data) {
-    if($scope.model.selectedLearningPhase.learningPhaseID === data.learningPhaseID){
+  $scope.onLearningPhase = function (data) {
+    if ($scope.model.selectedLearningPhase.learningPhaseID === data.learningPhaseID) {
       return false;
     }
     $scope.model.selectedLearningPhase = {
@@ -673,8 +678,8 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 
   $scope.loadKnowledgeList = function () {
     $http.get(`/course/knowledgeList?technologyID=${$scope.model.courseInfo.technologyID}&learningPhaseID=${$scope.model.selectedLearningPhase.learningPhaseID}`)
-        .then(function successCallback (response) {
-          if(response.data.err){
+        .then(function successCallback(response) {
+          if (response.data.err) {
             bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
             return false;
           }
@@ -695,14 +700,14 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         });
   };
 
-  $scope.onChooseKnowledge = function(knowledge, event) {
+  $scope.onChooseKnowledge = function (knowledge, event) {
     let checkbox = event.target;
-    if(checkbox.checked){
+    if (checkbox.checked) {
       $scope.model.courseKnowledgeList.push(knowledge);
-    }else{
+    } else {
       let index = -1;
-      $scope.model.courseKnowledgeList.forEach(function (courseKnowledge,i) {
-        if(courseKnowledge.knowledgeID === knowledge.knowledgeID){
+      $scope.model.courseKnowledgeList.forEach(function (courseKnowledge, i) {
+        if (courseKnowledge.knowledgeID === knowledge.knowledgeID) {
           index = i;
         }
       });
@@ -710,17 +715,21 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     }
   };
 
-  $scope.onSetCoursePlan = function() {
+  $scope.onSetCoursePlan = function () {
     $scope.model.isClickAdd = true;
 
-    let courseKnowledgeIDArray = $scope.model.courseKnowledgeList.map(obj => {return obj.knowledgeID});
-    let courseKnowledgeNameArray = $scope.model.courseKnowledgeList.map(obj => {return obj.knowledgeName});
+    let courseKnowledgeIDArray = $scope.model.courseKnowledgeList.map(obj => {
+      return obj.knowledgeID
+    });
+    let courseKnowledgeNameArray = $scope.model.courseKnowledgeList.map(obj => {
+      return obj.knowledgeName
+    });
 
     let index = -1;
     let dataStatus = '';
     let courseOrder = 0;
-    for(let i = 0; i < $scope.model.coursePlanList.length; i++){
-      if($scope.model.coursePlanList[i].courseOrder === $scope.model.courseOrder) {
+    for (let i = 0; i < $scope.model.coursePlanList.length; i++) {
+      if ($scope.model.coursePlanList[i].courseOrder === $scope.model.courseOrder) {
         index = i;
         dataStatus = $scope.model.coursePlanList[i].dataStatus;
         courseOrder = $scope.model.coursePlanList[i].courseOrder;
@@ -728,7 +737,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
       }
     }
 
-    if(index === -1) {
+    if (index === -1) {
       $scope.model.coursePlanList.push({
         technologyID: $scope.model.courseInfo.technologyID,
         technologyName: $scope.model.courseInfo.technologyName,
@@ -741,12 +750,14 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         dataStatus: 'P',
         dataStatusText: '未结束'
       });
-      $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {return obj.dataStatus !== 'F'}).length;
+      $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {
+        return obj.dataStatus !== 'F'
+      }).length;
       $('#kt_modal_2').modal('hide');
       return false;
     }
 
-    if(index >= 0 && dataStatus === 'F'){
+    if (index >= 0 && dataStatus === 'F') {
 
       $('#kt_modal_2').modal('hide');
       bootbox.alert(`第${courseOrder}节课已经授课完成，不能修改课程内容。`);
@@ -766,7 +777,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         }
       },
       callback: function (result) {
-        if(result) {
+        if (result) {
           $scope.model.coursePlanList[index].knowledgeIDArray = courseKnowledgeIDArray;
           $scope.model.coursePlanList[index].knowledgeNameArray = courseKnowledgeNameArray;
           $scope.$apply();
@@ -776,11 +787,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     });
   };
 
-  $scope.onCancelPlan = function(index) {
+  $scope.onCancelPlan = function (index) {
     $scope.model.coursePlanList.splice(index, 1);
   };
 
-  $scope.onSaveCoursePlan = function() {
+  $scope.onSaveCoursePlan = function () {
     bootbox.confirm({
       message: `您确认要修改课程授课计划吗？`,
       buttons: {
@@ -794,9 +805,9 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         }
       },
       callback: function (result) {
-        if(result) {
+        if (result) {
           let btn = $('#btnSaveCoursePlan');
-          $(btn).attr('disabled',true);
+          $(btn).attr('disabled', true);
           KTApp.progress(btn);
 
           let coursePlanEntityList = [];
@@ -819,7 +830,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             coursePlanJson: JSON.stringify(coursePlanEntityList),
             loginUser: $scope.model.loginUser.customerID
           }).then(function successCallback(response) {
-            if(response.data.err) {
+            if (response.data.err) {
               bizLogger.logInfo(
                   $scope.model.bizLog.pageName,
                   $scope.model.bizLog.operationName.CHANGE_COURSE_PLAN,
@@ -831,7 +842,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
               return false;
             }
             $scope.model.coursePlanList.forEach(function (coursePlan) {
-              if(coursePlan.dataStatus === ''){
+              if (coursePlan.dataStatus === '') {
                 coursePlan.dataStatus = 'P';
                 coursePlan.dataStatusText = '未开始';
               }
@@ -856,17 +867,17 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
   //endregion
 
   //region 布置练习
-  $scope.loadCourseExercises = function(){
+  $scope.loadCourseExercises = function () {
     let knowledgeArray = [];
     let exercisesArray = [];
     let exercisesDocumentArray = [];
 
-    $http.get(`/course/detail/knowledgeExercises?universityCode=${$scope.model.universityCode}&schoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}`).then(function successCallback (response) {
-      if(response.data.err){
+    $http.get(`/course/detail/knowledgeExercises?universityCode=${$scope.model.universityCode}&schoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}`).then(function successCallback(response) {
+      if (response.data.err) {
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
       }
-      if(response.data.totalCount === 0){
+      if (response.data.totalCount === 0) {
         return false;
       }
       $scope.model.exercisesList = [];
@@ -883,10 +894,10 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     });
   };
 
-  $scope.onShowExercisesModal = function(courseClass) {
+  $scope.onShowExercisesModal = function (courseClass) {
     $scope.model.exercisesCourseClass = courseClass;
     for (let i = 0; i < $scope.model.exercisesList.length; i++) {
-      if($scope.model.exercisesList[i].courseClass === courseClass){
+      if ($scope.model.exercisesList[i].courseClass === courseClass) {
         $scope.model.courseExercisesFilterList = $scope.model.exercisesList[i].knowledgeList;
         break;
       }
@@ -894,7 +905,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     $('#kt_modal_3').modal('show');
   };
 
-  $scope.onFinishClass = function(exercises, flag) {
+  $scope.onFinishClass = function (exercises, flag) {
     let message = `您确认第${exercises.courseClass}节课已结束？`;
     bootbox.confirm({
       message: message,
@@ -909,7 +920,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         }
       },
       callback: function (result) {
-        if(result) {
+        if (result) {
           $http.put('/course/detail/finishClass', {
             universityCode: $scope.model.courseInfo.universityCode,
             schoolID: $scope.model.courseInfo.schoolID,
@@ -917,7 +928,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
             courseClass: exercises.courseClass,
             loginUser: $scope.model.loginUser.customerID
           }).then(function successCallback(response) {
-            if(response.data.err) {
+            if (response.data.err) {
               bizLogger.logInfo(
                   $scope.model.bizLog.pageName,
                   $scope.model.bizLog.operationName.CHANGE_CLASS_FINISH,
@@ -928,22 +939,24 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
               return false;
             }
 
-            for (let i = 0; i < $scope.model.coursePlanList.length ; i++) {
-              if($scope.model.coursePlanList[i].courseOrder === exercises.courseClass){
+            for (let i = 0; i < $scope.model.coursePlanList.length; i++) {
+              if ($scope.model.coursePlanList[i].courseOrder === exercises.courseClass) {
                 $scope.model.coursePlanList[i].dataStatus = 'F';
                 $scope.model.coursePlanList[i].dataStatusText = '已结束';
                 break;
               }
             }
 
-            for (let i = 0; i < $scope.model.exercisesList.length ; i++) {
-              if($scope.model.exercisesList[i].courseClass === exercises.courseClass){
+            for (let i = 0; i < $scope.model.exercisesList.length; i++) {
+              if ($scope.model.exercisesList[i].courseClass === exercises.courseClass) {
                 $scope.model.exercisesList[i].dataStatus = 'F';
                 break;
               }
             }
 
-            $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {return obj.dataStatus !== 'F'}).length;
+            $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {
+              return obj.dataStatus !== 'F'
+            }).length;
 
             bizLogger.logInfo(
                 $scope.model.bizLog.pageName,
@@ -959,15 +972,15 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     });
   };
 
-  $scope.onShowAssignExercisesModal = function(exercises) {
+  $scope.onShowAssignExercisesModal = function (exercises) {
     $scope.model.assignExercises = exercises;
     $scope.model.exercisesCourseClass = exercises.courseClass;
     $('#kt_modal_send_exercises').modal('show');
   };
 
-  $scope.onAssignExercises = function() {
+  $scope.onAssignExercises = function () {
     let btn = $('#btnSendExercises');
-    $(btn).attr('disabled',true);
+    $(btn).attr('disabled', true);
     KTApp.progress(btn);
 
     $http.post('/course/detail/classExercises', {
@@ -978,7 +991,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
       assignCount: $scope.model.assignCount,
       loginUser: $scope.model.loginUser.customerID
     }).then(function successCallback(response) {
-      if(response.data.err) {
+      if (response.data.err) {
         bizLogger.logInfo(
             $scope.model.bizLog.pageName,
             $scope.model.bizLog.operationName.ASSIGN_CLASS_EXERCISES,
@@ -990,16 +1003,16 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         return false;
       }
 
-      for (let i = 0; i < $scope.model.coursePlanList.length ; i++) {
-        if($scope.model.coursePlanList[i].courseOrder === $scope.model.assignExercises.courseClass){
+      for (let i = 0; i < $scope.model.coursePlanList.length; i++) {
+        if ($scope.model.coursePlanList[i].courseOrder === $scope.model.assignExercises.courseClass) {
           $scope.model.coursePlanList[i].dataStatus = 'F';
           $scope.model.coursePlanList[i].dataStatusText = '已结束';
           break;
         }
       }
 
-      for (let i = 0; i < $scope.model.exercisesList.length ; i++) {
-        if($scope.model.exercisesList[i].courseClass === $scope.model.assignExercises.courseClass){
+      for (let i = 0; i < $scope.model.exercisesList.length; i++) {
+        if ($scope.model.exercisesList[i].courseClass === $scope.model.assignExercises.courseClass) {
           $scope.model.exercisesList[i].dataStatus = 'F';
           break;
         }
@@ -1007,7 +1020,9 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 
       KTApp.unprogress(btn);
       $(btn).removeAttr('disabled');
-      $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {return obj.dataStatus !== 'F'}).length;
+      $scope.model.noFinishClassCount = $scope.model.coursePlanList.filter((obj) => {
+        return obj.dataStatus !== 'F'
+      }).length;
       bizLogger.logInfo(
           $scope.model.bizLog.pageName,
           $scope.model.bizLog.operationName.ASSIGN_CLASS_EXERCISES,
@@ -1023,17 +1038,17 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
   //endregion
 
   //region 报名学生
-  $scope.loadCourseStudent = function(){
+  $scope.loadCourseStudent = function () {
     $http.get(`/course/detail/courseSignUp?pageNumber=${$scope.model.pageNumber4SignUp}&universityCode=${$scope.model.universityCode}&schoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}`)
-        .then(function successCallback (response) {
-          if(response.data.err){
+        .then(function successCallback(response) {
+          if (response.data.err) {
             bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
             return false;
           }
-          if(response.data.dataContent === null){
+          if (response.data.dataContent === null) {
             return false;
           }
-          if(response.data.dataContent.dataList !== null && response.data.dataContent.dataList.length === 0 && $scope.model.pageNumber4SignUp > 1){
+          if (response.data.dataContent.dataList !== null && response.data.dataContent.dataList.length === 0 && $scope.model.pageNumber4SignUp > 1) {
             $scope.model.pageNumber4SignUp--;
             $scope.loadCourseStudent();
             return false;
@@ -1052,53 +1067,83 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         });
   };
 
-  $scope.onFirstPage4SignUp = function() {
+  $scope.onFirstPage4SignUp = function () {
     $scope.model.pageNumber4SignUp = 1;
     $scope.loadCourseStudent();
   };
 
-  $scope.onPrePage4SignUp = function(){
-    if($scope.model.pageNumber4SignUp === 1){
+  $scope.onPrePage4SignUp = function () {
+    if ($scope.model.pageNumber4SignUp === 1) {
       return false;
     }
     $scope.model.pageNumber4SignUp--;
     $scope.loadCourseStudent();
   };
 
-  $scope.onPagination4SignUp = function(pageNumber){
-    if($scope.model.pageNumber4SignUp === pageNumber){
+  $scope.onPagination4SignUp = function (pageNumber) {
+    if ($scope.model.pageNumber4SignUp === pageNumber) {
       return false;
     }
     $scope.model.pageNumber4SignUp = pageNumber;
     $scope.loadCourseStudent();
   };
 
-  $scope.onNextPage4SignUp = function(){
-    if($scope.model.pageNumber4SignUp === $scope.model.maxPageNumber4SignUp){
+  $scope.onNextPage4SignUp = function () {
+    if ($scope.model.pageNumber4SignUp === $scope.model.maxPageNumber4SignUp) {
       return false;
     }
     $scope.model.pageNumber4SignUp++;
     $scope.loadCourseStudent();
   };
 
-  $scope.onLastPage4SignUp = function() {
+  $scope.onLastPage4SignUp = function () {
     $scope.model.pageNumber4SignUp = $scope.model.maxPageNumber4SignUp;
     $scope.loadCourseStudent();
+  };
+
+  $scope.onChangeAssistant = function (data, isAssistant) {
+    $http.put('/course/detail/changeAssistant', {
+      universityCode: data.studentUniversityCode,
+      schoolID: data.studentSchoolID,
+      studentID: data.studentID,
+      isAssistant: isAssistant,
+      loginUser: $scope.model.loginUser.customerID
+    }).then(function successCallback(response) {
+      if (response.data.err) {
+        bizLogger.logInfo(
+            $scope.model.bizLog.pageName,
+            $scope.model.bizLog.operationName.SET_STUDENT_ASSISTANT,
+            bizLogger.OPERATION_TYPE.UPDATE,
+            bizLogger.OPERATION_RESULT.FAILED);
+
+        bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+        return false;
+      }
+      bizLogger.logInfo(
+          $scope.model.bizLog.pageName,
+          $scope.model.bizLog.operationName.SET_STUDENT_ASSISTANT,
+          bizLogger.OPERATION_TYPE.UPDATE,
+          bizLogger.OPERATION_RESULT.SUCCESS);
+      $scope.loadCourseStudent();
+      layer.msg(localMessage.SET_SUCCESS);
+    }, function errorCallback(response) {
+      bootbox.alert(localMessage.NETWORK_ERROR);
+    });
   };
   //endregion
 
   //region 批改练习
-  $scope.loadCourseStudentExercises = function(){
+  $scope.loadCourseStudentExercises = function () {
     $http.get(`/course/detail/courseStudentExercises?pageNumber=${$scope.model.pageNumber4Exercises}&universityCode=${$scope.model.universityCode}&schoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}&dataStatus=${$scope.model.filterStatus}`)
-        .then(function successCallback (response) {
-          if(response.data.err){
+        .then(function successCallback(response) {
+          if (response.data.err) {
             bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
             return false;
           }
-          if(response.data.dataContent === null || response.data.dataContent.dataList === null){
-            if($scope.model.pageNumber4Exercises > 1){
+          if (response.data.dataContent === null || response.data.dataContent.dataList === null) {
+            if ($scope.model.pageNumber4Exercises > 1) {
               $scope.model.pageNumber4Exercises--;
-            }else {
+            } else {
               $scope.model.pageNumber4Exercises = 1;
             }
             $scope.model.totalCount4Exercises = 0;
@@ -1126,10 +1171,10 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         });
   };
 
-  $scope.loadCodeStandardList = function() {
+  $scope.loadCodeStandardList = function () {
     $http.get(`/course/detail/codeStandard?technologyID=${$scope.model.courseInfo.technologyID}`)
-        .then(function successCallback (response) {
-          if(response.data.err){
+        .then(function successCallback(response) {
+          if (response.data.err) {
             bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
             return false;
           }
@@ -1140,41 +1185,41 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         });
   };
 
-  $scope.onFirstPage4Exercises = function() {
+  $scope.onFirstPage4Exercises = function () {
     $scope.model.pageNumber4Exercises = 1;
     $scope.loadCourseStudentExercises();
   };
 
-  $scope.onPrePage4Exercises = function(){
-    if($scope.model.pageNumber4Exercises === 1){
+  $scope.onPrePage4Exercises = function () {
+    if ($scope.model.pageNumber4Exercises === 1) {
       return false;
     }
     $scope.model.pageNumber4Exercises--;
     $scope.loadCourseStudentExercises();
   };
 
-  $scope.onPagination4Exercises = function(pageNumber){
-    if($scope.model.pageNumber4Exercises === pageNumber){
+  $scope.onPagination4Exercises = function (pageNumber) {
+    if ($scope.model.pageNumber4Exercises === pageNumber) {
       return false;
     }
     $scope.model.pageNumber4Exercises = pageNumber;
     $scope.loadCourseStudentExercises();
   };
 
-  $scope.onNextPage4Exercises = function(){
-    if($scope.model.pageNumber4Exercises === $scope.model.maxPageNumber4Exercises){
+  $scope.onNextPage4Exercises = function () {
+    if ($scope.model.pageNumber4Exercises === $scope.model.maxPageNumber4Exercises) {
       return false;
     }
     $scope.model.pageNumber4Exercises++;
     $scope.loadCourseStudentExercises();
   };
 
-  $scope.onLastPage4Exercises = function() {
+  $scope.onLastPage4Exercises = function () {
     $scope.model.pageNumber4Exercises = $scope.model.maxPageNumber4Exercises;
     $scope.loadCourseStudentExercises();
   };
 
-  $scope.onFilterCourseStudentExercises = function(filterStatus) {
+  $scope.onFilterCourseStudentExercises = function (filterStatus) {
     $scope.model.filterStatus = filterStatus;
     $scope.loadCourseStudentExercises();
     bizLogger.logInfo(
@@ -1184,7 +1229,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         bizLogger.OPERATION_RESULT.SUCCESS);
   };
 
-  $scope.onShowReview = function(data) {
+  $scope.onShowReview = function (data) {
     $scope.model.reviewData.courseUniversityCode = data.courseUniversityCode;
     $scope.model.reviewData.courseSchoolID = data.courseSchoolID;
     $scope.model.reviewData.courseID = data.courseID;
@@ -1214,29 +1259,29 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     $('#kt_modal_review').modal('show');
   };
 
-  $scope.onCodeStandardResultChange = function() {
-    if($scope.model.reviewData.codeStandardResult === '0') {
+  $scope.onCodeStandardResultChange = function () {
+    if ($scope.model.reviewData.codeStandardResult === '0') {
       $scope.model.reviewData.isShowCodeStandardList = true;
-    }else{
+    } else {
       $scope.model.reviewData.isShowCodeStandardList = false;
     }
   };
 
-  $scope.onCodeStandardChange = function($event, codeStandardID) {
+  $scope.onCodeStandardChange = function ($event, codeStandardID) {
     let checkbox = $event.target;
-    if(checkbox.checked){
+    if (checkbox.checked) {
       $scope.model.reviewData.codeStandardErrorList.push(codeStandardID);
-    }else{
+    } else {
       let index = $scope.model.reviewData.codeStandardErrorList.indexOf(codeStandardID);
-      if(index >= 0){
+      if (index >= 0) {
         $scope.model.reviewData.codeStandardErrorList.splice(index, 1);
       }
     }
   };
 
-  $scope.onReviewSubmit = function() {
+  $scope.onReviewSubmit = function () {
     let btn = $('#btnReviewSubmit');
-    $(btn).attr('disabled',true);
+    $(btn).attr('disabled', true);
     KTApp.progress(btn);
     let codeStandardErrorList = [];
     $scope.model.reviewData.codeStandardErrorList.forEach(function (standardID) {
@@ -1267,7 +1312,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
       reviewMemo: $scope.model.reviewData.reviewMemo,
       loginUser: $scope.model.loginUser.customerID
     }).then(function successCallback(response) {
-      if(response.data.err) {
+      if (response.data.err) {
         bizLogger.logInfo(
             $scope.model.bizLog.pageName,
             $scope.model.bizLog.operationName.REVIEW_CLASS_EXERCISES,
@@ -1292,9 +1337,9 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     });
   };
 
-  $scope.loadReviewHistory = function() {
-    $http.get(`/course/detail/exercisesReviewHistory?pageNumber=${$scope.model.reviewHistory.pageNumber}&studentExercisesID=${$scope.model.reviewHistory.studentExercisesID}`).then(function successCallback (response) {
-      if(response.data.err){
+  $scope.loadReviewHistory = function () {
+    $http.get(`/course/detail/exercisesReviewHistory?pageNumber=${$scope.model.reviewHistory.pageNumber}&studentExercisesID=${$scope.model.reviewHistory.studentExercisesID}`).then(function successCallback(response) {
+      if (response.data.err) {
         bizLogger.logInfo(
             $scope.model.bizLog.pageName,
             $scope.model.bizLog.operationName.SHOW_REVIEW_HISTORY,
@@ -1304,16 +1349,16 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         return false;
       }
 
-      if(response.data.dataContent === null || response.data.dataContent.dataList === null){
+      if (response.data.dataContent === null || response.data.dataContent.dataList === null) {
         $scope.model.reviewHistory.totalCount = 0;
         $scope.model.reviewHistory.maxPageNumber = 0;
         $scope.model.reviewHistory.pageNumber = 1;
         $scope.model.reviewHistory.dataList = [];
         return false;
       }
-      if(response.data.dataContent.dataList !== null
+      if (response.data.dataContent.dataList !== null
           && response.data.dataContent.dataList.length === 0
-          && $scope.model.reviewHistory.pageNumber > 1){
+          && $scope.model.reviewHistory.pageNumber > 1) {
         $scope.model.reviewHistory.pageNumber--;
         return false;
       }
@@ -1334,7 +1379,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     });
   };
 
-  $scope.onShowReviewHistory = function(data) {
+  $scope.onShowReviewHistory = function (data) {
     $scope.model.reviewHistory.studentExercisesID = data.studentExercisesID;
     $scope.model.reviewHistory.totalCount = 0;
     $scope.model.reviewHistory.maxPageNumber = 0;
@@ -1344,30 +1389,30 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     $('#kt_modal_review_list').modal('show');
   };
 
-  $scope.onLoadMoreReviewHistory = function() {
+  $scope.onLoadMoreReviewHistory = function () {
     $scope.model.reviewHistory.pageNumber++;
     $scope.loadReviewHistory();
   };
   //endregion
 
   //region 在线答疑
-  $scope.loadCourseQuestion = function(){
-    $http.get(`/course/detail/courseQuestion?pageNumber=${$scope.model.courseQuestion.pageNumber}&courseUniversityCode=${$scope.model.universityCode}&courseSchoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}`).then(function successCallback (response) {
-      if(response.data.err){
+  $scope.loadCourseQuestion = function () {
+    $http.get(`/course/detail/courseQuestion?pageNumber=${$scope.model.courseQuestion.pageNumber}&courseUniversityCode=${$scope.model.universityCode}&courseSchoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}`).then(function successCallback(response) {
+      if (response.data.err) {
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
       }
 
-      if(response.data.dataContent === null || response.data.dataContent.dataList === null){
+      if (response.data.dataContent === null || response.data.dataContent.dataList === null) {
         $scope.model.courseQuestion.totalCount = 0;
         $scope.model.courseQuestion.maxPageNumber = 0;
         $scope.model.courseQuestion.pageNumber = 1;
         $scope.model.courseQuestion.dataList = [];
         return false;
       }
-      if(response.data.dataContent.dataList !== null
+      if (response.data.dataContent.dataList !== null
           && response.data.dataContent.dataList.length === 0
-          && $scope.model.courseQuestion.pageNumber > 1){
+          && $scope.model.courseQuestion.pageNumber > 1) {
         $scope.model.courseQuestion.pageNumber--;
         return false;
       }
@@ -1387,12 +1432,12 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     });
   };
 
-  $scope.onLoadMoreCourseQuestion = function() {
+  $scope.onLoadMoreCourseQuestion = function () {
     $scope.model.courseQuestion.pageNumber++;
     $scope.loadCourseQuestion();
   };
 
-  $scope.onShowLeaveMessageModal = function(question) {
+  $scope.onShowLeaveMessageModal = function (question) {
     $scope.model.leaveMessage.questionID = question.questionID;
     $scope.model.leaveMessage.questionerName = question.questionerName;
     $scope.model.leaveMessage.commenterUniversityCode = $scope.model.loginUser.universityCode;
@@ -1402,9 +1447,9 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     $('#kt_modal_leave_message').modal('show');
   };
 
-  $scope.onSubmitAnswerMessage = function() {
+  $scope.onSubmitAnswerMessage = function () {
     let btn = $('#btnSubmitAnswerMessage');
-    $(btn).attr('disabled',true);
+    $(btn).attr('disabled', true);
     KTApp.progress(btn);
     $http.post('/course/detail/leaveMessage', {
       questionID: $scope.model.leaveMessage.questionID,
@@ -1415,7 +1460,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
       messageContent: $scope.model.leaveMessage.messageContent,
       loginUser: $scope.model.loginUser.customerID
     }).then(function successCallback(response) {
-      if(response.data.err) {
+      if (response.data.err) {
         bizLogger.logInfo(
             $scope.model.bizLog.pageName,
             $scope.model.bizLog.operationName.REPLY_STUDENT_QUESTION,

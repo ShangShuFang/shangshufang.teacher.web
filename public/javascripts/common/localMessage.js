@@ -5,6 +5,7 @@ localMessage.NO_ACCOUNT = '您输入的用户名或密码不存在！';
 localMessage.UPLOAD_SUCCESS = '文件上传成功！';
 localMessage.SAVE_SUCCESS = '数据保存成功！';
 localMessage.DELETE_SUCCESS = '数据删除成功！';
+localMessage.SET_SUCCESS = '设置成功！';
 localMessage.NO_USING_LEARNING_PHASE = '未查询到该技术的学习路径！';
 localMessage.NO_USING_KNOWLEDGE = '未查询到该学习路径的知识点！';
 localMessage.NO_TECHNOLOGY_DATA = '抱歉，暂时没有更多热门技术了, 后续会持续添加，敬请期待！';

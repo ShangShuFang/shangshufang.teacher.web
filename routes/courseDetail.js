@@ -487,4 +487,31 @@ router.put('/exercisesReview', (req, res, next) => {
   });
 });
 
+router.put('/changeAssistant', (req, res, next) => {
+  let service = new commonService.commonInvoke('changeAssistant');
+  let data = {
+    universityCode: req.body.universityCode,
+    schoolID: req.body.schoolID,
+    studentID: req.body.studentID,
+    assistant: req.body.isAssistant,
+    loginUser: req.body.loginUser
+  };
+
+  service.change(data, (result) => {
+    if(result.err){
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    }else{
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg
+      });
+    }
+  });
+});
+
 module.exports = router;

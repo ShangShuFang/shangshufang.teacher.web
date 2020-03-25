@@ -433,68 +433,73 @@
             </div>
             <div class="tab-pane" id="kt_tabs_4" role="tabpanel">
               <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded"
-                   id="kt_apps_user_list_datatable" style="width: 85%; margin: 0 auto">
-                <table class="kt-datatable__table" style="display: block;">
+                   id="kt_apps_user_list_datatable" style="width: 100%; margin: 0 auto">
+                <table class="kt-datatable__table kt-datatable__row--hover table-hover" style="display: block;">
                   <thead class="kt-datatable__head">
-                  <tr class="kt-datatable__row" style="left: 0px;">
-                    <th class="kt-datatable__cell kt-datatable__cell--sort">
-                      <span style="width: 150px;">报名学生</span>
-                    </th>
-                    <th class="kt-datatable__cell kt-datatable__cell--sort">
-                      <span style="width: 180px;">报名时间</span>
-                    </th>
-                    <th class="kt-datatable__cell kt-datatable__cell--sort">
-                      <span style="width: 150px;">就读院校</span>
-                    </th>
-                    <th class="kt-datatable__cell kt-datatable__cell--sort">
-                      <span style="width: 150px;">所在学院</span>
-                    </th>
-                    <th class="kt-datatable__cell kt-datatable__cell--sort">
-                      <span style="width: 120px;">手机号码</span>
-                    </th>
-                    <th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort">
-                      <span style="width: 100px;">入学年份</span>
-                    </th>
-                    <th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort">
-                      <span style="width: 100px;">报名状态</span>
-                    </th>
-                  </tr>
+                    <tr class="kt-datatable__row" style="left: 0px;">
+                      <th class="kt-datatable__cell kt-datatable__cell--sort">
+                        <span style="width: 120px;">报名学生</span>
+                      </th>
+                      <th class="kt-datatable__cell kt-datatable__cell--sort">
+                        <span style="width: 130px;">报名时间</span>
+                      </th>
+                      <th class="kt-datatable__cell kt-datatable__cell--sort">
+                        <span style="width: 140px;">就读院校</span>
+                      </th>
+                      <th class="kt-datatable__cell kt-datatable__cell--sort">
+                        <span style="width: 100px;">手机号码</span>
+                      </th>
+                      <th data-field="Status" class="kt-datatable__cell">
+                        <span style="width: 100px;">入学年份</span>
+                      </th>
+                      <th data-field="Status" class="kt-datatable__cell">
+                        <span style="width: 100px;">课程助教</span>
+                      </th>
+                      <th data-field="Status" class="kt-datatable__cell">
+                        <span style="width: 100px;">报名状态</span>
+                      </th>
+                      <th data-field="Actions" class="kt-datatable__cell">
+                        <span style="width: 100px;">操作</span>
+                      </th>
+                    </tr>
+
                   </thead>
                   <tbody class="kt-datatable__body" style="">
                   <tr class="kt-datatable__row" style="left: 0;" ng-repeat="data in model.dataList4SignUp">
                     <td class="kt-datatable__cell">
-                          <span style="width: 150px;">
-                            <div class="kt-user-card-v2">
-                              <div class="kt-user-card-v2__pic">
-                                <img class="kt-badge kt-badge--xl" src="/media/users/teacher_default.png"
-                                     ng-if="data.studentPhoto == ''">
-                                <img class="kt-badge kt-badge--xl" ng-src="\{{data.studentPhoto}}"
-                                     ng-if="data.studentPhoto != ''">
-                              </div>
-
-                              <!--                            1公士，2上造，3簪袅，4不更，5大夫，6官大夫，7公大夫，8公乘，9五大夫，10左庶长，11右庶长，12左更，13中更，14右更，15少上造，16大上造，17驷车，18大庶长，19关内候，20彻候-->
-
-                              <div class="kt-user-card-v2__details">
-                                <a class="kt-user-card-v2__name" href="javascript:;" ng-bind="data.studentName"></a>
-                                <span class="kt-user-card-v2__desc">500学分 公士</span>
-                              </div>
-                            </div>
-                          </span>
+                      <span style="width: 120px;">
+                        <div class="kt-user-card-v2">
+                          <div class="kt-user-card-v2__pic">
+                            <img class="kt-badge kt-badge--xl" src="/media/users/teacher_default.png"
+                                 ng-if="data.studentPhoto == ''">
+                            <img class="kt-badge kt-badge--xl" ng-src="\{{data.studentPhoto}}"
+                                 ng-if="data.studentPhoto != ''">
+                          </div>
+                          <div class="kt-user-card-v2__details">
+                            <a class="kt-user-card-v2__name" href="javascript:;" ng-bind="data.studentName"></a>
+                            <span class="kt-user-card-v2__desc">500学分 公士</span>
+                          </div>
+                        </div>
+                      </span>
                     </td>
                     <td class="kt-datatable__cell">
-                      <span style="width: 180px;" ng-bind="data.createTime"></span>
+                      <span style="width: 130px;" ng-bind="data.createTime"></span>
                     </td>
                     <td class="kt-datatable__cell">
-                      <span style="width: 150px;" ng-bind="data.studentUniversityName"></span>
+                      <span style="width: 140px;" ng-bind="data.studentUniversityName"></span>
+                      <span style="width: 140px;" ng-bind="data.studentSchoolName"></span>
                     </td>
                     <td class="kt-datatable__cell">
-                      <span style="width: 150px;" ng-bind="data.studentSchoolName"></span>
-                    </td>
-                    <td class="kt-datatable__cell">
-                      <span style="width: 120px;" ng-bind="data.cellphone"></span>
+                      <span style="width: 100px;" ng-bind="data.cellphone"></span>
                     </td>
                     <td class="kt-datatable__cell">
                       <span style="width: 100px;">\{{data.enrollmentYear}}年</span>
+                    </td>
+                    <td class="kt-datatable__cell">
+                      <span style="width: 100px;">
+                        <span class="kt-badge kt-badge--dot kt-badge--danger" ng-if="data.assistant == true"></span>&nbsp;
+                        <span class="kt-font-bold ng-binding kt-font-danger" ng-if="data.assistant == true">助教</span>
+                      </span>
                     </td>
                     <td class="kt-datatable__cell">
                           <span style="width: 100px;">
@@ -502,6 +507,22 @@
                                   ng-class="{'kt-badge--success': data.dataStatus == 'A', 'kt-badge--warning': data.dataStatus == 'C'}"
                                   ng-bind="data.dataStatusText"></span>
                           </span>
+                    </td>
+                    <td data-field="Actions" class="kt-datatable__cell">
+                      <span style="overflow: visible; position: relative; width: 110px;">
+                          <button type="button"
+                                  class="btn btn-danger btn-sm"
+                                  ng-if="data.assistant == false"
+                                  ng-click="onChangeAssistant(data, true)">
+                            设为助教
+                          </button>
+                          <button type="button"
+                                  class="btn btn-secondary btn-sm"
+                                  ng-if="data.assistant == true"
+                                  ng-click="onChangeAssistant(data, false)">
+                            取消助教
+                          </button>
+                        </span>
                     </td>
                   </tr>
                   </tbody>
@@ -564,6 +585,8 @@
                   </div>
                 </div>
               </div>
+
+
             </div>
             <div class="tab-pane" id="kt_tabs_5" role="tabpanel">
               <form class="kt-form">

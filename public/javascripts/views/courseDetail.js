@@ -165,13 +165,27 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     if (!$scope.loadParameter()) {
       return false;
     }
-
+    $scope.clearMenuActive();
     $scope.loadCourseInfo();
     $scope.loadCourseExercises();
     $scope.loadCourseStudent();
     $scope.loadCourseStudentExercises();
     $scope.loadCourseQuestion();
     $scope.setDefaultTab();
+  };
+
+  $scope.clearMenuActive = function () {
+    $('ul.kt-menu__nav li').removeClass('kt-menu__item--here');
+  };
+
+  $scope.setMenuActive = function () {
+    let courseTeacherID = $scope.model.courseInfo.teacherID;
+    let loginUserID = $scope.model.loginUser.customerID;
+    if(courseTeacherID === loginUserID){
+      $('ul.kt-menu__nav li:nth-child(2)').addClass('kt-menu__item--here');
+      return false;
+    }
+    $('ul.kt-menu__nav li:nth-child(1)').addClass('kt-menu__item--here');
   };
 
   $scope.loadParameter = function () {
@@ -232,7 +246,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
       if (!commonUtility.isEmptyList(response.data.courseDetail.coursePlanList)) {
         $scope.model.courseOrder = response.data.courseDetail.coursePlanList[response.data.courseDetail.coursePlanList.length - 1].courseClass + 1;
       }
-
+      $scope.setMenuActive();
       $scope.loadCourseBaseInfo();
       $scope.loadCourseSchedule();
       $scope.loadCoursePlan();
@@ -1125,7 +1139,6 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
           bizLogger.OPERATION_TYPE.UPDATE,
           bizLogger.OPERATION_RESULT.SUCCESS);
       $scope.loadCourseStudent();
-      layer.msg(localMessage.SET_SUCCESS);
     }, function errorCallback(response) {
       bootbox.alert(localMessage.NETWORK_ERROR);
     });

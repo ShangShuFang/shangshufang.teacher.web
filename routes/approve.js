@@ -14,7 +14,8 @@ router.get('/list', (req, res, next) => {
   let universityCode = req.query.universityCode;
   let schoolID = req.query.schoolID;
   let accountID = req.query.accountID;
-  let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${accountID}`;
+  let dataStatus = req.query.dataStatus;
+  let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${accountID}/${dataStatus}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {
@@ -34,6 +35,33 @@ router.get('/list', (req, res, next) => {
     }
   });
 });
+
+router.get('/wait', (req, res, next) => {
+  let service = new commonService.commonInvoke('waitApprove');
+
+  let universityCode = req.query.universityCode;
+  let schoolID = req.query.schoolID;
+  let teacherID = req.query.teacherID;
+  let parameter = `${universityCode}/${schoolID}/${teacherID}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        totalCount: result.content.totalCount
+      });
+    }
+  });
+});
+
 
 router.put('/status', (req, res, next) => {
   //todo 如果dataStatus为A，则发送通知短信

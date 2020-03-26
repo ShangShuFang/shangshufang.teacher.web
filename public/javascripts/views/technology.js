@@ -52,6 +52,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.initPage = function () {
+    $scope.setMenuActive();
     $scope.setParameter();
     $scope.loadTechnologyInfo();
     $scope.loadKnowledgeList();
@@ -59,6 +60,10 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.loadCourseOfUniversityList();
     $scope.loadCourseOfOtherUniversityList();
     $scope.loadCourseStudent();
+  };
+
+  $scope.setMenuActive = function () {
+    $('ul.kt-menu__nav li:nth-child(1)').addClass('kt-menu__item--here');
   };
 
   $scope.setParameter = function () {

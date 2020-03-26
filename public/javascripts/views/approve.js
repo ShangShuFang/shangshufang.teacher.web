@@ -1,6 +1,7 @@
 let pageApp = angular.module('pageApp', []);
 pageApp.controller('pageCtrl', function ($scope, $http) {
   $scope.model = {
+    filterStatus: 'P',
     fromIndex : 0,
     toIndex: 0,
     pageNumber: 1,
@@ -24,15 +25,29 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $('ul.kt-menu__nav li').removeClass('kt-menu__item--here');
   };
 
+  $scope.onFilterData = function (status) {
+    $scope.model.filterStatus = status;
+    $scope.loadData();
+  };
+
   $scope.loadData = function () {
     $scope.model.loginUser = commonUtility.getLoginUser();
-    $http.get(`/approve/List?pageNumber=${$scope.model.pageNumber}&universityCode=${$scope.model.loginUser.universityCode}&schoolID=${$scope.model.loginUser.schoolID}&accountID=${$scope.model.loginUser.accountID}`)
+    $http.get(`/approve/List?pageNumber=${$scope.model.pageNumber}&universityCode=${$scope.model.loginUser.universityCode}&schoolID=${$scope.model.loginUser.schoolID}&accountID=${$scope.model.loginUser.accountID}&dataStatus=${$scope.model.filterStatus}`)
         .then(function successCallback (response) {
           if(response.data.err){
             bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
             return false;
           }
           if(response.data.dataContent === null || commonUtility.isEmptyList(response.data.dataContent.dataList)){
+            $scope.model.totalCount = 0;
+            $scope.model.dataList = [];
+            $scope.model.pageNumber = 1;
+            $scope.model.maxPageNumber = 0;
+            $scope.model.paginationArray = [];
+            $scope.model.prePageNum = -1;
+            $scope.model.nextPageNum = -1;
+            $scope.model.fromIndex = 0;
+            $scope.model.toIndex = 0;
             return false;
           }
           $scope.model.totalCount = response.data.dataContent.totalCount;

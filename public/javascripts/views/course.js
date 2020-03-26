@@ -75,7 +75,12 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       return false;
     }
     $scope.model.loginUser = commonUtility.getLoginUser();
+    $scope.setMenuActive();
     $scope.loadTechnologyList();
+  };
+
+  $scope.setMenuActive = function () {
+    $('ul.kt-menu__nav li:nth-child(1)').addClass('kt-menu__item--here');
   };
 
   //region step1: 选择所属技术

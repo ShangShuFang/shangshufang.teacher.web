@@ -35,8 +35,14 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
         bizLogger.OPERATION_RESULT.SUCCESS);
     $scope.model.isLogin = commonUtility.isLogin();
     $scope.model.loginUser = commonUtility.getLoginUser();
+    $scope.setMenuActive();
     $scope.loadTechnologyList();
     $scope.loadCourseList();
+    $scope.checkNewApprove();
+  };
+
+  $scope.setMenuActive = function () {
+    $('ul.kt-menu__nav li:nth-child(1)').addClass('kt-menu__item--here');
   };
 
   $scope.loadTechnologyList = function () {
@@ -95,6 +101,36 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     }, function errorCallback(response) {
       bootbox.alert(localMessage.NETWORK_ERROR);
     });
+  };
+
+  $scope.checkNewApprove = function () {
+    $http.get(`/approve/wait?universityCode=${$scope.model.loginUser.universityCode}&schoolID=${$scope.model.loginUser.schoolID}&teacherID=${$scope.model.loginUser.customerID}`).then(function successCallback (response) {
+      if(response.data.err){
+        bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+        return false;
+      }
+
+      if(response.data.totalCount === 0){
+        return false;
+      }
+      swal.fire({
+        text: `您有${response.data.totalCount}个账户申请待审批`,
+        type: 'info',
+        showCancelButton: true,
+        confirmButtonText: '现在审批',
+        cancelButtonText: '稍后审批',
+        reverseButtons: true
+      }).then(function(result){
+        if (result.value) {
+          window.open('/approve');
+        }
+      });
+
+    }, function errorCallback(response) {
+      bootbox.alert(localMessage.NETWORK_ERROR);
+    });
+
+
   };
 
   $scope.onLoadMoreTechnology = function (){

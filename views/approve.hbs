@@ -9,6 +9,48 @@
   </div>
   <div class="kt-portlet kt-portlet--height-fluid">
     <div class="kt-portlet__body">
+      <div class="shs-search-bar shs-top-line shs-under-line kt-padding-5">
+        <form class="kt-form kt-form--label-right">
+          <div class="kt-portlet__body kt-padding-0">
+            <div class="form-group row kt-margin-0">
+              <label class="col-form-label col-xl-1 col-sm-12 text-center">状态过滤：</label>
+              <div class="col-lg-4 col-md-9 col-sm-12 shs-padding-top-2">
+                <a href=""
+                   class="btn btn-elevate btn-square btn-sm"
+                   ng-class="{'btn-brand': model.filterStatus == 'NULL', 'btn-outline-hover-info': model.filterStatus != 'NULL'}"
+                   ng-click="onFilterData('NULL')">
+                  全部
+                </a>
+                <a href=""
+                   class="btn btn-elevate btn-square btn-sm"
+                   ng-class="{'btn-brand': model.filterStatus == 'P', 'btn-outline-hover-info': model.filterStatus != 'P'}"
+                   ng-click="onFilterData('P')">
+                  待审批
+                </a>
+                <a href=""
+                   class="btn btn-outline-hover-info btn-elevate btn-square btn-sm"
+                   ng-class="{'btn-brand': model.filterStatus == 'A', 'btn-outline-hover-info': model.filterStatus != 'A'}"
+                   ng-click="onFilterData('A')">
+                  正常
+                </a>
+                <a href=""
+                   class="btn btn-outline-hover-info btn-elevate btn-square btn-sm"
+                   ng-class="{'btn-brand': model.filterStatus == 'N', 'btn-outline-hover-info': model.filterStatus != 'N'}"
+                   ng-click="onFilterData('N')">
+                  驳回
+                </a>
+                <a href=""
+                   class="btn btn-outline-hover-info btn-elevate btn-square btn-sm"
+                   ng-class="{'btn-brand': model.filterStatus == 'D', 'btn-outline-hover-info': model.filterStatus != 'D'}"
+                   ng-click="onFilterData('D')">
+                  禁用
+                </a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
       <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded" id="local_data" style="">
         <table class="kt-datatable__table kt-datatable__row--hover table-hover" style="display: block;">
           <thead class="kt-datatable__head">

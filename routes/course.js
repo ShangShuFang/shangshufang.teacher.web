@@ -66,6 +66,61 @@ router.get('/list', (req, res, next) => {
   });
 });
 
+router.get('/copy/list', (req, res, next) => {
+  let service = new commonService.commonInvoke('courseCopy');
+
+  let universityCode = req.query.universityCode;
+  let schoolID = req.query.schoolID;
+  let teacherID = req.query.teacherID;
+  let technologyID = req.query.technologyID;
+
+  let parameter = `${universityCode}/${schoolID}/${teacherID}/${technologyID}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        dataList: result.content.responseData
+      });
+    }
+  });
+});
+
+router.get('/copy/coursePlan', (req, res, next) => {
+  let service = new commonService.commonInvoke('coursePlan');
+
+  let universityCode = req.query.universityCode;
+  let schoolID = req.query.schoolID;
+  let courseID = req.query.courseID;
+
+  let parameter = `${universityCode}/${schoolID}/${courseID}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        dataList: result.content.responseData
+      });
+    }
+  });
+});
+
 router.get('/info', (req, res, next) => {
   let service = new commonService.commonInvoke('course');
   let universityCode = req.query.universityCode;

@@ -93,13 +93,15 @@
                             <div class="kt-widget__media">
                               <a ng-href="/technology?technology=\{{data.technologyID}}" target="_blank"
                               class="kt-widget__username kt-font-brand kt-font-bold">
-                              <img class="kt-widget__img course-create-widget-img" ng-src="\{{data.technologyThumbnail}}" alt="image">
+                              <img class="kt-widget__img course-create-widget-img"
+                                   ng-src="\{{data.technologyThumbnail}}" alt="image">
                               </a>
                             </div>
 
                             <div class="kt-widget__info">
                               <a ng-href="/technology?technology=\{{data.technologyID}}" ng-bind="data.technologyName"
-                              target="_blank" class="kt-widget__username kt-font-brand kt-link kt-font-bold course-create-username"></a>
+                              target="_blank" class="kt-widget__username kt-font-brand kt-link kt-font-bold
+                              course-create-username"></a>
                               <span class="kt-widget__desc">
                                 <i class="la"
                                    ng-class="{'la-star-o': data.technologyStars < 1, 'la-star star-selected': data.technologyStars >= 1}"></i>
@@ -159,7 +161,9 @@
                       <label>授课时间</label>
                       <div class="row">
                         <div class="col-md-5">
-                          <input type="date" class="form-control" name="courseBeginDate" ng-model="model.courseBeginDate" ng-change="onBeginDateChange(model.courseBeginDate)" required placeholder="yyyy-MM-dd">
+                          <input type="date" class="form-control" name="courseBeginDate"
+                                 ng-model="model.courseBeginDate" ng-change="onBeginDateChange(model.courseBeginDate)"
+                                 required placeholder="yyyy-MM-dd">
                         </div>
                         <div class="col-md-2">
                           <div class="data-separate">
@@ -167,7 +171,8 @@
                           </div>
                         </div>
                         <div class="col-md-5">
-                          <input type="date" class="form-control" name="courseEndDate" ng-model="model.courseEndDate" ng-change="onEndDateChange(model.courseEndDate)" required placeholder="yyyy-MM-dd">
+                          <input type="date" class="form-control" name="courseEndDate" ng-model="model.courseEndDate"
+                                 ng-change="onEndDateChange(model.courseEndDate)" required placeholder="yyyy-MM-dd">
                         </div>
                       </div>
                     </div>
@@ -176,7 +181,8 @@
                       <div class="row">
                         <div class="col-xl-12">
                           <div class="form-group">
-                            <textarea class="form-control" maxlength="500" rows="5" ng-model="model.courseIntroduction" required placeholder="请输入课程简介，如课程目标、所授知识点、需要达到的能力等等(最多500字)"></textarea>
+                            <textarea class="form-control" maxlength="500" rows="5" ng-model="model.courseIntroduction"
+                                      required placeholder="请输入课程简介，如课程目标、所授知识点、需要达到的能力等等(最多500字)"></textarea>
                           </div>
                         </div>
                       </div>
@@ -187,11 +193,12 @@
                          ng-click="onShowCourseScheduleModal()" style="float: right"><i class="fa fa-plus"></i>添加</a>
                       <div class="kt-notification-v2">
                         <div href="javascript:;" ng-repeat="courseSchedule in model.courseScheduleList"
-                           class="kt-notification-v2__item kt-font-bold">
+                             class="kt-notification-v2__item kt-font-bold">
                           <div class="kt-notification-v2__item-icon" ng-bind="courseSchedule.weekday.dayText"></div>
                           <div class="kt-notification-v2__itek-wrapper" style="float: left">
                             <div class="kt-notification-v2__item-title">
-                              <span class="course-schedule" ng-repeat="course in courseSchedule.schedule">\{{course.orderText}}(\{{course.time}}) <br ng-if="$index == 3"/></span>
+                              <span class="course-schedule" ng-repeat="course in courseSchedule.schedule">
+                                \{{course.orderText}}(\{{course.time}}) <br ng-if="$index == 3"/></span>
                             </div>
                           </div>
                           <div style="float: right">
@@ -209,10 +216,16 @@
 
               <!--begin: Form Wizard Step 3-->
               <div class="kt-wizard-v1__content" data-ktwizard-type="step-content">
-                <div class="kt-portlet__body kt-portlet__body--fit" style="margin-bottom: 10px;">
-                  <a class="kt-font-brand kt-link kt-font-bold" href="javascript:;" ng-click="onShowCoursePlanModal()" style="width: 50px">
+                <div class="kt-portlet__body kt-portlet__body--fit" style="margin-bottom: 10px; display: inline-block">
+                  <a class="kt-font-brand kt-link kt-font-bold" href="javascript:;" ng-click="onShowCoursePlanModal()"
+                     style="width: 50px">
                     <i class="fa fa-plus"></i>
                     添加
+                  </a>
+                  <a class="kt-font-brand kt-link kt-font-bold" href="javascript:;" ng-click="onShowCopyModal()"
+                     style="width: 50px" ng-if="model.copyCourseList.length > 0">
+                    <i class="flaticon2-copy"></i>
+                    拷贝
                   </a>
                 </div>
                 <div class="kt-portlet kt-portlet--mobile">
@@ -221,38 +234,41 @@
                     <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded">
                       <table class="kt-datatable__table course-plan" style="display: block;">
                         <thead class="kt-datatable__head">
-                          <tr class="kt-datatable__row" style="left: 0;">
-                            <th class="kt-datatable__cell text-center">
-                              节次
-                            </th>
-                            <th class="kt-datatable__cell text-center">
-                              技术
-                            </th>
-                            <th class="kt-datatable__cell text-center">
-                              所授知识点
-                            </th>
-                            <th class="kt-datatable__cell text-center">
-                              操作
-                            </th>
-                          </tr>
+                        <tr class="kt-datatable__row" style="left: 0;">
+                          <th class="kt-datatable__cell text-center">
+                            节次
+                          </th>
+                          <th class="kt-datatable__cell text-center">
+                            技术
+                          </th>
+                          <th class="kt-datatable__cell text-center">
+                            所授知识点
+                          </th>
+                          <th class="kt-datatable__cell text-center">
+                            操作
+                          </th>
+                        </tr>
                         </thead>
                         <tbody class="kt-datatable__body">
-                          <tr class="kt-datatable__row" ng-repeat="coursePlan in model.coursePlanList" style="left: 0;">
-                            <td data-field="AgentName" class="kt-datatable__cell">
-                              <span>第\{{coursePlan.courseOrder}}节</span>
-                            </td>
-                            <td class="kt-datatable__cell text-center">
-                              <span ng-bind="coursePlan.technologyName"></span>
-                            </td>
-                            <td data-field="ShipDate" class="kt-datatable__cell">
-                              <span class="text-center" ng-repeat="knowledgeName in coursePlan.knowledgeNameArray" ng-bind="knowledgeName"></span>
-                            </td>
-                            <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell text-center">
-                              <a title="delete" class="btn btn-sm btn-clean btn-icon btn-icon-md" ng-click="onRemoveCoursePlan(coursePlan)">
-                                <i class="la la-trash"></i>
-                              </a>
-                            </td>
-                          </tr>
+                        <tr class="kt-datatable__row" ng-repeat="coursePlan in model.coursePlanList" style="left: 0;">
+                          <td data-field="AgentName" class="kt-datatable__cell">
+                            <span>第\{{coursePlan.courseOrder}}节</span>
+                          </td>
+                          <td class="kt-datatable__cell text-center">
+                            <span ng-bind="coursePlan.technologyName"></span>
+                          </td>
+                          <td data-field="ShipDate" class="kt-datatable__cell">
+                            <span class="text-center" ng-repeat="knowledgeName in coursePlan.knowledgeNameArray"
+                                  ng-bind="knowledgeName"></span>
+                          </td>
+                          <td data-field="Actions" data-autohide-disabled="false"
+                              class="kt-datatable__cell text-center">
+                            <a title="delete" class="btn btn-sm btn-clean btn-icon btn-icon-md"
+                               ng-click="onRemoveCoursePlan(coursePlan)">
+                              <i class="la la-trash"></i>
+                            </a>
+                          </td>
+                        </tr>
 
                         </tbody>
                       </table>
@@ -289,7 +305,8 @@
                         </div>
                         <div class="review-content-group">
                           <span>授课时间: </span>
-                          <span ng-bind="model.courseBeginDateFormat"></span> ~ <span ng-bind="model.courseEndDateFormat"></span>
+                          <span ng-bind="model.courseBeginDateFormat"></span> ~ <span
+                                ng-bind="model.courseEndDateFormat"></span>
                         </div>
                         <div class="review-content-group">
                           <span>课程简介: </span>
@@ -305,11 +322,14 @@
                       <div class="kt-wizard-v1__review-content">
                         <div class="kt-notification-v2">
                           <div href="javascript:;" ng-repeat="courseSchedule in model.courseScheduleList"
-                             class="kt-notification-v2__item kt-font-bold">
+                               class="kt-notification-v2__item kt-font-bold">
                             <div class="kt-notification-v2__item-icon" ng-bind="courseSchedule.weekday.dayText"></div>
                             <div class="kt-notification-v2__itek-wrapper" style="float: left">
                               <div class="kt-notification-v2__item-title">
-                                <span class="course-schedule" ng-repeat="course in courseSchedule.schedule">\{{course.orderText}}(\{{course.time}}) <br ng-if="$index == 3"/></span>
+                                <span class="course-schedule" ng-repeat="course in courseSchedule.schedule">
+                                  \{{course.orderText}}(\{{course.time}})
+                                  <br ng-if="$index == 3"/>
+                                </span>
                               </div>
                             </div>
                           </div>
@@ -325,25 +345,27 @@
                         <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded">
                           <table class="kt-datatable__table course-plan-review">
                             <thead class="kt-datatable__head">
-                              <tr class="kt-datatable__row" style="left: 0;">
-                                <th class="kt-datatable__cell text-center">
-                                  节次
-                                </th>
-                                <th class="kt-datatable__cell">
-                                  所授知识点
-                                </th>
-                              </tr>
+                            <tr class="kt-datatable__row" style="left: 0;">
+                              <th class="kt-datatable__cell text-center">
+                                节次
+                              </th>
+                              <th class="kt-datatable__cell">
+                                所授知识点
+                              </th>
+                            </tr>
                             </thead>
                             <tbody class="kt-datatable__body">
-                              <tr class="kt-datatable__row" ng-repeat="coursePlan in model.coursePlanList" style="left: 0;">
-                                <td data-field="AgentName" class="kt-datatable__cell">
-                                  <span>第\{{coursePlan.courseOrder}}节</span>
-                                </td>
-                                <td data-field="ShipDate" class="kt-datatable__cell">
-                                  <span class="text-center" ng-repeat="knowledgeName in coursePlan.knowledgeNameArray" ng-bind="knowledgeName"></span>
+                            <tr class="kt-datatable__row" ng-repeat="coursePlan in model.coursePlanList"
+                                style="left: 0;">
+                              <td data-field="AgentName" class="kt-datatable__cell">
+                                <span>第\{{coursePlan.courseOrder}}节</span>
+                              </td>
+                              <td data-field="ShipDate" class="kt-datatable__cell">
+                                <span class="text-center" ng-repeat="knowledgeName in coursePlan.knowledgeNameArray"
+                                      ng-bind="knowledgeName"></span>
 
-                                </td>
-                              </tr>
+                              </td>
+                            </tr>
                             </tbody>
                           </table>
                         </div>
@@ -434,7 +456,8 @@
               </div>
             </div>
 
-            <div class="modal fade" id="kt_modal_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="kt_modal_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -448,12 +471,14 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <div class="dropdown search-form-dropdown">
-                              <input type="text" class="form-control" placeholder="请先在第一步选择课程讲授技术" ng-model="model.selectedTechnology.technologyName" disabled required>
+                              <input type="text" class="form-control" placeholder="请先在第一步选择课程讲授技术"
+                                     ng-model="model.selectedTechnology.technologyName" disabled required>
                             </div>
                           </div>
 
                           <div class="form-group">
-                            <input type="number" class="form-control" min="1" max="300" maxlength="3" ng-model="model.courseOrder" placeholder="请输入第几节课" required>
+                            <input type="number" class="form-control" min="1" max="300" maxlength="3"
+                                   ng-model="model.courseOrder" placeholder="请输入第几节课" required>
                           </div>
 
                           <div class="form-group">
@@ -462,7 +487,8 @@
                                 <span ng-bind="model.selectedLearningPhase.learningPhaseName"></span>
                                 <i class="flaticon2-down"></i>
                               </button>
-                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start">
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                   x-placement="bottom-start">
                                 <a ng-repeat="data in model.learningPhaseList"
                                    class="dropdown-item"
                                    href="javascript:;"
@@ -477,7 +503,8 @@
                               <div class="col-xl-12">
                                 <div class="kt-checkbox-list">
                                   <label class="kt-checkbox" ng-repeat="knowledge in model.knowledgeList">
-                                    <input type="checkbox" name="technologyKnowledge" ng-click="onChooseKnowledge(knowledge,$event)"> \{{knowledge.knowledgeName}}
+                                    <input type="checkbox" name="technologyKnowledge"
+                                           ng-click="onChooseKnowledge(knowledge,$event)"> \{{knowledge.knowledgeName}}
                                     <span></span>
                                   </label>
                                 </div>
@@ -490,7 +517,8 @@
                             <label>第<span class="kt-font-danger font-weight-bolder" ng-bind="model.courseOrder"></span>节课讲授的知识点</label>
                             <div class="kt-notification kt-notification--fit">
 
-                              <div class="kt-notification__item" ng-repeat="courseKnowledge in model.courseKnowledgeList">
+                              <div class="kt-notification__item"
+                                   ng-repeat="courseKnowledge in model.courseKnowledgeList">
                                 <div class="kt-notification__item-icon course-knowledge-technology">
                                   <img ng-src="\{{courseKnowledge.technologyThumbnail}}">
                                 </div>
@@ -512,12 +540,78 @@
                       <button type="button" class="btn btn-primary" ng-click="onSetCoursePlan()" ng-disabled="model.selectedTechnology == null
                                                                               || model.courseOrder == undefined
                                                                               || model.selectedLearningPhase.learningPhaseID == 0
-                                                                              || model.courseKnowledgeList.length == 0">确定</button>
+                                                                              || model.courseKnowledgeList.length == 0">
+                        确定
+                      </button>
                     </div>
                   </form>
                 </div>
               </div>
             </div>
+
+            <div class="modal fade" id="kt_modal_3" tabindex="-1" role="dialog" style="display: none;">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" ng-bind="model.copyCoursePlanTitle"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded"
+                         id="local_data" style="">
+                      <table class="kt-datatable__table table-hover" style="display: block;">
+                        <thead class="kt-datatable__head">
+                          <tr class="kt-datatable__row" style="left: 0px;">
+                            <th class="kt-datatable__cell">
+                              <span style="width: 60px;">#</span>
+                            </th>
+                            <th class="kt-datatable__cell">
+                              <span style="width: 250px;">课程</span>
+                            </th>
+                            <th class="kt-datatable__cell">
+                              <span style="width: 120px;">开始时间</span>
+                            </th>
+                            <th class="kt-datatable__cell">
+                              <span style="width: 120px;">结束时间</span>
+                            </th>
+                            <th class="kt-datatable__cell">
+                              <span style="width: 110px;">操作</span>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody class="kt-datatable__body" style="">
+                          <tr data-row="0" class="kt-datatable__row" style="left: 0px;" ng-repeat="course in model.copyCourseList">
+                            <td class="kt-datatable__cell">
+                              <span style="width: 60px;" ng-bind="$index + 1"></span>
+                            </td>
+                            <th class="kt-datatable__cell">
+                              <span style="width: 250px;" ng-bind="course.courseName"></span>
+                            </th>
+                            <th class="kt-datatable__cell">
+                              <span style="width: 120px;" ng-bind="course.courseTimeBegin"></span>
+                            </th>
+                            <th class="kt-datatable__cell">
+                              <span style="width: 120px;" ng-bind="course.courseTimeEnd"></span>
+                            </th>
+                            <th class="kt-datatable__cell">
+                              <span style="width: 110px;">
+                                <button type="button" class="btn btn-info btn-sm" ng-click="onCopyCoursePlan(course)">拷贝</button>
+                              </span>
+                            </th>
+                        </tr>
+                        </tbody>
+                      </table>
+
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

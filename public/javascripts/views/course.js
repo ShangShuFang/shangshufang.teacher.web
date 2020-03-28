@@ -55,6 +55,10 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     knowledgeList: [],
     courseKnowledgeList: [],
     coursePlanList: [],
+
+    copyCoursePlanTitle: '',
+    copyCourseList: [],
+    copyCoursePlanList: [],
     isAdd: false,
     //endregion
 
@@ -124,6 +128,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     });
     $scope.loadLearningPhase();
     $scope.model.courseKnowledgeList.splice(0, $scope.model.courseKnowledgeList.length);
+    $scope.loadCourseCopyList();
   };
 
   $scope.onLoadMoreTechnology = function (){
@@ -142,6 +147,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     });
     $scope.loadLearningPhase();
     $scope.model.courseKnowledgeList.splice(0, $scope.model.courseKnowledgeList.length);
+    $scope.loadCourseCopyList();
   };
   //endregion
 
@@ -226,6 +232,23 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   //endregion
 
   //region step3: 课程计划
+  $scope.loadCourseCopyList = function () {
+    $http.get(`/course/copy/list?universityCode=${$scope.model.loginUser.universityCode}&schoolID=${$scope.model.loginUser.schoolID}&teacherID=${$scope.model.loginUser.customerID}&technologyID=${$scope.model.selectedTechnology.technologyID}`).then(function successCallback (response) {
+      if(response.data.err){
+        bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+        return false;
+      }
+      if(commonUtility.isEmptyList(response.data.dataList)){
+        $scope.model.copyCourseList = [];
+        return false;
+      }
+      $scope.model.copyCourseList = response.data.dataList;
+      $scope.model.copyCoursePlanTitle = `拷贝${$scope.model.selectedTechnology.technologyName}授课计划`;
+    }, function errorCallback(response) {
+      bootbox.alert(localMessage.NETWORK_ERROR);
+    });
+  };
+
   $scope.onShowCoursePlanModal = function(){
     if(!$scope.model.isAdd){
       $scope.model.courseOrder = 1;
@@ -236,6 +259,54 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       $scope.model.isAdd = false;
     }
     $('#kt_modal_2').modal('show');
+  };
+
+  $scope.onShowCopyModal = function () {
+    $('#kt_modal_3').modal('show');
+  };
+
+  $scope.onCopyCoursePlan = function (course) {
+
+    $http.get(`/course/copy/coursePlan?universityCode=${course.universityCode}&schoolID=${course.schoolID}&courseID=${course.courseID}`).then(function successCallback (response) {
+      if(response.data.err){
+        bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+        return false;
+      }
+      if(commonUtility.isEmptyList(response.data.dataList)){
+        layer.msg(localMessage.COURSE_PLAN_NOT_FOUND);
+        return false;
+      }
+
+      let courseClassArray = commonUtility.distinctArray(response.data.dataList.map(obj => {return obj.courseClass}));
+
+      courseClassArray.forEach(function (courseClass) {
+        let courseClassDataList= response.data.dataList.filter((data) => {return data.courseClass === courseClass;});
+
+        let courseKnowledgeIDArray = courseClassDataList.map(obj => {return obj.knowledgeID});
+        let courseKnowledgeNameArray = courseClassDataList.map(obj => {return obj.knowledgeName});
+
+        let learningPhaseIDArray = courseClassDataList.map(obj => {return obj.learningPhaseID});
+        let learningPhaseNameArray = courseClassDataList.map(obj => {return obj.learningPhaseName});
+
+        $scope.model.coursePlanList.push({
+          technologyID: $scope.model.selectedTechnology.technologyID,
+          technologyName: $scope.model.selectedTechnology.technologyName,
+          technologyThumbnail: $scope.model.selectedTechnology.technologyThumbnail,
+          courseOrder: courseClass,
+          learningPhaseID: learningPhaseIDArray[0],
+          learningPhaseName: learningPhaseNameArray[0],
+          knowledgeIDArray: courseKnowledgeIDArray,
+          knowledgeNameArray: courseKnowledgeNameArray
+        });
+      });
+
+      $scope.model.isAdd = true;
+      $('#kt_modal_3').modal('hide');
+
+
+    }, function errorCallback(response) {
+      bootbox.alert(localMessage.NETWORK_ERROR);
+    });
   };
 
   $scope.loadLearningPhase = function () {

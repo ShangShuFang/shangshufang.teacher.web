@@ -72,6 +72,7 @@
 
 
       "course": "/api/course",
+      "courseCopy": "/api/course/copy",
       "changeCourseStatus": "/api/course/changeStatus",
       "changeCourseBaseInfo": "/api/course/courseBaseInfo",
       "changeCourseSchedule": "/api/course/courseSchedule",
@@ -84,6 +85,7 @@
       "courseQuestionLeaveMessage": "/api/course/question/leaveMessage",
 
       "finishClass": "/api/course/plan/finishClass",
+      "coursePlan": "/api/course/plan",
       "classExercises": "/api/university/student/exercises",
       "classExercisesAssign": "/api/university/student/exercises/assign",
       "classExercisesReview": "/api/university/student/exercises/review",

@@ -175,3 +175,16 @@ commonUtility.getDeviceName = function () {
   }
   return device;
 };
+
+commonUtility.distinctArray = function (arr) {
+  if (!Array.isArray(arr)) {
+    return arr;
+  }
+  let array = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (array.indexOf(arr[i]) === -1) {
+      array.push(arr[i])
+    }
+  }
+  return array;
+};

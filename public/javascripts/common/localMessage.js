@@ -44,6 +44,8 @@ localMessage.PASSWORD_CHANGE_SUCCESS = '密码修改成功。';
 localMessage.CELLPHONE_NOT_FOUND = '您输入的手机号码不存在。';
 localMessage.COURSE_NOT_FOUND = '该课程已被删除';
 
+localMessage.COURSE_PLAN_NOT_FOUND = '该课程计划已被删除';
+
 
 localMessage.formatMessage = function (code, msg) {
   return `<strong>抱歉，系统发生异常，请联系我们</strong> </br>状态码:&nbsp ${code} </br> 详细信息:&nbsp ${msg}`;

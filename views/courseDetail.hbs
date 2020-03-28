@@ -497,8 +497,8 @@
                     </td>
                     <td class="kt-datatable__cell">
                       <span style="width: 100px;">
-                        <span class="kt-badge kt-badge--dot kt-badge--danger" ng-if="data.assistant == true"></span>&nbsp;
-                        <span class="kt-font-bold ng-binding kt-font-danger" ng-if="data.assistant == true">助教</span>
+                        <span class="kt-badge kt-badge--dot kt-badge--danger" ng-if="data.assistant == 1"></span>&nbsp;
+                        <span class="kt-font-bold ng-binding kt-font-danger" ng-if="data.assistant == 1">助教</span>
                       </span>
                     </td>
                     <td class="kt-datatable__cell">
@@ -512,14 +512,14 @@
                       <span style="overflow: visible; position: relative; width: 110px;">
                           <button type="button"
                                   class="btn btn-danger btn-sm"
-                                  ng-if="data.assistant == false"
-                                  ng-click="onChangeAssistant(data, true)">
+                                  ng-if="data.assistant == 0"
+                                  ng-click="onChangeAssistant(data, 1)">
                             设为助教
                           </button>
                           <button type="button"
                                   class="btn btn-secondary btn-sm"
-                                  ng-if="data.assistant == true"
-                                  ng-click="onChangeAssistant(data, false)">
+                                  ng-if="data.assistant == 1"
+                                  ng-click="onChangeAssistant(data, 0)">
                             取消助教
                           </button>
                         </span>

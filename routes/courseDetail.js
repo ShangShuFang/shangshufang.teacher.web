@@ -493,7 +493,7 @@ router.put('/changeAssistant', (req, res, next) => {
     universityCode: req.body.universityCode,
     schoolID: req.body.schoolID,
     studentID: req.body.studentID,
-    assistant: req.body.isAssistant,
+    assistant: req.body.assistant,
     loginUser: req.body.loginUser
   };
 

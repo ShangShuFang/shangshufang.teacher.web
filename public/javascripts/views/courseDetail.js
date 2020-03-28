@@ -1115,12 +1115,12 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     $scope.loadCourseStudent();
   };
 
-  $scope.onChangeAssistant = function (data, isAssistant) {
+  $scope.onChangeAssistant = function (data, assistant) {
     $http.put('/course/detail/changeAssistant', {
       universityCode: data.studentUniversityCode,
       schoolID: data.studentSchoolID,
       studentID: data.studentID,
-      isAssistant: isAssistant,
+      assistant: assistant,
       loginUser: $scope.model.loginUser.customerID
     }).then(function successCallback(response) {
       if (response.data.err) {

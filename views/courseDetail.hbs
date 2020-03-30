@@ -1552,4 +1552,8 @@
   </div>
 </div>
 <input type="hidden" value="{{tabIndex}}" id="hidden_tabIndex">
-<script src="/javascripts/views/courseDetail.js" type="text/javascript"></script>
+<script>
+  $(document).ready(function () {
+    commonUtility.appendScript('/javascripts/views/courseDetail.js');
+  });
+</script>

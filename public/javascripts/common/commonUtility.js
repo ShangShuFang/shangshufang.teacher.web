@@ -93,7 +93,6 @@ commonUtility.isCellphoneNumber = function (cellphone) {
 commonUtility.isEmail = function (email) {
   let reg = /^\w{3,}(\.\w+)*@[A-z0-9]+(\.[A-z]{2,5}){1,2}$/;
   return reg.test(email);
-
 };
 
 commonUtility.isLogin = function () {
@@ -187,4 +186,11 @@ commonUtility.distinctArray = function (arr) {
     }
   }
   return array;
+};
+
+commonUtility.appendScript = function (url) {
+  let script = document.createElement("script");
+  script.type = "text/javascript";
+  script.src = url;
+  document.body.parentNode.appendChild(script);
 };

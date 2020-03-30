@@ -638,5 +638,9 @@
   </div>
 </div>
 
-<script src="javascripts/plugins/wizard-1.min.js" type="text/javascript"></script>
-<script src="javascripts/views/course.js" type="text/javascript"></script>
+<script>
+  $(document).ready(function () {
+    commonUtility.appendScript('/javascripts/plugins/wizard-1.min.js');
+    commonUtility.appendScript('/javascripts/views/course.js');
+  });
+</script>

@@ -1,0 +1,13 @@
+.suggest-option button{
+  width: 163px;
+  border: 1px solid #e2e5ec;
+  color: #595d6e;
+  margin-bottom: 15px;
+  margin-right: 10px;
+}
+.suggest-option .btn-brand {
+  color: #ffffff;
+}
+.invalid-feedback{
+  display: block;
+}

@@ -15,7 +15,8 @@ router.get('/list', (req, res, next) => {
   let schoolID = req.query.schoolID;
   let accountID = req.query.accountID;
   let dataStatus = req.query.dataStatus;
-  let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${accountID}/${dataStatus}`;
+  let accountRole = req.query.accountRole;
+  let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${accountID}/${dataStatus}/${accountRole}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {

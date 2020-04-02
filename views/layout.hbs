@@ -68,7 +68,13 @@
                       <img alt="Pic" src="/media/users/teacher_default.png" class="img-circle" style="border-radius: 50%" ng-if="model.loginUser.photo == ''"/>
                     </div>
                     <div class="kt-user-card__name">
-                      <span ng-bind="model.loginUser.customerName"></span>老师
+                      <div>
+                        <span ng-bind="model.loginUser.customerName"></span>
+                      </div>
+                      <div style="font-size: 12px">
+                        <span ng-bind="model.loginUser.universityName"></span>
+                        <span ng-bind="model.loginUser.schoolName"></span>
+                      </div>
                     </div>
                   </div>
                   <!--end: Head -->

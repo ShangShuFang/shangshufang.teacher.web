@@ -49,7 +49,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
 
   $scope.setDropdownList = function () {
     $scope.model.timeList.push({timeCode: -1, timeText: '近一年'});
-    $scope.model.timeList.push({timeCode: -2, timeText: '近两半'});
+    $scope.model.timeList.push({timeCode: -2, timeText: '近两年'});
     $scope.model.timeList.push({timeCode: -3, timeText: '近三年'});
     $scope.model.timeList.push({timeCode: 0, timeText: '全部'});
 

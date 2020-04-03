@@ -458,7 +458,9 @@
                       <th data-field="Status" class="kt-datatable__cell">
                         <span style="width: 100px;">报名状态</span>
                       </th>
-                      <th data-field="Actions" class="kt-datatable__cell">
+                      <th data-field="Actions"
+                          class="kt-datatable__cell"
+                          ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID && model.courseInfo.dataStatus != 'F'">
                         <span style="width: 100px;">操作</span>
                       </th>
                     </tr>
@@ -508,7 +510,8 @@
                                   ng-bind="data.dataStatusText"></span>
                           </span>
                     </td>
-                    <td data-field="Actions" class="kt-datatable__cell">
+                    <td class="kt-datatable__cell"
+                        ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID && model.courseInfo.dataStatus != 'F'">
                       <span style="overflow: visible; position: relative; width: 110px;">
                           <button type="button"
                                   class="btn btn-danger btn-sm"

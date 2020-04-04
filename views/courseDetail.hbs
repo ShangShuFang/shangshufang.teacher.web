@@ -708,16 +708,13 @@
                     </th>
 
                     <th class="kt-datatable__cell kt-datatable__cell--sort">
-                      <span style="width: 60px;">练习节次</span>
+                      <span style="width: 60px;">节次</span>
                     </th>
                     <th class="kt-datatable__cell kt-datatable__cell--sort">
-                      <span style="width: 80px;">学习阶段</span>
+                      <span style="width: 130px;">知识点</span>
                     </th>
                     <th class="kt-datatable__cell kt-datatable__cell--sort">
-                      <span style="width: 100px;">练习知识点</span>
-                    </th>
-                    <th class="kt-datatable__cell kt-datatable__cell--sort">
-                      <span style="width: 100px;">练习习题</span>
+                      <span style="width: 150px;">习题</span>
                     </th>
                     <th class="kt-datatable__cell kt-datatable__cell--sort">
                       <span style="width: 120px;">提交时间</span>
@@ -744,9 +741,6 @@
                                   <img class="kt-badge kt-badge--xl" ng-src="\{{data.studentPhoto}}"
                                        ng-if="data.studentPhoto != ''">
                                 </div>
-
-                                <!--                            1公士，2上造，3簪袅，4不更，5大夫，6官大夫，7公大夫，8公乘，9五大夫，10左庶长，11右庶长，12左更，13中更，14右更，15少上造，16大上造，17驷车，18大庶长，19关内候，20彻候-->
-
                                 <div class="kt-user-card-v2__details">
                                   <a class="kt-user-card-v2__name" href="javascript:;" ng-bind="data.studentName"></a>
                                   <span class="kt-user-card-v2__desc">500学分 公士</span>
@@ -764,13 +758,10 @@
                         <span style="width: 60px;">第\{{data.courseClass}}节</span>
                       </td>
                       <td class="kt-datatable__cell">
-                        <span style="width: 80px;" ng-bind="data.learningPhaseName"></span>
+                        <span style="width: 130px;" ng-bind="data.knowledgeName"></span>
                       </td>
                       <td class="kt-datatable__cell">
-                        <span style="width: 100px;" ng-bind="data.knowledgeName"></span>
-                      </td>
-                      <td class="kt-datatable__cell">
-                        <span style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"  >
+                        <span style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"  >
                           <a ng-href="\{{data.exercisesDocumentUrl}}"
                              target="_blank"
                              title="\{{data.exercisesDocumentUrl}}"

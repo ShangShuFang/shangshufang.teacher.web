@@ -1234,6 +1234,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 
   $scope.onFilterCourseStudentExercises = function (filterStatus) {
     $scope.model.filterStatus = filterStatus;
+    $scope.model.pageNumber4Exercises = 1;
     $scope.loadCourseStudentExercises();
     bizLogger.logInfo(
         $scope.model.bizLog.pageName,
@@ -1261,6 +1262,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     $scope.model.reviewData.knowledgeName = data.knowledgeName;
     $scope.model.reviewData.exercisesDocumentName = data.exercisesDocumentUrl.substr(data.exercisesDocumentUrl.lastIndexOf('/') + 1);
     $scope.model.reviewData.exercisesDocumentUrl = data.exercisesDocumentUrl;
+    $scope.model.reviewData.exercisesAnswerUrl = data.exercisesAnswerUrl;
     $scope.model.reviewData.updateTime = data.updateTime;
     $scope.model.reviewData.sourceCodeGitUrl = data.sourceCodeGitUrl;
     $scope.model.reviewData.compilationResult = -1;

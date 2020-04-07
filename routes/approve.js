@@ -26,7 +26,7 @@ router.get('/list', (req, res, next) => {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('账户审批', pageNumber, result);
+      let dataContent = commonService.buildRenderData('账户审批', pageNumber, sysConfig.pageSize, result);
       res.json({
         err: false,
         code: result.code,

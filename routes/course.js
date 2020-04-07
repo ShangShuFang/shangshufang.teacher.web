@@ -55,7 +55,7 @@ router.get('/list', (req, res, next) => {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('课程列表', pageNumber, result);
+      let dataContent = commonService.buildRenderData('课程列表', pageNumber, sysConfig.pageSize, result);
       res.json({
         err: false,
         code: result.code,

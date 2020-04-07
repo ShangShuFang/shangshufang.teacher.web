@@ -43,7 +43,7 @@ router.get('/data', function(req, res, next) {
   let teacherID = req.query.teacherID;
   let cellphone = req.query.cellphone;
 
-  let parameter = `${pageNumber}/${sysConfig.studentAbilityAnalysisPageSize}/${technologyID}/${studentUniversityCode}/${studentSchoolID}/${teacherUniversityCode}/${teacherSchoolID}/${teacherID}/${cellphone}`;
+  let parameter = `${pageNumber}/${sysConfig.abilityAnalysisPageSize}/${technologyID}/${studentUniversityCode}/${studentSchoolID}/${teacherUniversityCode}/${teacherSchoolID}/${teacherID}/${cellphone}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {
@@ -53,7 +53,7 @@ router.get('/data', function(req, res, next) {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('学生专业能力分析', pageNumber, result);
+      let dataContent = commonService.buildRenderData('学生专业能力分析', pageNumber, sysConfig.abilityAnalysisPageSize, result);
       res.json({
         err: false,
         code: result.code,

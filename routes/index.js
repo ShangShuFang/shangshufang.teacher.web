@@ -21,7 +21,7 @@ router.get('/technologyList', (req, res, next) => {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('热门技术', pageNumber, result);
+      let dataContent = commonService.buildRenderData('热门技术', pageNumber, sysConfig.pageSize, result);
       res.json({
         err: false,
         code: result.code,

@@ -36,13 +36,13 @@ exports.commonInvoke = function(apiName) {
   }
 };
 
-exports.buildRenderData = function (title, pageNumber, serviceResult) {
+exports.buildRenderData = function (title, pageNumber, pageSize, serviceResult) {
   let renderData = {};
   if(serviceResult.err || !serviceResult.content.result){
     renderData = {
       title: title,
       totalCount: 0,
-      pageSize: sysConfig.pageSize,
+      pageSize: pageSize,
       paginationArray:[],
       dataList: []
     };

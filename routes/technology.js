@@ -94,7 +94,7 @@ router.get('/courseSignUp', function(req, res, next) {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('报名学生', pageNumber, result);
+      let dataContent = commonService.buildRenderData('报名学生', pageNumber, sysConfig.pageSize, result);
       res.json({
         err: false,
         code: result.code,

@@ -8,7 +8,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     cellphone: '',
 
     //begin: 数据列表
-    fromIndex : 0,
+    fromIndex: 0,
     toIndex: 0,
     pageNumber: 1,
     totalCount: 0,
@@ -23,8 +23,8 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     loginUser: null
   };
 
-  $scope.initPage = function() {
-    if(!commonUtility.isLogin()) {
+  $scope.initPage = function () {
+    if (!commonUtility.isLogin()) {
       $scope.model.isLogin = false;
       return false;
     }
@@ -40,13 +40,13 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $('ul.kt-menu__nav li:nth-child(3)').addClass('kt-menu__item--here');
   };
 
-  $scope.initTechnologyList = function(){
-    $http.get('/ability/analysis/technologySimple').then(function successCallback (response) {
-      if(response.data.err){
+  $scope.initTechnologyList = function () {
+    $http.get('/ability/analysis/technologySimple').then(function successCallback(response) {
+      if (response.data.err) {
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
       }
-      if(response.data.dataList === null){
+      if (response.data.dataList === null) {
         return false;
       }
       $scope.model.technologyList = response.data.dataList;
@@ -57,7 +57,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     });
   };
 
-  $scope.initStudentList = function() {
+  $scope.initStudentList = function () {
     $scope.model.studentTypeList.push({
       studentTypeID: 0,
       studentTypeText: '全部学生',
@@ -97,41 +97,47 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.model.selectedStudentType = $scope.model.studentTypeList[0];
   };
 
-  $scope.onFilterTechnology = function(technology) {
-    if($scope.model.selectedTechnology.technologyID === technology.technologyID){
+  $scope.onFilterTechnology = function (technology) {
+    if ($scope.model.selectedTechnology.technologyID === technology.technologyID) {
       return false;
     }
     $scope.model.selectedTechnology = technology;
     $scope.loadStudentList();
   };
 
-  $scope.onFilterStudent = function(studentType) {
-    if($scope.model.selectedStudentType.studentTypeID === studentType.studentTypeID){
+  $scope.onFilterStudent = function (studentType) {
+    if ($scope.model.selectedStudentType.studentTypeID === studentType.studentTypeID) {
       return false;
     }
     $scope.model.selectedStudentType = studentType;
     $scope.loadStudentList();
   };
 
-  $scope.onFilterCellphone = function() {
-    if(commonUtility.isEmpty($scope.model.cellphone)){
-      return false;
-    }
+  $scope.onFilterCellphone = function () {
     $scope.loadStudentList();
   };
 
-  $scope.loadStudentList = function() {
+  $scope.loadStudentList = function () {
     let cellphone = $scope.model.cellphone;
-    if(commonUtility.isEmpty(cellphone)){
+    if (commonUtility.isEmpty(cellphone)) {
       cellphone = 'NULL';
     }
     $http.get(`/ability/analysis/data?pageNumber=${$scope.model.pageNumber}&technologyID=${$scope.model.selectedTechnology.technologyID}&studentUniversityCode=${$scope.model.selectedStudentType.studentUniversityCode}&studentSchoolID=${$scope.model.selectedStudentType.studentSchoolID}&teacherUniversityCode=${$scope.model.selectedStudentType.teacherUniversityCode}&teacherSchoolID=${$scope.model.selectedStudentType.teacherSchoolID}&teacherID=${$scope.model.selectedStudentType.teacherID}&cellphone=${cellphone}`)
-        .then(function successCallback (response) {
-          if(response.data.err){
+        .then(function successCallback(response) {
+          if (response.data.err) {
             bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
             return false;
           }
-          if(response.data.dataContent === null || response.data.dataContent.dataList === null){
+          if (response.data.dataContent === null || response.data.dataContent.dataList === null) {
+            $scope.model.totalCount = 0;
+            $scope.model.dataList = [];
+            $scope.model.pageNumber = 1;
+            $scope.model.maxPageNumber = 0;
+            $scope.model.paginationArray = [];
+            $scope.model.prePageNum = -1;
+            $scope.model.nextPageNum = -1;
+            $scope.model.fromIndex = 0;
+            $scope.model.toIndex = 0;
             return false;
           }
 
@@ -156,40 +162,40 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
         });
   };
 
-  $scope.onFirstPage = function() {
-    if($scope.model.pageNumber === 1){
+  $scope.onFirstPage = function () {
+    if ($scope.model.pageNumber === 1) {
       return false;
     }
     $scope.model.pageNumber = 1;
     $scope.loadStudentList();
   };
 
-  $scope.onPrePage = function(){
-    if($scope.model.pageNumber === 1){
+  $scope.onPrePage = function () {
+    if ($scope.model.pageNumber === 1) {
       return false;
     }
     $scope.model.pageNumber--;
     $scope.loadStudentList();
   };
 
-  $scope.onPagination = function(pageNumber){
-    if($scope.model.pageNumber === pageNumber){
+  $scope.onPagination = function (pageNumber) {
+    if ($scope.model.pageNumber === pageNumber) {
       return false;
     }
     $scope.model.pageNumber = pageNumber;
     $scope.loadStudentList();
   };
 
-  $scope.onNextPage = function(){
-    if($scope.model.pageNumber === $scope.model.maxPageNumber4Exercises){
+  $scope.onNextPage = function () {
+    if ($scope.model.pageNumber === $scope.model.maxPageNumber4Exercises) {
       return false;
     }
     $scope.model.pageNumber++;
     $scope.loadStudentList();
   };
 
-  $scope.onLastPage = function() {
-    if($scope.model.pageNumber === $scope.model.maxPageNumber4Exercises){
+  $scope.onLastPage = function () {
+    if ($scope.model.pageNumber === $scope.model.maxPageNumber4Exercises) {
       return false;
     }
     $scope.model.pageNumber = $scope.model.maxPageNumber4Exercises;

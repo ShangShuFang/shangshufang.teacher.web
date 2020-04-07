@@ -51,7 +51,7 @@ router.get('/courseSignUp', function(req, res, next) {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('报名学生', pageNumber, result);
+      let dataContent = commonService.buildRenderData('报名学生', pageNumber, sysConfig.pageSize, result);
       res.json({
         err: false,
         code: result.code,
@@ -79,7 +79,7 @@ router.get('/courseStudentSignUp', function(req, res, next) {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('报名课程', pageNumber, result);
+      let dataContent = commonService.buildRenderData('报名课程', pageNumber, sysConfig.pageSize, result);
       res.json({
         err: false,
         code: result.code,
@@ -108,7 +108,7 @@ router.get('/courseStudentExercises', function(req, res, next) {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('学生练习', pageNumber, result);
+      let dataContent = commonService.buildRenderData('学生练习', pageNumber, sysConfig.pageSize, result);
       res.json({
         err: false,
         code: result.code,
@@ -134,7 +134,7 @@ router.get('/courseStudentExercisesReview', function(req, res, next) {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('学生练习批改', pageNumber, result);
+      let dataContent = commonService.buildRenderData('学生练习批改', pageNumber, sysConfig.pageSize, result);
       res.json({
         err: false,
         code: result.code,
@@ -160,7 +160,7 @@ router.get('/exercisesReviewHistory', function(req, res, next) {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('批改历史', pageNumber, result);
+      let dataContent = commonService.buildRenderData('批改历史', pageNumber, sysConfig.pageSize, result);
       res.json({
         err: false,
         code: result.code,
@@ -213,7 +213,7 @@ router.get('/courseQuestion', function(req, res, next) {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('课程问题列表', pageNumber, result);
+      let dataContent = commonService.buildRenderData('课程问题列表', pageNumber, sysConfig.pageSize, result);
       res.json({
         err: false,
         code: result.code,

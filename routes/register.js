@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/checkCellphone', function(req, res, next) {
-  let service = new commonService.commonInvoke('checkUniversityAccountCellphone');
+  let service = new commonService.commonInvoke('checkCellphone4Register');
   let cellphone = req.query.cellphone;
 
   service.queryWithParameter(cellphone, function (result) {

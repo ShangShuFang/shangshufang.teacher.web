@@ -30,7 +30,7 @@ router.get('/suggestType', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  let service = new commonService.commonInvoke('suggest');
+  let service = new commonService.commonInvoke('addSuggest');
   let data = {
     suggestTypeID: req.body.suggestTypeID,
     suggestContent: req.body.suggestContent,

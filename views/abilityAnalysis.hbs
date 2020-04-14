@@ -64,7 +64,7 @@
             </div>
             <div class="kt-portlet__head-toolbar">
               <a class="kt-nav__link kt-widget__username kt-font-brand kt-font-bold"
-                 href="/ability/detail?universityCode=\{{data.studentUniversityCode}}&schoolID=\{{data.studentSchoolID}}&studentID=\{{data.studentID}}" target="_blank">
+                 href="/ability/detail?universityCode=\{{data.universityCode}}&schoolID=\{{data.schoolID}}&studentID=\{{data.studentID}}" target="_blank">
               <i class="kt-nav__link-icon flaticon2-pie-chart-1"></i>
               <span class="kt-nav__link-text">详细</span>
               </a>
@@ -119,11 +119,11 @@
                 <div class="kt-widget__item">
                   <div class="kt-widget__contact">
                     <span class="kt-widget__label">高校:</span>
-                    <span class="kt-widget__data" ng-bind="data.studentUniversityName"></span>
+                    <span class="kt-widget__data" ng-bind="data.universityName"></span>
                   </div>
                   <div class="kt-widget__contact">
                     <span class="kt-widget__label">学院:</span>
-                    <span class="kt-widget__data" ng-bind="data.studentSchoolName"></span>
+                    <span class="kt-widget__data" ng-bind="data.schoolName"></span>
                   </div>
                   <div class="kt-widget__contact">
                     <span class="kt-widget__label finish-exercises-count">练习题完成数量:</span>

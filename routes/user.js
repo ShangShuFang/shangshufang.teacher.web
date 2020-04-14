@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.put('/', (req, res, next) => {
-  let service = new commonService.commonInvoke('teachers');
+  let service = new commonService.commonInvoke('changeTeacher');
   let data = {
     universityCode: req.body.universityCode,
     schoolID: req.body.schoolID,

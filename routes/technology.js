@@ -32,7 +32,7 @@ router.get('/technologyInfo', (req, res, next) => {
 });
 
 router.get('/knowledgeList', (req, res, next) => {
-  let service = new commonService.commonInvoke('knowledge');
+  let service = new commonService.commonInvoke('knowledgeList');
   let pageNumber = parameterUtils.processNumberParameter(req.query.pageNumber, Constants.PAGE_NUMBER_DEFAULT);
   let technologyID = parameterUtils.processNumberParameter(req.query.technologyID, Constants.TECHNOLOGY_DEFAULT_ID);
 
@@ -80,9 +80,9 @@ router.get('/developmentDirections', function(req, res, next) {
 });
 
 router.get('/courseSignUp', function(req, res, next) {
-  let service = new commonService.commonInvoke('courseTechnologySignUp');
+  let service = new commonService.commonInvoke('signUp4Technology');
   let pageNumber = parseInt(req.query.pageNumber);
-  let technologyID = parameterUtils.processNumberParameter(req.query.technologyID, Constants.TECHNOLOGY_DEFAULT_ID);;
+  let technologyID = parameterUtils.processNumberParameter(req.query.technologyID, Constants.TECHNOLOGY_DEFAULT_ID);
 
   let parameter = `${pageNumber}/${sysConfig.pageSize}/${technologyID}`;
 

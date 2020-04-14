@@ -32,7 +32,7 @@ router.get('/learningPhase', (req, res, next) => {
 });
 
 router.get('/list', (req, res, next) => {
-  let service = new commonService.commonInvoke('course');
+  let service = new commonService.commonInvoke('courseList');
 
   let pageNumber = req.query.pageNumber;
   let pageSize = parameterUtils.processNumberParameter(req.query.pageSize, sysConfig.pageSize);
@@ -67,7 +67,7 @@ router.get('/list', (req, res, next) => {
 });
 
 router.get('/copy/list', (req, res, next) => {
-  let service = new commonService.commonInvoke('courseCopy');
+  let service = new commonService.commonInvoke('courseSimpleList');
 
   let universityCode = req.query.universityCode;
   let schoolID = req.query.schoolID;
@@ -95,7 +95,7 @@ router.get('/copy/list', (req, res, next) => {
 });
 
 router.get('/copy/coursePlan', (req, res, next) => {
-  let service = new commonService.commonInvoke('coursePlan');
+  let service = new commonService.commonInvoke('coursePlanList');
 
   let universityCode = req.query.universityCode;
   let schoolID = req.query.schoolID;
@@ -122,7 +122,7 @@ router.get('/copy/coursePlan', (req, res, next) => {
 });
 
 router.get('/info', (req, res, next) => {
-  let service = new commonService.commonInvoke('course');
+  let service = new commonService.commonInvoke('courseDetail');
   let universityCode = req.query.universityCode;
   let schoolID = req.query.schoolID;
   let courseID = req.query.courseID;
@@ -150,7 +150,7 @@ router.get('/info', (req, res, next) => {
 });
 
 router.get('/knowledgeList', (req, res, next) => {
-  let service = new commonService.commonInvoke('knowledge');
+  let service = new commonService.commonInvoke('knowledgeList');
   let technologyID = parameterUtils.processNumberParameter(req.query.technologyID, Constants.TECHNOLOGY_DEFAULT_ID);
   let learningPhaseID = parameterUtils.processNumberParameter(req.query.learningPhaseID, Constants.LEARNING_PHASE);
 
@@ -176,7 +176,7 @@ router.get('/knowledgeList', (req, res, next) => {
 });
 
 router.get('/teacherList', (req, res, next) => {
-  let service = new commonService.commonInvoke('teachers');
+  let service = new commonService.commonInvoke('teachersList');
   let universityCode = req.query.universityCode;
   let schoolID = req.query.schoolID;
   let fullName = req.query.fullName;
@@ -232,7 +232,7 @@ router.get('/checkCourse', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  let service = new commonService.commonInvoke('course');
+  let service = new commonService.commonInvoke('addCourse');
   let data = {
     universityCode: req.body.universityCode,
     schoolID: req.body.schoolID,

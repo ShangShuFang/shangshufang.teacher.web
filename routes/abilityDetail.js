@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/studentInfo', (req, res, next) => {
-  let service = new commonService.commonInvoke('studentAbilityAnalysis');
+  let service = new commonService.commonInvoke('studentAbilityResultSummary');
   let studentUniversityCode = req.query.studentUniversityCode;
   let studentSchoolID = req.query.studentSchoolID;
   let studentID = req.query.studentID;
@@ -38,7 +38,7 @@ router.get('/studentInfo', (req, res, next) => {
 });
 
 router.get('/learningTechnology', (req, res, next) => {
-  let service = new commonService.commonInvoke('learningTechnology');
+  let service = new commonService.commonInvoke('studentLearningTechnologyAbilityResultSummary');
   let studentUniversityCode = req.query.studentUniversityCode;
   let studentSchoolID = req.query.studentSchoolID;
   let studentID = req.query.studentID;
@@ -62,8 +62,9 @@ router.get('/learningTechnology', (req, res, next) => {
   });
 });
 
+// todo delete
 router.get('/technologyAnalysis', (req, res, next) => {
-  let service = new commonService.commonInvoke('technologyAnalysis');
+  let service = new commonService.commonInvoke('studentAbility4Technology');
   let studentUniversityCode = req.query.studentUniversityCode;
   let studentSchoolID = req.query.studentSchoolID;
   let studentID = req.query.studentID;
@@ -89,7 +90,7 @@ router.get('/technologyAnalysis', (req, res, next) => {
 });
 
 router.get('/knowledgeAnalysis', (req, res, next) => {
-  let service = new commonService.commonInvoke('knowledgeAnalysis');
+  let service = new commonService.commonInvoke('studentAbility4knowledge');
   let studentUniversityCode = req.query.studentUniversityCode;
   let studentSchoolID = req.query.studentSchoolID;
   let studentID = req.query.studentID;
@@ -115,7 +116,7 @@ router.get('/knowledgeAnalysis', (req, res, next) => {
 });
 
 router.get('/codeStandardAnalysis', (req, res, next) => {
-  let service = new commonService.commonInvoke('codeStandardAnalysis');
+  let service = new commonService.commonInvoke('studentAbility4codeStandard');
   let studentUniversityCode = req.query.studentUniversityCode;
   let studentSchoolID = req.query.studentSchoolID;
   let studentID = req.query.studentID;

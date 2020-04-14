@@ -27,8 +27,8 @@ $(document).ready(function () {
       bootbox.alert(localMessage.PARAMETER_ERROR);
       return false;
     }
-    loadStudentInfo();
-    loadTechnologyAnalysisData();
+    loadStudentAbilityResultSummary();
+    loadTechnologyAbilityResultSummary();
   }
 
   function setMenuActive() {
@@ -49,7 +49,7 @@ $(document).ready(function () {
     model.isParameterValid = true;
   }
 
-  function loadStudentInfo(){
+  function loadStudentAbilityResultSummary(){
     $.ajax({
       type: "GET",
       url: "/ability/detail/studentInfo",
@@ -62,6 +62,9 @@ $(document).ready(function () {
       success: function(result) {
         if(result.err){
           bootbox.alert(localMessage.formatMessage(result.code, result.msg));
+          return false;
+        }
+        if (result.studentInfo === null) {
           return false;
         }
         $('.student-name').text(result.studentInfo.fullName);
@@ -86,9 +89,9 @@ $(document).ready(function () {
         bootbox.alert(localMessage.NETWORK_ERROR);
       }
     });
-  };
+  }
 
-  function loadTechnologyAnalysisData() {
+  function loadTechnologyAbilityResultSummary() {
     $.ajax({
       type: "GET",
       url: "/ability/detail/learningTechnology",
@@ -133,8 +136,8 @@ $(document).ready(function () {
                         <div class="kt-widget12__info">
                           <span class="kt-widget12__desc">专业能力</span>
                           <span class="kt-widget12__value">
-                            <span class="ability-level technology${data.technologyID}-level"></span>
-                            <span>超过站内<span class="position-site technology${data.technologyID}-position"></span>的同学</span>
+                            <span class="ability-level technology${data.technologyID}-level">${data.abilityLevel}</span>
+                            <span>超过站内<span class="position-site technology${data.technologyID}-position">${data.positionSite}%</span>的同学</span>
                           </span>
                         </div>
                         <div class="kt-widget12__info">
@@ -145,9 +148,10 @@ $(document).ready(function () {
                                    role="progressbar"
                                    aria-valuenow="100"
                                    aria-valuemin="0"
-                                   aria-valuemax="100"></div>
+                                   aria-valuemax="100" 
+                                   style="width: ${data.finishKnowledgePercent}%"></div>
                             </div>
-                            <span class="kt-widget12__stat learning-percent-text"></span>
+                            <span class="kt-widget12__stat learning-percent-text">${data.finishKnowledgePercent}%</span>
                           </div>
                         </div>
                       </div>
@@ -193,9 +197,8 @@ $(document).ready(function () {
 
               let technologyID = $(this).attr('data-technology-id');
               if($(rootElement).find(`#knowledgeAnalysis${technologyID}`).children().length === 0){
-                loadTechnologyAnalysis(technologyID);
-                loadCodeStandardAnalysis(technologyID);
                 loadKnowledgeAnalysis(technologyID);
+                loadCodeStandardAnalysis(technologyID);
                 loadExerciseAnalysis(technologyID);
                 loadExercisePercentAnalysis(technologyID);
               }
@@ -204,8 +207,9 @@ $(document).ready(function () {
               $(rootElement).find('.kt-portlet__body').attr('style', 'display: none; overflow: hidden; padding-top: 0px; padding-bottom: 0px;');
             }
           });
+        });
 
-        })
+        setLevelClass();
       },
       error : function(e){
         bootbox.alert(localMessage.NETWORK_ERROR);
@@ -213,61 +217,41 @@ $(document).ready(function () {
     });
   }
 
-  function loadTechnologyAnalysis(technologyID) {
-    $.ajax({
-      type: "GET",
-      url: "/ability/detail/technologyAnalysis",
-      data: {
-        studentUniversityCode: model.universityCode,
-        studentSchoolID: model.schoolID,
-        studentID: model.studentID,
-        technologyID: technologyID,
-      },
-      dataType: "JSON",
-      success: function(result) {
-        if(result.err){
-          bootbox.alert(localMessage.formatMessage(result.code, result.msg));
-          return false;
-        }
+  function setLevelClass() {
+    $('div.technology-analysis-detail').each(function () {
+      let levelObject = $(this).find('span.ability-level');
 
-        $(`span.technology${technologyID}-level`).text(result.data.abilityLevel);
-        $(`span.technology${technologyID}-position`).text(`${result.data.positionSite}%`);
-        //technology
-        switch (result.data.abilityLevel) {
-          case "L1":
-            $(`span.technology${technologyID}-level`).addClass('ability-level-1');
-            break;
-          case "L2":
-            $(`span.technology${technologyID}-level`).addClass('ability-level-2');
-            break;
-          case "L3":
-            $(`span.technology${technologyID}-level`).addClass('ability-level-3');
-            break;
-          case "L4":
-            $(`span.technology${technologyID}-level`).addClass('ability-level-4');
-            break;
-          case "L5":
-            $(`span.technology${technologyID}-level`).addClass('ability-level-5');
-            break;
-          case "L6":
-            $(`span.technology${technologyID}-level`).addClass('ability-level-6');
-            break;
-          case "L7":
-            $(`span.technology${technologyID}-level`).addClass('ability-level-7');
-            break;
-          case "L8":
-            $(`span.technology${technologyID}-level`).addClass('ability-level-8');
-            break;
-          default:
-            break;
-        }
-
-
-      },
-      error : function(e){
-        bootbox.alert(localMessage.NETWORK_ERROR);
+      let level = $(levelObject).text();
+      switch (level) {
+        case "L1":
+          $(levelObject).addClass('ability-level-1');
+          break;
+        case "L2":
+          $(levelObject).addClass('ability-level-2');
+          break;
+        case "L3":
+          $(levelObject).addClass('ability-level-3');
+          break;
+        case "L4":
+          $(levelObject).addClass('ability-level-4');
+          break;
+        case "L5":
+          $(levelObject).addClass('ability-level-5');
+          break;
+        case "L6":
+          $(levelObject).addClass('ability-level-6');
+          break;
+        case "L7":
+          $(levelObject).addClass('ability-level-7');
+          break;
+        case "L8":
+          $(levelObject).addClass('ability-level-8');
+          break;
+        default:
+          break;
       }
     });
+
   }
 
   function loadCodeStandardAnalysis(technologyID) {
@@ -371,8 +355,8 @@ $(document).ready(function () {
           return false;
         }
 
-        $('.learning-percent').css('width', `${result.data.learningPercentCount}%`);
-        $('.learning-percent-text').text(`${result.data.learningPercentCount}%`);
+        // $('.learning-percent').css('width', `${result.data.learningPercentCount}%`);
+        // $('.learning-percent-text').text(`${result.data.learningPercentCount}%`);
         let data = [
           {label: "未掌握", data: result.data.noLearningKnowledgeCount, color:  KTApp.getStateColor("brand")},
           {label: "已掌握", data: result.data.graspKnowledgeCount, color:  KTApp.getStateColor("success")},

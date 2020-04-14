@@ -30,7 +30,7 @@ router.get('/technologySimple', (req, res, next) => {
 });
 
 router.get('/data', function(req, res, next) {
-  let service = new commonService.commonInvoke('studentAbilityAnalysis');
+  let service = new commonService.commonInvoke('studentAbilityResultList');
   let pageNumber = parseInt(req.query.pageNumber);
 
   let technologyID = req.query.technologyID;

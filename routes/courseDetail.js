@@ -35,7 +35,7 @@ router.get('/knowledgeExercises', function(req, res, next) {
 });
 
 router.get('/courseSignUp', function(req, res, next) {
-  let service = new commonService.commonInvoke('courseSignUp');
+  let service = new commonService.commonInvoke('signUp4Student');
   let pageNumber = parseInt(req.query.pageNumber);
   let universityCode = req.query.universityCode;
   let schoolID = req.query.schoolID;
@@ -63,7 +63,7 @@ router.get('/courseSignUp', function(req, res, next) {
 });
 
 router.get('/courseStudentSignUp', function(req, res, next) {
-  let service = new commonService.commonInvoke('courseStudentSignUp');
+  let service = new commonService.commonInvoke('signUp4Course');
   let pageNumber = parseInt(req.query.pageNumber);
   let universityCode = req.query.universityCode;
   let schoolID = req.query.schoolID;
@@ -120,7 +120,7 @@ router.get('/courseStudentExercises', function(req, res, next) {
 });
 
 router.get('/courseStudentExercisesReview', function(req, res, next) {
-  let service = new commonService.commonInvoke('classExercisesReview');
+  let service = new commonService.commonInvoke('classExercisesReviewList');
   let pageNumber = parseInt(req.query.pageNumber);
   let studentExercisesID = req.query.studentExercisesID;
 
@@ -146,7 +146,7 @@ router.get('/courseStudentExercisesReview', function(req, res, next) {
 });
 
 router.get('/exercisesReviewHistory', function(req, res, next) {
-  let service = new commonService.commonInvoke('classExercisesReview');
+  let service = new commonService.commonInvoke('classExercisesReviewList');
   let pageNumber = parseInt(req.query.pageNumber);
   let studentExercisesID = req.query.studentExercisesID;
 
@@ -196,7 +196,7 @@ router.get('/codeStandard', function(req, res, next) {
 });
 
 router.get('/courseQuestion', function(req, res, next) {
-  let service = new commonService.commonInvoke('courseQuestion');
+  let service = new commonService.commonInvoke('courseQuestionList');
   let pageNumber = parseInt(req.query.pageNumber);
 
   let courseUniversityCode = req.query.courseUniversityCode;
@@ -339,7 +339,7 @@ router.put('/finish', (req, res, next) => {
 });
 
 router.post('/classExercises', (req, res, next) => {
-  let service = new commonService.commonInvoke('classExercisesAssign');
+  let service = new commonService.commonInvoke('assignClassExercises');
   let data = {
     courseUniversityCode: req.body.universityCode,
     courseSchoolID: req.body.schoolID,
@@ -367,7 +367,7 @@ router.post('/classExercises', (req, res, next) => {
 });
 
 router.post('/exercisesReview', (req, res, next) => {
-  let service = new commonService.commonInvoke('classExercisesReview');
+  let service = new commonService.commonInvoke('addClassExercisesReview');
   let data = {
     courseUniversityCode: req.body.courseUniversityCode,
     courseSchoolID: req.body.courseSchoolID,
@@ -405,7 +405,7 @@ router.post('/exercisesReview', (req, res, next) => {
 });
 
 router.post('/leaveMessage', (req, res, next) => {
-  let service = new commonService.commonInvoke('courseQuestionLeaveMessage');
+  let service = new commonService.commonInvoke('addCourseQuestionLeaveMessage');
   let data = {
     questionID: req.body.questionID,
     commenterUniversityCode: req.body.commenterUniversityCode,
@@ -461,7 +461,7 @@ router.put('/finishClass', (req, res, next) => {
 });
 
 router.put('/exercisesReview', (req, res, next) => {
-  let service = new commonService.commonInvoke('classExercisesReview');
+  let service = new commonService.commonInvoke('changeClassExercisesReview');
   let data = {
     reviewID: req.body.reviewID,
     reviewerID: req.body.reviewerID,

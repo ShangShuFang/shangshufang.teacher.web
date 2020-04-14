@@ -36,7 +36,7 @@ router.get('/chinaRegion', (req, res, next) => {
 });
 
 router.get('/university', (req, res, next) => {
-  let service = new commonService.commonInvoke('university');
+  let service = new commonService.commonInvoke('universityList');
   let parameter = '1/9999/0/0/A';
 
   service.queryWithParameter(parameter,  (result) => {
@@ -58,7 +58,7 @@ router.get('/university', (req, res, next) => {
 });
 
 router.get('/school', (req, res, next) => {
-  let service = new commonService.commonInvoke('school');
+  let service = new commonService.commonInvoke('schoolList');
   let universityCode = req.query.universityCode;
   let parameter = `1/9999/${universityCode}/A`;
 
@@ -125,7 +125,7 @@ router.get('/technology', (req, res, next) => {
 });
 
 router.get('/knowledge', (req, res, next) => {
-  let service = new commonService.commonInvoke('knowledge');
+  let service = new commonService.commonInvoke('knowledgeSimpleList');
   let technologyID = req.query.technologyID;
   service.queryWithParameter(technologyID,  (result) => {
     if (result.err) {
@@ -145,27 +145,27 @@ router.get('/knowledge', (req, res, next) => {
   });
 });
 
-router.get('/direction', (req, res, next) => {
-  let service = new commonService.commonInvoke('direction');
-  let parameter = `1/9999`;
-
-  service.queryWithParameter(parameter,  (result) => {
-    if (result.err) {
-      res.json({
-        err: true,
-        code: result.code,
-        msg: result.msg
-      });
-    } else {
-      res.json({
-        err: false,
-        code: result.code,
-        msg: result.msg,
-        dataList: result.content.responseData
-      });
-    }
-  });
-});
+// router.get('/direction', (req, res, next) => {
+//   let service = new commonService.commonInvoke('direction');
+//   let parameter = `1/9999`;
+//
+//   service.queryWithParameter(parameter,  (result) => {
+//     if (result.err) {
+//       res.json({
+//         err: true,
+//         code: result.code,
+//         msg: result.msg
+//       });
+//     } else {
+//       res.json({
+//         err: false,
+//         code: result.code,
+//         msg: result.msg,
+//         dataList: result.content.responseData
+//       });
+//     }
+//   });
+// });
 
 router.get('/learningPhase', (req, res, next) => {
   let service = new commonService.commonInvoke('learningPhase');
@@ -234,7 +234,7 @@ router.get('/verificationCode/generate', (req, res, next) => {
 });
 
 router.get('/verificationCode/check', (req, res, next) => {
-  let service = new commonService.commonInvoke('verificationCode');
+  let service = new commonService.commonInvoke('checkVerificationCode');
   let cellphone = req.query.cellphone;
   let code = req.query.code;
   let parameter = `${cellphone}/${code}`;
@@ -274,7 +274,7 @@ router.get('/verificationCode/check', (req, res, next) => {
 
 router.post('/verificationCode/send', function (req, res, next) {
   //todo 调用阿里云，发送手机验证码
-  let service = new commonService.commonInvoke('verificationCode');
+  let service = new commonService.commonInvoke('addVerificationCode');
   let data = {
     systemFunction: req.body.systemFunction,
     cellphone: req.body.cellphone,

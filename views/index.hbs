@@ -69,29 +69,32 @@
                   <i class="flaticon2-cup"></i>
                 </div>
                 <div class="item">
-                  <ul>
-                    <li>
-                      <img src="media/users/300_21.jpg" >
-                      <p>马化腾</p>
-                    </li>
-                    <li>
-                      <img src="media/users/300_21.jpg" >
-                      <p>马化腾</p>
-                    </li>
-                    <li>
-                      <img src="media/users/300_21.jpg" >
-                      <p>马化腾</p>
-                    </li>
-                    <li>
-                      <img src="media/users/300_21.jpg" >
-                      <p>马化腾</p>
+                  <ul ng-if="data.topStudentMainInfoList != null">
+                    <li ng-repeat="student in data.topStudentMainInfoList">
+                      <a ng-href="/ability/detail?universityCode=\{{student.universityCode}}&schoolID=\
+                      {{student.schoolID}}&studentID=\{{student.studentID}}" target="_blank">
+                      <img src="/media/users/teacher_default.png" ng-if="student.studentPhoto == ''">
+                      <img ng-src="\{{student.studentPhoto}}" ng-if="student.studentPhoto != ''">
+                      </a>
+                      <p ng-bind="student.studentName"></p>
                     </li>
                   </ul>
+                  <div class="alert alert-solid-warning alert-bold" role="alert"
+                       ng-if="data.topStudentMainInfoList == null">
+                    <div class="alert-text no-top-student">
+
+                      <span>拔得头筹，就能得到更多企业的关注。</span> <br>
+                      <span>学霸尚未诞生,咱们还有机会，加油！</span>
+
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="kt-widget__footer">
-              <button type="button" class="btn btn-label-brand btn-lg btn-upper" ng-click="onCreateCourse(data.technologyID, 0)">创建课程</button>
+            <div class="kt-widget__footer kt-margin-0">
+              <button type="button" class="btn btn-label-brand btn-lg btn-upper"
+                      ng-click="onCreateCourse(data.technologyID, 0)">创建课程
+              </button>
             </div>
           </div>
         </div>
@@ -100,7 +103,9 @@
   </div>
   <div class="row">
     <div class="col-xl-12 text-center">
-      <button type="button" class="btn btn-secondary btn-elevate btn-pill" ng-click="onLoadMoreTechnology()" ng-if="model.technologyList.length < model.technologyTotalCount"><i class="fa fa-sync-alt"></i> 查看更多热门技术</button>
+      <button type="button" class="btn btn-secondary btn-elevate btn-pill" ng-click="onLoadMoreTechnology()"
+              ng-if="model.technologyList.length < model.technologyTotalCount"><i class="fa fa-sync-alt"></i> 查看更多热门技术
+      </button>
     </div>
   </div>
 

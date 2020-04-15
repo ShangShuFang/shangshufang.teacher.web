@@ -10,12 +10,14 @@
 }
 
 .top-student .item {
-  /*width: 80%;*/
-  margin: 10px auto 0;
-  /*border: 2px solid #00CED1;*/
+  margin: 1rem auto 0;
 }
 
-.top-student .item ul,li{
+.no-top-student {
+  font-size: 0.95rem;
+}
+
+.top-student .item ul, li {
   margin: 0;
   padding: 0;
   list-style: none;

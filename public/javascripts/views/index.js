@@ -60,6 +60,9 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       }
 
       response.data.dataContent.dataList.forEach(function (data) {
+        // data.topStudentMainInfoList.forEach(function (student) {
+        //   student.abilityDetailUrl = `/ability/detail?universityCode=${student.universityCode}&schoolID=${student.schoolID}&studentID=${student.studentID}`;
+        // });
         $scope.model.technologyList.push(data);
       });
 

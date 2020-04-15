@@ -91,7 +91,7 @@
               </div>
 
               <!--begin::Register form-->
-              <form class="kt-form" name="myForm" ng-if="!model.isRegisterSuccess" novalidate>
+              <form ng-cloak class="kt-form" name="myForm" ng-if="!model.isRegisterSuccess" novalidate>
                 <div class="form-group">
                   <div class="dropdown form-dropdown">
                     <button type="button" class="btn btn-secondary" data-toggle="dropdown">
@@ -99,7 +99,8 @@
                       <i class="flaticon2-down"></i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start">
-                      <a class="dropdown-item" href="javascript:;" ng-click="onUniversityChange(0, '请所择所在高校')">请所择所在高校</a>
+                      <a class="dropdown-item" href="javascript:;"
+                         ng-click="onUniversityChange(0, '请所择所在高校')">请所择所在高校</a>
                       <div class="dropdown-divider"></div>
                       <a ng-repeat="data in model.universityList"
                          class="dropdown-item"
@@ -227,7 +228,7 @@
               <!--end::Register form-->
 
               <!--begin::Register success form-->
-              <form class="kt-form" ng-if="model.isRegisterSuccess">
+              <form ng-cloak class="kt-form" ng-if="model.isRegisterSuccess">
                 <div class="form-group">
                   <div class="kt-section__content">
                     <div class="kt-demo">

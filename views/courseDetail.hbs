@@ -92,10 +92,8 @@
               <i class="fa fa-handshake"></i>
             </div>
             <div class="kt-widget__details">
-              <span class="kt-widget__title">使用该技术的企业</span>
-              <span class="kt-widget__value">
-                \{{model.courseInfo.courseTechnologyUsingCompanyCount}}家
-              </span>
+              <span class="kt-widget__title">使用企业</span>
+              <span class="kt-widget__value" ng-bind="model.courseInfo.courseTechnologyUsingCompanyCount"></span>
             </div>
           </div>
           <div class="kt-widget__item">
@@ -104,9 +102,8 @@
             </div>
             <div class="kt-widget__details">
               <span class="kt-widget__title">覆盖知识点</span>
-              <span class="kt-widget__value">
-                \{{model.courseInfo.courseKnowledgeCount}}/\{{model.courseInfo.technologyKnowledgeCount}}
-              </span>
+              <span class="kt-widget__value" ng-bind="model.courseInfo.courseKnowledgeCount"></span>/<span
+                    class="kt-widget__value" ng-bind="model.courseInfo.technologyKnowledgeCount"></span>
             </div>
           </div>
           <div class="kt-widget__item">
@@ -115,8 +112,7 @@
             </div>
             <div class="kt-widget__details">
               <span class="kt-widget__title">编程练习</span>
-              <span class="kt-widget__value">
-                \{{model.courseInfo.courseKnowledgeExercisesCount}}
+              <span class="kt-widget__value" ng-bind="model.courseInfo.courseKnowledgeExercisesCount">
               </span>
             </div>
           </div>
@@ -126,8 +122,7 @@
             </div>
             <div class="kt-widget__details">
               <span class="kt-widget__title">报名学生</span>
-              <span class="kt-widget__value">
-                \{{model.courseInfo.courseSingUpCount}}
+              <span class="kt-widget__value" ng-bind="model.courseInfo.courseSingUpCount">
               </span>
             </div>
           </div>
@@ -137,9 +132,8 @@
             </div>
             <div class="kt-widget__details">
               <span class="kt-widget__title">在线提问</span>
-              <span class="kt-widget__value">
-                \{{model.courseInfo.courseQuestionFinish}}/\{{model.courseInfo.courseQuestion}}
-              </span>
+              <span class="kt-widget__value" ng-bind="model.courseInfo.courseQuestionFinish"></span>/<span
+                    class="kt-widget__value" ng-bind="model.courseInfo.courseQuestion"></span>
             </div>
           </div>
         </div>
@@ -478,8 +472,10 @@
                                  ng-if="data.studentPhoto != ''">
                           </div>
                           <div class="kt-user-card-v2__details">
-                            <a class="kt-user-card-v2__name" href="javascript:;" ng-bind="data.studentName"></a>
-                            <span class="kt-user-card-v2__desc">500学分 公士</span>
+                            <span class="kt-user-card-v2__name" ng-bind="data.studentName"></span>
+                                <span class="kt-user-card-v2__desc"
+                                      ng-bind="data.abilityLevel"
+                                      ng-class="{'ability-level-1': data.abilityLevel == 'L1', 'ability-level-2': data.abilityLevel == 'L2', 'ability-level-3': data.abilityLevel == 'L3', 'ability-level-4': data.abilityLevel == 'L4', 'ability-level-5': data.abilityLevel == 'L5', 'ability-level-6': data.abilityLevel == 'L6', 'ability-level-7': data.abilityLevel == 'L7', 'ability-level-8': data.abilityLevel == 'L8'}"></span>
                           </div>
                         </div>
                       </span>
@@ -742,8 +738,10 @@
                                        ng-if="data.studentPhoto != ''">
                                 </div>
                                 <div class="kt-user-card-v2__details">
-                                  <a class="kt-user-card-v2__name" href="javascript:;" ng-bind="data.studentName"></a>
-                                  <span class="kt-user-card-v2__desc">500学分 公士</span>
+                                  <span class="kt-user-card-v2__name" ng-bind="data.studentName"></span>
+                                <span class="kt-user-card-v2__desc"
+                                      ng-bind="data.abilityLevel"
+                                      ng-class="{'ability-level-1': data.abilityLevel == 'L1', 'ability-level-2': data.abilityLevel == 'L2', 'ability-level-3': data.abilityLevel == 'L3', 'ability-level-4': data.abilityLevel == 'L4', 'ability-level-5': data.abilityLevel == 'L5', 'ability-level-6': data.abilityLevel == 'L6', 'ability-level-7': data.abilityLevel == 'L7', 'ability-level-8': data.abilityLevel == 'L8'}"></span>
                                 </div>
                               </div>
                             </span>

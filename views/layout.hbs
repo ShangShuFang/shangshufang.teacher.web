@@ -36,7 +36,7 @@
             <div class="kt-header__brand   kt-grid__item" id="kt_header_brand">
               <div class="kt-header__brand-logo">
                 <a href="/index">
-                  <img alt="logo" src="/images/logo.png" class="website-logo" />
+                  <img alt="logo" src="/images/logo.png" class="website-logo"/>
                 </a>
               </div>
             </div>
@@ -45,17 +45,15 @@
             <!-- begin:: Header Topbar -->
             <div class="kt-header__topbar">
               <!--begin: User bar -->
-
-              <div class="kt-header__topbar-item dropdown" ng-if="model.isLogin">
+              <div ng-cloak class="kt-header__topbar-item dropdown" ng-if="model.isLogin">
                 <div class="kt-header__topbar-wrapper" data-offset="10px,10px">
                   <a href="/approve" target="_blank">
-                    <img src="/media/icons/check.png" style="width: 37px" title="账号审批" />
+                    <img src="/media/icons/check.png" style="width: 37px" title="账号审批"/>
                   </a>
                 </div>
-
               </div>
 
-              <div class="kt-header__topbar-item kt-header__topbar-item--user" ng-if="model.isLogin">
+              <div ng-cloak class="kt-header__topbar-item kt-header__topbar-item--user" ng-if="model.isLogin">
                 <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,10px">
                   <img alt="Pic" ng-src="\{{model.loginUser.photo}}" ng-if="model.loginUser.photo !== ''" />
                   <img alt="Pic" src="/media/users/teacher_default.png" class="img-circle" style="border-radius: 50%" ng-if="model.loginUser.photo == ''"/>
@@ -107,21 +105,21 @@
                       </div>
                     </a>
                     <div class="kt-notification__custom kt-space-between">
-                      <a href="javascript:;" class="btn btn-label btn-label-brand btn-sm btn-bold" ng-click="onSignOut()">退出登陆</a>
+                      <a href="javascript:;" class="btn btn-label btn-label-brand btn-sm btn-bold"
+                         ng-click="onSignOut()">退出登陆</a>
                     </div>
                   </div>
                   <!--end: Navigation -->
                 </div>
               </div>
 
-<!--              <div class="kt-header__topbar-item" ng-if="model.isLogin">-->
-<!--                <span ng-bind="model.loginUser.customerName"></span>-->
-<!--                <span>老师好</span>-->
-<!--              </div>-->
-
-              <div class="kt-header__topbar-item kt-header__topbar-item--user" ng-if="!model.isLogin">
-                <button type="button" class="btn btn-outline-hover-info btn-elevate btn-pill" onclick="location.href='/login'">登 陆</button>
-                <button type="button" class="btn btn-outline-hover-danger btn-pill" onclick="location.href='/register'">注 册</button>
+              <div ng-cloak class="kt-header__topbar-item kt-header__topbar-item--user" ng-if="!model.isLogin">
+                <button type="button" class="btn btn-outline-hover-info btn-elevate btn-pill"
+                        onclick="location.href='/login'">登 陆
+                </button>
+                <button type="button" class="btn btn-outline-hover-danger btn-pill" onclick="location.href='/register'">
+                  注 册
+                </button>
               </div>
               <!--end: User bar -->
             </div>
@@ -364,7 +362,7 @@
 <!-- black5 before-->
 <!--<script src="plugins/general/wnumb/wNumb.js" type="text/javascript"></script>-->
 <!--<script src="plugins/general/jquery-form/dist/jquery.form.min.js" type="text/javascript"></script>-->
-<!--<script src="plugins/general/block-ui/jquery.blockUI.js" type="text/javascript"></script>-->
+<script src="plugins/general/block-ui/jquery.blockUI.min.js" type="text/javascript"></script>
 <!--<script src="plugins/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" type="text/javascript"></script>-->
 <!--<script src="plugins/general/js/global/integration/plugins/bootstrap-datepicker.init.js" type="text/javascript"></script>-->
 <!--<script src="plugins/general/bootstrap-datetime-picker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>-->

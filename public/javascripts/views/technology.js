@@ -226,17 +226,17 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   //region 报名学生
-  $scope.loadCourseStudent = function(){
+  $scope.loadCourseStudent = function () {
     $http.get(`/technology/courseSignUp?pageNumber=${$scope.model.pageNumber4SignUp}&technologyID=${$scope.model.technologyID}`)
-      .then(function successCallback (response) {
-        if(response.data.err){
-          bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
-          return false;
-        }
-        if(response.data.dataContent === null){
-          return false;
-        }
-        if(response.data.dataContent.dataList !== null && response.data.dataContent.dataList.length === 0 && $scope.model.pageNumber > 1){
+        .then(function successCallback(response) {
+          if (response.data.err) {
+            bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+            return false;
+          }
+          if (response.data.dataContent === null) {
+            return false;
+          }
+          if (response.data.dataContent.dataList !== null && response.data.dataContent.dataList.length === 0 && $scope.model.pageNumber > 1) {
           $scope.model.pageNumber--;
           $scope.loadCourseStudent();
           return false;

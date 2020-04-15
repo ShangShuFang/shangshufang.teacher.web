@@ -24,15 +24,12 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.initPage = function () {
-    if (!commonUtility.isLogin()) {
-      $scope.model.isLogin = false;
-      return false;
-    }
-    $scope.model.isLogin = true;
+    $scope.model.isLogin = commonUtility.isLogin();
     $scope.model.loginUser = commonUtility.getLoginUser();
     $scope.setMenuActive();
-    $scope.initStudentList();
     $scope.initTechnologyList();
+    $scope.initStudentList();
+
   };
 
   $scope.setMenuActive = function () {
@@ -67,6 +64,13 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       teacherSchoolID: 0,
       teacherID: 0
     });
+
+    $scope.model.selectedStudentType = $scope.model.studentTypeList[0];
+
+    if (!$scope.model.isLogin) {
+      return false;
+    }
+
     $scope.model.studentTypeList.push({
       studentTypeID: 1,
       studentTypeText: '本校学生',
@@ -94,7 +98,6 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       teacherSchoolID: $scope.model.loginUser.schoolID,
       teacherID: $scope.model.loginUser.customerID
     });
-    $scope.model.selectedStudentType = $scope.model.studentTypeList[0];
   };
 
   $scope.onFilterTechnology = function (technology) {
@@ -117,27 +120,40 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.loadStudentList();
   };
 
+  $scope.initData = function () {
+    $scope.model.totalCount = 0;
+    $scope.model.dataList = [];
+    $scope.model.pageNumber = 1;
+    $scope.model.maxPageNumber = 0;
+    $scope.model.paginationArray = [];
+    $scope.model.prePageNum = -1;
+    $scope.model.nextPageNum = -1;
+    $scope.model.fromIndex = 0;
+    $scope.model.toIndex = 0;
+  };
+
   $scope.loadStudentList = function () {
+    KTApp.blockPage({
+      overlayColor: '#000000',
+      type: 'v2',
+      state: 'primary',
+      message: '正在查询...'
+    });
+
     let cellphone = $scope.model.cellphone;
     if (commonUtility.isEmpty(cellphone)) {
       cellphone = 'NULL';
     }
+    $scope.initData();
     $http.get(`/ability/analysis/data?pageNumber=${$scope.model.pageNumber}&technologyID=${$scope.model.selectedTechnology.technologyID}&studentUniversityCode=${$scope.model.selectedStudentType.studentUniversityCode}&studentSchoolID=${$scope.model.selectedStudentType.studentSchoolID}&teacherUniversityCode=${$scope.model.selectedStudentType.teacherUniversityCode}&teacherSchoolID=${$scope.model.selectedStudentType.teacherSchoolID}&teacherID=${$scope.model.selectedStudentType.teacherID}&cellphone=${cellphone}`)
         .then(function successCallback(response) {
           if (response.data.err) {
             bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+            KTApp.unblockPage();
             return false;
           }
           if (response.data.dataContent === null || response.data.dataContent.dataList === null) {
-            $scope.model.totalCount = 0;
-            $scope.model.dataList = [];
-            $scope.model.pageNumber = 1;
-            $scope.model.maxPageNumber = 0;
-            $scope.model.paginationArray = [];
-            $scope.model.prePageNum = -1;
-            $scope.model.nextPageNum = -1;
-            $scope.model.fromIndex = 0;
-            $scope.model.toIndex = 0;
+            KTApp.unblockPage();
             return false;
           }
 
@@ -157,6 +173,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
           $scope.model.nextPageNum = response.data.dataContent.nextPageNum === undefined ? -1 : response.data.dataContent.nextPageNum;
           $scope.model.fromIndex = response.data.dataContent.dataList === null ? 0 : ($scope.model.pageNumber - 1) * Constants.PAGE_SIZE + 1;
           $scope.model.toIndex = response.data.dataContent.dataList === null ? 0 : ($scope.model.pageNumber - 1) * Constants.PAGE_SIZE + $scope.model.dataList.length;
+          KTApp.unblockPage();
         }, function errorCallback(response) {
           bootbox.alert(localMessage.NETWORK_ERROR);
         });

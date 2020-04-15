@@ -1,5 +1,6 @@
 .kt-widget__value{
   font-size: 0.95rem !important;
+  display: inline !important;
 }
 .kt-widget__pic{
   max-width: 130px !important;

@@ -173,9 +173,9 @@ router.get('/exercisesReviewHistory', function(req, res, next) {
 
 router.get('/codeStandard', function(req, res, next) {
   let service = new commonService.commonInvoke('codeStandard');
-  let technologyID = req.query.technologyID;
+  let languageID = req.query.languageID;
 
-  let parameter = `1/999/${technologyID}`;
+  let parameter = `1/999/${languageID}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {

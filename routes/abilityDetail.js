@@ -120,8 +120,8 @@ router.get('/codeStandardAnalysis', (req, res, next) => {
   let studentUniversityCode = req.query.studentUniversityCode;
   let studentSchoolID = req.query.studentSchoolID;
   let studentID = req.query.studentID;
-  let technologyID = req.query.technologyID;
-  let parameter = `${studentUniversityCode}/${studentSchoolID}/${studentID}/${technologyID}`;
+  let languageID = req.query.languageID;
+  let parameter = `${studentUniversityCode}/${studentSchoolID}/${studentID}/${languageID}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {

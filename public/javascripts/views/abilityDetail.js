@@ -114,7 +114,7 @@ $(document).ready(function () {
         $('.learning-technology-count').text(result.dataList.length);
         result.dataList.forEach(function (data) {
           $('div.technology-analysis-detail').append(
-              `<div class="kt-portlet kt-portlet--collapse" data-technology-id="${data.technologyID}" data-ktportlet="true">
+              `<div class="kt-portlet kt-portlet--collapse" data-technology-id="${data.technologyID}" data-language-id="${data.languageID}" data-ktportlet="true">
                 <div class="kt-portlet__head">
                   <div class="kt-portlet__head-label">
                     <h3 class="kt-portlet__head-title">
@@ -123,7 +123,7 @@ $(document).ready(function () {
                   </div>
                   <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-group">
-                      <a href="javascript:;" data-ktportlet-tool="toggle" data-technology-id="${data.technologyID}" class="btn btn-sm btn-icon btn-default btn-pill btn-icon-md btn-show-detail">
+                      <a href="javascript:;" data-ktportlet-tool="toggle" data-technology-id="${data.technologyID}" data-language-id="${data.languageID}" class="btn btn-sm btn-icon btn-default btn-pill btn-icon-md btn-show-detail">
                         <i class="la la-angle-down"></i>
                       </a>
                     </div>
@@ -196,9 +196,10 @@ $(document).ready(function () {
               $(rootElement).find('.kt-portlet__body').attr('style', '');
 
               let technologyID = $(this).attr('data-technology-id');
+              let languageID = $(this).attr('data-language-id');
               if($(rootElement).find(`#knowledgeAnalysis${technologyID}`).children().length === 0){
                 loadKnowledgeAnalysis(technologyID);
-                loadCodeStandardAnalysis(technologyID);
+                loadCodeStandardAnalysis(languageID, technologyID);
                 loadExerciseAnalysis(technologyID);
                 loadExercisePercentAnalysis(technologyID);
               }
@@ -254,7 +255,7 @@ $(document).ready(function () {
 
   }
 
-  function loadCodeStandardAnalysis(technologyID) {
+  function loadCodeStandardAnalysis(languageID, technologyID) {
     $.ajax({
       type: "GET",
       url: "/ability/detail/codeStandardAnalysis",
@@ -262,7 +263,7 @@ $(document).ready(function () {
         studentUniversityCode: model.universityCode,
         studentSchoolID: model.schoolID,
         studentID: model.studentID,
-        technologyID: technologyID,
+        languageID: languageID,
       },
       dataType: "JSON",
       success: function(result) {

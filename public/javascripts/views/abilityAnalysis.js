@@ -144,7 +144,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     if (commonUtility.isEmpty(cellphone)) {
       cellphone = 'NULL';
     }
-    $scope.initData();
+    // $scope.initData();
     $http.get(`/ability/analysis/data?pageNumber=${$scope.model.pageNumber}&technologyID=${$scope.model.selectedTechnology.technologyID}&studentUniversityCode=${$scope.model.selectedStudentType.studentUniversityCode}&studentSchoolID=${$scope.model.selectedStudentType.studentSchoolID}&teacherUniversityCode=${$scope.model.selectedStudentType.teacherUniversityCode}&teacherSchoolID=${$scope.model.selectedStudentType.teacherSchoolID}&teacherID=${$scope.model.selectedStudentType.teacherID}&cellphone=${cellphone}`)
         .then(function successCallback(response) {
           if (response.data.err) {
@@ -153,6 +153,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
             return false;
           }
           if (response.data.dataContent === null || response.data.dataContent.dataList === null) {
+            $scope.initData();
             KTApp.unblockPage();
             return false;
           }

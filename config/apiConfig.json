@@ -56,7 +56,7 @@
       "classExercisesReviewList": "/api/v1/course/exercises/review/list",
       "addClassExercisesReview": "/api/v1/course/exercises/review/add",
       "changeClassExercisesReview": "/api/v1/course/exercises/review/change",
-      "codeStandard": "/api/v1/sys_parm/code_guideline/list",
+      "codeStandard": "/api/v1/code_standard/list",
 
       "teachersList": "/api/v1/user/teacher/list",
       "changeTeacher": "/api/v1/user/teacher/change",

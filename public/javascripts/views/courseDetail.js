@@ -1185,7 +1185,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
   };
 
   $scope.loadCodeStandardList = function () {
-    $http.get(`/course/detail/codeStandard?technologyID=${$scope.model.courseInfo.technologyID}`)
+    $http.get(`/course/detail/codeStandard?languageID=${$scope.model.courseInfo.languageID}`)
         .then(function successCallback(response) {
           if (response.data.err) {
             bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
@@ -1257,6 +1257,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     $scope.model.reviewData.studentSchoolID = data.studentSchoolID;
     $scope.model.reviewData.studentSchoolName = data.studentSchoolName;
     $scope.model.reviewData.technologyID = data.technologyID;
+    $scope.model.reviewData.languageID = $scope.model.courseInfo.languageID;
     $scope.model.reviewData.technologyName = data.technologyName;
     $scope.model.reviewData.learningPhaseName = data.learningPhaseName;
     $scope.model.reviewData.knowledgeName = data.knowledgeName;
@@ -1300,11 +1301,12 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     KTApp.progress(btn);
     let codeStandardErrorList = [];
     $scope.model.reviewData.codeStandardErrorList.forEach(function (standardID) {
+      //todo 修改为languageID
       codeStandardErrorList.push({
         studentUniversityCode: $scope.model.reviewData.studentUniversityCode,
         studentSchoolID: $scope.model.reviewData.studentSchoolID,
         studentID: $scope.model.reviewData.studentID,
-        technologyID: $scope.model.reviewData.technologyID,
+        languageID: $scope.model.reviewData.technologyID,
         codeStandardID: standardID,
       });
     });

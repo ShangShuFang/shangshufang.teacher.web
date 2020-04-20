@@ -45,7 +45,7 @@
             <!-- begin:: Header Topbar -->
             <div class="kt-header__topbar">
               <!--begin: User bar -->
-              <div ng-cloak class="kt-header__topbar-item dropdown" ng-if="model.isLogin">
+              <div ng-cloak class="kt-header__topbar-item dropdown" ng-if="model.isLogin && model.loginUser.accountRole == 'A'">
                 <div class="kt-header__topbar-wrapper" data-offset="10px,10px">
                   <a href="/approve" target="_blank">
                     <img src="/media/icons/check.png" style="width: 37px" title="账号审批"/>

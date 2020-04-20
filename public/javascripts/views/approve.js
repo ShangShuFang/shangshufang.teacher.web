@@ -17,6 +17,11 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.initPage = function() {
+    $scope.model.loginUser = commonUtility.getLoginUser();
+    if($scope.model.loginUser == null || $scope.model.loginUser.accountRole !== 'A'){
+      location.href = '/';
+      return false;
+    }
     $scope.setMenuActive();
     $scope.loadData();
   };
@@ -31,8 +36,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.loadData = function () {
-    $scope.model.loginUser = commonUtility.getLoginUser();
-    $http.get(`/approve/List?pageNumber=${$scope.model.pageNumber}&universityCode=${$scope.model.loginUser.universityCode}&schoolID=${$scope.model.loginUser.schoolID}&accountID=${$scope.model.loginUser.accountID}&dataStatus=${$scope.model.filterStatus}&accountRole=${$scope.model.loginUser.accountRole}`)
+    $http.get(`/approve/List?pageNumber=${$scope.model.pageNumber}&universityCode=${$scope.model.loginUser.universityCode}&schoolID=${$scope.model.loginUser.schoolID}&accountID=${$scope.model.loginUser.accountID}&dataStatus=${$scope.model.filterStatus}`)
         .then(function successCallback (response) {
           if(response.data.err){
             bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));

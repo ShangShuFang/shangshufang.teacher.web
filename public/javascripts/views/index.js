@@ -106,7 +106,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.checkNewApprove = function () {
-    if(!$scope.model.isLogin){
+    if($scope.model.loginUser == null || $scope.model.loginUser.accountRole !== 'A'){
       return false;
     }
     $http.get(`/approve/wait?universityCode=${$scope.model.loginUser.universityCode}&schoolID=${$scope.model.loginUser.schoolID}&teacherID=${$scope.model.loginUser.customerID}`).then(function successCallback (response) {

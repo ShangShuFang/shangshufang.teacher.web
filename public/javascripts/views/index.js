@@ -201,11 +201,56 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.onFinishCourse = function(course) {
-    bizLogger.logInfo(
-        $scope.model.bizLog.pageName,
-        $scope.model.bizLog.operationName.COURSE_CHANGE_FINISH,
-        bizLogger.OPERATION_TYPE.UPDATE,
-        bizLogger.OPERATION_RESULT.SUCCESS);
+    bootbox.confirm({
+      message: `${$scope.model.loginUser.customerName}老师，请确认课程【${course.courseName}】已经授课完成吗？`,
+      buttons: {
+        confirm: {
+          label: '确认',
+          className: 'btn-danger'
+        },
+        cancel: {
+          label: '取消',
+          className: 'btn-secondary'
+        }
+      },
+      callback: function (result) {
+        if (result) {
+          let btn = $('#btnFinishCourse');
+          $(btn).attr('disabled', true);
+          KTApp.progress(btn);
+
+          $http.put('/course/detail/finish', {
+            universityCode: course.universityCode,
+            schoolID: course.schoolID,
+            teacherID: course.teacherID,
+            courseID: course.courseID,
+            loginUser: $scope.model.loginUser.customerID
+          }).then(function successCallback(response) {
+            if (response.data.err) {
+              bizLogger.logInfo(
+                  $scope.model.bizLog.pageName,
+                  $scope.model.bizLog.operationName.COURSE_CHANGE_FINISH,
+                  bizLogger.OPERATION_TYPE.UPDATE,
+                  bizLogger.OPERATION_RESULT.FAILED);
+              KTApp.unprogress(btn);
+              bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+              return false;
+            }
+            bizLogger.logInfo(
+                $scope.model.bizLog.pageName,
+                $scope.model.bizLog.operationName.COURSE_CHANGE_FINISH,
+                bizLogger.OPERATION_TYPE.UPDATE,
+                bizLogger.OPERATION_RESULT.SUCCESS);
+            $scope.loadCourseList();
+          }, function errorCallback(response) {
+            bootbox.alert(localMessage.NETWORK_ERROR);
+          });
+        }
+      }
+    });
+
+
+
   };
 
   $scope.onOpenTechnologyInfo = function(technologyID, optionFlag) {

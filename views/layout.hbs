@@ -16,48 +16,73 @@
 </head>
 
 <body class="kt-page--loading-enabled kt-page--loading kt-header--fixed kt-header--minimize-topbar kt-header-mobile--fixed kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-subheader--enabled kt-subheader--transparent kt-page--loading">
-
-<!-- begin::Page loader -->
-
-<!-- end::Page Loader -->
-
-<!-- begin:: Page -->
-
-<div class="kt-grid kt-grid--hor kt-grid--root">
+  <div class="kt-grid kt-grid--hor kt-grid--root">
   <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
     <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper " id="kt_wrapper">
 
       <!-- begin:: Header -->
       <div id="kt_header" class="kt-header kt-grid__item kt-header--fixed " data-ktheader-minimize="on" ng-app="myApp" ng-controller="myCtrl">
         <div class="kt-header__top">
-          <div class="kt-container ">
-
-            <!-- begin:: Brand -->
-            <div class="kt-header__brand   kt-grid__item" id="kt_header_brand">
+          <div class="kt-container container-head">
+            <div class="kt-header__brand kt-grid__item" id="kt_header_brand">
               <div class="kt-header__brand-logo">
                 <a href="/index">
-                  <img alt="logo" src="/images/logo.png" class="website-logo"/>
+                  <img alt="logo" src="/media/logos/logo_temp2_220.png" class="website-logo"/>
                 </a>
               </div>
             </div>
-            <!-- end:: Brand -->
 
-            <!-- begin:: Header Topbar -->
-            <div class="kt-header__topbar">
-              <!--begin: User bar -->
-              <div ng-cloak class="kt-header__topbar-item dropdown" ng-if="model.isLogin && model.loginUser.accountRole == 'A'">
-                <div class="kt-header__topbar-wrapper" data-offset="10px,10px">
-                  <a href="/approve" target="_blank">
-                    <img src="/media/icons/check.png" style="width: 37px" title="账号审批"/>
+            <div class="kt-header-menu-wrapper" id="kt_header_menu_wrapper">
+              <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile ">
+                <ul class="kt-menu__nav ">
+                  <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel">
+                    <a href="/index" class="kt-menu__link">
+                      <span class="kt-menu__link-text">开课中心</span>
+                      <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                  </li>
+                  <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel">
+                    <a href="/myCourse" class="kt-menu__link">
+                      <span class="kt-menu__link-text">我的课程</span>
+                      <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                  </li>
+                  <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel">
+                    <a href="/ability/analysis" class="kt-menu__link">
+                      <span class="kt-menu__link-text">学生能力分析</span>
+                      <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                  </li>
+                  <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel">
+                    <a href="/company" class="kt-menu__link">
+                      <span class="kt-menu__link-text">企业用人标准</span>
+                      <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="kt-header__topbar header-logout">
+              <div class="kt-header__topbar-item kt-header__topbar-item--user" id="login_bar">
+                <button type="button"  class="btn btn-login" onclick="location.href='/login'">登 陆</button>
+                &nbsp;
+                &nbsp;
+                <button type="button" class="btn btn-register"
+                   onclick="location.href='/register'">
+                  注 册
+                </button>
+              </div>
+            </div>
+
+            <div class="kt-header__topbar header-login kt-hidden" id="user_bar">
+              <div class="kt-header__topbar-item kt-header__topbar-item--user">
+                <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,10px">
+                  <a href="javascript:">
+                    你好，<span ng-bind="model.loginUser.customerName"></span>老师
                   </a>
                 </div>
-              </div>
 
-              <div ng-cloak class="kt-header__topbar-item kt-header__topbar-item--user" ng-if="model.isLogin">
-                <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,10px">
-                  <img alt="Pic" ng-src="\{{model.loginUser.photo}}" ng-if="model.loginUser.photo !== ''" />
-                  <img alt="Pic" src="/media/users/teacher_default.png" class="img-circle" style="border-radius: 50%" ng-if="model.loginUser.photo == ''"/>
-                </div>
                 <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
                   <!--begin: Head -->
                   <div class="kt-user-card kt-user-card--skin-light kt-notification-item-padding-x">
@@ -113,64 +138,28 @@
                 </div>
               </div>
 
-              <div ng-cloak class="kt-header__topbar-item kt-header__topbar-item--user" ng-if="!model.isLogin">
-                <button type="button" class="btn btn-outline-hover-info btn-elevate btn-pill"
-                        onclick="location.href='/login'">登 陆
-                </button>
-                <button type="button" class="btn btn-outline-hover-danger btn-pill" onclick="location.href='/register'">
-                  注 册
-                </button>
-              </div>
-              <!--end: User bar -->
-            </div>
-            <!-- end:: Header Topbar -->
-          </div>
-        </div>
-        <div class="kt-header__bottom">
-          <div class="kt-container">
-            <button class="kt-header-menu-wrapper-close" id="kt_header_menu_mobile_close_btn"><i class="la la-close"></i></button>
-            <div class="kt-header-menu-wrapper" id="kt_header_menu_wrapper">
-              <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile ">
-                <ul class="kt-menu__nav ">
-                  <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel">
-                    <a href="/index" class="kt-menu__link">
-                      <span class="kt-menu__link-text">开课中心</span>
-                      <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                    </a>
-                  </li>
-                  <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel">
-                    <a href="/myCourse" class="kt-menu__link">
-                      <span class="kt-menu__link-text">我的课程</span>
-                      <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                    </a>
-                  </li>
-                  <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel">
-                    <a href="/ability/analysis" class="kt-menu__link">
-                      <span class="kt-menu__link-text">学生能力分析</span>
-                      <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                    </a>
-                  </li>
-                  <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel">
-                    <a href="/company" class="kt-menu__link">
-                      <span class="kt-menu__link-text">合作企业</span>
-                      <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                    </a>
-                  </li>
-                </ul>
+              <div class="kt-header__topbar-item" style="border-right: 1px solid #cccccc; height: 15px"></div>
+
+              <div class="kt-header__topbar-item">
+                <div class="kt-header__topbar-wrapper" data-offset="10px,10px">
+                  <a href="/approve" target="_blank">账号审批</a>
+                </div>
               </div>
             </div>
 
-            <!-- end: Header Menu -->
           </div>
         </div>
       </div>
 
       <!-- end:: Header -->
+
+      <!-- begin:: Body -->
       <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
         <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
           {{{body}}}
         </div>
       </div>
+      <!-- end:: Body -->
 
       <!-- begin:: Footer -->
       <div class="kt-footer  kt-footer--extended  kt-grid__item" id="kt_footer">
@@ -201,42 +190,37 @@
                   </div>
                 </div>
               </div>
-
-
             </div>
           </div>
         </div>
       </div>
-
       <!-- end:: Footer -->
     </div>
   </div>
 </div>
 
-<!-- end:: Page -->
+  <div id="kt_scrolltop" class="kt-scrolltop">
+    <i class="fa fa-arrow-up"></i>
+  </div>
 
-<!-- begin::Scrolltop -->
-<div id="kt_scrolltop" class="kt-scrolltop">
-  <i class="fa fa-arrow-up"></i>
-</div>
-
-<!-- end::Scrolltop -->
-<!-- begin::Sticky Toolbar -->
-<ul class="kt-sticky-toolbar" style="margin-top: 30px;">
-  <li class="kt-sticky-toolbar__item kt-sticky-toolbar__item--brand" data-toggle="kt-tooltip" title="" data-placement="left" data-original-title="前往官网">
-    <a href="https://www.baidu.com" target="_blank"><i class="flaticon2-website"></i></a>
-  </li>
-  <li class="kt-sticky-toolbar__item kt-sticky-toolbar__item--warning" data-toggle="kt-tooltip" title="级别标准说明" data-placement="left">
-    <a href="/ability/level" target="_blank"><i class="flaticon2-telegram-logo"></i></a>
-  </li>
-  <li class="kt-sticky-toolbar__item kt-sticky-toolbar__item--danger" data-toggle="kt-tooltip" title="使用意见反馈" data-placement="left">
-    <a href="/suggest" target="_blank"><i class="flaticon2-chat-1"></i></a>
-  </li>
-</ul>
-
-<!-- end::Sticky Toolbar -->
-
-<!--end::Page Scripts -->
+  <ul class="kt-sticky-toolbar" style="margin-top: 30px;">
+    <li class="kt-sticky-toolbar__item kt-sticky-toolbar__item--brand">
+      <a href="https://www.baidu.com" target="_blank">
+        <i class="flaticon2-website"></i>
+      </a>
+      <span>前往官网</span>
+    </li>
+    <li class="kt-sticky-toolbar__item kt-sticky-toolbar__split"></li>
+    <li class="kt-sticky-toolbar__item kt-sticky-toolbar__item--warning">
+      <a href="/ability/level" target="_blank"><i class="flaticon2-telegram-logo"></i></a>
+      <span>级别标准</span>
+    </li>
+    <li class="kt-sticky-toolbar__item kt-sticky-toolbar__split"></li>
+    <li class="kt-sticky-toolbar__item kt-sticky-toolbar__item--danger">
+      <a href="/suggest" target="_blank"><i class="flaticon2-chat-1"></i></a>
+      <span>意见反馈</span>
+    </li>
+  </ul>
 </body>
 
 <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet" >

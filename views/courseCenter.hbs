@@ -1,0 +1,313 @@
+<link href="/stylesheets/views/courseCenter.css" rel="stylesheet" type="text/css" />
+<div ng-app="pageApp" ng-controller="pageCtrl">
+  <div class="kt-container--fluid kt-grid__item kt-grid__item--fluid" style="max-height: 132px">
+    <div class="course-center-header"></div>
+  </div>
+  <div class="kt-container--fluid kt-grid__item kt-grid__item--fluid category-2">
+    <div class="kt-container kt-grid__item kt-grid__item--fluid">
+      <div class="kt-header-menu-wrapper kt-grid__item kt-grid__item--fluid" style="opacity: 1;">
+        <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile  kt-header-menu--layout-default ">
+          <span class="filter-title">研发方向：</span>
+          <ul class="kt-menu__nav ">
+            <li class="kt-menu__item" ng-class="{'kt-menu__item--here': model.selectedDirection.directionID == 0}">
+              <a href="javascript:" class="kt-menu__link" ng-click="onFilterByDirection()">
+                <span class="kt-menu__link-text">全部</span>
+              </a>
+            </li>
+            <li class="kt-menu__item" ng-repeat="direction in model.directionList" ng-class="{'kt-menu__item--here': model.selectedDirection.directionID == direction.directionID}">
+              <a href="javascript:" class="kt-menu__link" ng-click="onFilterByDirection(direction)">
+                <span class="kt-menu__link-text" ng-bind="direction.directionName"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="kt-container--fluid kt-grid__item kt-grid__item--fluid category-3">
+    <div class="kt-container kt-grid__item kt-grid__item--fluid ">
+      <div class="kt-header-menu-wrapper kt-grid__item kt-grid__item--fluid" style="opacity: 1;">
+        <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile  kt-header-menu--layout-default ">
+          <span class="filter-title">技术分类：</span>
+          <ul class="kt-menu__nav ">
+            <li class="kt-menu__item" ng-class="{'kt-menu__item--here': model.selectedCategory.categoryID == 0}">
+              <a href="javascript:" class="kt-menu__link" ng-click="onFilterByCategory()">
+                <span class="kt-menu__link-text">全部</span>
+              </a>
+            </li>
+            <li class="kt-menu__item"
+                ng-repeat="category in model.categoryList"
+                ng-class="{'kt-menu__item--here': model.selectedCategory.categoryID == category.technologyCategoryID}">
+              <a href="javascript:" class="kt-menu__link" ng-click="onFilterByCategory(category)">
+                <span class="kt-menu__link-text" ng-bind="category.technologyCategoryName"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="kt-subheader kt-grid__item" id="kt_subheader">
+    <div class="kt-container ">
+      <div class="kt-subheader__main">
+        <h3 class="kt-subheader__title"></h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- begin:: Content -->
+  <div class="kt-container kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+      <div class="col-md-3 col-sm-3 col-xl-3" ng-repeat="data in model.technologyList">
+        <div class="kt-portlet kt-portlet--height-fluid">
+          <div class="kt-portlet__head kt-portlet__head--noborder">
+            <div class="kt-portlet__head-label">
+              <h3 class="kt-portlet__head-title">
+              </h3>
+            </div>
+          </div>
+          <div class="kt-portlet__body">
+            <div class="kt-widget kt-widget--user-profile-2 ">
+              <div class="kt-widget__head">
+                <div class="kt-widget__media">
+                  <a href="javascript:;"
+                     class="kt-widget__username kt-font-brand kt-font-bold"
+                     ng-click='onOpenTechnologyInfo(data.technologyID, 0)'>
+                    <img class="kt-widget__img"
+                         ng-src="\{{data.technologyThumbnail}}" alt="image">
+                  </a>
+                </div>
+
+                <div class="kt-widget__info">
+                  <a href="javascript:;"
+                     ng-click='onOpenTechnologyInfo(data.technologyID, 1)'
+                     ng-bind="data.technologyName"
+                     class="kt-widget__username kt-font-brand kt-link kt-font-bold"></a>
+                  <span class="kt-widget__desc">
+								  <i class="la" ng-class="{'la-star-o': data.technologyStars < 1, 'la-star star-selected': data.technologyStars >= 1}"></i>
+								  <i class="la" ng-class="{'la-star-o': data.technologyStars < 2, 'la-star star-selected': data.technologyStars >= 2}"></i>
+								  <i class="la" ng-class="{'la-star-o': data.technologyStars < 3, 'la-star star-selected': data.technologyStars >= 3}"></i>
+								  <i class="la" ng-class="{'la-star-o': data.technologyStars < 4, 'la-star star-selected': data.technologyStars >= 4}"></i>
+								  <i class="la" ng-class="{'la-star-o': data.technologyStars < 5, 'la-star star-selected': data.technologyStars >= 5}"></i>
+								</span>
+                </div>
+              </div>
+              <div class="kt-widget__body">
+                <div class="kt-widget__item">
+                  <div class="kt-widget__contact">
+                    <span class="kt-widget__label">难度级别:</span>
+                    <span class="kt-font-bold kt-badge kt-badge--inline"
+                          ng-class="{'kt-badge--info': data.difficultyLevel == 'J', 'kt-badge--warning': data.difficultyLevel == 'M', 'kt-badge--danger': data.difficultyLevel == 'S'}"
+                          ng-bind="data.difficultyLevelText"></span>
+                  </div>
+                  <div class="kt-widget__contact">
+                    <span class="kt-widget__label">涵盖知识点:</span>
+                    <span class="kt-widget__data" ng-bind="data.knowledgeCount"></span>
+                  </div>
+                  <div class="kt-widget__contact">
+                    <span class="kt-widget__label">平台内使用企业:</span>
+                    <span class="kt-widget__data" ng-bind="data.usingCompanyCount"></span>
+                  </div>
+                </div>
+                <div class="kt-widget__section top-student">
+                  <div class="title">
+                    <span>学霸榜</span>
+                    <i class="flaticon2-cup"></i>
+                  </div>
+                  <div class="item">
+                    <ul ng-if="data.topStudentMainInfoList != null">
+                      <li ng-repeat="student in data.topStudentMainInfoList">
+                        <a ng-href="/ability/detail?universityCode=\{{student.universityCode}}&schoolID=\
+                        {{student.schoolID}}&studentID=\{{student.studentID}}" target="_blank">
+                        <img src="/media/users/teacher_default.png" ng-if="student.studentPhoto == ''">
+                        <img ng-src="\{{student.studentPhoto}}" ng-if="student.studentPhoto != ''">
+                        </a>
+                        <p ng-bind="student.studentName"></p>
+                      </li>
+                    </ul>
+                    <div class="alert alert-solid-warning alert-bold" role="alert"
+                         ng-if="data.topStudentMainInfoList == null">
+                      <div class="alert-text no-top-student">
+
+                        <span>拔得头筹，就能得到更多企业的关注。</span> <br>
+                        <span>学霸尚未诞生,咱们还有机会，加油！</span>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="kt-widget__footer kt-margin-0">
+                <button type="button" class="btn btn-label-brand btn-lg btn-upper"
+                        ng-click="onCreateCourse(data, 0)">创建课程
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12 text-center">
+        <button type="button" class="btn btn-secondary btn-elevate btn-pill" ng-click="onLoadMoreTechnology()"
+                ng-if="model.technologyList.length < model.technologyTotalCount"><i class="fa fa-sync-alt"></i> 查看更多
+        </button>
+      </div>
+    </div>
+
+    <!--  <div class="kt-subheader kt-grid__item" id="kt_subheader">-->
+    <!--    <div class="kt-container">-->
+    <!--      <h3 class="kt-subheader__title">进行中的课程</h3>-->
+    <!--    </div>-->
+    <!--  </div>-->
+
+    <!--  <div class="row" ng-if="model.isLogin == false">-->
+    <!--    <div class="col-xl-12">-->
+    <!--      <div class="kt-portlet">-->
+    <!--        <div class="kt-portlet__body">-->
+    <!--          <div class="kt-widget kt-widget--user-profile-3 text-center">-->
+    <!--            您还没有登陆，<a class="kt-font-brand kt-link kt-font-bold" href="/login?backUrl=/index">现在登陆</a>查看正在进行中的课程-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--  </div>-->
+
+
+    <!--  <div class="row" ng-if="model.isLogin && model.courseProcessingTotalCount === 0">-->
+    <!--    <div class="col-xl-12">-->
+    <!--      <div class="kt-portlet">-->
+    <!--        <div class="kt-portlet__body">-->
+    <!--          <div class="kt-widget kt-widget--user-profile-3 text-center">-->
+    <!--            您还没有正在进行的课程，<a class="kt-font-brand kt-link kt-font-bold" href="javascript:;" ng-click="onCreateCourse(0, 1)">-->
+    <!--            现在创建 <i class="fa fa-angle-right"></i></a>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--  </div>-->
+
+    <!--  <div ng-if="model.isLogin && model.courseProcessingTotalCount !== 0">-->
+    <!--    <div class="row" ng-repeat="course in model.courseProcessingList">-->
+    <!--      <div class="col-xl-12">-->
+    <!--        <div class="kt-portlet">-->
+    <!--          <div class="kt-portlet__body">-->
+    <!--            <div class="kt-widget kt-widget--user-profile-3">-->
+    <!--              <div class="kt-widget__top">-->
+
+    <!--                  <div class="kt-widget__pic kt-font-boldest kt-font-light btn-option"-->
+    <!--                       ng-class="{'kt-widget__pic--success kt-font-success': $index%2 == 0, 'kt-widget__pic--danger kt-font-danger': $index%2 != 0}"-->
+    <!--                       ng-bind="course.technologyName" ng-click="onOpenTechnologyInfo(course.technologyID, 2)">-->
+    <!--                  </div>-->
+
+
+    <!--                <div class="kt-widget__content">-->
+    <!--                  <div class="kt-widget__head">-->
+    <!--                    <a href="javascript:;" class="kt-widget__username kt-font-brand kt-link kt-font-bold" ng-bind="course.courseName" ng-click="onOpenCourseDetail(course, 0)"></a>-->
+    <!--                    <div class="kt-widget__action">-->
+    <!--                      <button type="button" class="btn btn-label-success btn-sm btn-upper" ng-click="onOpenCourseDetail(course, 2, 6)">批改作业</button>&nbsp;-->
+    <!--                      <button type="button" id="btnFinishCourse" class="btn btn-label-danger btn-sm btn-upper" ng-click="onFinishCourse(course)">授课完成</button>-->
+    <!--                    </div>-->
+    <!--                  </div>-->
+    <!--                  <div class="kt-widget__subhead">-->
+    <!--                  <span>-->
+    <!--                    <i class="flaticon-calendar-with-a-clock-time-tools"></i>-->
+    <!--                    <span ng-bind="course.courseTimeBegin"></span>-->
+    <!--                    <span>~</span>-->
+    <!--                    <span ng-bind="course.courseTimeEnd"></span>-->
+    <!--                  </span>-->
+    <!--                  </div>-->
+    <!--                  <div class="kt-widget__info">-->
+    <!--                    <div class="kt-widget__desc">-->
+    <!--                      <p class="course-decs" title="\{{course.courseIntroduction}}" ng-bind="course.courseIntroduction">-->
+    <!--                      </p>-->
+    <!--                    </div>-->
+    <!--                    <div class="kt-widget__progress shs-progress">-->
+    <!--                      <div class="kt-widget__text">-->
+    <!--                        Progress-->
+    <!--                      </div>-->
+    <!--                      <div class="progress" style="height: 5px;width: 100%;">-->
+    <!--                        <div class="progress-bar"-->
+    <!--                             role="progressbar"-->
+    <!--                             ng-class="{'kt-bg-success': $index%2 == 0, 'kt-bg-danger': $index%2 != 0}"-->
+    <!--                             ng-style="{'width':course.courseProcess}"></div>-->
+    <!--                      </div>-->
+    <!--                      <div class="kt-widget__stats" ng-bind="course.courseProcess">-->
+    <!--                      </div>-->
+    <!--                    </div>-->
+    <!--                  </div>-->
+    <!--                </div>-->
+    <!--              </div>-->
+    <!--              <div class="kt-widget__bottom">-->
+    <!--                <div class="kt-widget__item">-->
+    <!--                  <div class="kt-widget__icon">-->
+    <!--                    <i class="fa fa-handshake"></i>-->
+    <!--                  </div>-->
+    <!--                  <div class="kt-widget__details">-->
+    <!--                    <span class="kt-widget__title">使用该技术的企业</span>-->
+    <!--                    <a href="javascript:;" class="kt-widget__value no-hand">-->
+    <!--                      \{{course.courseTechnologyUsingCompanyCount}}家-->
+    <!--                    </a>-->
+    <!--                  </div>-->
+    <!--                </div>-->
+    <!--                <div class="kt-widget__item">-->
+    <!--                  <div class="kt-widget__icon">-->
+    <!--                    <i class="flaticon-list-3"></i>-->
+    <!--                  </div>-->
+    <!--                  <div class="kt-widget__details">-->
+    <!--                    <span class="kt-widget__title">涵盖知识点</span>-->
+    <!--                    <a href="javascript:;" class="kt-widget__value no-hand">-->
+    <!--                      \{{course.courseKnowledgeCount}}/\{{course.technologyKnowledgeCount}}-->
+    <!--                    </a>-->
+    <!--                  </div>-->
+    <!--                </div>-->
+    <!--                <div class="kt-widget__item">-->
+    <!--                  <div class="kt-widget__icon">-->
+    <!--                    <i class="flaticon-list"></i>-->
+    <!--                  </div>-->
+    <!--                  <div class="kt-widget__details">-->
+    <!--                    <span class="kt-widget__title">涵盖练习题</span>-->
+    <!--                    <a href="javascript:;" class="kt-widget__value no-hand">-->
+    <!--                      \{{course.courseKnowledgeExercisesCount}}-->
+    <!--                    </a>-->
+    <!--                  </div>-->
+    <!--                </div>-->
+    <!--                <div class="kt-widget__item">-->
+    <!--                  <div class="kt-widget__icon">-->
+    <!--                    <i class="flaticon2-user"></i>-->
+    <!--                  </div>-->
+    <!--                  <div class="kt-widget__details">-->
+    <!--                    <span class="kt-widget__title">报名学生</span>-->
+    <!--                    <a href="javascript:;" class="kt-widget__value no-hand">-->
+    <!--                      \{{course.courseSingUpCount}}-->
+    <!--                    </a>-->
+    <!--                  </div>-->
+    <!--                </div>-->
+    <!--                <div class="kt-widget__item">-->
+    <!--                  <div class="kt-widget__icon">-->
+    <!--                    <i class="flaticon-chat-1"></i>-->
+    <!--                  </div>-->
+    <!--                  <div class="kt-widget__details">-->
+    <!--                    <span class="kt-widget__title">在线提问</span>-->
+    <!--                    <a href="javascript:;" class="kt-widget__value no-hand">-->
+    <!--                      \{{course.courseQuestionFinish}}/\{{course.courseQuestion}}-->
+    <!--                    </a>-->
+    <!--                  </div>-->
+    <!--                </div>-->
+    <!--              </div>-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--  </div>-->
+  </div>
+  <!-- end:: Content -->
+</div>
+
+
+<script>
+  $(document).ready(function () {
+    commonUtility.appendScript('/javascripts/views/courseCenter.js');
+  });
+</script>

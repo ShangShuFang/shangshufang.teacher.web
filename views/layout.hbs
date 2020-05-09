@@ -24,7 +24,7 @@
       <div id="kt_header" class="kt-header kt-grid__item kt-header--fixed " data-ktheader-minimize="on" ng-app="myApp" ng-controller="myCtrl">
         <div class="kt-header__top">
           <div class="kt-container container-head">
-            <div class="kt-header__brand kt-grid__item" id="kt_header_brand">
+            <div class="kt-header__brand kt-grid__item">
               <div class="kt-header__brand-logo">
                 <a href="/index">
                   <img alt="logo" src="/media/logos/logo_temp2_220.png" class="website-logo"/>
@@ -32,30 +32,42 @@
               </div>
             </div>
 
-            <div class="kt-header-menu-wrapper" id="kt_header_menu_wrapper">
+            <div class="kt-header-menu-wrapper kt_header_memu" id="kt_header_menu_wrapper">
               <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile ">
-                <ul class="kt-menu__nav ">
+                <ul class="kt-menu__nav main-menu_nav">
                   <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel">
-                    <a href="/index" class="kt-menu__link">
+                    <a href="/" class="kt-menu__link">
+                      <span class="kt-menu__link-text">首页</span>
+                      <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                  </li>
+                  <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel">
+                    <a href="/course/center" class="kt-menu__link">
                       <span class="kt-menu__link-text">开课中心</span>
                       <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
                   </li>
                   <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel">
-                    <a href="/myCourse" class="kt-menu__link">
+                    <a href="/course/my" class="kt-menu__link">
                       <span class="kt-menu__link-text">我的课程</span>
                       <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
                   </li>
                   <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel">
+                    <a href="/learning/path" class="kt-menu__link">
+                      <span class="kt-menu__link-text">学习路线</span>
+                      <i class="kt-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                  </li>
+                  <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel">
                     <a href="/ability/analysis" class="kt-menu__link">
-                      <span class="kt-menu__link-text">学生能力分析</span>
+                      <span class="kt-menu__link-text">学情分析</span>
                       <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
                   </li>
                   <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel">
                     <a href="/company" class="kt-menu__link">
-                      <span class="kt-menu__link-text">企业用人标准</span>
+                      <span class="kt-menu__link-text">招聘要求</span>
                       <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
                   </li>

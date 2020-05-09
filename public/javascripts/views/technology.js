@@ -21,8 +21,8 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     knowledgeList: [],
     knowledgeList1: [],
     knowledgeList2: [],
-    directionTotalCount: 0,
-    directionList: [],
+    companyTotalCount: 0,
+    companyList: [],
     isShowLoadCompleteMessage: false,
 
     courseProcessingTotalCount: 0,
@@ -55,15 +55,16 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.setMenuActive();
     $scope.setParameter();
     $scope.loadTechnologyInfo();
+    $scope.loadCompanyList();
     $scope.loadKnowledgeList();
-    $scope.loadDevelopmentDirectionList();
     $scope.loadCourseOfUniversityList();
     $scope.loadCourseOfOtherUniversityList();
     $scope.loadCourseStudent();
+    $('.carousel').carousel();
   };
 
   $scope.setMenuActive = function () {
-    $('ul.kt-menu__nav li:nth-child(1)').addClass('kt-menu__item--here');
+    $('ul.kt-menu__nav li:nth-child(2)').addClass('kt-menu__item--here');
   };
 
   $scope.setParameter = function () {
@@ -139,18 +140,18 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     });
   };
 
-  $scope.loadDevelopmentDirectionList = function () {
-    $http.get(`/technology/developmentDirections?technologyID=${$scope.model.technologyID}`)
+  $scope.loadCompanyList = function () {
+    $http.get(`/common/company?maxCount=12`)
       .then(function successCallback (response) {
         if(response.data.err){
           bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
           return false;
         }
-        if(response.data.directionList === null || response.data.directionList.length === 0) {
+        if(commonUtility.isEmptyList(response.data.dataList)) {
           return false;
         }
-        $scope.model.directionTotalCount = response.data.directionList.length;
-        $scope.model.directionList = response.data.directionList;
+        $scope.model.companyTotalCount = response.data.totalCount;
+        $scope.model.companyList = response.data.dataList;
       }, function errorCallback(response) {
         bootbox.alert(localMessage.NETWORK_ERROR);
     });
@@ -164,7 +165,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     let universityCode = $scope.model.loginUser.universityCode;
     let courseTimeBegin = dateUtils.addDateYear(currentDateString, -1) + ' 00:00:00';
     let dataStatus = 'A';
-    $http.get(`/course/list?pageNumber=${$scope.model.courseProcessing4UniversityPageNumber}&pageSize=6&universityCode=${universityCode}&schoolID=0&teacherID=0&technologyID=${$scope.model.technologyID}&courseTimeBegin=${courseTimeBegin}&dataStatus=${dataStatus}&isSelf=true`).then(function successCallback (response) {
+    $http.get(`/course/list?pageNumber=${$scope.model.courseProcessing4UniversityPageNumber}&pageSize=6&universityCode=${universityCode}&schoolID=0&teacherID=0&directionID=0&categoryID=0&technologyID=${$scope.model.technologyID}&courseTimeBegin=${courseTimeBegin}&dataStatus=${dataStatus}&isSelf=true`).then(function successCallback (response) {
       if(response.data.err){
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
@@ -198,7 +199,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     let universityCode = $scope.model.loginUser.universityCode;
     let courseTimeBegin = dateUtils.addDateYear(currentDateString, -1) + ' 00:00:00';
     let dataStatus = 'A';
-    $http.get(`/course/list?pageNumber=${$scope.model.courseProcessing4OtherUniversityPageNumber}&pageSize=6&universityCode=${universityCode}&schoolID=0&teacherID=0&technologyID=${$scope.model.technologyID}&courseTimeBegin=${courseTimeBegin}&dataStatus=${dataStatus}&isSelf=false`).then(function successCallback (response) {
+    $http.get(`/course/list?pageNumber=${$scope.model.courseProcessing4OtherUniversityPageNumber}&pageSize=6&universityCode=${universityCode}&schoolID=0&directionID=0&categoryID=0&teacherID=0&technologyID=${$scope.model.technologyID}&courseTimeBegin=${courseTimeBegin}&dataStatus=${dataStatus}&isSelf=false`).then(function successCallback (response) {
       if(response.data.err){
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
@@ -308,9 +309,16 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
         bizLogger.OPERATION_TYPE.REDIRECT,
         bizLogger.OPERATION_RESULT.SUCCESS);
 
-    if($scope.model.technologyID !== 0){
-      localStorage.setItem(Constants.KEY_NEW_COURSE_TECHNOLOGY, $scope.model.technologyID);
-    }
+    const newCourseTechnology = {
+      technologyID: $scope.model.technologyInfo.technologyID,
+      technologyName: $scope.model.technologyInfo.technologyName,
+      directionID: $scope.model.technologyInfo.directionID,
+      directionName: $scope.model.technologyInfo.directionName,
+      categoryID: $scope.model.technologyInfo.categoryID,
+      categoryName: $scope.model.technologyInfo.categoryName
+    };
+    localStorage.setItem(Constants.KEY_NEW_COURSE_TECHNOLOGY, JSON.stringify(newCourseTechnology));
+
     location.href = '/course';
   };
 

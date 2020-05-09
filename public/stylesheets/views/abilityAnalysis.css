@@ -54,3 +54,11 @@
   background: #f0f3ff !important;
   opacity: 0.3 !important;
 }
+.student-filter {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.student-filter .kt-input-icon {
+  width: 60%;
+  float: right;
+}

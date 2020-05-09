@@ -1,58 +1,102 @@
 <link href="stylesheets/views/abilityAnalysis.css" rel="stylesheet" type="text/css"/>
 <div ng-app="pageApp" ng-controller="pageCtrl">
-  <div class="kt-container kt-grid__item kt-grid__item--fluid">
-    <div class="kt-subheader kt-grid__item">
-      <div class="kt-container">
-        <div class="kt-subheader__main">
-          <h3 class="kt-subheader__title"></h3>
-        </div>
-      </div>
-    </div>
-    <div class="kt-portlet">
-      <div class="kt-portlet__body">
-        <div class="filter-group">
-          <div class="row filter">
-            <div class="col-md-1">
-              <h6 class="head">市场技术</h6>
-            </div>
-            <div class="col-md-10">
-              <a href="javascript:;"
-                 ng-repeat="technology in model.technologyList"
-                 ng-click="onFilterTechnology(technology)"
-                 ng-class="{'btn-brand': model.selectedTechnology.technologyID == technology.technologyID}"
-                 class="btn btn-elevate btn-square btn-sm"
-                 ng-bind="technology.technologyName"></a>
-            </div>
-          </div>
-          <div class="filter-space"></div>
-          <div class="row filter">
-            <div class="col-md-1">
-              <h6 class="head">学生</h6>
-            </div>
-            <div class="col-md-10">
-              <a href="javascript:;"
-                 ng-repeat="studentType in model.studentTypeList"
-                 ng-click="onFilterStudent(studentType)"
-                 ng-class="{'btn-brand': model.selectedStudentType.studentTypeID == studentType.studentTypeID}"
-                 class="btn btn-elevate btn-square btn-sm"
-                 ng-bind="studentType.studentTypeText"></a>
-            </div>
-          </div>
-          <div class="filter-space"></div>
-          <div class="row filter">
-            <div class="col-md-1">
-              <h6 class="head">电话号码</h6>
-            </div>
-            <div class="col-md-10">
-              <input type="tel" maxlength="11" ng-model="model.cellphone" class="form-control cellphone">
-              <button type="button" class="btn btn-secondary btn-elevate btn-icon btn-search"
-                      ng-click="onFilterCellphone()"><i class="fa fa-search"></i></button>
-            </div>
-          </div>
+  <div class="kt-container--fluid kt-grid__item kt-grid__item--fluid" style="max-height: 132px">
+    <div class="course-center-header"></div>
+  </div>
+
+  <div class="kt-container--fluid kt-grid__item kt-grid__item--fluid category-2">
+    <div class="kt-container kt-grid__item kt-grid__item--fluid">
+      <div class="kt-header-menu-wrapper kt-grid__item kt-grid__item--fluid" style="opacity: 1;">
+        <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile  kt-header-menu--layout-default ">
+          <span class="filter-title">研发方向：</span>
+          <ul class="kt-menu__nav ">
+            <li class="kt-menu__item" ng-class="{'kt-menu__item--here': model.selectedDirection.directionID == 0}">
+              <a href="javascript:" class="kt-menu__link" ng-click="onFilterByDirection()">
+                <span class="kt-menu__link-text">全部</span>
+              </a>
+            </li>
+            <li class="kt-menu__item" ng-repeat="direction in model.directionList" ng-class="{'kt-menu__item--here': model.selectedDirection.directionID == direction.directionID}">
+              <a href="javascript:" class="kt-menu__link" ng-click="onFilterByDirection(direction)">
+                <span class="kt-menu__link-text" ng-bind="direction.directionName"></span>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
+  <div class="kt-container--fluid kt-grid__item kt-grid__item--fluid category-3">
+    <div class="kt-container kt-grid__item kt-grid__item--fluid ">
+      <div class="kt-header-menu-wrapper kt-grid__item kt-grid__item--fluid" style="opacity: 1;">
+        <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile  kt-header-menu--layout-default ">
+          <span class="filter-title">技术分类：</span>
+          <ul class="kt-menu__nav ">
+            <li class="kt-menu__item" ng-class="{'kt-menu__item--here': model.selectedCategory.categoryID == 0}">
+              <a href="javascript:" class="kt-menu__link" ng-click="onFilterByCategory()">
+                <span class="kt-menu__link-text">全部</span>
+              </a>
+            </li>
+            <li class="kt-menu__item"
+                ng-repeat="category in model.categoryList"
+                ng-class="{'kt-menu__item--here': model.selectedCategory.categoryID == category.technologyCategoryID}">
+              <a href="javascript:" class="kt-menu__link" ng-click="onFilterByCategory(category)">
+                <span class="kt-menu__link-text" ng-bind="category.technologyCategoryName"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="kt-container--fluid kt-grid__item kt-grid__item--fluid category-3">
+    <div class="kt-container kt-grid__item kt-grid__item--fluid ">
+      <div class="kt-header-menu-wrapper kt-grid__item kt-grid__item--fluid" style="opacity: 1;">
+        <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile  kt-header-menu--layout-default ">
+          <span class="filter-title">热点技术：</span>
+          <ul class="kt-menu__nav ">
+            <li class="kt-menu__item" ng-class="{'kt-menu__item--here': model.selectedTechnology.technologyID == 0}">
+              <a href="javascript:" class="kt-menu__link" ng-click="onFilterByTechnology()">
+                <span class="kt-menu__link-text">全部</span>
+              </a>
+            </li>
+            <li class="kt-menu__item"
+                ng-repeat="technology in model.technologyList"
+                ng-class="{'kt-menu__item--here': model.selectedTechnology.technologyID == technology.technologyID}">
+              <a href="javascript:" class="kt-menu__link" ng-click="onFilterByTechnology(technology)">
+                <span class="kt-menu__link-text" ng-bind="technology.technologyName"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kt-container--fluid kt-grid__item kt-grid__item--fluid category-3">
+    <div class="kt-container kt-grid__item kt-grid__item--fluid">
+      <div class="row student-filter">
+        <div class="col-md-6">
+          <button type="button"
+                  class="btn btn-pill btn-elevate btn-sm"
+                  ng-repeat="studentType in model.studentTypeList"
+                  ng-class="{'btn-info': model.selectedStudentType.studentTypeID == studentType.studentTypeID, 'btn-outline-hover-info': model.selectedStudentType.studentTypeID != studentType.studentTypeID}"
+                  ng-bind="studentType.studentTypeText"
+                  ng-click="onFilterStudent(studentType)"></button>
+        </div>
+        <div class="col-md-6 text-right">
+          <div class="kt-input-icon kt-input-icon--right">
+            <input type="text" class="form-control student-name" ng-model="model.studentName" ng-keydown="onFilterByName($event)" placeholder="按学生姓名查询...">
+            <span class="kt-input-icon__icon kt-input-icon__icon--right">
+              <span><i class="la la-search"></i></span>
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <div class="kt-container kt-grid__item kt-grid__item--fluid">
     <div ng-cloak class="row" ng-if="model.totalCount > 0">
       <div class="col-xl-3" ng-repeat="data in model.dataList">
@@ -69,19 +113,6 @@
               <i class="kt-nav__link-icon flaticon2-pie-chart-1"></i>
               <span class="kt-nav__link-text">详细</span>
               </a>
-<!--              <a href="#" class="btn btn-icon" data-toggle="dropdown">-->
-<!--                <i class="flaticon-more-1 kt-font-brand"></i>-->
-<!--              </a>-->
-<!--              <div class="dropdown-menu dropdown-menu-right">-->
-<!--                <ul class="kt-nav">-->
-<!--                  <li class="kt-nav__item">-->
-<!--                    <a href="/ability/detail?universityCode=\{{data.studentUniversityCode}}&schoolID=\{{data.studentSchoolID}}&studentID=\{{data.studentID}}" target="_blank" class="kt-nav__link">-->
-<!--                      <i class="kt-nav__link-icon flaticon2-pie-chart-1"></i>-->
-<!--                      <span class="kt-nav__link-text">详细分析</span>-->
-<!--                    </a>-->
-<!--                  </li>-->
-<!--                </ul>-->
-<!--              </div>-->
             </div>
           </div>
           <div class="kt-portlet__body">
@@ -125,6 +156,14 @@
                   <div class="kt-widget__contact">
                     <span class="kt-widget__label">学院:</span>
                     <span class="kt-widget__data" ng-bind="data.schoolName"></span>
+                  </div>
+                  <div class="kt-widget__contact">
+                    <span class="kt-widget__label">专业:</span>
+                    <span class="kt-widget__data" ng-bind="data.majorName"></span>
+                  </div>
+                  <div class="kt-widget__contact">
+                    <span class="kt-widget__label">技术:</span>
+                    <span class="kt-widget__data" ng-bind="data.technologyName"></span>
                   </div>
                   <div class="kt-widget__contact">
                     <span class="kt-widget__label finish-exercises-count">练习题完成数量:</span>

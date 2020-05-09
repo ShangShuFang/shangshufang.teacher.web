@@ -15,11 +15,11 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
 
   $scope.setMenuActive = function () {
     $('ul.kt-menu__nav li').removeClass('kt-menu__item--here');
-    $('ul.kt-menu__nav li:nth-child(4)').addClass('kt-menu__item--here');
+    $('ul.kt-menu__nav li:nth-child(6)').addClass('kt-menu__item--here');
   };
 
   $scope.loadData = function(){
-    $http.get(`/company/list`)
+    $http.get(`/company/list?maxCount=9999`)
         .then(function successCallback (response) {
           if(response.data.err){
             bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));

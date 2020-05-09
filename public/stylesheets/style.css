@@ -9,6 +9,9 @@ body {
   border: 1px solid #fd27eb !important;
 }
 
+.kt_header_memu .kt-menu__nav .kt-menu__link-text {
+  font-size: 1.1rem !important;
+}
 .shs-banner img{
   width: 100%;
 }
@@ -236,4 +239,59 @@ a.no-hand{
 }
 .position-site {
   color: #e71d62;
+}
+
+.course-center-header {
+  height: 132px;
+  background: url(/media/bg/header-bk.png) no-repeat;
+  background-size: cover;
+  box-sizing: border-box;
+}
+
+.category-2 {
+  max-height: 68px;
+  padding: 15px 0;
+  background-color: #ffffff;
+  box-shadow: 0 8px 16px 0 rgba(28,31,33,.1);
+}
+.category-2 .kt-header-menu-wrapper {
+  width: 100%;
+}
+.category-2 .filter-title {
+  padding: 0.75rem 0rem 0.75rem 1.45rem;
+  color: #959eaf;
+  font-weight: 500;
+}
+.category-2 .kt-header-menu .kt-menu__nav > .kt-menu__item:hover:not(.kt-menu__item--here):not(.kt-menu__item--active) > .kt-menu__link, .kt-header-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--hover:not(.kt-menu__item--here):not(.kt-menu__item--active) > .kt-menu__link {
+  background-color: transparent;
+  border-radius: 0%;
+  font-weight: bolder;
+}
+.category-2 .kt-header-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--here > .kt-menu__link {
+  background-color: transparent;
+  font-weight: bolder !important;
+  font-family: "微软雅黑","Microsoft YaHei";
+}
+
+.category-3 .kt-header-menu-wrapper {
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px solid #e0e0e0;
+}
+.category-3 .filter-title {
+  padding: 1.65rem 0rem 0.75rem 1.45rem;
+  color: #959eaf;
+  font-weight: 500;
+}
+.category-3 .kt-header-menu .kt-menu__nav > .kt-menu__item:hover:not(.kt-menu__item--here):not(.kt-menu__item--active) > .kt-menu__link, .kt-header-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--hover:not(.kt-menu__item--here):not(.kt-menu__item--active) > .kt-menu__link {
+  background-color: transparent;
+}
+.category-3 .kt-header-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--here > .kt-menu__link {
+  background-color: transparent;
+}
+
+.category-4 .kt-header-menu-wrapper {
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px solid #e0e0e0;
 }

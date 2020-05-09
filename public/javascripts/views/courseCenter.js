@@ -2,12 +2,35 @@ let pageApp = angular.module('pageApp', []);
 pageApp.controller('pageCtrl', function ($scope, $http) {
   $scope.model = {
     bizLog: {
-      pageName: 'index',
+      pageName: 'courseCenter',
       operationName: {
-        PAGE_LOAD: 'PL'
+        PAGE_LOAD: 'PL',
+        TECHNOLOGY_IMAGE_LINK: 'TIL',
+        TECHNOLOGY_TEXT_LINK: 'TTL',
+        TECHNOLOGY_STUDENT_TOP: 'TST',
+        TECHNOLOGY_CREATE_COURSE: 'TCC',
+        CREATE_COURSE_LINK: 'CCL',
+        COURSE_IMAGE_LINK: 'CIL',
+        COURSE_TEXT_LINK: 'CTL',
+        COURSE_REDIRECT_INFO: 'CRI',
+        COURSE_REDIRECT_REVIEW: 'CRR',
+        COURSE_CHANGE_FINISH: 'CCF',
       },
       logMemo: '',
     },
+    directionList: [],
+    selectedDirection: {directionID: 0, directionName: '全部'},
+
+    categoryList: [],
+    selectedCategory: {categoryID: 0, categoryName: '全部'},
+
+
+    pageNumber: 1,
+    technologyTotalCount: 0,
+    technologyList: [],
+    courseProcessingTotalCount: 0,
+    courseProcessingList: [],
+    isAppendData: false,
     isLogin: false,
     loginUser: null
   };
@@ -20,34 +43,90 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
         bizLogger.OPERATION_RESULT.SUCCESS);
     $scope.model.isLogin = commonUtility.isLogin();
     $scope.model.loginUser = commonUtility.getLoginUser();
-    $scope.setMenuActive();    
+    $scope.setMenuActive();
+    $scope.loadDirectionList();
+    $scope.loadTechnologyCategoryList();
+    $scope.loadTechnologyList();
+    $scope.checkNewApprove();
   };
 
   $scope.setMenuActive = function () {
-    $('ul.kt-menu__nav li:nth-child(1)').addClass('kt-menu__item--here');
+    $('ul.main-menu_nav li:nth-child(2)').addClass('kt-menu__item--here');
   };
 
-  $scope.loadTechnologyList = function () {
-    $http.get(`/index/technologyList?pageNumber=${$scope.model.pageNumber}`).then(function successCallback (response) {
-      if(response.data.err){
+  $scope.loadDirectionList = function () {
+    $http.get(`/common/direction/list`).then(function successCallback(response) {
+      if (response.data.err) {
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
       }
-      if(response.data.dataContent === null || response.data.dataContent.dataList === null){
-        if($scope.model.pageNumber > 1){
+      $scope.model.directionList = response.data.dataList;
+    }, function errorCallback(response) {
+      bootbox.alert(localMessage.NETWORK_ERROR);
+    });
+  };
+
+  $scope.loadTechnologyCategoryList = function () {
+    $http.get(`/common/technology/category/list?directionID=${$scope.model.selectedDirection.directionID}`).then(function successCallback(response) {
+      if (response.data.err) {
+        bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+        return false;
+      }
+      $scope.model.categoryList = response.data.dataList;
+    }, function errorCallback(response) {
+      bootbox.alert(localMessage.NETWORK_ERROR);
+    });
+  };
+
+  $scope.onFilterByDirection = function (direction) {
+    if (direction === undefined) {
+      $scope.model.selectedDirection = {directionID: 0, directionName: '全部'};
+      $scope.model.selectedCategory = {categoryID: 0, categoryName: '全部'};
+      $scope.model.isAppendData = false;
+      $scope.loadTechnologyCategoryList();
+      $scope.loadTechnologyList();
+      return false;
+    }
+    $scope.model.selectedDirection = {directionID: direction.directionID, directionName: direction.directionName};
+    $scope.model.selectedCategory = {categoryID: 0, categoryName: '全部'};
+    $scope.model.isAppendData = false;
+    $scope.loadTechnologyCategoryList();
+    $scope.loadTechnologyList();
+  };
+
+  $scope.onFilterByCategory = function (category) {
+    if (category === undefined) {
+      $scope.model.selectedCategory = {categoryID: 0, categoryName: '全部'};
+      $scope.model.isAppendData = false;
+      $scope.loadTechnologyList();
+      return false;
+    }
+    $scope.model.selectedCategory = {categoryID: category.technologyCategoryID, categoryName: category.technologyCategoryName};
+    $scope.model.isAppendData = false;
+    $scope.loadTechnologyList();
+  };
+
+  $scope.loadTechnologyList = function () {
+    $http.get(`/course/center/technologyList?pageNumber=${$scope.model.pageNumber}&directionID=${$scope.model.selectedDirection.directionID}&categoryID=${$scope.model.selectedCategory.categoryID}`).then(function successCallback(response) {
+      if (response.data.err) {
+        bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+        return false;
+      }
+      if (response.data.dataContent === null || response.data.dataContent.dataList === null) {
+        if ($scope.model.pageNumber > 1) {
           $scope.model.pageNumber--;
           layer.msg(localMessage.NO_TECHNOLOGY_DATA);
         }
         return false;
       }
 
-      response.data.dataContent.dataList.forEach(function (data) {
-        // data.topStudentMainInfoList.forEach(function (student) {
-        //   student.abilityDetailUrl = `/ability/detail?universityCode=${student.universityCode}&schoolID=${student.schoolID}&studentID=${student.studentID}`;
-        // });
-        $scope.model.technologyList.push(data);
-      });
-
+      if ($scope.model.isAppendData) {
+        response.data.dataContent.dataList.forEach(function (data) {
+          $scope.model.technologyList.push(data);
+        });
+      } else {
+        $scope.model.technologyList = response.data.dataContent.dataList;
+      }
       $scope.model.technologyTotalCount = response.data.dataContent.totalCount;
       $scope.model.pageNumber = response.data.dataContent.currentPageNum;
     }, function errorCallback(response) {
@@ -56,7 +135,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.loadCourseList = function () {
-    if(!$scope.model.isLogin){
+    if (!$scope.model.isLogin) {
       return false;
     }
     let currentDateString = dateUtils.getCurrentDate();
@@ -65,14 +144,14 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     let teacherID = $scope.model.loginUser.customerID;
     let courseTimeBegin = `${currentDateString} 00:00:00`;
     let dataStatus = 'A';
-    $http.get(`/course/list?pageNumber=${$scope.model.pageNumber}&pageSize=99&universityCode=${universityCode}&schoolID=${schoolID}&teacherID=${teacherID}&technologyID=0&courseTimeBegin=${courseTimeBegin}&dataStatus=${dataStatus}&isSelf=true&searchType=S`).then(function successCallback (response) {
-      if(response.data.err){
+    $http.get(`/course/list?pageNumber=${$scope.model.pageNumber}&pageSize=99&universityCode=${universityCode}&schoolID=${schoolID}&teacherID=${teacherID}&technologyID=0&courseTimeBegin=${courseTimeBegin}&dataStatus=${dataStatus}&isSelf=true&searchType=S`).then(function successCallback(response) {
+      if (response.data.err) {
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
       }
 
-      if(response.data.dataContent.dataList === null || response.data.dataContent.dataList.length === 0){
-        if($scope.model.pageNumber > 1){
+      if (response.data.dataContent.dataList === null || response.data.dataContent.dataList.length === 0) {
+        if ($scope.model.pageNumber > 1) {
           $scope.model.pageNumber--;
           layer.msg(localMessage.NO_TECHNOLOGY_DATA);
         }
@@ -88,16 +167,16 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.checkNewApprove = function () {
-    if($scope.model.loginUser == null || $scope.model.loginUser.accountRole !== 'A'){
+    if ($scope.model.loginUser == null || $scope.model.loginUser.accountRole !== 'A') {
       return false;
     }
-    $http.get(`/approve/wait?universityCode=${$scope.model.loginUser.universityCode}&schoolID=${$scope.model.loginUser.schoolID}&teacherID=${$scope.model.loginUser.customerID}`).then(function successCallback (response) {
-      if(response.data.err){
+    $http.get(`/approve/wait?universityCode=${$scope.model.loginUser.universityCode}&schoolID=${$scope.model.loginUser.schoolID}&teacherID=${$scope.model.loginUser.customerID}`).then(function successCallback(response) {
+      if (response.data.err) {
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
       }
 
-      if(response.data.totalCount === 0){
+      if (response.data.totalCount === 0) {
         return false;
       }
       swal.fire({
@@ -107,7 +186,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
         confirmButtonText: '现在审批',
         cancelButtonText: '稍后审批',
         reverseButtons: true
-      }).then(function(result){
+      }).then(function (result) {
         if (result.value) {
           window.open('/approve');
         }
@@ -120,12 +199,13 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
 
   };
 
-  $scope.onLoadMoreTechnology = function (){
+  $scope.onLoadMoreTechnology = function () {
     $scope.model.pageNumber++;
+    $scope.model.isAppendData = true;
     $scope.loadTechnologyList();
   };
 
-  $scope.onCreateCourse = function(technologyID, optionFlag) {
+  $scope.onCreateCourse = function (technology, optionFlag) {
     let operationName = '';
     if (optionFlag === 0) {
       operationName = $scope.model.bizLog.operationName.TECHNOLOGY_CREATE_COURSE;
@@ -138,17 +218,24 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
         bizLogger.OPERATION_TYPE.REDIRECT,
         bizLogger.OPERATION_RESULT.SUCCESS);
 
-    if(technologyID !== 0){
-      localStorage.setItem(Constants.KEY_NEW_COURSE_TECHNOLOGY, technologyID);
-    }
-    if(!commonUtility.isLogin()){
+
+    if (!commonUtility.isLogin()) {
       location.href = '/login?backUrl=/course';
-    }else{
+    } else {
+      const newCourseTechnology = {
+        technologyID: technology.technologyID,
+        technologyName: technology.technologyName,
+        directionID: technology.directionID,
+        directionName: technology.directionName,
+        categoryID: technology.categoryID,
+        categoryName: technology.categoryName
+      };
+      localStorage.setItem(Constants.KEY_NEW_COURSE_TECHNOLOGY, JSON.stringify(newCourseTechnology));
       location.href = '/course';
     }
   };
 
-  $scope.onOpenCourseDetail = function(course, optionFlag, tabIndex) {
+  $scope.onOpenCourseDetail = function (course, optionFlag, tabIndex) {
     let operationName = '';
     switch (optionFlag) {
       case 0:
@@ -175,14 +262,14 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     });
 
     localStorage.setItem(Constants.KEY_INFO_COURSE_IDENTIFY, courseParam);
-    if(tabIndex !== undefined){
+    if (tabIndex !== undefined) {
       window.open(`/course/detail?tabIndex=${tabIndex}`);
 
     }
     window.open('/course/detail');
   };
 
-  $scope.onFinishCourse = function(course) {
+  $scope.onFinishCourse = function (course) {
     bootbox.confirm({
       message: `${$scope.model.loginUser.customerName}老师，请确认课程【${course.courseName}】已经授课完成吗？`,
       buttons: {
@@ -232,10 +319,9 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     });
 
 
-
   };
 
-  $scope.onOpenTechnologyInfo = function(technologyID, optionFlag) {
+  $scope.onOpenTechnologyInfo = function (technologyID, optionFlag) {
     let operationName = '';
     switch (optionFlag) {
       case 0:

@@ -23,6 +23,9 @@
 
       "developmentDirections": "/api/v1/develop_direction/list/direction",
 
+      "directionList": "/api/v1/develop_direction/list",
+      "technologyCategoryList": "/api/v1/technology/category/list",
+
       "knowledgeList": "/api/v1/knowledge/list",
       "knowledgeSimpleList": "/api/v1/knowledge/list/simple",
 
@@ -68,7 +71,7 @@
       "suggestType": "/api/v1/sys_parm/suggest_type/list",
       "addSuggest": "/api/v1/suggest/add",
 
-      "company": "/api/v1/customer/company/client",
+      "company": "/api/v1/customer/company/list",
       "companyUsingTechnology": "/api/v1/customer/company/list/using/technology",
       "companyUsingKnowledge": "/api/v1/customer/company/list/using/knowledge/client",
 

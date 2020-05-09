@@ -9,8 +9,12 @@ router.get('/', function(req, res, next) {
 
 router.get('/technologySimple', (req, res, next) => {
   let service = new commonService.commonInvoke('technologySimple');
+  const directionID = req.query.directionID;
+  const categoryID = req.query.categoryID;
+  const dataStatus = 'A';
+  const parameter = `${directionID}/${categoryID}/${dataStatus}`;
 
-  service.queryWithParameter('',  (result) => {
+  service.queryWithParameter(parameter,  (result) => {
     if (result.err) {
       res.json({
         err: true,
@@ -33,6 +37,9 @@ router.get('/data', function(req, res, next) {
   let service = new commonService.commonInvoke('studentAbilityResultList');
   let pageNumber = parseInt(req.query.pageNumber);
 
+  let directionID = req.query.directionID;
+  let categoryID = req.query.categoryID;
+
   let technologyID = req.query.technologyID;
   let studentUniversityCode = req.query.studentUniversityCode;
   let studentSchoolID = req.query.studentSchoolID;
@@ -41,9 +48,9 @@ router.get('/data', function(req, res, next) {
   let teacherSchoolID = req.query.teacherSchoolID;
 
   let teacherID = req.query.teacherID;
-  let cellphone = req.query.cellphone;
+  let studentName = req.query.studentName;
 
-  let parameter = `${pageNumber}/${sysConfig.abilityAnalysisPageSize}/${technologyID}/${studentUniversityCode}/${studentSchoolID}/${teacherUniversityCode}/${teacherSchoolID}/${teacherID}/${cellphone}`;
+  let parameter = `${pageNumber}/${sysConfig.abilityAnalysisPageSize}/${directionID}/${categoryID}/${technologyID}/${studentUniversityCode}/${studentSchoolID}/${teacherUniversityCode}/${teacherSchoolID}/${teacherID}/${studentName}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {

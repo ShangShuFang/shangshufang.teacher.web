@@ -37,3 +37,11 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+
+.using-company-container .kt-portlet__body .col-md-2:nth-child(-n+6) {
+  margin-bottom: 1.5rem;
+}
+
+.using-company-container .kt-portlet__body img {
+  width: 100%;
+}

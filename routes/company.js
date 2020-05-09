@@ -9,8 +9,9 @@ router.get('/', function(req, res, next) {
 
 router.get('/list', (req, res, next) => {
   let service = new commonService.commonInvoke('company');
+  let parameter = `1/${req.query.maxCount}/0/0/A`;
 
-  service.queryWithParameter('',  (result) => {
+  service.queryWithParameter(parameter,  (result) => {
     if (result.err) {
       res.json({
         err: true,

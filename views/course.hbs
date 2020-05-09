@@ -1,21 +1,24 @@
 <link href="stylesheets/plugins/wizard-1.css" rel="stylesheet" type="text/css"/>
 <link href="stylesheets/views/course.css" rel="stylesheet" type="text/css"/>
 <div ng-app="pageApp" ng-controller="pageCtrl">
-  <div class="kt-subheader kt-grid__item" id="kt_subheader">
+
+  <div class="kt-subheader kt-grid__item breadcrumbs" id="kt_subheader">
     <div class="kt-container ">
       <div class="kt-subheader__main">
         <div class="kt-subheader__breadcrumbs">
-          <a href="" class="kt-subheader__breadcrumbs-link">
-            主页/Java
-          </a>
-          <span class="kt-subheader__breadcrumbs-separator"></span>
-          <a href="" class="kt-subheader__breadcrumbs-link">
-            创建课程
-          </a>
+          <span class="kt-subheader__breadcrumbs-link" ng-bind="model.selectedTechnology.directionName">
+          </span>
+          <span class="fa fa-angle-right"></span>
+          <span class="kt-subheader__breadcrumbs-link" ng-bind="model.selectedTechnology.categoryName">
+          </span>
+          <span class="fa fa-angle-right"></span>
+          <span class="kt-subheader__breadcrumbs-link" ng-bind="model.selectedTechnology.technologyName">
+          </span>
         </div>
       </div>
     </div>
   </div>
+
   <div class="kt-container  kt-grid__item kt-grid__item--fluid">
     <div class="kt-portlet" ng-if="!model.isSubmitSuccess">
       <div class="kt-portlet__body kt-portlet__body--fit">
@@ -25,25 +28,13 @@
             <!--begin: Form Wizard Nav -->
             <div class="kt-wizard-v1__nav">
               <div class="kt-wizard-v1__nav-items kt-wizard-v1__nav-items--clickable">
-
-                <!--doc: Replace A tag with SPAN tag to disable the step link click -->
-                <div class="kt-wizard-v1__nav-item" data-ktwizard-type="step" data-ktwizard-state="current">
-                  <div class="kt-wizard-v1__nav-body">
-                    <div class="kt-wizard-v1__nav-icon">
-                      <i class="fab fa-python"></i>
-                    </div>
-                    <div class="kt-wizard-v1__nav-label">
-                      1: 选择所属技术
-                    </div>
-                  </div>
-                </div>
                 <div class="kt-wizard-v1__nav-item" data-ktwizard-type="step" data-ktwizard-state="pending">
                   <div class="kt-wizard-v1__nav-body">
                     <div class="kt-wizard-v1__nav-icon">
                       <i class="fa fa-info-circle"></i>
                     </div>
                     <div class="kt-wizard-v1__nav-label">
-                      2. 课程基本信息
+                      1. 课程基本信息
                     </div>
                   </div>
                 </div>
@@ -53,7 +44,7 @@
                       <i class="flaticon2-calendar-2"></i>
                     </div>
                     <div class="kt-wizard-v1__nav-label">
-                      3. 课程计划
+                      2. 课程计划
                     </div>
                   </div>
                 </div>
@@ -63,7 +54,7 @@
                       <i class="flaticon-globe"></i>
                     </div>
                     <div class="kt-wizard-v1__nav-label">
-                      4. 预览并提交
+                      3. 预览提交
                     </div>
                   </div>
                 </div>
@@ -76,72 +67,72 @@
             <!--begin: Form Wizard Form-->
             <form class="kt-form" name="myForm" id="kt_form" novalidate="novalidate">
 
-              <!--begin: Form Wizard Step 1-->
-              <div class="kt-wizard-v1__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
-                <div class="row">
-                  <div class="col-md-4" ng-repeat="data in model.technologyList">
-                    <div class="kt-portlet kt-portlet--height-fluid">
-                      <div class="kt-portlet__head kt-portlet__head--noborder">
-                        <div class="kt-portlet__head-label">
-                          <h3 class="kt-portlet__head-title">
-                          </h3>
-                        </div>
-                      </div>
-                      <div class="kt-portlet__body">
-                        <div class="kt-widget kt-widget--user-profile-2 ">
-                          <div class="kt-widget__head">
-                            <div class="kt-widget__media">
-                              <a ng-href="/technology?technology=\{{data.technologyID}}" target="_blank"
-                              class="kt-widget__username kt-font-brand kt-font-bold">
-                              <img class="kt-widget__img course-create-widget-img"
-                                   ng-src="\{{data.technologyThumbnail}}" alt="image">
-                              </a>
-                            </div>
+              <!-- region: Form Wizard Step 1-->
+<!--              <div class="kt-wizard-v1__content" data-ktwizard-type="step-content" data-ktwizard-state="current">-->
+<!--                <div class="row">-->
+<!--                  <div class="col-md-4" ng-repeat="data in model.technologyList">-->
+<!--                    <div class="kt-portlet kt-portlet--height-fluid">-->
+<!--                      <div class="kt-portlet__head kt-portlet__head--noborder">-->
+<!--                        <div class="kt-portlet__head-label">-->
+<!--                          <h3 class="kt-portlet__head-title">-->
+<!--                          </h3>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                      <div class="kt-portlet__body">-->
+<!--                        <div class="kt-widget kt-widget--user-profile-2 ">-->
+<!--                          <div class="kt-widget__head">-->
+<!--                            <div class="kt-widget__media">-->
+<!--                              <a ng-href="/technology?technology=\{{data.technologyID}}" target="_blank"-->
+<!--                              class="kt-widget__username kt-font-brand kt-font-bold">-->
+<!--                              <img class="kt-widget__img course-create-widget-img"-->
+<!--                                   ng-src="\{{data.technologyThumbnail}}" alt="image">-->
+<!--                              </a>-->
+<!--                            </div>-->
 
-                            <div class="kt-widget__info">
-                              <a ng-href="/technology?technology=\{{data.technologyID}}" ng-bind="data.technologyName"
-                              target="_blank" class="kt-widget__username kt-font-brand kt-link kt-font-bold
-                              course-create-username"></a>
-                              <span class="kt-widget__desc">
-                                <i class="la"
-                                   ng-class="{'la-star-o': data.technologyStars < 1, 'la-star star-selected': data.technologyStars >= 1}"></i>
-                                <i class="la"
-                                   ng-class="{'la-star-o': data.technologyStars < 2, 'la-star star-selected': data.technologyStars >= 2}"></i>
-                                <i class="la"
-                                   ng-class="{'la-star-o': data.technologyStars < 3, 'la-star star-selected': data.technologyStars >= 3}"></i>
-                                <i class="la"
-                                   ng-class="{'la-star-o': data.technologyStars < 4, 'la-star star-selected': data.technologyStars >= 4}"></i>
-                                <i class="la"
-                                   ng-class="{'la-star-o': data.technologyStars < 5, 'la-star star-selected': data.technologyStars >= 5}"></i>
-                              </span>
-                            </div>
-                          </div>
-                          <div class="kt-widget__footer">
-                            <button type="button" class="btn btn-elevate btn-pill"
-                                    ng-class="{'btn-outline-brand': !data.selected, 'btn-brand': data.selected}"
-                                    ng-click="onChooseTechnology(data)">
-                              <i class="fa fa-hand-point-up" ng-if="!data.selected"></i>
-                              <i class="flaticon2-check-mark" ng-if="data.selected"></i>
-                              <span ng-if="!data.selected">待选</span>
-                              <span ng-if="data.selected">已选中</span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-xl-12 text-center">
-                    <button type="button" class="btn btn-secondary btn-elevate btn-pill"
-                            ng-click="onLoadMoreTechnology()"
-                            ng-if="model.technologyList.length < model.technologyTotalCount"><i
-                            class="fa fa-sync-alt"></i> 查看更多热门技术
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <!--end: Form Wizard Step 1-->
+<!--                            <div class="kt-widget__info">-->
+<!--                              <a ng-href="/technology?technology=\{{data.technologyID}}" ng-bind="data.technologyName"-->
+<!--                              target="_blank" class="kt-widget__username kt-font-brand kt-link kt-font-bold-->
+<!--                              course-create-username"></a>-->
+<!--                              <span class="kt-widget__desc">-->
+<!--                                <i class="la"-->
+<!--                                   ng-class="{'la-star-o': data.technologyStars < 1, 'la-star star-selected': data.technologyStars >= 1}"></i>-->
+<!--                                <i class="la"-->
+<!--                                   ng-class="{'la-star-o': data.technologyStars < 2, 'la-star star-selected': data.technologyStars >= 2}"></i>-->
+<!--                                <i class="la"-->
+<!--                                   ng-class="{'la-star-o': data.technologyStars < 3, 'la-star star-selected': data.technologyStars >= 3}"></i>-->
+<!--                                <i class="la"-->
+<!--                                   ng-class="{'la-star-o': data.technologyStars < 4, 'la-star star-selected': data.technologyStars >= 4}"></i>-->
+<!--                                <i class="la"-->
+<!--                                   ng-class="{'la-star-o': data.technologyStars < 5, 'la-star star-selected': data.technologyStars >= 5}"></i>-->
+<!--                              </span>-->
+<!--                            </div>-->
+<!--                          </div>-->
+<!--                          <div class="kt-widget__footer">-->
+<!--                            <button type="button" class="btn btn-elevate btn-pill"-->
+<!--                                    ng-class="{'btn-outline-brand': !data.selected, 'btn-brand': data.selected}"-->
+<!--                                    ng-click="onChooseTechnology(data)">-->
+<!--                              <i class="fa fa-hand-point-up" ng-if="!data.selected"></i>-->
+<!--                              <i class="flaticon2-check-mark" ng-if="data.selected"></i>-->
+<!--                              <span ng-if="!data.selected">待选</span>-->
+<!--                              <span ng-if="data.selected">已选中</span>-->
+<!--                            </button>-->
+<!--                          </div>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                  <div class="col-xl-12 text-center">-->
+<!--                    <button type="button" class="btn btn-secondary btn-elevate btn-pill"-->
+<!--                            ng-click="onLoadMoreTechnology()"-->
+<!--                            ng-if="model.technologyList.length < model.technologyTotalCount"><i-->
+<!--                            class="fa fa-sync-alt"></i> 查看更多热门技术-->
+<!--                    </button>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+              <!-- endregion Wizard Step 1-->
 
               <!--begin: Form Wizard Step 2-->
               <div class="kt-wizard-v1__content" data-ktwizard-type="step-content">
@@ -161,8 +152,11 @@
                       <label>授课时间</label>
                       <div class="row">
                         <div class="col-md-5">
-                          <input type="date" class="form-control" name="courseBeginDate"
-                                 ng-model="model.courseBeginDate" ng-change="onBeginDateChange(model.courseBeginDate)"
+                          <input type="date"
+                                 class="form-control"
+                                 name="courseBeginDate"
+                                 ng-model="model.courseBeginDate"
+                                 ng-change="onBeginDateChange(model.courseBeginDate)"
                                  required placeholder="yyyy-MM-dd">
                         </div>
                         <div class="col-md-2">
@@ -171,8 +165,13 @@
                           </div>
                         </div>
                         <div class="col-md-5">
-                          <input type="date" class="form-control" name="courseEndDate" ng-model="model.courseEndDate"
-                                 ng-change="onEndDateChange(model.courseEndDate)" required placeholder="yyyy-MM-dd">
+                          <input type="date"
+                                 class="form-control"
+                                 name="courseEndDate"
+                                 ng-model="model.courseEndDate"
+                                 ng-change="onEndDateChange(model.courseEndDate)"
+                                 required
+                                 placeholder="yyyy-MM-dd">
                         </div>
                       </div>
                     </div>
@@ -285,18 +284,7 @@
                   <div class="kt-wizard-v1__review">
                     <div class="kt-wizard-v1__review-item">
                       <div class="kt-wizard-v1__review-title">
-                        课程所属技术
-                      </div>
-                      <div class="kt-wizard-v1__review-content">
-                        <div class="review-content-group">
-                          <span>技术方向: </span>
-                          <span ng-bind="model.selectedTechnology.technologyName"></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="kt-wizard-v1__review-item">
-                      <div class="kt-wizard-v1__review-title">
-                        课程基本信息
+                        基本信息
                       </div>
                       <div class="kt-wizard-v1__review-content">
                         <div class="review-content-group">
@@ -339,7 +327,7 @@
 
                     <div class="kt-wizard-v1__review-item">
                       <div class="kt-wizard-v1__review-title">
-                        课程计划
+                        授课计划
                       </div>
                       <div class="kt-wizard-v1__review-content">
                         <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded">

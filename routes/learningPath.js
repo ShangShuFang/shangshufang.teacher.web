@@ -4,7 +4,7 @@ let sysConfig = require('../config/sysConfig');
 let commonService = require('../service/commonService');
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: '开课中心' });
+  res.render('learningPath', { title: '学习路线' });
 });
 
 module.exports = router;

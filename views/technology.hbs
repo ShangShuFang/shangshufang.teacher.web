@@ -62,6 +62,32 @@
     </div>
   </div>
 
+  <!-- begin:: 使用该技术的企业 -->
+  <div class="kt-container kt-grid__item kt-grid__item--fluid using-company-container">
+    <div class="kt-portlet">
+      <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title">
+            使用该技术的企业
+            <small class="count">
+              <strong>站内共有<span ng-bind="model.companyTotalCount"></span>家企业使用该技术进行项目研发</strong>
+            </small>
+          </h3>
+        </div>
+      </div>
+      <div class="kt-portlet__body">
+        <div class="row">
+          <div class="col-md-2" ng-repeat="company in model.companyList">
+            <img ng-src="\{{company.brand}}" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end:: 市场研发方向 -->
+
+  <div class="space-10"></div>
+
   <!-- begin:: 知识点列表 -->
   <div class="kt-container kt-grid__item kt-grid__item--fluid">
     <div class="kt-portlet">
@@ -128,54 +154,6 @@
 
   <div class="space-10"></div>
 
-  <!-- begin:: 市场研发方向 -->
-  <div class="kt-container kt-grid__item kt-grid__item--fluid">
-    <div class="kt-portlet">
-      <div class="kt-portlet__head">
-        <div class="kt-portlet__head-label">
-          <h3 class="kt-portlet__head-title">
-            市场研发方向
-            <small class="count">
-              <strong>涉及<span ng-bind="model.directionTotalCount"></span>个研发方向</strong>
-            </small>
-          </h3>
-        </div>
-      </div>
-      <div class="kt-portlet__body">
-        <div class="row">
-          <div class="col-xl-12">
-            <div class="kt-list-timeline">
-              <div class="kt-list-timeline__items">
-                <div class="kt-list-timeline__item" ng-repeat="direction in model.directionList">
-                  <span class="kt-list-timeline__badge kt-list-timeline__badge--warning"></span>
-                  <span class="kt-list-timeline__text" ng-bind="direction.directionName"></span>
-                  <span class="kt-list-timeline__time direction-stars">
-                    市场热度
-                    <span class="kt-widget__desc">
-                      <i class="la"
-                         ng-class="{'la-star-o': direction.directionStars < 1, 'la-star star-selected': direction.directionStars >= 1}"></i>
-                      <i class="la"
-                         ng-class="{'la-star-o': direction.directionStars < 2, 'la-star star-selected': direction.directionStars >= 2}"></i>
-                      <i class="la"
-                         ng-class="{'la-star-o': direction.directionStars < 3, 'la-star star-selected': direction.directionStars >= 3}"></i>
-                      <i class="la"
-                         ng-class="{'la-star-o': direction.directionStars < 4, 'la-star star-selected': direction.directionStars >= 4}"></i>
-                      <i class="la"
-                         ng-class="{'la-star-o': direction.directionStars < 5, 'la-star star-selected': direction.directionStars >= 5}"></i>
-                  </span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- end:: 市场研发方向 -->
-
-  <div class="space-10"></div>
-
   <!-- begin:: 校内外开设课程 -->
   <div class="kt-container kt-grid__item kt-grid__item--fluid">
     <div class="kt-portlet">
@@ -184,7 +162,7 @@
           <h3 class="kt-portlet__head-title">
             校内外开设课程
             <small class="count">
-              <strong>当前站内共开始课程<span ng-bind="model.courseProcessingTotalCount"></span>个</strong>
+              <strong>站内有<span ng-bind="model.courseProcessingTotalCount"></span>个课程正在授课中</strong>
             </small>
           </h3>
         </div>
@@ -286,13 +264,11 @@
                                   <div class="kt-widget__section">
                                     <div class="kt-widget__blog">
                                       <i class="flaticon-list-3" style="color: #3d3d3e"></i> &nbsp;
-                                      <span class="kt-widget__title">覆盖知识点 \{{course.courseKnowledgeCount}}/\
-                                        {{course.technologyKnowledgeCount}}</span>
+                                      <span class="kt-widget__title">覆盖知识点 \{{course.courseKnowledgeCount}}/\{{course.technologyKnowledgeCount}}</span>
                                     </div>
                                     <div class="kt-widget__blog">
                                       <i class="flaticon-list" style="color: #3d3d3e"></i> &nbsp;
-                                      <span class="kt-widget__title">覆盖练习题 \
-                                        {{course.courseKnowledgeExercisesCount}}</span>
+                                      <span class="kt-widget__title">覆盖练习题 \{{course.courseKnowledgeExercisesCount}}</span>
                                     </div>
                                   </div>
                                 </div>
@@ -472,7 +448,7 @@
           <h3 class="kt-portlet__head-title">
             选课学生信息
             <small class="count">
-              <strong>当前站内共有\{{model.totalCount4SignUp}}名学生正在学习该技术</strong>
+              <strong>站内共有\{{model.totalCount4SignUp}}名学生正在学习该技术</strong>
             </small>
           </h3>
         </div>
@@ -529,8 +505,7 @@
                           <span style="width: 150px;">
                             <div class="kt-user-card-v2">
                               <div class="kt-user-card-v2__pic">
-                                <a ng-href="/ability/detail?universityCode=\{{data.studentUniversityCode}}&schoolID=\
-                                {{data.studentSchoolID}}&studentID=\{{data.studentID}}" target="_blank">
+                                <a ng-href="/ability/detail?universityCode=\{{data.studentUniversityCode}}&schoolID=\{{data.studentSchoolID}}&studentID=\{{data.studentID}}" target="_blank">
                                   <img class="kt-badge kt-badge--xl" src="/media/users/teacher_default.png"
                                        ng-if="data.studentPhoto == ''">
                                   <img class="kt-badge kt-badge--xl" ng-src="\{{data.studentPhoto}}"

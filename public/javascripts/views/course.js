@@ -80,11 +80,12 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     }
     $scope.model.loginUser = commonUtility.getLoginUser();
     $scope.setMenuActive();
-    $scope.loadTechnologyList();
+    $scope.setCourseTechnology();
+    // $scope.loadTechnologyList();
   };
 
   $scope.setMenuActive = function () {
-    $('ul.kt-menu__nav li:nth-child(1)').addClass('kt-menu__item--here');
+    $('ul.kt-menu__nav li:nth-child(2)').addClass('kt-menu__item--here');
   };
 
   //region step1: 选择所属技术
@@ -116,16 +117,12 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.setCourseTechnology = function() {
-    let technologyID = localStorage.getItem(Constants.KEY_NEW_COURSE_TECHNOLOGY);
-    if(technologyID === null) {
+    let json = localStorage.getItem(Constants.KEY_NEW_COURSE_TECHNOLOGY);
+    if(json === null) {
+      bootbox.alert(localMessage.PARAMETER_ERROR);
       return false;
     }
-    $scope.model.technologyList.forEach(function (technology) {
-      if(technology.technologyID === parseInt(technologyID)){
-        $scope.model.selectedTechnology = technology;
-        technology.selected = true;
-      }
-    });
+    $scope.model.selectedTechnology = JSON.parse(json);
     $scope.loadLearningPhase();
     $scope.model.courseKnowledgeList.splice(0, $scope.model.courseKnowledgeList.length);
     $scope.loadCourseCopyList();

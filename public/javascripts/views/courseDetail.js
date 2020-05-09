@@ -182,10 +182,10 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     let courseTeacherID = $scope.model.courseInfo.teacherID;
     let loginUserID = $scope.model.loginUser.customerID;
     if(courseTeacherID === loginUserID){
-      $('ul.kt-menu__nav li:nth-child(2)').addClass('kt-menu__item--here');
+      $('ul.kt-menu__nav li:nth-child(3)').addClass('kt-menu__item--here');
       return false;
     }
-    $('ul.kt-menu__nav li:nth-child(1)').addClass('kt-menu__item--here');
+    $('ul.kt-menu__nav li:nth-child(2)').addClass('kt-menu__item--here');
   };
 
   $scope.loadParameter = function () {

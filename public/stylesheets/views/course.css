@@ -110,3 +110,16 @@ a.knowledgeName{
 .course-create-username{
   font-size: 1.2rem !important;
 }
+.kt-wizard-v1 .kt-wizard-v1__nav .kt-wizard-v1__nav-items {
+  width: 90%;
+}
+.kt-wizard-v1 .kt-wizard-v1__wrapper .kt-form {
+  width: 78%;
+}
+.breadcrumbs .fa-angle-right {
+  margin-top: 2px;
+  margin-left: 3px;
+  margin-right: 5px;
+  color: #979db7;
+  
+}

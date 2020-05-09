@@ -54,7 +54,7 @@ commonUtility.delCookie = function (name) {
   exp.setTime(exp.getTime() - 1);
   let cookieName = this.getCookie(name);
   if(cookieName !== null)
-    document.cookie= name + "=" + cookieName + ";expires=" + exp.toGMTString();
+    document.cookie= name + "=" + cookieName + ";expires=" + exp.toGMTString()+"; path=/";
 };
 
 commonUtility.getLoginUser = function () {

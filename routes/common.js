@@ -82,7 +82,7 @@ router.get('/school', (req, res, next) => {
 
 router.get('/company', (req, res, next) => {
   let service = new commonService.commonInvoke('company');
-  let parameter = `1/9999/0/0`;
+  let parameter = `1/${req.query.maxCount}/0/0/A`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {
@@ -96,6 +96,7 @@ router.get('/company', (req, res, next) => {
         err: false,
         code: result.code,
         msg: result.msg,
+        totalCount: result.content.totalCount,
         dataList: result.content.responseData
       });
     }
@@ -145,27 +146,49 @@ router.get('/knowledge', (req, res, next) => {
   });
 });
 
-// router.get('/direction', (req, res, next) => {
-//   let service = new commonService.commonInvoke('direction');
-//   let parameter = `1/9999`;
-//
-//   service.queryWithParameter(parameter,  (result) => {
-//     if (result.err) {
-//       res.json({
-//         err: true,
-//         code: result.code,
-//         msg: result.msg
-//       });
-//     } else {
-//       res.json({
-//         err: false,
-//         code: result.code,
-//         msg: result.msg,
-//         dataList: result.content.responseData
-//       });
-//     }
-//   });
-// });
+router.get('/direction/list', (req, res, next) => {
+  let service = new commonService.commonInvoke('directionList');
+  let parameter = `1/9999/A`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        dataList: result.content.responseData
+      });
+    }
+  });
+});
+
+router.get('/technology/category/list', (req, res, next) => {
+  const service = new commonService.commonInvoke('technologyCategoryList');
+  const parameter = `1/9999/${req.query.directionID}/A`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        dataList: result.content.responseData
+      });
+    }
+  });
+});
 
 router.get('/learningPhase', (req, res, next) => {
   let service = new commonService.commonInvoke('learningPhase');

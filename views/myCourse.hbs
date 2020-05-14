@@ -117,10 +117,10 @@
                 <div class="kt-widget__head">
                   <a href="javascript:;" class="kt-widget__username kt-font-brand kt-link kt-font-bold" ng-bind="course.courseName" ng-click="onOpenCourseDetail(course, 0)"></a>
                   <div class="kt-widget__action">
-                    <span class="kt-badge kt-badge--inline kt-badge--info" ng-if="course.dataStatus == 'P'">未开始</span>
-                    <span class="kt-badge kt-badge--inline kt-badge--success" ng-if="course.dataStatus == 'F'">已结束</span>
-                    <button type="button" class="btn btn-label-success btn-sm btn-upper" ng-click="onOpenCourseDetail(course, 2, 6)" ng-if="course.dataStatus == 'A'">批改作业</button>&nbsp;
-                    <button type="button" class="btn btn-label-danger btn-sm btn-upper" ng-click="onFinishCourse(course)" ng-if="course.dataStatus == 'A'">授课完成</button>
+                    <span class="kt-badge kt-badge--inline kt-badge--info" ng-if="course.dataStatus == '0'">未开始</span>
+                    <span class="kt-badge kt-badge--inline kt-badge--success" ng-if="course.dataStatus == '2'">已结束</span>
+                    <button type="button" class="btn btn-label-success btn-sm btn-upper" ng-click="onOpenCourseDetail(course, 2, 6)" ng-if="course.dataStatus == '1'">批改作业</button>&nbsp;
+                    <button type="button" class="btn btn-label-danger btn-sm btn-upper" ng-click="onFinishCourse(course)" ng-if="course.dataStatus == '1'">授课完成</button>
                   </div>
                 </div>
                 <div class="kt-widget__subhead">

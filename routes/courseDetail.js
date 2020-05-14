@@ -317,7 +317,7 @@ router.put('/finish', (req, res, next) => {
     schoolID: req.body.schoolID,
     teacherID: req.body.teacherID,
     courseID: req.body.courseID,
-    dataStatus: 'F',
+    dataStatus: '2',
     loginUser: req.body.loginUser
   };
 

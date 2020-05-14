@@ -115,9 +115,9 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.model.timeList.push({timeCode: -3, timeText: '近三年'});
 
     $scope.model.dataStatusList.push({statusCode: 'NULL', statusText: '全部'});
-    $scope.model.dataStatusList.push({statusCode: 'P', statusText: '未开始'});
-    $scope.model.dataStatusList.push({statusCode: 'A', statusText: '进行中'});
-    $scope.model.dataStatusList.push({statusCode: 'F', statusText: '已结束'});
+    $scope.model.dataStatusList.push({statusCode: '0', statusText: '未开始'});
+    $scope.model.dataStatusList.push({statusCode: '1', statusText: '进行中'});
+    $scope.model.dataStatusList.push({statusCode: '2', statusText: '已结束'});
 
     $scope.model.selectedTime = $scope.model.timeList[1];
     $scope.model.selectedDataStatus = $scope.model.dataStatusList[2];

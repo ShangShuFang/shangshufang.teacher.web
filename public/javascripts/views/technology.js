@@ -60,7 +60,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.loadCourseOfUniversityList();
     $scope.loadCourseOfOtherUniversityList();
     $scope.loadCourseStudent();
-    $('.carousel').carousel();
+    // $('.carousel').carousel();
   };
 
   $scope.setMenuActive = function () {

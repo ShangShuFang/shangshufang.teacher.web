@@ -584,7 +584,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     });
   };
   //endregion
-
+  
   //region 授课计划
   $scope.loadCoursePlan = function () {
     let courseKnowledgeIDArray = [];
@@ -1117,9 +1117,10 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 
   $scope.onChangeAssistant = function (data, assistant) {
     $http.put('/course/detail/changeAssistant', {
-      universityCode: data.studentUniversityCode,
-      schoolID: data.studentSchoolID,
       studentID: data.studentID,
+      courseUniversityCode: $scope.model.universityCode,
+      courseSchoolID: $scope.model.schoolID,
+      courseID: $scope.model.courseID,
       assistant: assistant,
       loginUser: $scope.model.loginUser.customerID
     }).then(function successCallback(response) {
@@ -1306,7 +1307,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
         studentUniversityCode: $scope.model.reviewData.studentUniversityCode,
         studentSchoolID: $scope.model.reviewData.studentSchoolID,
         studentID: $scope.model.reviewData.studentID,
-        languageID: $scope.model.reviewData.technologyID,
+        languageID: $scope.model.reviewData.languageID,
         codeStandardID: standardID,
       });
     });

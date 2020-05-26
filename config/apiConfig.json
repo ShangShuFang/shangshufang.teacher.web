@@ -64,7 +64,7 @@
       "teachersList": "/api/v1/user/teacher/list",
       "changeTeacher": "/api/v1/user/teacher/change",
       "checkCustomerEmail": "/api/v1/user/teacher/check/email",
-      "changeAssistant": "/api/v1/user/student/change/assistant",
+      "changeAssistant": "/api/v1/course/sign_up/change/assistant",
 
       "businessAnalyseLog": "/api/v1/burying_point/add",
 

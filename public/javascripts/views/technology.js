@@ -164,7 +164,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     let currentDateString = dateUtils.getCurrentDate();
     let universityCode = $scope.model.loginUser.universityCode;
     let courseTimeBegin = dateUtils.addDateYear(currentDateString, -1) + ' 00:00:00';
-    let dataStatus = 'A';
+    let dataStatus = '1';
     $http.get(`/course/list?pageNumber=${$scope.model.courseProcessing4UniversityPageNumber}&pageSize=6&universityCode=${universityCode}&schoolID=0&teacherID=0&directionID=0&categoryID=0&technologyID=${$scope.model.technologyID}&courseTimeBegin=${courseTimeBegin}&dataStatus=${dataStatus}&isSelf=true`).then(function successCallback (response) {
       if(response.data.err){
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
@@ -198,7 +198,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     let currentDateString = dateUtils.getCurrentDate();
     let universityCode = $scope.model.loginUser.universityCode;
     let courseTimeBegin = dateUtils.addDateYear(currentDateString, -1) + ' 00:00:00';
-    let dataStatus = 'A';
+    let dataStatus = '1';
     $http.get(`/course/list?pageNumber=${$scope.model.courseProcessing4OtherUniversityPageNumber}&pageSize=6&universityCode=${universityCode}&schoolID=0&directionID=0&categoryID=0&teacherID=0&technologyID=${$scope.model.technologyID}&courseTimeBegin=${courseTimeBegin}&dataStatus=${dataStatus}&isSelf=false`).then(function successCallback (response) {
       if(response.data.err){
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));

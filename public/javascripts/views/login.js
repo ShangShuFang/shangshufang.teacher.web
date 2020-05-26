@@ -40,7 +40,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
 			//记录Cookie
 			commonUtility.setCookie(Constants.COOKIE_LOGIN_USER, JSON.stringify(response.data.teacherInfo));
 			if(commonUtility.isEmpty(backUrl)){
-				location.href = '/index';
+				location.href = '/';
 				return false;
 			}
 			location.href = backUrl;

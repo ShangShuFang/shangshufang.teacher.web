@@ -490,9 +490,10 @@ router.put('/exercisesReview', (req, res, next) => {
 router.put('/changeAssistant', (req, res, next) => {
   let service = new commonService.commonInvoke('changeAssistant');
   let data = {
-    universityCode: req.body.universityCode,
-    schoolID: req.body.schoolID,
     studentID: req.body.studentID,
+    courseUniversityCode: req.body.courseUniversityCode,
+    courseSchoolID: req.body.courseSchoolID,
+    courseID: req.body.courseID,
     assistant: req.body.assistant,
     loginUser: req.body.loginUser
   };

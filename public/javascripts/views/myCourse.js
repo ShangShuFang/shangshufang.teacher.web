@@ -231,7 +231,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     localStorage.setItem(Constants.KEY_INFO_COURSE_IDENTIFY, courseParam);
     if(tabIndex !== undefined){
       window.open(`/course/detail?tabIndex=${tabIndex}`);
-
+      return false;
     }
     window.open('/course/detail');
   };

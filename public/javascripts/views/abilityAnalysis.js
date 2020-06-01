@@ -8,7 +8,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     selectedCategory: {categoryID: 0, categoryName: '全部'},
 
     technologyList: [],
-    selectedTechnology: {},
+    selectedTechnology: {technologyID: 0, technologyName: '全部'},
     studentTypeList: [],
     selectedStudentType: {},
     studentName: '',
@@ -37,7 +37,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.loadTechnologyCategoryList();
     $scope.loadTechnologyList();
     $scope.loadStudentList();
-
+    $scope.loadStudentAbilityList();
   };
 
   $scope.setMenuActive = function () {
@@ -112,7 +112,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.loadStudentAbilityList();
   };
 
-    $scope.onFilterByName = function (e) {
+  $scope.onFilterByName = function (e) {
     let keyCode = e.keyCode;
     if (keyCode === 13) {
       $scope.loadStudentAbilityList();
@@ -130,7 +130,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       }
       $scope.model.technologyList = response.data.dataList;
       $scope.model.selectedTechnology = {technologyID: 0, technologyName: '全部'};
-      $scope.loadStudentAbilityList();
+      // $scope.loadStudentAbilityList();
     }, function errorCallback(response) {
       bootbox.alert(localMessage.NETWORK_ERROR);
     });
@@ -146,6 +146,11 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       teacherSchoolID: 0,
       teacherID: 0
     });
+    $scope.model.selectedStudentType = $scope.model.studentTypeList[0];
+    
+    if (!$scope.model.isLogin) {
+      return false;
+    }
     $scope.model.studentTypeList.push({
       studentTypeID: 1,
       studentTypeText: '本校学生',
@@ -164,16 +169,15 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       teacherSchoolID: 0,
       teacherID: 0
     });
-    $scope.model.studentTypeList.push({
-      studentTypeID: 3,
-      studentTypeText: '我的学生',
-      studentUniversityCode: 0,
-      studentSchoolID: 0,
-      teacherUniversityCode: $scope.model.loginUser.universityCode,
-      teacherSchoolID: $scope.model.loginUser.schoolID,
-      teacherID: $scope.model.loginUser.customerID
-    });
-    $scope.model.selectedStudentType = $scope.model.studentTypeList[0];
+    // $scope.model.studentTypeList.push({
+    //   studentTypeID: 3,
+    //   studentTypeText: '我的学生',
+    //   studentUniversityCode: 0,
+    //   studentSchoolID: 0,
+    //   teacherUniversityCode: $scope.model.loginUser.universityCode,
+    //   teacherSchoolID: $scope.model.loginUser.schoolID,
+    //   teacherID: $scope.model.loginUser.customerID
+    // });
   };
 
   $scope.initData = function () {

@@ -62,7 +62,6 @@ router.get('/learningTechnology', (req, res, next) => {
   });
 });
 
-// todo delete
 router.get('/technologyAnalysis', (req, res, next) => {
   let service = new commonService.commonInvoke('studentAbility4Technology');
   let studentUniversityCode = req.query.studentUniversityCode;

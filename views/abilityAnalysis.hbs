@@ -72,7 +72,7 @@
     </div>
   </div>
 
-  <div class="kt-container--fluid kt-grid__item kt-grid__item--fluid category-3">
+  <div class="kt-container--fluid kt-grid__item kt-grid__item--fluid category-3" ng-if="model.isLogin === true">
     <div class="kt-container kt-grid__item kt-grid__item--fluid">
       <div class="row student-filter">
         <div class="col-md-6">
@@ -97,7 +97,11 @@
   </div>
 
 
-  <div class="kt-container kt-grid__item kt-grid__item--fluid">
+  <div class="kt-container kt-grid__item kt-grid__item--fluid kt-align-center kt-padding-15" ng-if="model.totalCount == 0">
+    未查询到满足条件的数据
+  </div>
+
+  <div class="kt-container kt-grid__item kt-grid__item--fluid" ng-if="model.totalCount > 0">
     <div ng-cloak class="row" ng-if="model.totalCount > 0">
       <div class="col-xl-3" ng-repeat="data in model.dataList">
         <!--Begin::Portlet-->

@@ -101,10 +101,21 @@ commonUtility.isLogin = function () {
 };
 
 commonUtility.getIpAddress = function () {
-  return {
-    city_ip: returnCitySN["cip"],
-    city_id: returnCitySN["cid"],
-    city_name: returnCitySN["cname"]
+  try {
+    let cityIP = returnCitySN["cip"];
+    let cityID = returnCitySN["cid"];
+    let cityName = returnCitySN["cname"];
+    return {
+      city_ip: cityIP,
+      city_id: cityID,
+      city_name: cityName
+    }
+  } catch (e) {
+    return {
+      city_ip: 0,
+      city_id: 0,
+      city_name: 'null'
+    }
   }
 };
 

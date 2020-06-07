@@ -221,8 +221,8 @@ router.get('/knowledge/finish', (req, res, next) => {
   });
 });
 
-router.get('/knowledge/weakness', (req, res, next) => {
-  let service = new commonService.commonInvoke('weaknessKnowledgeList');
+router.get('/knowledge/learning', (req, res, next) => {
+  let service = new commonService.commonInvoke('learningKnowledgeList');
   let pageNumber = req.query.pageNumber;
   let pageSize = sysConfig.allSize;
   let universityCode = req.query.universityCode;

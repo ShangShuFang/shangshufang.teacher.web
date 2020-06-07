@@ -266,7 +266,7 @@ $(document).ready(function () {
             $('.noLearning-knowledge .kt-list-timeline__item').remove();
 
             loadFinishKnowledge();
-            loadWeaknessKnowledge();
+            loadLearningKnowledge();
             loadNoLearningKnowledge();
             $('#kt_modal_knowledge').modal('show');
           });
@@ -309,6 +309,7 @@ $(document).ready(function () {
           bootbox.alert(localMessage.formatMessage(result.code, result.msg));
           return false;
         }
+        $('#finish_knowledge_title').text(commonUtility.isEmptyList(result.list) ? `已掌握的知识点（0）` : `已掌握的知识点（${result.list.length}）`)
         if (commonUtility.isEmptyList(result.list)) {
           if (finishKnowledgeModel.totalCount > 0) {
             $('.finish-knowledge-more').addClass('kt-hidden');
@@ -340,10 +341,10 @@ $(document).ready(function () {
     });
   }
   
-  function loadWeaknessKnowledge() {
+  function loadLearningKnowledge() {
     $.ajax({
       type: 'GET',
-      url: '/ability/detail/knowledge/weakness',
+      url: '/ability/detail/knowledge/learning',
       data: {
         pageNumber: weaknessKnowledgeModel.pageNumber,
         universityCode: model.universityCode,
@@ -357,7 +358,7 @@ $(document).ready(function () {
           bootbox.alert(localMessage.formatMessage(result.code, result.msg));
           return false;
         }
-
+        $('#learning_knowledge_title').text(commonUtility.isEmptyList(result.list) ? `正在练习的知识点（0）` : `正在练习的知识点（${result.list.length}）`)
         if (commonUtility.isEmptyList(result.list)) {
           if (weaknessKnowledgeModel.totalCount > 0) {
             $('.weakness-knowledge-more').addClass('kt-hidden');
@@ -407,6 +408,7 @@ $(document).ready(function () {
           bootbox.alert(localMessage.formatMessage(result.code, result.msg)); 
           return false;
         }
+        $('#pending_knowledge_title').text(commonUtility.isEmptyList(result.list) ? `未掌握的知识点（0）` : `未掌握的知识点（${result.list.length}）`)
         if (commonUtility.isEmptyList(result.list)) {
           if (noLearningKnowledgeModel.totalCount > 0) {
             $('.noLearning-knowledge-more').addClass('kt-hidden');
@@ -750,12 +752,10 @@ $(document).ready(function () {
           return false;
         }
 
-        // $('.learning-percent').css('width', `${result.data.learningPercentCount}%`);
-        // $('.learning-percent-text').text(`${result.data.learningPercentCount}%`);
         let data = [
           {label: "未掌握", data: result.data.noLearningKnowledgeCount, color:  KTApp.getStateColor("brand")},
           {label: "已掌握", data: result.data.graspKnowledgeCount, color:  KTApp.getStateColor("success")},
-          {label: "较薄弱", data: result.data.weaknessKnowledgeCount, color:  KTApp.getStateColor("danger")}
+          {label: "练习中", data: result.data.learningPercentCount, color:  KTApp.getStateColor("danger")}
         ];
 
         $.plot($(`#knowledgeAnalysis${technologyID}`), data, {

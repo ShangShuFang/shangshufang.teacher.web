@@ -22,7 +22,7 @@ commonUtility.isEmpty = function (value) {
 };
 
 commonUtility.isEmptyList = function (list) {
-  return list === null || list.length === 0;
+  return list === null || list === undefined || list.length === 0;
 };
 
 commonUtility.isNumber = function (value) {

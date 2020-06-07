@@ -56,7 +56,7 @@ router.get('/learningTechnology', (req, res, next) => {
         err: false,
         code: result.code,
         msg: result.msg,
-        dataList: result.content.responseData
+        list: result.content.responseData
       });
     }
   });
@@ -187,6 +187,123 @@ router.get('/exercisePercentAnalysis', (req, res, next) => {
         code: result.code,
         msg: result.msg,
         dataList: result.content.responseData
+      });
+    }
+  });
+});
+
+router.get('/knowledge/finish', (req, res, next) => {
+  let service = new commonService.commonInvoke('finishKnowledgeList');
+  let pageNumber = req.query.pageNumber;
+  let pageSize = sysConfig.allSize;
+  let universityCode = req.query.universityCode;
+  let schoolID = req.query.schoolID;
+  let studentID = req.query.studentID;
+  let technologyID = req.query.technologyID;
+  let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${studentID}/${technologyID}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        totalCount: result.content.totalCount,
+        list: result.content.responseData
+      });
+    }
+  });
+});
+
+router.get('/knowledge/weakness', (req, res, next) => {
+  let service = new commonService.commonInvoke('weaknessKnowledgeList');
+  let pageNumber = req.query.pageNumber;
+  let pageSize = sysConfig.allSize;
+  let universityCode = req.query.universityCode;
+  let schoolID = req.query.schoolID;
+  let studentID = req.query.studentID;
+  let technologyID = req.query.technologyID;
+  let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${studentID}/${technologyID}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        totalCount: result.content.totalCount,
+        list: result.content.responseData
+      });
+    }
+  });
+});
+
+router.get('/knowledge/noLearning', (req, res, next) => {
+  let service = new commonService.commonInvoke('noLearningKnowledgeList');
+  let pageNumber = req.query.pageNumber;
+  let pageSize = sysConfig.allSize;
+  let universityCode = req.query.universityCode;
+  let schoolID = req.query.schoolID;
+  let studentID = req.query.studentID;
+  let technologyID = req.query.technologyID;
+  let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${studentID}/${technologyID}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        totalCount: result.content.totalCount,
+        list: result.content.responseData
+      });
+    }
+  });
+});
+
+router.get('/exercise/list', (req, res, next) => {
+  let service = new commonService.commonInvoke('studentExercisesList');
+  let pageNumber = req.query.pageNumber;
+  let pageSize = sysConfig.pageSize;
+  let universityCode = req.query.universityCode;
+  let schoolID = req.query.schoolID;
+  let studentID = req.query.studentID;
+  let technologyID = req.query.technologyID;
+  let dataStatus = req.query.dataStatus;
+  let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${studentID}/${technologyID}/${dataStatus}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      let dataContent = commonService.buildRenderData('学生所有练习', pageNumber, pageSize, result);
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        dataContent: dataContent
       });
     }
   });

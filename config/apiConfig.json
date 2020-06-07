@@ -72,7 +72,7 @@
       "addSuggest": "/api/v1/suggest/add",
 
       "company": "/api/v1/customer/company/list",
-      "companyUsingTechnology": "/api/v1/customer/company/list/using/technology",
+      "companyUsingTechnology": "/api/v1/customePr/company/list/using/technology",
       "companyUsingKnowledge": "/api/v1/customer/company/list/using/knowledge/client",
 
       "studentAbilityResultList": "/api/v1/analysis/ability/student/list",
@@ -81,7 +81,11 @@
       "studentAbility4knowledge": "/api/v1/analysis/ability/student/any/knowledge_summary",
       "studentAbility4codeStandard": "/api/v1/analysis/ability/student/any/code_guideline",
       "exerciseAnalysis": "/api/v1/analysis/ability/student/list/exercise_number",
-      "exercisePercentAnalysis": "/api/v1/analysis/ability/student/list/exercise_percent"
+      "exercisePercentAnalysis": "/api/v1/analysis/ability/student/list/exercise_percent",
+      "finishKnowledgeList": "/api/v1/analysis/ability/student/list/finish_knowledge",
+      "weaknessKnowledgeList": "/api/v1/analysis/ability/student/list/weakness_knowledge",
+      "noLearningKnowledgeList": "/api/v1/analysis/ability/student/list/noLearning_knowledge",
+      "studentExercisesList": "/api/v1/course/exercises/list/student/technology"
     }
   }
 }

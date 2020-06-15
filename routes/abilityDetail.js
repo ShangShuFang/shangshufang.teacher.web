@@ -279,6 +279,36 @@ router.get('/knowledge/noLearning', (req, res, next) => {
   });
 });
 
+router.get('/knowledge/weak', (req, res, next) => {
+  let service = new commonService.commonInvoke('weakKnowledgeList');
+  let pageNumber = req.query.pageNumber;
+  let pageSize = sysConfig.allSize;
+  let universityCode = req.query.universityCode;
+  let schoolID = req.query.schoolID;
+  let studentID = req.query.studentID;
+  let technologyID = req.query.technologyID;
+  let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${studentID}/${technologyID}`;
+
+  service.queryWithParameter(parameter,  (result) => {
+    if (result.err) {
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    } else {
+      let dataContent = commonService.buildRenderData('薄弱知识点列表', pageNumber, pageSize, result);
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg,
+        totalCount: result.content.totalCount,
+        dataContent: dataContent
+      });
+    }
+  });
+});
+
 router.get('/exercise/list', (req, res, next) => {
   let service = new commonService.commonInvoke('studentExercisesList');
   let pageNumber = req.query.pageNumber;

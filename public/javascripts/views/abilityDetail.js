@@ -38,6 +38,12 @@ $(document).ready(function () {
     maxPageNumber: 0,
     dataList: []
   };
+  let weakKnowledgeModel = {
+    pageNumber: 1,
+    totalCount: 0,
+    maxPageNumber: 0,
+    dataList: []
+  };
   let knowledgeExercisesModel = {
     dataStatus: 'NULL',
     fromIndex : 0,
@@ -203,6 +209,16 @@ $(document).ready(function () {
                           <div id="codeStandardAnalysis${data.technologyID}" style="height: 280px;"></div>
                         </div>
                       </div>
+                      
+                      <div class="kt-widget12__item">
+                        <div class="kt-widget12__info">
+                          <span class="kt-widget12__desc text-center">薄弱的知识点</span>
+                          <div id="weakKnowledge${data.technologyID}">                            
+                            
+                          </div>
+                        </div>
+                      </div>
+                      
                       <div class="kt-widget12__item">
                         <div class="kt-widget12__info">
                           <span class="kt-widget12__desc text-center">练习情况数量趋势分析 <a href="javascript:" class="kt-link--info btn-detail-exercises" data-technology-id="${data.technologyID}">(查看数据)</a></span>
@@ -238,6 +254,7 @@ $(document).ready(function () {
               if($(rootElement).find(`#knowledgeAnalysis${model.technologyID}`).children().length === 0){
                 loadKnowledgeAnalysis(model.technologyID);
                 loadCodeStandardAnalysis(model.languageID, model.technologyID);
+                loadWeakKnowledgeAnalysis(model.technologyID);
                 loadExerciseAnalysis(model.technologyID);
                 loadExercisePercentAnalysis(model.technologyID);
               }
@@ -734,7 +751,65 @@ $(document).ready(function () {
       }
     });
   }
-  
+
+  function loadWeakKnowledgeAnalysis(technologyID) {
+    $.ajax({
+      type: "GET",
+      url: "/ability/detail/knowledge/weak",
+      data: {
+        pageNumber: weakKnowledgeModel.pageNumber,
+        universityCode: model.universityCode,
+        schoolID: model.schoolID,
+        studentID: model.studentID,
+        technologyID: technologyID,
+      },
+      dataType: "JSON",
+      success: function(result) {
+        if(result.err){
+          bootbox.alert(localMessage.formatMessage(result.code, result.msg));
+          return false;
+        }
+        let elementObj = $(`#weakKnowledge${technologyID}`);
+        weakKnowledgeModel.totalCount = result.totalCount;
+        if (weakKnowledgeModel.totalCount === 0) {
+          $(elementObj).append('<div class="text-center">暂时没有薄弱的知识点</div>');
+          return false;
+        }
+        weakKnowledgeModel.maxPageNumber = Math.ceil(result.dataContent.totalCount / result.dataContent.pageSize);
+        weakKnowledgeModel.dataList = result.dataContent.dataList;
+
+        let dataListHtml=
+            '<table class="table table-striped text-center">\n' +
+            '  <thead>\n' +
+            '  <tr>\n' +
+            '    <th style="width: 15%;">#</th>\n' +
+            '    <th style="width: 70%;">知识点名称</th>\n' +
+            '    <th style="width: 15%;">修改次数</th>\n' +
+            '  </tr>\n' +
+            '  </thead>\n' +
+            '  <tbody>';
+
+        weakKnowledgeModel.dataList.forEach(function (data, index) {
+          dataListHtml +=
+              `  <tr>
+                  <th scope="row" style="width: 15%;">${index+1}</th>
+                  <td style="width: 70%;">${data.knowledgeName}</td>
+                  <td style="width: 15%;">${data.reviewCount}</td>
+                </tr>`;
+        });
+
+        dataListHtml +=
+            '  </tbody>\n' +
+            '</table>';
+
+        $(elementObj).append(dataListHtml);
+      },
+      error : function(e){
+        bootbox.alert(localMessage.NETWORK_ERROR);
+      }
+    });
+  }
+
   function loadKnowledgeAnalysis(technologyID) {
     $.ajax({
       type: "GET",

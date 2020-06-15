@@ -1268,10 +1268,16 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     $scope.model.reviewData.updateTime = data.updateTime;
     $scope.model.reviewData.sourceCodeGitUrl = data.sourceCodeGitUrl;
     $scope.model.reviewData.compilationResult = -1;
+    $scope.model.reviewData.isShowCodeStandardList = false;
     $scope.model.reviewData.runResult = -1;
-    $scope.model.reviewData.score = 0;
+    $scope.model.reviewData.codeStandardResult = -1;
+    $scope.model.reviewData.codeStandardErrorList = [];
     $scope.model.reviewData.reviewResult = -1;
     $scope.model.reviewData.reviewMemo = '';
+
+    $.each($('input[name="codeStandard"]'), (index, obj) => {
+      $(obj).prop("checked", "");
+    });
 
     $('#kt_modal_review').modal('show');
   };
@@ -1302,7 +1308,6 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
     KTApp.progress(btn);
     let codeStandardErrorList = [];
     $scope.model.reviewData.codeStandardErrorList.forEach(function (standardID) {
-      //todo 修改为languageID
       codeStandardErrorList.push({
         studentUniversityCode: $scope.model.reviewData.studentUniversityCode,
         studentSchoolID: $scope.model.reviewData.studentSchoolID,

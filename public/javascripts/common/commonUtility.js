@@ -12,9 +12,9 @@ commonUtility.setNavActive = function () {
     pathname = '/softwareExercises';
   }
 
-  linkObj = $(`#kt_aside_menu_wrapper ul.kt-menu__nav li a[href="${pathname}"]`);
-  linkObj.parent().addClass('kt-menu__item--active');
-  linkObj.parent().parent().parent().parent().addClass('kt-menu__item--open');
+  linkObj = $(`#kt_header_menu ul.kt-menu__nav li a[href="${pathname}"]`);
+  linkObj.parent().addClass('kt-menu__item--here');
+  linkObj.parent().parent().parent().parent().addClass('kt-menu__item--here');
 };
 
 commonUtility.isEmpty = function (value) {

@@ -1,0 +1,9 @@
+.selected {
+  background-color: #f7f8fa;
+}
+.selected span {
+  color: #edad37 !important;
+}
+.last-marker {
+  bottom: 35px;
+}

@@ -1,9 +1,9 @@
 {
-  "pageSize": 10,
-  "reviewHistory": 5,
-  "technologyPageSize": 8,
-  "knowledgePageSize": 16,
-  "abilityAnalysisPageSize": 16,
-  "paginationSize": 10,
-  "allSize": 9999
+  "pageSize": {
+    "five": "5",
+    "eight": "8",
+    "ten": "10",
+    "sixteen": "16",
+    "all": "9999"
+  }
 }

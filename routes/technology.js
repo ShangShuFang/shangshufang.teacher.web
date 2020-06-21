@@ -36,7 +36,7 @@ router.get('/knowledgeList', (req, res, next) => {
   let pageNumber = parameterUtils.processNumberParameter(req.query.pageNumber, Constants.PAGE_NUMBER_DEFAULT);
   let technologyID = parameterUtils.processNumberParameter(req.query.technologyID, Constants.TECHNOLOGY_DEFAULT_ID);
 
-  let parameter = `${pageNumber}/${sysConfig.knowledgePageSize}/${technologyID}/0/${Constants.DATA_ACTIVE}`;
+  let parameter = `${pageNumber}/${sysConfig.pageSize.sixteen}/${technologyID}/0/${Constants.DATA_ACTIVE}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {
@@ -84,7 +84,7 @@ router.get('/courseSignUp', function(req, res, next) {
   let pageNumber = parseInt(req.query.pageNumber);
   let technologyID = parameterUtils.processNumberParameter(req.query.technologyID, Constants.TECHNOLOGY_DEFAULT_ID);
 
-  let parameter = `${pageNumber}/${sysConfig.pageSize}/${technologyID}`;
+  let parameter = `${pageNumber}/${sysConfig.pageSize.ten}/${technologyID}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {
@@ -94,7 +94,7 @@ router.get('/courseSignUp', function(req, res, next) {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('报名学生', pageNumber, sysConfig.pageSize, result);
+      let dataContent = commonService.buildRenderData('报名学生', pageNumber, sysConfig.pageSize.ten, result);
       res.json({
         err: false,
         code: result.code,

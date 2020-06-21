@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/technologyList', (req, res, next) => {
   const service = new commonService.commonInvoke('technologyList');
-  const parameter = `${req.query.pageNumber}/${sysConfig.technologyPageSize}/${req.query.directionID}/${req.query.categoryID}`;
+  const parameter = `${req.query.pageNumber}/${sysConfig.pageSize.eight}/${req.query.directionID}/${req.query.categoryID}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {
@@ -19,7 +19,7 @@ router.get('/technologyList', (req, res, next) => {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('热门技术', req.query.pageNumber, sysConfig.pageSize, result);
+      let dataContent = commonService.buildRenderData('热门技术', req.query.pageNumber, sysConfig.pageSize.ten, result);
       res.json({
         err: false,
         code: result.code,

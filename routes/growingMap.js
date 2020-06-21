@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 router.get('/list', function(req, res, next) {
   const service = new commonService.commonInvoke('growingMapList');
   const pageNumber = 1;
-  const pageSize = sysConfig.allSize;
+  const pageSize = sysConfig.pageSize.all;
   const parameter = `${pageNumber}/${pageSize}`;
 
   service.queryWithParameter(parameter, function (result) {

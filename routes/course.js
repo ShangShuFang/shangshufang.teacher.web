@@ -35,7 +35,7 @@ router.get('/list', (req, res, next) => {
   let service = new commonService.commonInvoke('courseList');
 
   let pageNumber = req.query.pageNumber;
-  let pageSize = parameterUtils.processNumberParameter(req.query.pageSize, sysConfig.pageSize);
+  let pageSize = parameterUtils.processNumberParameter(req.query.pageSize, sysConfig.pageSize.ten);
   let universityCode = req.query.universityCode;
   let schoolID = req.query.schoolID;
   let teacherID = req.query.teacherID;
@@ -59,7 +59,7 @@ router.get('/list', (req, res, next) => {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('课程列表', pageNumber, sysConfig.pageSize, result);
+      let dataContent = commonService.buildRenderData('课程列表', pageNumber, sysConfig.pageSize.ten, result);
       res.json({
         err: false,
         code: result.code,

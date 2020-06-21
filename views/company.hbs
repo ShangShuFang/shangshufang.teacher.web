@@ -1,89 +1,96 @@
-<link href="stylesheets/views/company.css" rel="stylesheet" type="text/css"/>
-<div class="kt-container kt-grid__item kt-grid__item--fluid" ng-app="pageApp" ng-controller="pageCtrl">
-  <div class="kt-subheader kt-grid__item">
-    <div class="kt-container">
+<link href="stylesheets/views/company.css" rel="stylesheet" type="text/css" />
+<div ng-app="pageApp" ng-controller="pageCtrl">
+  <div class="kt-container--fluid kt-grid__item kt-grid__item--fluid" style="max-height: 132px">
+    <div class="course-center-header"></div>
+  </div>
+
+  <div class="kt-subheader kt-grid__item" id="kt_subheader">
+    <div class="kt-container ">
       <div class="kt-subheader__main">
         <h3 class="kt-subheader__title"></h3>
       </div>
     </div>
   </div>
-  <div class="kt-portlet kt-portlet--height-fluid">
-    <div class="kt-portlet__head">
-      <div class="kt-portlet__head-label">
-        <h3 class="kt-portlet__head-title">
-          上書房合作企业及招聘标准
-        </h3>
-      </div>
-    </div>
-    <div class="kt-portlet__body">
-      <div class="tab-content">
-        <div class="tab-pane active" id="kt_widget5_tab1_content" aria-expanded="true">
-          <div class="kt-widget5">
-            <div class="kt-widget5__item" ng-repeat="company in model.companyList">
-              <div class="kt-widget5__content">
-                <div class="kt-widget5__pic">
-                  <img class="kt-widget7__img" ng-src="\{{company.brand}}" alt="">
+
+  <div class="kt-container kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+      <div class="col-md-3 col-sm-3 col-xl-3" ng-repeat="company in model.companyList">
+        <div class="kt-portlet kt-portlet--height-fluid">
+          <div class="kt-portlet__head kt-portlet__head--noborder">
+            <div class="kt-portlet__head-label">
+              <h3 class="kt-portlet__head-title">
+              </h3>
+            </div>
+          </div>
+          <div class="kt-portlet__body">
+            <div class="kt-widget kt-widget--user-profile-2 ">
+              <div class="kt-widget__head">
+                <div class="kt-widget__media">
+                  <img class="kt-widget__img" ng-src="\{{company.brand}}" alt="image">
                 </div>
-                <div class="kt-widget5__section">
-                  <h6 class="kt-widget5__title kt-margin-0" ng-bind="company.companyName"></h6>
-                  <p class="kt-widget5__desc company-leave-message des-misc-3" ng-bind="company.memo"></p>
+
+                <div class="kt-widget__info">
+                  <h4 href="javascript:;" ng-click='onOpenTechnologyInfo(data.technologyID, 1)'
+                    ng-bind="company.companyAbbreviation" class="kt-widget__username kt-font-bold"></h4>
+
+                  <span class="kt-widget__desc">
+                    正在使用<span ng-bind="company.usingTechnologyCount"></span>项技术
+                  </span>
                 </div>
               </div>
-              <div class="kt-widget5__content">
-                <div class="kt-widget5__stats">
-                  <span class="kt-widget5__number ability-level"
-                        ng-class="{'ability-level-1': company.recruitLevel == 'L1', 'ability-level-2': company.recruitLevel == 'L2', 'ability-level-3': company.recruitLevel == 'L3', 'ability-level-4': company.recruitLevel == 'L4', 'ability-level-5': company.recruitLevel == 'L5', 'ability-level-6': company.recruitLevel == 'L6', 'ability-level-7': company.recruitLevel == 'L7', 'ability-level-8': company.recruitLevel == 'L8'}"
-                        ng-bind="company.recruitLevel"></span>
-                  <span class="kt-widget5__sales">起步级别</span>
+              <div class="kt-widget__body">
+                <div class="kt-widget__item">
+                  <div class="kt-widget__contact">
+                    <p ng-bind="company.memo" class="des-misc-3"></p>
+                  </div>
                 </div>
-                <div class="kt-widget5__stats">
-                  <a href="javascript:;" class="btn-label-brand btn btn-sm btn-bold"
-                     ng-click="onShowCompanyTechnology(company)">查看技术需求</a>
-                </div>
+              </div>
+              <div class="kt-widget__footer kt-margin-0">
+                <button type="button" class="btn btn-label-brand btn-lg btn-upper" ng-click="onShowDetail(company)">
+                  查看起步级别
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="row" ng-if="model.companyList.length < model.totalCount">
+      <div class="col-xl-12 text-center">
+        <button type="button" class="btn btn-secondary btn-elevate btn-pill" ng-click="onLoadMore()"><i
+            class="fa fa-sync-alt"></i> 查看更多
+        </button>
+      </div>
+    </div>
   </div>
-  <div class="modal fade show" id="kt_modal_company_technology" tabindex="-1" role="dialog"
-       aria-labelledby="exampleModalLabel" aria-modal="true" style="display: none; padding-left: 0;">
+
+
+  <div class="modal fade" id="modal_using_technology" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title ng-binding" id="exampleModalLabel" ng-bind="model.companyModalTitle"></h5>
+          <h5 class="modal-title" ng-bind="model.companyModalTitle"></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           </button>
         </div>
         <div class="modal-body">
-          <div class="tree-demo jstree jstree-6 jstree-default">
-            <ul class="jstree-container-ul jstree-children">
-              <li ng-repeat="technology in model.technologyList"
-                  class="jstree-node"
-                  ng-class="{'jstree-open': technology.isOpen == true, 'jstree-closed': technology.isOpen == false}">
-                <i class="jstree-icon jstree-ocl"></i>
-                <a class="jstree-anchor"
-                   ng-click="onTreeNodeClick(technology, $event)"
-                   href="javascript:;"
-                   tabindex="-1">
-                  <i class="jstree-icon jstree-themeicon fa fa-folder icon-lg kt-font-warning jstree-themeicon-custom"></i>
-                  <span ng-bind="technology.technologyName"></span>
-                </a>
-                <ul class="jstree-children" ng-if="technology.isOpen == true">
-                  <li ng-repeat="knowledge in technology.knowledgeList" class="jstree-node jstree-leaf knowledge-node">
-                    <i class="jstree-icon jstree-ocl1"></i>
-                    <a class="jstree-anchor"
-                       href="javascript:;"
-                       tabindex="-1">
-                      <i class="jstree-icon jstree-themeicon fa fa-file icon-lg kt-font-warning jstree-themeicon-custom"></i>
-                      <span ng-bind="knowledge.knowledgeName"></span>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>使用技术</th>
+                <th>起步级别</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat = "technology in model.technologyList">
+                <th scope="row" ng-bind="$index + 1"></th>
+                <td ng-bind="technology.technologyName"></td>
+                <td ng-bind="technology.recruitLevel"></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>

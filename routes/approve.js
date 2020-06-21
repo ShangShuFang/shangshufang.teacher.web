@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 router.get('/list', (req, res, next) => {
   let service = new commonService.commonInvoke('approveAccount');
   let pageNumber = req.query.pageNumber;
-  let pageSize = sysConfig.pageSize;
+  let pageSize = sysConfig.pageSize.ten;
   let universityCode = req.query.universityCode;
   let schoolID = req.query.schoolID;
   let accountID = req.query.accountID;
@@ -25,7 +25,7 @@ router.get('/list', (req, res, next) => {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('账户审批', pageNumber, sysConfig.pageSize, result);
+      let dataContent = commonService.buildRenderData('账户审批', pageNumber, sysConfig.pageSize.ten, result);
       res.json({
         err: false,
         code: result.code,

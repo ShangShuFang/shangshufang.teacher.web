@@ -4,7 +4,7 @@ let apiConfig = require('../config/apiConfig');
 let pagingUtils = require('../common/pagingUtils');
 
 exports.commonInvoke = function(apiName) {
-  this.pageSize = sysConfig.pageSize;
+  this.pageSize = sysConfig.pageSize.ten;
   this.host = apiConfig.StoreService.host;
   this.port = apiConfig.StoreService.port;
   this.path = apiConfig.StoreService.path[apiName];
@@ -55,7 +55,7 @@ exports.buildRenderData = function (title, pageNumber, pageSize, serviceResult) 
         title: title,
         totalCount: serviceResult.content.totalCount,
         currentPageNum: pageNumber,
-        pageSize: sysConfig.pageSize,
+        pageSize: sysConfig.pageSize.ten,
         dataList: serviceResult.content.responseData
       }
     }else{
@@ -67,7 +67,7 @@ exports.buildRenderData = function (title, pageNumber, pageSize, serviceResult) 
           prePageNum: prePaginationNum,
           nextPageNum: nextPaginationNum,
           currentPageNum: pageNumber,
-          pageSize: sysConfig.pageSize,
+          pageSize: sysConfig.pageSize.ten,
           dataList: serviceResult.content.responseData
         }
       }else if(prePaginationNum === 0 && nextPaginationNum === -1){
@@ -76,7 +76,7 @@ exports.buildRenderData = function (title, pageNumber, pageSize, serviceResult) 
           totalCount: serviceResult.content.totalCount,
           paginationArray: paginationArray,
           currentPageNum: pageNumber,
-          pageSize: sysConfig.pageSize,
+          pageSize: sysConfig.pageSize.ten,
           dataList: serviceResult.content.responseData
         }
       }else if(prePaginationNum === 0) {
@@ -86,7 +86,7 @@ exports.buildRenderData = function (title, pageNumber, pageSize, serviceResult) 
           paginationArray: paginationArray,
           nextPageNum: nextPaginationNum,
           currentPageNum: pageNumber,
-          pageSize: sysConfig.pageSize,
+          pageSize: sysConfig.pageSize.ten,
           dataList: serviceResult.content.responseData
         }
       }else{
@@ -96,7 +96,7 @@ exports.buildRenderData = function (title, pageNumber, pageSize, serviceResult) 
           paginationArray: paginationArray,
           prePageNum: prePaginationNum,
           currentPageNum: pageNumber,
-          pageSize: sysConfig.pageSize,
+          pageSize: sysConfig.pageSize.ten,
           dataList: serviceResult.content.responseData
         }
       }

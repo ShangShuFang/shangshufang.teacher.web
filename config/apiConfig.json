@@ -72,7 +72,7 @@
       "addSuggest": "/api/v1/suggest/add",
 
       "company": "/api/v1/customer/company/list",
-      "companyUsingTechnology": "/api/v1/customePr/company/list/using/technology",
+      "companyUsingTechnology": "/api/v1/customer/company/list/using/technology",
       "companyUsingKnowledge": "/api/v1/customer/company/list/using/knowledge/client",
 
       "studentAbilityResultList": "/api/v1/analysis/ability/student/list",

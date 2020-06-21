@@ -41,7 +41,7 @@ router.get('/courseSignUp', function(req, res, next) {
   let schoolID = req.query.schoolID;
   let courseID = req.query.courseID;
 
-  let parameter = `${pageNumber}/${sysConfig.pageSize}/${universityCode}/${schoolID}/${courseID}`;
+  let parameter = `${pageNumber}/${sysConfig.pageSize.ten}/${universityCode}/${schoolID}/${courseID}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {
@@ -51,7 +51,7 @@ router.get('/courseSignUp', function(req, res, next) {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('报名学生', pageNumber, sysConfig.pageSize, result);
+      let dataContent = commonService.buildRenderData('报名学生', pageNumber, sysConfig.pageSize.ten, result);
       res.json({
         err: false,
         code: result.code,
@@ -69,7 +69,7 @@ router.get('/courseStudentSignUp', function(req, res, next) {
   let schoolID = req.query.schoolID;
   let studentID = req.query.studentID;
 
-  let parameter = `${pageNumber}/${sysConfig.pageSize}/${universityCode}/${schoolID}/${studentID}`;
+  let parameter = `${pageNumber}/${sysConfig.pageSize.ten}/${universityCode}/${schoolID}/${studentID}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {
@@ -79,7 +79,7 @@ router.get('/courseStudentSignUp', function(req, res, next) {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('报名课程', pageNumber, sysConfig.pageSize, result);
+      let dataContent = commonService.buildRenderData('报名课程', pageNumber, sysConfig.pageSize.ten, result);
       res.json({
         err: false,
         code: result.code,
@@ -98,7 +98,7 @@ router.get('/courseStudentExercises', function(req, res, next) {
   let courseID = req.query.courseID;
   let dataStatus = req.query.dataStatus;
 
-  let parameter = `${pageNumber}/${sysConfig.pageSize}/${universityCode}/${schoolID}/${courseID}/${dataStatus}`;
+  let parameter = `${pageNumber}/${sysConfig.pageSize.ten}/${universityCode}/${schoolID}/${courseID}/${dataStatus}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {
@@ -108,7 +108,7 @@ router.get('/courseStudentExercises', function(req, res, next) {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('学生练习', pageNumber, sysConfig.pageSize, result);
+      let dataContent = commonService.buildRenderData('学生练习', pageNumber, sysConfig.pageSize.ten, result);
       res.json({
         err: false,
         code: result.code,
@@ -124,7 +124,7 @@ router.get('/courseStudentExercisesReview', function(req, res, next) {
   let pageNumber = parseInt(req.query.pageNumber);
   let studentExercisesID = req.query.studentExercisesID;
 
-  let parameter = `${pageNumber}/${sysConfig.pageSize}/${studentExercisesID}`;
+  let parameter = `${pageNumber}/${sysConfig.pageSize.ten}/${studentExercisesID}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {
@@ -134,7 +134,7 @@ router.get('/courseStudentExercisesReview', function(req, res, next) {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('学生练习批改', pageNumber, sysConfig.pageSize, result);
+      let dataContent = commonService.buildRenderData('学生练习批改', pageNumber, sysConfig.pageSize.ten, result);
       res.json({
         err: false,
         code: result.code,
@@ -150,7 +150,7 @@ router.get('/exercisesReviewHistory', function(req, res, next) {
   let pageNumber = parseInt(req.query.pageNumber);
   let studentExercisesID = req.query.studentExercisesID;
 
-  let parameter = `${pageNumber}/${sysConfig.reviewHistory}/${studentExercisesID}`;
+  let parameter = `${pageNumber}/${sysConfig.pageSize.five}/${studentExercisesID}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {
@@ -160,7 +160,7 @@ router.get('/exercisesReviewHistory', function(req, res, next) {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('批改历史', pageNumber, sysConfig.pageSize, result);
+      let dataContent = commonService.buildRenderData('批改历史', pageNumber, sysConfig.pageSize.ten, result);
       res.json({
         err: false,
         code: result.code,
@@ -203,7 +203,7 @@ router.get('/courseQuestion', function(req, res, next) {
   let courseSchoolID = req.query.courseSchoolID;
   let courseID = req.query.courseID;
 
-  let parameter = `${pageNumber}/${sysConfig.pageSize}/${courseUniversityCode}/${courseSchoolID}/${courseID}`;
+  let parameter = `${pageNumber}/${sysConfig.pageSize.ten}/${courseUniversityCode}/${courseSchoolID}/${courseID}`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {
@@ -213,7 +213,7 @@ router.get('/courseQuestion', function(req, res, next) {
         msg: result.msg
       });
     } else {
-      let dataContent = commonService.buildRenderData('课程问题列表', pageNumber, sysConfig.pageSize, result);
+      let dataContent = commonService.buildRenderData('课程问题列表', pageNumber, sysConfig.pageSize.ten, result);
       res.json({
         err: false,
         code: result.code,

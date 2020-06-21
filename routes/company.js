@@ -9,7 +9,8 @@ router.get('/', function(req, res, next) {
 
 router.get('/list', (req, res, next) => {
   let service = new commonService.commonInvoke('company');
-  let parameter = `1/${req.query.maxCount}/0/0/A`;
+  let pageNumber = req.query.pageNumber;
+  let parameter = `${pageNumber}/${sysConfig.pageSize.sixteen}/0/0/A`;
 
   service.queryWithParameter(parameter,  (result) => {
     if (result.err) {
@@ -19,17 +20,18 @@ router.get('/list', (req, res, next) => {
         msg: result.msg
       });
     } else {
+      let dataContent = commonService.buildRenderData('合作企业', pageNumber, sysConfig.pageSize.sixteen, result);
       res.json({
         err: false,
         code: result.code,
         msg: result.msg,
-        dataList: result.content.responseData
+        dataContent: dataContent
       });
     }
   });
 });
 
-router.get('/technology', (req, res, next) => {
+router.get('/technology/using', (req, res, next) => {
   let service = new commonService.commonInvoke('companyUsingTechnology');
   let companyID = req.query.companyID;
 

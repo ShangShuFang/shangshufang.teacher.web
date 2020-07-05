@@ -32,7 +32,8 @@
                   <span class="kt-menu__link-text">全部</span>
                 </a>
               </li>
-              <li class="kt-menu__item" ng-repeat="direction in model.directionList" ng-class="{'kt-menu__item--here': model.selectedDirection.directionID == direction.directionID}">
+              <li class="kt-menu__item" ng-repeat="direction in model.directionList"
+                ng-class="{'kt-menu__item--here': model.selectedDirection.directionID == direction.directionID}">
                 <a href="javascript:" class="kt-menu__link" ng-click="onFilterByDirection(direction)">
                   <span class="kt-menu__link-text" ng-bind="direction.directionName"></span>
                 </a>
@@ -53,9 +54,8 @@
                   <span class="kt-menu__link-text">全部</span>
                 </a>
               </li>
-              <li class="kt-menu__item"
-                  ng-repeat="category in model.categoryList"
-                  ng-class="{'kt-menu__item--here': model.selectedCategory.categoryID == category.technologyCategoryID}">
+              <li class="kt-menu__item" ng-repeat="category in model.categoryList"
+                ng-class="{'kt-menu__item--here': model.selectedCategory.categoryID == category.technologyCategoryID}">
                 <a href="javascript:" class="kt-menu__link" ng-click="onFilterByCategory(category)">
                   <span class="kt-menu__link-text" ng-bind="category.technologyCategoryName"></span>
                 </a>
@@ -69,20 +69,14 @@
       <!-- begin:: 查询条件 -->
       <div class="row course-filter">
         <div class="col-md-6">
-          <button type="button"
-                  class="btn btn-pill btn-elevate btn-sm"
-                  ng-repeat="time in model.timeList"
-                  ng-class="{'btn-info': model.selectedTime.timeCode == time.timeCode, 'btn-outline-hover-info': model.selectedTime.timeCode != time.timeCode}"
-                  ng-bind="time.timeText"
-                  ng-click="onSelectedTime(time)"></button>
+          <button type="button" class="btn btn-pill btn-elevate btn-sm" ng-repeat="time in model.timeList"
+            ng-class="{'btn-primary': model.selectedTime.timeCode == time.timeCode, 'btn-primary-hover-info': model.selectedTime.timeCode != time.timeCode}"
+            ng-bind="time.timeText" ng-click="onSelectedTime(time)"></button>
         </div>
         <div class="col-md-6 text-right">
-          <button type="button"
-                  class="btn btn-elevate btn-pill btn-sm"
-                  ng-repeat="status in model.dataStatusList"
-                  ng-class="{'btn-warning': model.selectedDataStatus.statusCode == status.statusCode, 'btn-outline-hover-warning': model.selectedDataStatus.statusCode != status.statusCode}"
-                  ng-bind="status.statusText"
-                  ng-click="onSelectDataStatus(status)"></button>
+          <button type="button" class="btn btn-elevate btn-pill btn-sm" ng-repeat="status in model.dataStatusList"
+            ng-class="{'btn-primary': model.selectedDataStatus.statusCode == status.statusCode, 'btn-primary-hover-info': model.selectedDataStatus.statusCode != status.statusCode}"
+            ng-bind="status.statusText" ng-click="onSelectDataStatus(status)"></button>
         </div>
       </div>
       <!-- end:: 查询条件 -->
@@ -104,32 +98,36 @@
       <!-- end:: 未查询到数据 -->
 
       <!-- begin:: 课程数据 -->
-      <div class="kt-portlet" ng-repeat="course in model.courseList" ng-if="model.isLogin && model.courseTotalCount !== 0">
+      <div class="kt-portlet" ng-repeat="course in model.courseList"
+        ng-if="model.isLogin && model.courseTotalCount !== 0">
         <div class="kt-portlet__body">
           <div class="kt-widget kt-widget--user-profile-3">
             <div class="kt-widget__top">
               <div class="kt-widget__pic kt-font-boldest kt-font-light btn-option"
-                   ng-class="{'kt-widget__pic--success kt-font-success': $index%2 == 0, 'kt-widget__pic--danger kt-font-danger': $index%2 != 0}"
-                   ng-click="onOpenTechnologyInfo(course.technologyID)"
-                   ng-bind="course.technologyName">
+                ng-class="{'kt-widget__pic--success kt-font-success': $index%2 == 0, 'kt-widget__pic--danger kt-font-danger': $index%2 != 0}"
+                ng-click="onOpenTechnologyInfo(course.technologyID)" ng-bind="course.technologyName">
               </div>
               <div class="kt-widget__content">
                 <div class="kt-widget__head">
-                  <a href="javascript:;" class="kt-widget__username kt-font-brand kt-link kt-font-bold" ng-bind="course.courseName" ng-click="onOpenCourseDetail(course, 0)"></a>
+                  <a href="javascript:;" class="kt-widget__username kt-font-brand kt-link kt-font-bold"
+                    ng-bind="course.courseName" ng-click="onOpenCourseDetail(course, 0)"></a>
                   <div class="kt-widget__action">
                     <span class="kt-badge kt-badge--inline kt-badge--info" ng-if="course.dataStatus == '0'">未开始</span>
-                    <span class="kt-badge kt-badge--inline kt-badge--success" ng-if="course.dataStatus == '2'">已结束</span>
-                    <button type="button" class="btn btn-label-success btn-sm btn-upper" ng-click="onOpenCourseDetail(course, 2, 6)" ng-if="course.dataStatus == '1'">批改作业</button>&nbsp;
-                    <button type="button" class="btn btn-label-danger btn-sm btn-upper" ng-click="onFinishCourse(course)" ng-if="course.dataStatus == '1'">授课完成</button>
+                    <span class="kt-badge kt-badge--inline kt-badge--success"
+                      ng-if="course.dataStatus == '2'">已结束</span>
+                    <button type="button" class="btn btn-secondary btn-sm" ng-click="onOpenCourseDetail(course, 2, 6)"
+                      ng-if="course.dataStatus == '1'">批改作业</button>&nbsp;
+                    <button type="button" class="btn btn-primary btn-sm btn-upper" ng-click="onFinishCourse(course)"
+                      ng-if="course.dataStatus == '1'">授课完成</button>
                   </div>
                 </div>
                 <div class="kt-widget__subhead">
-                <span>
-                  <i class="flaticon-calendar-with-a-clock-time-tools"></i>
-                  <span ng-bind="course.courseTimeBegin"></span>
-                  <span>~</span>
-                  <span ng-bind="course.courseTimeEnd"></span>
-                </span>
+                  <span>
+                    <i class="flaticon-calendar-with-a-clock-time-tools"></i>
+                    <span ng-bind="course.courseTimeBegin"></span>
+                    <span>~</span>
+                    <span ng-bind="course.courseTimeEnd"></span>
+                  </span>
                 </div>
                 <div class="kt-widget__info">
                   <div class="kt-widget__desc">
@@ -141,10 +139,9 @@
                       Progress
                     </div>
                     <div class="progress" style="height: 5px;width: 100%;">
-                      <div class="progress-bar"
-                           role="progressbar"
-                           ng-class="{'kt-bg-success': $index%2 == 0, 'kt-bg-danger': $index%2 != 0}"
-                           ng-style="{'width':course.courseProcess}"></div>
+                      <div class="progress-bar" role="progressbar"
+                        ng-class="{'kt-bg-success': $index%2 == 0, 'kt-bg-danger': $index%2 != 0}"
+                        ng-style="{'width':course.courseProcess}"></div>
                     </div>
                     <div class="kt-widget__stats" ng-bind="course.courseProcess">
                     </div>
@@ -214,13 +211,40 @@
       </div>
       <!-- end:: 课程数据 -->
 
-      <!-- begin:: 加载更多 -->
-      <div class="row" ng-if="model.isLogin && model.courseList.length > 0 && model.courseList.length < model.courseTotalCount">
-        <div class="col-xl-12 text-center">
-          <button type="button" class="btn btn-secondary btn-elevate btn-pill" ng-click="onLoadMoreCourse()" ><i class="fa fa-sync-alt"></i>加载更多</button>
+      <!-- begin:: 翻页 -->
+
+      <div class="kt-container kt-grid__item kt-grid__item--fluid" ng-if="model.courseTotalCount > 0">
+        <div class="kt-pagination kt-pagination--warning kt-pagination--circle">
+          <div class="kt-pagination__toolbar">
+            <span class="pagination__desc">
+              共查询到<span ng-bind="model.courseTotalCount"></span>个满足条件的课程，当前显示第<span
+                ng-bind="model.fromIndex"></span>到第<span ng-bind="model.toIndex"></span>个课程
+            </span>
+          </div>
+          <ul class="kt-pagination__links">
+            <li class="kt-pagination__link--first" ng-class="{'pagination-disabled': model.prePageNum == -1}">
+              <a href="javascript:" ng-click="onFirstPage()"><i class="fa fa-angle-double-left"></i></a>
+            </li>
+            <li class="kt-pagination__link--next" ng-class="{'pagination-disabled': model.prePageNum == -1}">
+              <a href="javascript:" ng-click="onPrePage()"><i class="fa fa-angle-left"></i></a>
+            </li>
+
+            <li ng-repeat="pagination in model.paginationArray"
+              ng-class="{'kt-pagination__link--active': model.pageNumber == pagination}">
+              <a href="javascript:" ng-bind="pagination" ng-click="onPagination(pagination)"></a>
+            </li>
+
+            <li class="kt-pagination__link--prev" ng-class="{'pagination-disabled': model.nextPageNum == -1}">
+              <a href="javascript:" ng-click="onNextPage()"><i class="fa fa-angle-right"></i></a>
+            </li>
+            <li class="kt-pagination__link--last" ng-class="{'pagination-disabled': model.nextPageNum == -1}">
+              <a href="javascript:" ng-click="onLastPage()"><i class="fa fa-angle-double-right"></i></a>
+            </li>
+          </ul>
         </div>
       </div>
-      <!-- end:: 加载更多 -->
+
+      <!-- end:: 翻页 -->
     </div>
   </div>
   <!-- end:: 已登录 -->

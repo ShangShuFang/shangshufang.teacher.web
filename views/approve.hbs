@@ -15,34 +15,29 @@
             <div class="form-group row kt-margin-0">
               <label class="col-form-label col-xl-1 col-sm-12 text-center">状态过滤：</label>
               <div class="col-lg-4 col-md-9 col-sm-12 shs-padding-top-2">
-                <a href=""
-                   class="btn btn-elevate btn-square btn-sm"
-                   ng-class="{'btn-brand': model.filterStatus == 'NULL', 'btn-outline-hover-info': model.filterStatus != 'NULL'}"
-                   ng-click="onFilterData('NULL')">
+                <a href="" class="btn btn-elevate btn-square btn-sm"
+                  ng-class="{'btn-primary': model.filterStatus == 'NULL', 'btn-primary-hover-info': model.filterStatus != 'NULL'}"
+                  ng-click="onFilterData('NULL')">
                   全部
                 </a>
-                <a href=""
-                   class="btn btn-elevate btn-square btn-sm"
-                   ng-class="{'btn-brand': model.filterStatus == 'P', 'btn-outline-hover-info': model.filterStatus != 'P'}"
-                   ng-click="onFilterData('P')">
+                <a href="" class="btn btn-elevate btn-square btn-sm"
+                  ng-class="{'btn-primary': model.filterStatus == 'P', 'btn-primary-hover-info': model.filterStatus != 'P'}"
+                  ng-click="onFilterData('P')">
                   待审批
                 </a>
-                <a href=""
-                   class="btn btn-outline-hover-info btn-elevate btn-square btn-sm"
-                   ng-class="{'btn-brand': model.filterStatus == 'A', 'btn-outline-hover-info': model.filterStatus != 'A'}"
-                   ng-click="onFilterData('A')">
+                <a href="" class="btn btn-outline-hover-info btn-elevate btn-square btn-sm"
+                  ng-class="{'btn-primary': model.filterStatus == 'A', 'btn-primary-hover-info': model.filterStatus != 'A'}"
+                  ng-click="onFilterData('A')">
                   正常
                 </a>
-                <a href=""
-                   class="btn btn-outline-hover-info btn-elevate btn-square btn-sm"
-                   ng-class="{'btn-brand': model.filterStatus == 'N', 'btn-outline-hover-info': model.filterStatus != 'N'}"
-                   ng-click="onFilterData('N')">
+                <a href="" class="btn btn-outline-hover-info btn-elevate btn-square btn-sm"
+                  ng-class="{'btn-primary': model.filterStatus == 'N', 'btn-primary-hover-info': model.filterStatus != 'N'}"
+                  ng-click="onFilterData('N')">
                   驳回
                 </a>
-                <a href=""
-                   class="btn btn-outline-hover-info btn-elevate btn-square btn-sm"
-                   ng-class="{'btn-brand': model.filterStatus == 'D', 'btn-outline-hover-info': model.filterStatus != 'D'}"
-                   ng-click="onFilterData('D')">
+                <a href="" class="btn btn-outline-hover-info btn-elevate btn-square btn-sm"
+                  ng-class="{'btn-primary': model.filterStatus == 'D', 'btn-outline-hover-info': model.filterStatus != 'D'}"
+                  ng-click="onFilterData('D')">
                   禁用
                 </a>
               </div>
@@ -71,7 +66,8 @@
               <th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort">
                 <span style="width: 148px;">账户状态</span>
               </th>
-              <th data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell kt-datatable__cell--sort">
+              <th data-field="Actions" data-autohide-disabled="false"
+                class="kt-datatable__cell kt-datatable__cell--sort">
                 <span style="width: 110px;">操作</span>
               </th>
             </tr>
@@ -93,95 +89,68 @@
               <td data-field="Type" data-autohide-disabled="false" class="kt-datatable__cell">
                 <span style="width: 148px;">
                   <span class="kt-badge kt-badge--dot"
-                        ng-class="{'kt-badge--primary': data.accountRole == 'S', 'kt-badge--success': data.accountRole == 'T'}"></span>&nbsp;
+                    ng-class="{'kt-badge--primary': data.accountRole == 'S', 'kt-badge--success': data.accountRole == 'T'}"></span>&nbsp;
                   <span class="kt-font-bold"
-                        ng-class="{'kt-font-primary': data.accountRole == 'S', 'kt-font-success': data.accountRole == 'T'}"
-                        ng-bind="data.accountRoleText"></span>
+                    ng-class="{'kt-font-primary': data.accountRole == 'S', 'kt-font-success': data.accountRole == 'T'}"
+                    ng-bind="data.accountRoleText"></span>
                 </span>
               </td>
               <td data-field="Status" class="kt-datatable__cell">
-                  <span style="width: 148px;">
-                    <span class="kt-badge kt-badge--inline kt-badge--pill"
-                          ng-class="{'kt-badge--brand': data.dataStatus == 'P', 'kt-badge--success': data.dataStatus == 'A', 'kt-badge--warning': data.dataStatus == 'N', 'kt-badge--danger': data.dataStatus == 'D'}"
-                          ng-bind="data.dataStatusText"></span>
-                  </span>
+                <span style="width: 148px;">
+                  <span class="kt-badge kt-badge--inline kt-badge--pill"
+                    ng-class="{'kt-badge--brand': data.dataStatus == 'P', 'kt-badge--success': data.dataStatus == 'A', 'kt-badge--warning': data.dataStatus == 'N', 'kt-badge--danger': data.dataStatus == 'D'}"
+                    ng-bind="data.dataStatusText"></span>
+                </span>
               </td>
               <td data-field="Actions" data-autohide-disabled="false" class="kt-datatable__cell">
-                  <span style="overflow: visible; position: relative; width: 110px;">
-                    <button type="button"
-                            class="btn btn-success btn-sm"
-                            ng-if="data.dataStatus == 'P' || data.dataStatus == 'N' || data.dataStatus == 'D'"
-                            ng-click="onChangeStatus(data, 'A')">
-                      激活
-                    </button>
-                    <button type="button"
-                            class="btn btn-warning btn-sm"
-                            ng-if="data.dataStatus == 'P'"
-                            ng-click="onChangeStatus(data, 'N')">
-                      驳回
-                    </button>
-                    <button type="button"
-                            class="btn btn-danger btn-sm"
-                            ng-if="data.dataStatus == 'A'"
-                            ng-click="onChangeStatus(data, 'D')">
-                      禁用
-                    </button>
-                  </span>
+                <span style="overflow: visible; position: relative; width: 110px;">
+                  <button type="button" class="btn btn-success btn-sm"
+                    ng-if="data.dataStatus == 'P' || data.dataStatus == 'N' || data.dataStatus == 'D'"
+                    ng-click="onChangeStatus(data, 'A')">
+                    激活
+                  </button>
+                  <button type="button" class="btn btn-warning btn-sm" ng-if="data.dataStatus == 'P'"
+                    ng-click="onChangeStatus(data, 'N')">
+                    驳回
+                  </button>
+                  <button type="button" class="btn btn-danger btn-sm" ng-if="data.dataStatus == 'A'"
+                    ng-click="onChangeStatus(data, 'D')">
+                    禁用
+                  </button>
+                </span>
               </td>
             </tr>
           </tbody>
         </table>
-        <div class="kt-datatable__pager kt-datatable--paging-loaded">
-          <ul class="kt-datatable__pager-nav">
-            <li>
-              <a title="第一页"
-                 class="kt-datatable__pager-link kt-datatable__pager-link--first"
-                 ng-class="{'kt-datatable__pager-link--disabled': model.prePageNum == -1}"
-                 ng-disable = "model.prePageNum == -1"
-                 ng-click="onFirstPage()">
-                <i class="flaticon2-fast-back"></i>
-              </a>
-            </li>
-            <li>
-              <a title="前一页"
-                 class="kt-datatable__pager-link kt-datatable__pager-link--prev"
-                 ng-class="{'kt-datatable__pager-link--disabled': model.prePageNum == -1}"
-                 ng-disable = "model.prePageNum == -1"
-                 ng-click="onPrePage()">
-                <i class="flaticon2-back"></i>
-              </a>
-            </li>
-            <li ng-repeat="pageNumber in model.paginationArray" >
-              <a class="kt-datatable__pager-link kt-datatable__pager-link-number"
-                 ng-class="{'kt-datatable__pager-link--active': model.pageNumber == pageNumber}"
-                 ng-click="onPagination(pageNumber)"
-                 ng-bind="pageNumber">
-              </a>
-            </li>
-            <li>
-              <a title="下一页"
-                 class="kt-datatable__pager-link kt-datatable__pager-link--next"
-                 ng-class="{'kt-datatable__pager-link--disabled': model.nextPageNum == -1}"
-                 ng-disable = "model.nextPageNum == -1"
-                 ng-click="onNextPage()">
-                <i class="flaticon2-next"></i>
-              </a>
-            </li>
 
-            <li>
-              <a title="最后一页"
-                 class="kt-datatable__pager-link kt-datatable__pager-link--last"
-                 ng-class="{'kt-datatable__pager-link--disabled': model.nextPageNum == -1}"
-                 ng-disable = "model.nextPageNum == -1"
-                 ng-click="onLastPage()">
-                <i class="flaticon2-fast-next"></i>
-              </a>
-            </li>
-          </ul>
-          <div class="kt-datatable__pager-info">
-            <span class="kt-datatable__pager-detail">
-              显示第<span ng-bind="model.fromIndex"></span>到第<span ng-bind="model.toIndex"></span>条数据，共计<span ng-bind="model.totalCount"></span>条数据
-            </span>
+        <div class="kt-container- kt-grid__item kt-grid__item--fluid kt-padding-15" ng-if="model.totalCount > 0">
+          <div class="kt-pagination kt-pagination--warning kt-pagination--circle">
+            <div class="kt-pagination__toolbar">
+              <span class="pagination__desc">
+                共查询到<span ng-bind="model.totalCount"></span>个满足条件的热点技术，当前显示第<span
+                  ng-bind="model.fromIndex"></span>到第<span ng-bind="model.toIndex"></span>个技术
+              </span>
+            </div>
+            <ul class="kt-pagination__links">
+              <li class="kt-pagination__link--first" ng-class="{'pagination-disabled': model.prePageNum == -1}">
+                <a href="javascript:" ng-click="onFirstPage()"><i class="fa fa-angle-double-left"></i></a>
+              </li>
+              <li class="kt-pagination__link--next" ng-class="{'pagination-disabled': model.prePageNum == -1}">
+                <a href="javascript:" ng-click="onPrePage()"><i class="fa fa-angle-left"></i></a>
+              </li>
+
+              <li ng-repeat="pagination in model.paginationArray"
+                ng-class="{'kt-pagination__link--active': model.pageNumber == pagination}">
+                <a href="javascript:" ng-bind="pagination" ng-click="onPagination(pagination)"></a>
+              </li>
+
+              <li class="kt-pagination__link--prev" ng-class="{'pagination-disabled': model.nextPageNum == -1}">
+                <a href="javascript:" ng-click="onNextPage()"><i class="fa fa-angle-right"></i></a>
+              </li>
+              <li class="kt-pagination__link--last" ng-class="{'pagination-disabled': model.nextPageNum == -1}">
+                <a href="javascript:" ng-click="onLastPage()"><i class="fa fa-angle-double-right"></i></a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

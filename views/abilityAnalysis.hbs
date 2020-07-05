@@ -1,4 +1,4 @@
-<link href="stylesheets/views/abilityAnalysis.css" rel="stylesheet" type="text/css"/>
+<link href="stylesheets/views/abilityAnalysis.css" rel="stylesheet" type="text/css" />
 <div ng-app="pageApp" ng-controller="pageCtrl">
   <div class="kt-container--fluid kt-grid__item kt-grid__item--fluid" style="max-height: 132px">
     <div class="course-center-header"></div>
@@ -15,7 +15,8 @@
                 <span class="kt-menu__link-text">全部</span>
               </a>
             </li>
-            <li class="kt-menu__item" ng-repeat="direction in model.directionList" ng-class="{'kt-menu__item--here': model.selectedDirection.directionID == direction.directionID}">
+            <li class="kt-menu__item" ng-repeat="direction in model.directionList"
+              ng-class="{'kt-menu__item--here': model.selectedDirection.directionID == direction.directionID}">
               <a href="javascript:" class="kt-menu__link" ng-click="onFilterByDirection(direction)">
                 <span class="kt-menu__link-text" ng-bind="direction.directionName"></span>
               </a>
@@ -36,9 +37,8 @@
                 <span class="kt-menu__link-text">全部</span>
               </a>
             </li>
-            <li class="kt-menu__item"
-                ng-repeat="category in model.categoryList"
-                ng-class="{'kt-menu__item--here': model.selectedCategory.categoryID == category.technologyCategoryID}">
+            <li class="kt-menu__item" ng-repeat="category in model.categoryList"
+              ng-class="{'kt-menu__item--here': model.selectedCategory.categoryID == category.technologyCategoryID}">
               <a href="javascript:" class="kt-menu__link" ng-click="onFilterByCategory(category)">
                 <span class="kt-menu__link-text" ng-bind="category.technologyCategoryName"></span>
               </a>
@@ -59,9 +59,8 @@
                 <span class="kt-menu__link-text">全部</span>
               </a>
             </li>
-            <li class="kt-menu__item"
-                ng-repeat="technology in model.technologyList"
-                ng-class="{'kt-menu__item--here': model.selectedTechnology.technologyID == technology.technologyID}">
+            <li class="kt-menu__item" ng-repeat="technology in model.technologyList"
+              ng-class="{'kt-menu__item--here': model.selectedTechnology.technologyID == technology.technologyID}">
               <a href="javascript:" class="kt-menu__link" ng-click="onFilterByTechnology(technology)">
                 <span class="kt-menu__link-text" ng-bind="technology.technologyName"></span>
               </a>
@@ -76,16 +75,14 @@
     <div class="kt-container kt-grid__item kt-grid__item--fluid">
       <div class="row student-filter">
         <div class="col-md-6">
-          <button type="button"
-                  class="btn btn-pill btn-elevate btn-sm"
-                  ng-repeat="studentType in model.studentTypeList"
-                  ng-class="{'btn-info': model.selectedStudentType.studentTypeID == studentType.studentTypeID, 'btn-outline-hover-info': model.selectedStudentType.studentTypeID != studentType.studentTypeID}"
-                  ng-bind="studentType.studentTypeText"
-                  ng-click="onFilterStudent(studentType)"></button>
+          <button type="button" class="btn btn-pill btn-elevate btn-sm" ng-repeat="studentType in model.studentTypeList"
+            ng-class="{'btn-primary': model.selectedStudentType.studentTypeID == studentType.studentTypeID, 'btn-primary-hover-info': model.selectedStudentType.studentTypeID != studentType.studentTypeID}"
+            ng-bind="studentType.studentTypeText" ng-click="onFilterStudent(studentType)"></button>
         </div>
         <div class="col-md-6 text-right">
           <div class="kt-input-icon kt-input-icon--right">
-            <input type="text" class="form-control student-name" ng-model="model.studentName" ng-keydown="onFilterByName($event)" placeholder="按学生姓名查询...">
+            <input type="text" class="form-control student-name" ng-model="model.studentName"
+              ng-keydown="onFilterByName($event)" placeholder="按学生姓名查询...">
             <span class="kt-input-icon__icon kt-input-icon__icon--right">
               <span><i class="la la-search"></i></span>
             </span>
@@ -97,7 +94,8 @@
   </div>
 
 
-  <div class="kt-container kt-grid__item kt-grid__item--fluid kt-align-center kt-padding-15" ng-if="model.totalCount == 0">
+  <div class="kt-container kt-grid__item kt-grid__item--fluid kt-align-center kt-padding-15"
+    ng-if="model.totalCount == 0">
     未查询到满足条件的数据
   </div>
 
@@ -113,9 +111,10 @@
             </div>
             <div class="kt-portlet__head-toolbar">
               <a class="kt-nav__link kt-widget__username kt-font-brand kt-font-bold"
-                 href="/ability/detail?universityCode=\{{data.universityCode}}&schoolID=\{{data.schoolID}}&studentID=\{{data.studentID}}" target="_blank">
-              <i class="kt-nav__link-icon flaticon2-pie-chart-1"></i>
-              <span class="kt-nav__link-text">详细</span>
+                href="/ability/detail?universityCode=\{{data.universityCode}}&schoolID=\{{data.schoolID}}&studentID=\{{data.studentID}}"
+                target="_blank">
+                <i class="kt-nav__link-icon flaticon2-pie-chart-1"></i>
+                <span class="kt-nav__link-text">详细</span>
               </a>
             </div>
           </div>
@@ -124,32 +123,35 @@
             <div class="kt-widget kt-widget--user-profile-2">
               <div class="kt-widget__head">
                 <div class="kt-widget__media">
-                  <img class="kt-widget__img" src="/media/users/teacher_default.png" ng-if="data.studentPhoto.length == 0" alt="image">
-                  <img class="kt-widget__img" ng-src="\{{data.studentPhoto}}" ng-if="data.studentPhoto.length > 0" alt="image">
+                  <img class="kt-widget__img" src="/media/users/teacher_default.png"
+                    ng-if="data.studentPhoto.length == 0" alt="image">
+                  <img class="kt-widget__img" ng-src="\{{data.studentPhoto}}" ng-if="data.studentPhoto.length > 0"
+                    alt="image">
                 </div>
                 <div class="kt-widget__info">
-                <span class="kt-widget__username">
-                  <span ng-bind="data.studentName"></span>
-                  <span ng-bind="data.abilityLevel"
-                        class="ability-level"
-                        ng-class="{'ability-level-1': data.abilityLevel == 'L1', 'ability-level-2': data.abilityLevel == 'L2', 'ability-level-3': data.abilityLevel == 'L3', 'ability-level-4': data.abilityLevel == 'L4', 'ability-level-5': data.abilityLevel == 'L5', 'ability-level-6': data.abilityLevel == 'L6', 'ability-level-7': data.abilityLevel == 'L7', 'ability-level-8': data.abilityLevel == 'L8'}"></span>
-                </span>
-                <span class="kt-widget__desc">
-                  超越站内<span class="position-site" ng-bind="data.positionSite"></span>的同学
-                </span>
+                  <span class="kt-widget__username">
+                    <span ng-bind="data.studentName"></span>
+                    <span ng-bind="data.abilityLevel" class="ability-level"
+                      ng-class="{'ability-level-1': data.abilityLevel == 'L1', 'ability-level-2': data.abilityLevel == 'L2', 'ability-level-3': data.abilityLevel == 'L3', 'ability-level-4': data.abilityLevel == 'L4', 'ability-level-5': data.abilityLevel == 'L5', 'ability-level-6': data.abilityLevel == 'L6', 'ability-level-7': data.abilityLevel == 'L7', 'ability-level-8': data.abilityLevel == 'L8'}"></span>
+                  </span>
                   <span class="kt-widget__desc">
-                  已被<span class="position-site">0</span>家企业关注
-                </span>
+                    超越站内<span class="position-site" ng-bind="data.positionSite"></span>的同学
+                  </span>
+                  <span class="kt-widget__desc">
+                    已被<span class="position-site">0</span>家企业关注
+                  </span>
                 </div>
               </div>
               <div class="kt-widget__body">
                 <div class="kt-widget__section">
                   <div>
                     <span>掌握知识点</span>
-                    <span class="kt-widget12__stat learning-percent-text finish-knowledge-percent kt-font-bold" ng-bind="data.finishKnowledgePercent"></span>
+                    <span class="kt-widget12__stat learning-percent-text finish-knowledge-percent kt-font-bold"
+                      ng-bind="data.finishKnowledgePercent"></span>
                   </div>
                   <div class="progress kt-progress--sm">
-                    <div class="progress-bar bg-success" role="progressbar" ng-style="{'width': data.finishKnowledgePercent}" style="width: \{{data.finishKnowledgePercent}%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar bg-success" role="progressbar"
+                      ng-style="{'width': data.finishKnowledgePercent}" style="width: \{{data.finishKnowledgePercent}%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                 </div>
                 <div class="kt-widget__item">
@@ -202,49 +204,39 @@
         <!--End::Portlet-->
       </div>
     </div>
-    <div ng-cloak class="row" ng-if="model.totalCount > 0">
-      <div class="col-xl-12">
-        <!--begin:: Components/Pagination/Default-->
-        <div class="kt-portlet">
-          <div class="kt-portlet__body">
-            <!--begin: Pagination-->
-            <div class="kt-pagination kt-pagination--brand">
-              <ul class="kt-pagination__links">
-                <li class="kt-pagination__link--first" ng-click="onFirstPage()" ng-if="model.pageNumber > 1">
-                  <a href="javascript:;" title="第一页"><i class="fa fa-angle-double-left kt-font-brand"></i></a>
-                </li>
-                <li class="kt-pagination__link--next" ng-click="onPrePage" ng-if="model.pageNumber > 1">
-                  <a href="javascript:;" title="前一页"><i class="fa fa-angle-left kt-font-brand"></i></a>
-                </li>
 
-                <li ng-repeat="pageNumber in model.paginationArray"
-                    ng-class="{'kt-pagination__link--active': model.pageNumber == pageNumber}"
-                    ng-click="onPagination(pageNumber)">
-                  <a href="javascript:;" ng-bind="pageNumber"></a>
-                </li>
-
-                <li class="kt-pagination__link--prev" ng-click="onNextPage()" ng-if="model.pageNumber < model.maxPageNumber">
-                  <a href="javascript:;" title="下一页"><i class="fa fa-angle-right kt-font-brand"></i></a>
-                </li>
-                <li class="kt-pagination__link--last" ng-click="onLastPage()" ng-if="model.pageNumber < model.maxPageNumber">
-                  <a href="javascript:;" title="最后一页"><i class="fa fa-angle-double-right kt-font-brand"></i></a>
-                </li>
-
-              </ul>
-              <div class="kt-pagination__toolbar">
-              <span class="pagination__desc">
-                显示第<span ng-bind="model.fromIndex"></span>到第<span ng-bind="model.toIndex"></span>条数据，共计<span ng-bind="model.totalCount"></span>条数据
-              </span>
-              </div>
-            </div>
-
-            <!--end: Pagination-->
-          </div>
+    <div class="kt-grid__item kt-grid__item--fluid" ng-if="model.totalCount > 0">
+      <div class="kt-pagination kt-pagination--warning kt-pagination--circle">
+        <div class="kt-pagination__toolbar">
+          <span class="pagination__desc">
+            共查询到<span ng-bind="model.totalCount"></span>位满足条件的学生，当前显示第<span
+              ng-bind="model.fromIndex"></span>到第<span ng-bind="model.toIndex"></span>个学生
+          </span>
         </div>
+        <ul class="kt-pagination__links">
+          <li class="kt-pagination__link--first" ng-class="{'pagination-disabled': model.prePageNum == -1}">
+            <a href="javascript:" ng-click="onFirstPage()"><i class="fa fa-angle-double-left"></i></a>
+          </li>
+          <li class="kt-pagination__link--next" ng-class="{'pagination-disabled': model.prePageNum == -1}">
+            <a href="javascript:" ng-click="onPrePage()"><i class="fa fa-angle-left"></i></a>
+          </li>
 
-        <!--end:: Components/Pagination/Default-->
+          <li ng-repeat="pagination in model.paginationArray"
+            ng-class="{'kt-pagination__link--active': model.pageNumber == pagination}">
+            <a href="javascript:" ng-bind="pagination" ng-click="onPagination(pagination)"></a>
+          </li>
+
+          <li class="kt-pagination__link--prev" ng-class="{'pagination-disabled': model.nextPageNum == -1}">
+            <a href="javascript:" ng-click="onNextPage()"><i class="fa fa-angle-right"></i></a>
+          </li>
+          <li class="kt-pagination__link--last" ng-class="{'pagination-disabled': model.nextPageNum == -1}">
+            <a href="javascript:" ng-click="onLastPage()"><i class="fa fa-angle-double-right"></i></a>
+          </li>
+        </ul>
       </div>
     </div>
+
+
   </div>
 </div>
 

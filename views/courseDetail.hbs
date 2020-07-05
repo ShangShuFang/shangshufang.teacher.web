@@ -15,19 +15,25 @@
           <div class="kt-widget__pic kt-widget__pic--success kt-font-success kt-font-boldest kt-font-light btn-option"
                ng-bind="model.courseInfo.technologyName"
                ng-click="onOpenTechnologyInfo(model.courseInfo.technologyID)"></div>
+
           <div class="kt-widget__content">
             <div class="kt-widget__head">
-              <h4 ng-bind="model.courseInfo.courseName"></h4>
+              <h4>
+                <span ng-bind="model.courseInfo.courseName"></span>
+                <span class="kt-badge kt-badge--inline " 
+                      ng-class="{'kt-badge--info': model.courseInfo.dataStatus == '0', 'kt-badge--success': model.courseInfo.dataStatus == '1', 'kt-label-bg-color-1 font-color-white': model.courseInfo.dataStatus == '2'}" 
+                      ng-bind="model.courseInfo.dataStatusText"></span>
+              </h4>
+              
               <div class="kt-widget__action">
 
-                <span class="kt-badge kt-badge--inline kt-badge--info" ng-if="model.courseInfo.dataStatus == '0'">未开始</span>
-                <span class="kt-badge kt-badge--inline kt-badge--success" ng-if="model.courseInfo.dataStatus == '2'">已结束</span>
+                
 
                 <button type="button"
                         id="btnFinishCourse"
-                        class="btn btn-label-danger btn-sm btn-upper"
+                        class="btn btn-primary"
                         ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID && model.courseInfo.dataStatus == '1'"
-                        ng-click="onFinishCourse()">授课完成
+                        ng-click="onFinishCourse()"> 授课结束
                 </button>&nbsp;
 
               </div>
@@ -166,7 +172,7 @@
               <a class="nav-link" data-toggle="tab" href="#kt_tabs_4" role="tab" aria-selected="false">报名学生</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="tab" href="#kt_tabs_5" role="tab" aria-selected="false">布置练习</a>
+              <a class="nav-link" data-toggle="tab" href="#kt_tabs_5" role="tab" aria-selected="false">随堂练习</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#kt_tabs_6" role="tab" aria-selected="false">批改练习</a>
@@ -251,7 +257,7 @@
                     <div class="row">
                       <div class="col-12 text-center">
                         <button type="button"
-                                class="btn btn-success"
+                                class="btn btn-primary"
                                 id="btnSaveCourseInfo"
                                 ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID && model.courseInfo.dataStatus != '2'"
                                 ng-click="onSaveCourseInfo()"
@@ -327,7 +333,7 @@
                     <div class="row">
                       <div class="col-12 text-center">
                         <button type="button"
-                                class="btn btn-success"
+                                class="btn btn-primary"
                                 id="btnSaveCourseSchedule"
                                 ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID && model.courseInfo.dataStatus != '2'"
                                 ng-disabled="model.courseScheduleList.length == 0 || model.noFinishClassCount === 0"
@@ -412,7 +418,7 @@
                     <div class="row">
                       <div class="col-12 text-center">
                         <button type="button"
-                                class="btn btn-success"
+                                class="btn btn-primary"
                                 id="btnSaveCoursePlan"
                                 ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID && model.courseInfo.dataStatus != '2'"
                                 ng-disabled="model.noFinishClassCount === 0"
@@ -526,64 +532,38 @@
                   </tr>
                   </tbody>
                 </table>
-                <div class="kt-datatable__pager kt-datatable--paging-loaded" ng-if="model.totalCount4SignUp > 0">
-                  <ul class="kt-datatable__pager-nav">
-                    <li>
-                      <a title="第一页"
-                         class="kt-datatable__pager-link kt-datatable__pager-link--first"
-                         ng-class="{'kt-datatable__pager-link--disabled': model.prePageNum4SignUp == -1}"
-                         ng-disable = "model.prePageNum4SignUp == -1"
-                         ng-click="onFirstPage4SignUp()">
-                        <i class="flaticon2-fast-back"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a title="前一页"
-                         class="kt-datatable__pager-link kt-datatable__pager-link--prev"
-                         ng-class="{'kt-datatable__pager-link--disabled': model.prePageNum4SignUp == -1}"
-                         ng-disable = "model.prePageNum4SignUp == -1"
-                         ng-click="onPrePage4SignUp()">
-                        <i class="flaticon2-back"></i>
-                      </a>
-                    </li>
+              </div>
 
-                    <li ng-repeat="pageNumber in model.paginationArray4SignUp" >
-                      <a class="kt-datatable__pager-link kt-datatable__pager-link-number"
-                         ng-class="{'kt-datatable__pager-link--active': model.pageNumber4SignUp == pageNumber}"
-                         ng-click="onPagination4SignUp(pageNumber)"
-                         ng-bind="pageNumber">
-                      </a>
-                    </li>
-
-                    <li>
-                      <a title="下一页"
-                         class="kt-datatable__pager-link kt-datatable__pager-link--next"
-                         ng-class="{'kt-datatable__pager-link--disabled': model.nextPageNum4SignUp == -1}"
-                         ng-disable = "model.nextPageNum4SignUp == -1"
-                         ng-click="onNextPage4SignUp()"
-                         data-page="2">
-                        <i class="flaticon2-next"></i>
-                      </a>
-                    </li>
-
-                    <li>
-                      <a title="最后一页"
-                         class="kt-datatable__pager-link kt-datatable__pager-link--last"
-                         ng-class="{'kt-datatable__pager-link--disabled': model.nextPageNum4SignUp == -1}"
-                         ng-disable = "model.nextPageNum4SignUp == -1"
-                         ng-click="onLastPage4SignUp()"
-                         data-page="4">
-                        <i class="flaticon2-fast-next"></i>
-                      </a>
-                    </li>
-                  </ul>
-                  <div class="kt-datatable__pager-info">
-                    <span class="kt-datatable__pager-detail">
-                      显示第<span ng-bind="model.fromIndex4SignUp"></span>到第<span ng-bind="model.toIndex4SignUp"></span>条数据，共计<span ng-bind="model.totalCount4SignUp"></span>条数据
+              <div class="kt-container kt-grid__item kt-grid__item--fluid kt-margin-t-15" ng-if="model.totalCount4SignUp > 0">
+                <div class="kt-pagination kt-pagination--warning kt-pagination--circle">
+                  <div class="kt-pagination__toolbar">
+                    <span class="pagination__desc">
+                      共有<span ng-bind="model.totalCount4SignUp"></span>名学生已报名，当前显示第<span ng-bind="model.fromIndex4SignUp"></span>到第<span
+                                          ng-bind="model.toIndex4SignUp"></span>名学生
                     </span>
                   </div>
+                  <ul class="kt-pagination__links">
+                    <li class="kt-pagination__link--first" ng-class="{'pagination-disabled': model.prePageNum4SignUp == -1}">
+                      <a href="javascript:" ng-click="onFirstPage4SignUp()"><i class="fa fa-angle-double-left"></i></a>
+                    </li>
+                    <li class="kt-pagination__link--next" ng-class="{'pagination-disabled': model.prePageNum4SignUp == -1}">
+                      <a href="javascript:" ng-click="onPrePage4SignUp()"><i class="fa fa-angle-left"></i></a>
+                    </li>
+
+                    <li ng-repeat="pagination in model.paginationArray4SignUp" ng-class="{'kt-pagination__link--active': model.pageNumber4SignUp == pagination}">
+                      <a href="javascript:" ng-bind="pagination" ng-click="onPagination4SignUp(pagination)"></a>
+                    </li>
+
+                    <li class="kt-pagination__link--prev" ng-class="{'pagination-disabled': model.nextPageNum4SignUp == -1}">
+                      <a href="javascript:" ng-click="onNextPage4SignUp()"><i class="fa fa-angle-right"></i></a>
+                    </li>
+                    <li class="kt-pagination__link--last" ng-class="{'pagination-disabled': model.nextPageNum4SignUp == -1}">
+                      <a href="javascript:" ng-click="onNextPage4SignUp()"><i class="fa fa-angle-double-right"></i></a>
+                    </li>
+                  </ul>
                 </div>
               </div>
+
 
 
             </div>
@@ -659,31 +639,31 @@
                       <div class="col-lg-4 col-md-9 col-sm-12 shs-padding-top-2">
                         <a href=""
                            class="btn btn-elevate btn-square btn-sm"
-                           ng-class="{'btn-brand': model.filterStatus == 'NULL', 'btn-outline-hover-info': model.filterStatus != 'NULL'}"
+                           ng-class="{'btn-primary': model.filterStatus == 'NULL', 'btn-primary-hover-info': model.filterStatus != 'NULL'}"
                            ng-click="onFilterCourseStudentExercises('NULL')">
                           全部
                         </a>
                         <a href=""
                            class="btn btn-elevate btn-square btn-sm"
-                           ng-class="{'btn-brand': model.filterStatus == 'P', 'btn-outline-hover-info': model.filterStatus != 'P'}"
+                           ng-class="{'btn-primary': model.filterStatus == 'P', 'btn-primary-hover-info': model.filterStatus != 'P'}"
                            ng-click="onFilterCourseStudentExercises('P')">
                           未完成
                         </a>
                         <a href=""
                            class="btn btn-outline-hover-info btn-elevate btn-square btn-sm"
-                           ng-class="{'btn-brand': model.filterStatus == 'W', 'btn-outline-hover-info': model.filterStatus != 'W'}"
+                           ng-class="{'btn-primary': model.filterStatus == 'W', 'btn-primary-hover-info': model.filterStatus != 'W'}"
                            ng-click="onFilterCourseStudentExercises('W')">
                           待批改
                         </a>
                         <a href=""
                            class="btn btn-outline-hover-info btn-elevate btn-square btn-sm"
-                           ng-class="{'btn-brand': model.filterStatus == 'R', 'btn-outline-hover-info': model.filterStatus != 'R'}"
+                           ng-class="{'btn-primary': model.filterStatus == 'R', 'btn-primary-hover-info': model.filterStatus != 'R'}"
                            ng-click="onFilterCourseStudentExercises('R')">
                           待修改
                         </a>
                         <a href=""
                            class="btn btn-outline-hover-info btn-elevate btn-square btn-sm"
-                           ng-class="{'btn-brand': model.filterStatus == 'S', 'btn-outline-hover-info': model.filterStatus != 'S'}"
+                           ng-class="{'btn-primary': model.filterStatus == 'S', 'btn-primary-hover-info': model.filterStatus != 'S'}"
                            ng-click="onFilterCourseStudentExercises('S')">
                           已通过
                         </a>
@@ -808,64 +788,37 @@
                     </tr>
                   </tbody>
                 </table>
-                <div class="kt-datatable__pager kt-datatable--paging-loaded" ng-if="model.totalCount4Exercises > 0">
-                  <ul class="kt-datatable__pager-nav">
-                    <li>
-                      <a title="第一页"
-                         class="kt-datatable__pager-link kt-datatable__pager-link--first"
-                         ng-class="{'kt-datatable__pager-link--disabled': model.prePageNum4Exercises == -1}"
-                         ng-disable = "model.prePageNum4Exercises == -1"
-                         ng-click="onFirstPage4Exercises()">
-                        <i class="flaticon2-fast-back"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a title="前一页"
-                         class="kt-datatable__pager-link kt-datatable__pager-link--prev"
-                         ng-class="{'kt-datatable__pager-link--disabled': model.prePageNum4Exercises == -1}"
-                         ng-disable = "model.prePageNum4Exercises == -1"
-                         ng-click="onPrePage4Exercises()">
-                        <i class="flaticon2-back"></i>
-                      </a>
-                    </li>
+              </div>
+              <div class="kt-container kt-grid__item kt-grid__item--fluid kt-margin-t-15" ng-if="model.totalCount4Exercises > 0">
+                  <div class="kt-pagination kt-pagination--warning kt-pagination--circle">
+                    <div class="kt-pagination__toolbar">
+                      <span class="pagination__desc">
+                        共查询到<span ng-bind="model.totalCount4Exercises"></span>个满足条件的学生随堂练习，当前显示第<span ng-bind="model.fromIndex4Exercises"></span>到第<span
+                                            ng-bind="model.toIndex4Exercises"></span>个练习
+                      </span>
+                    </div>
+                    <ul class="kt-pagination__links">
+                      <li class="kt-pagination__link--first" ng-class="{'pagination-disabled': model.prePageNum4Exercises == -1}">
+                        <a href="javascript:" ng-click="onFirstPage4Exercises()"><i class="fa fa-angle-double-left"></i></a>
+                      </li>
+                      <li class="kt-pagination__link--next" ng-class="{'pagination-disabled': model.prePageNum4Exercises == -1}">
+                        <a href="javascript:" ng-click="onPrePage4Exercises()"><i class="fa fa-angle-left"></i></a>
+                      </li>
 
-                    <li ng-repeat="pageNumber in model.paginationArray4Exercises" >
-                      <a class="kt-datatable__pager-link kt-datatable__pager-link-number"
-                         ng-class="{'kt-datatable__pager-link--active': model.pageNumber4Exercises == pageNumber}"
-                         ng-click="onPagination4Exercises(pageNumber)"
-                         ng-bind="pageNumber">
-                      </a>
-                    </li>
+                      <li ng-repeat="pagination in model.paginationArray4Exercises" ng-class="{'kt-pagination__link--active': model.pageNumber4Exercises == pagination}">
+                        <a href="javascript:" ng-bind="pagination" ng-click="onPagination4Exercises(pagination)"></a>
+                      </li>
 
-                    <li>
-                      <a title="下一页"
-                         class="kt-datatable__pager-link kt-datatable__pager-link--next"
-                         ng-class="{'kt-datatable__pager-link--disabled': model.nextPageNum4Exercises == -1}"
-                         ng-disable = "model.nextPageNum4Exercises == -1"
-                         ng-click="onNextPage4Exercises()"
-                         data-page="2">
-                        <i class="flaticon2-next"></i>
-                      </a>
-                    </li>
-
-                    <li>
-                      <a title="最后一页"
-                         class="kt-datatable__pager-link kt-datatable__pager-link--last"
-                         ng-class="{'kt-datatable__pager-link--disabled': model.nextPageNum4Exercises == -1}"
-                         ng-disable = "model.nextPageNum4Exercises == -1"
-                         ng-click="onLastPage4Exercises()"
-                         data-page="4">
-                        <i class="flaticon2-fast-next"></i>
-                      </a>
-                    </li>
-                  </ul>
-                  <div class="kt-datatable__pager-info">
-                    <span class="kt-datatable__pager-detail">
-                      显示第<span ng-bind="model.fromIndex4Exercises"></span>到第<span ng-bind="model.toIndex4Exercises"></span>条数据，共计<span ng-bind="model.totalCount4Exercises"></span>条数据
-                    </span>
+                      <li class="kt-pagination__link--prev" ng-class="{'pagination-disabled': model.nextPageNum4Exercises == -1}">
+                        <a href="javascript:" ng-click="onNextPage4Exercises()"><i class="fa fa-angle-right"></i></a>
+                      </li>
+                      <li class="kt-pagination__link--last" ng-class="{'pagination-disabled': model.nextPageNum4Exercises == -1}">
+                        <a href="javascript:" ng-click="onLastPage4Exercises()"><i class="fa fa-angle-double-right"></i></a>
+                      </li>
+                    </ul>
                   </div>
                 </div>
-              </div>
+
             </div>
             <div class="tab-pane" id="kt_tabs_7" role="tabpanel">
               <div class="alert alert-secondary" role="alert" ng-if="model.courseQuestion.totalCount == 0">

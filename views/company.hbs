@@ -46,7 +46,7 @@
                 </div>
               </div>
               <div class="kt-widget__footer kt-margin-0">
-                <button type="button" class="btn btn-label-brand btn-lg btn-upper" ng-click="onShowDetail(company)">
+                <button type="button" class="btn btn-primary btn-lg btn-upper" ng-click="onShowDetail(company)">
                   查看起步级别
                 </button>
               </div>
@@ -56,13 +56,45 @@
       </div>
     </div>
 
-    <div class="row" ng-if="model.companyList.length < model.totalCount">
+    {{!-- <div class="row" ng-if="model.companyList.length < model.totalCount">
       <div class="col-xl-12 text-center">
         <button type="button" class="btn btn-secondary btn-elevate btn-pill" ng-click="onLoadMore()"><i
             class="fa fa-sync-alt"></i> 查看更多
         </button>
       </div>
+    </div> --}}
+
+    <div class="kt-container kt-grid__item kt-grid__item--fluid" ng-if="model.totalCount > 0">
+      <div class="kt-pagination kt-pagination--warning kt-pagination--circle">
+        <div class="kt-pagination__toolbar">
+          <span class="pagination__desc">
+            共查询到<span ng-bind="model.totalCount"></span>个合作企业，当前显示第<span
+              ng-bind="model.fromIndex"></span>到第<span ng-bind="model.toIndex"></span>个企业
+          </span>
+        </div>
+        <ul class="kt-pagination__links">
+          <li class="kt-pagination__link--first" ng-class="{'pagination-disabled': model.prePageNum == -1}">
+            <a href="javascript:" ng-click="onFirstPage()"><i class="fa fa-angle-double-left"></i></a>
+          </li>
+          <li class="kt-pagination__link--next" ng-class="{'pagination-disabled': model.prePageNum == -1}">
+            <a href="javascript:" ng-click="onPrePage()"><i class="fa fa-angle-left"></i></a>
+          </li>
+
+          <li ng-repeat="pagination in model.paginationArray"
+            ng-class="{'kt-pagination__link--active': model.pageNumber == pagination}">
+            <a href="javascript:" ng-bind="pagination" ng-click="onPagination(pagination)"></a>
+          </li>
+
+          <li class="kt-pagination__link--prev" ng-class="{'pagination-disabled': model.nextPageNum == -1}">
+            <a href="javascript:" ng-click="onNextPage()"><i class="fa fa-angle-right"></i></a>
+          </li>
+          <li class="kt-pagination__link--last" ng-class="{'pagination-disabled': model.nextPageNum == -1}">
+            <a href="javascript:" ng-click="onLastPage()"><i class="fa fa-angle-double-right"></i></a>
+          </li>
+        </ul>
+      </div>
     </div>
+
   </div>
 
 
@@ -84,7 +116,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat = "technology in model.technologyList">
+              <tr ng-repeat="technology in model.technologyList">
                 <th scope="row" ng-bind="$index + 1"></th>
                 <td ng-bind="technology.technologyName"></td>
                 <td ng-bind="technology.recruitLevel"></td>

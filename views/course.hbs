@@ -67,73 +67,6 @@
             <!--begin: Form Wizard Form-->
             <form class="kt-form" name="myForm" id="kt_form" novalidate="novalidate">
 
-              <!-- region: Form Wizard Step 1-->
-<!--              <div class="kt-wizard-v1__content" data-ktwizard-type="step-content" data-ktwizard-state="current">-->
-<!--                <div class="row">-->
-<!--                  <div class="col-md-4" ng-repeat="data in model.technologyList">-->
-<!--                    <div class="kt-portlet kt-portlet--height-fluid">-->
-<!--                      <div class="kt-portlet__head kt-portlet__head--noborder">-->
-<!--                        <div class="kt-portlet__head-label">-->
-<!--                          <h3 class="kt-portlet__head-title">-->
-<!--                          </h3>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                      <div class="kt-portlet__body">-->
-<!--                        <div class="kt-widget kt-widget--user-profile-2 ">-->
-<!--                          <div class="kt-widget__head">-->
-<!--                            <div class="kt-widget__media">-->
-<!--                              <a ng-href="/technology?technology=\{{data.technologyID}}" target="_blank"-->
-<!--                              class="kt-widget__username kt-font-brand kt-font-bold">-->
-<!--                              <img class="kt-widget__img course-create-widget-img"-->
-<!--                                   ng-src="\{{data.technologyThumbnail}}" alt="image">-->
-<!--                              </a>-->
-<!--                            </div>-->
-
-<!--                            <div class="kt-widget__info">-->
-<!--                              <a ng-href="/technology?technology=\{{data.technologyID}}" ng-bind="data.technologyName"-->
-<!--                              target="_blank" class="kt-widget__username kt-font-brand kt-link kt-font-bold-->
-<!--                              course-create-username"></a>-->
-<!--                              <span class="kt-widget__desc">-->
-<!--                                <i class="la"-->
-<!--                                   ng-class="{'la-star-o': data.technologyStars < 1, 'la-star star-selected': data.technologyStars >= 1}"></i>-->
-<!--                                <i class="la"-->
-<!--                                   ng-class="{'la-star-o': data.technologyStars < 2, 'la-star star-selected': data.technologyStars >= 2}"></i>-->
-<!--                                <i class="la"-->
-<!--                                   ng-class="{'la-star-o': data.technologyStars < 3, 'la-star star-selected': data.technologyStars >= 3}"></i>-->
-<!--                                <i class="la"-->
-<!--                                   ng-class="{'la-star-o': data.technologyStars < 4, 'la-star star-selected': data.technologyStars >= 4}"></i>-->
-<!--                                <i class="la"-->
-<!--                                   ng-class="{'la-star-o': data.technologyStars < 5, 'la-star star-selected': data.technologyStars >= 5}"></i>-->
-<!--                              </span>-->
-<!--                            </div>-->
-<!--                          </div>-->
-<!--                          <div class="kt-widget__footer">-->
-<!--                            <button type="button" class="btn btn-elevate btn-pill"-->
-<!--                                    ng-class="{'btn-outline-brand': !data.selected, 'btn-brand': data.selected}"-->
-<!--                                    ng-click="onChooseTechnology(data)">-->
-<!--                              <i class="fa fa-hand-point-up" ng-if="!data.selected"></i>-->
-<!--                              <i class="flaticon2-check-mark" ng-if="data.selected"></i>-->
-<!--                              <span ng-if="!data.selected">待选</span>-->
-<!--                              <span ng-if="data.selected">已选中</span>-->
-<!--                            </button>-->
-<!--                          </div>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="row">-->
-<!--                  <div class="col-xl-12 text-center">-->
-<!--                    <button type="button" class="btn btn-secondary btn-elevate btn-pill"-->
-<!--                            ng-click="onLoadMoreTechnology()"-->
-<!--                            ng-if="model.technologyList.length < model.technologyTotalCount"><i-->
-<!--                            class="fa fa-sync-alt"></i> 查看更多热门技术-->
-<!--                    </button>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-              <!-- endregion Wizard Step 1-->
-
               <!--begin: Form Wizard Step 2-->
               <div class="kt-wizard-v1__content" data-ktwizard-type="step-content">
                 <div class="kt-form__section kt-form__section--first">
@@ -370,7 +303,7 @@
                         data-ktwizard-type="action-prev">
                   上一步
                 </button>
-                <button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+                <button class="btn btn-primary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
                         data-ktwizard-type="action-submit"
                         ng-click="onSubmit()"
                         ng-disabled="model.selectedTechnology == null
@@ -386,7 +319,7 @@
                                     || model.coursePlanList.length == 0">
                   提交
                 </button>
-                <button class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+                <button class="btn btn-primary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
                         data-ktwizard-type="action-next">
                   下一步
                 </button>
@@ -606,19 +539,19 @@
     </div>
 
     <div class="kt-portlet" ng-if="model.isSubmitSuccess">
-      <div class="alert alert-success" role="alert" style="width: 100%; margin: 0 auto">
+      <div class="alert alert-outline-success" role="alert" style="width: 100%; margin: 0 auto">
         <div class="alert-text">
           <h4 class="alert-heading">
             <i class="flaticon2-check-mark"></i>
             提交成功！
           </h4>
-          <p>
+          <p class="kt-margin-t-15" style="color: #979cb7;">
             您的课程信息已提交成功，现在可以让学生开始报名啦！
           </p>
           <hr>
-          <p class="mb-0">
+          <p class="mb-0 kt-margin-t-15 kt-font-primary">
             上书房智慧教育slogan todo
-            <a href="/myCourse" class="kt-font-brand kt-link kt-font-bold">查看我的课程</a>
+            <a href="/course/my" class="kt-font-brand kt-link kt-font-bold">查看我的课程</a>
           </p>
         </div>
       </div>

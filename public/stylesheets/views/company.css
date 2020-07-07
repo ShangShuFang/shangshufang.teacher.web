@@ -1,12 +1,20 @@
 .des-misc-3 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
-  white-space: pre-wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    white-space: pre-wrap;
 }
+
 .company-leave-message {
-  max-width: 650px;
-  max-height: 62px;
+    max-width: 650px;
+    max-height: 62px;
+}
+
+.course-center-header {
+    height: 150px;
+    background: url(/media/banner/company_header.jpg) no-repeat;
+    background-size: cover;
+    box-sizing: border-box;
 }

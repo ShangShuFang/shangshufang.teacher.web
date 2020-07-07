@@ -312,12 +312,13 @@ a.no-hand {
     color: #e71d62;
 }
 
-.course-center-header {
+
+/* .course-center-header {
     height: 132px;
     background: url(/media/bg/header-bk.png) no-repeat;
     background-size: cover;
     box-sizing: border-box;
-}
+} */
 
 .category-2 {
     max-height: 68px;

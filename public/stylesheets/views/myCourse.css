@@ -1,4 +1,11 @@
 .course-filter {
-  margin-top: 1.6rem;
-  margin-bottom: 1.6rem;
+    margin-top: 1.6rem;
+    margin-bottom: 1.6rem;
+}
+
+.course-center-header {
+    height: 150px;
+    background: url(/media/banner/my_course_header.jpg) no-repeat;
+    background-size: cover;
+    box-sizing: border-box;
 }

@@ -9,3 +9,10 @@
 .last-marker {
     bottom: 35px;
 }
+
+.course-center-header {
+    height: 150px;
+    background: url(/media/banner/growing_map_header.jpg) no-repeat;
+    background-size: cover;
+    box-sizing: border-box;
+}

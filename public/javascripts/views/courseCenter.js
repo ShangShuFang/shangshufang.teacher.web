@@ -114,13 +114,6 @@ pageApp.controller('pageCtrl', function($scope, $http) {
                 bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
                 return false;
             }
-            if (response.data.dataContent === null || response.data.dataContent.dataList === null) {
-                if ($scope.model.pageNumber > 1) {
-                    $scope.model.pageNumber--;
-                    layer.msg(localMessage.NO_TECHNOLOGY_DATA);
-                }
-                return false;
-            }
 
             $scope.model.technologyTotalCount = response.data.dataContent.totalCount;
             $scope.model.pageNumber = parseInt(response.data.dataContent.currentPageNum);

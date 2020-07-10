@@ -33,13 +33,15 @@ body {
     width: 180px;
 }
 
-.kt-header-menu-wrapper {
-    width: 700px;
-}
 
-.header-login {
+/* .kt-header-menu-wrapper {
+    width: 700px;
+} */
+
+
+/* .header-login {
     width: 200px;
-}
+} */
 
 .kt-sticky-toolbar {
     width: 60px;
@@ -68,9 +70,10 @@ body {
     padding: 3px;
 }
 
-.header-logout {
+
+/* .header-logout {
     width: 150px;
-}
+} */
 
 .btn-login {
     width: 70px;

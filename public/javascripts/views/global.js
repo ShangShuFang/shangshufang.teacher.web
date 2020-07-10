@@ -9,7 +9,8 @@ globalApp.controller('myCtrl', function($scope, $http) {
         $scope.model.isLogin = commonUtility.isLogin();
         $scope.model.loginUser = commonUtility.getLoginUser();
         if ($scope.model.isLogin) {
-            $('#login_bar').hide();
+            $('#login_bar').addClass('kt-hidden');
+            $('#user_bar').removeClass('kt-hidden');
 
             if ($scope.model.loginUser.accountRole !== 'A') {
                 $('#user_bar .decollator').hide()
@@ -17,10 +18,8 @@ globalApp.controller('myCtrl', function($scope, $http) {
             }
             $('#user_bar').removeClass('kt-hidden');
         } else {
-            if (!$('#user_bar').hasClass('kt-hidden')) {
-                $('#login_bar').removeClass('kt-hidden');
-                $('#user_bar').hide();
-            }
+            $('#login_bar').removeClass('kt-hidden');
+            $('#user_bar').addClass('kt-hidden');
         }
     };
 

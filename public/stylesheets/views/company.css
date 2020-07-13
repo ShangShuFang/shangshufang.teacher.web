@@ -15,6 +15,5 @@
 .course-center-header {
     height: 150px;
     background: url(/media/banner/company_header.jpg) no-repeat;
-    background-size: cover;
-    box-sizing: border-box;
+    background-size: 100% 100%;
 }

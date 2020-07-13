@@ -6,10 +6,11 @@ body {
     margin-top: 5px !important;
 }
 
-.was-validated .form-control:invalid,
+
+/* .was-validated .form-control:invalid,
 .form-control.is-invalid {
-    border: 1px solid #ff6700 !important;
-}
+    border: 1px solid #3d94fb !important;
+} */
 
 .kt_header_memu .kt-menu__nav .kt-menu__link-text {
     font-size: 1.1rem !important;
@@ -29,9 +30,10 @@ body {
     margin-right: 2.5rem;
 }
 
-.website-logo {
+
+/* .website-logo {
     width: 180px;
-}
+} */
 
 
 /* .kt-header-menu-wrapper {
@@ -78,16 +80,16 @@ body {
 .btn-login {
     width: 70px;
     border-radius: 1.5rem;
-    color: #ff6700 !important;
-    border-color: #ff6700;
+    color: #3d94fb !important;
+    border-color: #3d94fb;
 }
 
 .btn-register {
     width: 70px;
     border-radius: 1.5rem;
     color: rgb(255, 255, 255) !important;
-    background-color: #ff6700;
-    border-color: #ff6700;
+    background-color: #3d94fb;
+    border-color: #3d94fb;
 }
 
 .shs-banner {
@@ -109,7 +111,7 @@ body {
 }
 
 .star-selected {
-    color: #ff6700;
+    color: #fb6a3d;
 }
 
 
@@ -257,7 +259,31 @@ a.no-hand {
 }
 
 .shs-login-left {
-    background-image: url(/images/banner_login.png);
+    background-image: url(/media/bg/bg_left_1.jpg);
+    background-size: 100% 100% !important;
+    -moz-background-size: 100% 100% !important;
+}
+
+.shs-register-left {
+    background-image: url(/media/bg/bg_left_2.jpg);
+    background-size: 100% 100% !important;
+    -moz-background-size: 100% 100% !important;
+}
+
+.shs-forget-left {
+    background-image: url(/media/bg/bg_left_4.jpg);
+    background-size: 100% 100% !important;
+    -moz-background-size: 100% 100% !important;
+}
+
+.shs-user-info-left {
+    background-image: url(/media/bg/bg_left_6.jpg);
+    background-size: 100% 100% !important;
+    -moz-background-size: 100% 100% !important;
+}
+
+.shs-change-password-left {
+    background-image: url(/media/bg/bg_left_9.jpg);
     background-size: 100% 100% !important;
     -moz-background-size: 100% 100% !important;
 }
@@ -398,31 +424,31 @@ a.no-hand {
 /* begin: 修改框架样式 */
 
 .btn-primary {
-    background: #ff6700 !important;
-    border-color: #ff6700 !important;
+    background: #3d94fb !important;
+    border-color: #3d94fb !important;
     color: #fff !important;
 }
 
 .btn-primary:hover {
-    background: #ff6700;
-    border: 1px solid #ff6700;
+    background: #3d94fb;
+    border: 1px solid #3d94fb;
     color: #fff;
 }
 
 .btn-primary-info {
-    color: #ee702e !important;
-    border-color: #ee702e !important;
+    color: #3d94fb !important;
+    border-color: #3d94fb !important;
     background-color: transparent;
 }
 
 .btn-primary-hover-info:hover {
-    color: #ee702e !important;
-    border-color: #ee702e !important;
+    color: #3d94fb !important;
+    border-color: #3d94fb !important;
     background-color: transparent;
 }
 
 .btn-collect:hover {
-    color: #ff6700;
+    color: #3d94fb;
 }
 
 .btn-warning {
@@ -432,24 +458,25 @@ a.no-hand {
 }
 
 .kt-font-primary {
-    color: #ff6700 !important;
+    color: #3d94fb !important;
 }
 
 .alert.alert-solid-warning {
-    background: rgba(243, 174, 140, 0.1);
+    background: rgba(179, 211, 241, 0.1);
 }
 
 .alert.alert-solid-warning .alert-text {
-    color: #ff6700;
+    color: #3d94fb;
 }
 
 .kt-header__topbar-wrapper a:hover {
-    color: #ff6700 !important;
+    color: #3d94fb !important;
 }
 
-.kt-bg-danger {
-    background-color: #ff6700 !important;
-}
+
+/* .kt-bg-danger {
+    background-color: #3d94fb !important;
+} */
 
 .kt-label-bg-color-1 {
     color: #6f7175 !important;
@@ -458,19 +485,19 @@ a.no-hand {
 }
 
 .kt-pagination.kt-pagination--warning .kt-pagination__links .kt-pagination__link--active {
-    background: #ff6700;
+    background: #3d94fb;
 }
 
 .nav-tabs.nav-tabs-line.nav-tabs-line-warning.nav.nav-tabs .nav-link:hover,
 .nav-tabs.nav-tabs-line.nav-tabs-line-warning.nav.nav-tabs .nav-link.active,
 .nav-tabs.nav-tabs-line.nav-tabs-line-warning a.nav-link:hover,
 .nav-tabs.nav-tabs-line.nav-tabs-line-warning a.nav-link.active {
-    color: #ff6700;
-    border-bottom: 1px solid #ff6700;
+    color: #3d94fb;
+    border-bottom: 1px solid #3d94fb;
 }
 
 .kt-nav.kt-nav--v4 .kt-nav__item.active .kt-nav__link {
-    border-left: 3px solid #ff6700;
+    border-left: 3px solid #3d94fb;
 }
 
 

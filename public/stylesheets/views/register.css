@@ -65,8 +65,8 @@
 .btn-primary.disabled,
 .btn-primary:disabled {
     color: #fff !important;
-    background-color: #ff6700 !important;
-    border-color: #ff6700 !important;
+    background-color: #3d94fb !important;
+    border-color: #3d94fb !important;
 }
 
 .form-control.is-invalid {

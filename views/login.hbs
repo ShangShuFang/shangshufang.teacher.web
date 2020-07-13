@@ -63,27 +63,19 @@
 
       <!--begin::Aside-->
       <div class="kt-grid__item kt-grid__item--order-tablet-and-mobile-2 kt-grid kt-grid--hor kt-login__aside shs-login-left">
-        <div class="kt-grid__item">
-          <a href="/" class="kt-login__logo">
-            <img src="/images/logo.png" style="width: 260px">
-          </a>
-        </div>
         <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver">
           <div class="kt-grid__item kt-grid__item--middle">
             <h3 class="kt-login__title"> </h3>
             <h4 class="kt-login__subtitle"> </h4>
           </div>
         </div>
-        <div class="kt-grid__item">
+        {{!-- <div class="kt-grid__item">
           <div class="kt-login__info">
             <div class="kt-login__copyright">
               &copy 2020~2021 西安樱桃谷信息技术有限公司
             </div>
-            <div class="kt-login__menu">
-              <a href="#" class="kt-link">联系我们</a>
-            </div>
           </div>
-        </div>
+        </div> --}}
       </div>
 
       <!--begin::Aside-->
@@ -108,7 +100,6 @@
               <h3><span style="color: #5867dd;">上书房</span>智慧教育平台 教师端</h3>
             </div>
 
-            <!--begin::Form-->
             <form class="kt-form" name="myForm" novalidate>
               <div class="form-group">
                 <input class="form-control" type="tel" placeholder="请输入手机号码" minlength="11" maxlength="11" name="cellphone" ng-model="model.cellphone" required  autocomplete="close">
@@ -116,7 +107,6 @@
               <div class="form-group">
                 <input class="form-control" type="password" placeholder="请输入密码" maxlength="12" name="password" ng-model="model.password" required autocomplete="close">
               </div>
-              <!--begin::Action-->
               <div class="kt-login__actions">
                 <a href="/forgetPassword" class="kt-link kt-login__link-forgot" style="margin-left: 3px">
                   忘记密码 ?
@@ -130,45 +120,19 @@
                                   || (myForm.password.$dirty && myForm.password.$invalid)">登 陆</button>
               </div>
               <input type="hidden" id="hidden_backUrl" value="{{backUrl}}">
-
-              <!--end::Action-->
             </form>
 
-            <!--end::Form-->
 
-            <!--begin::Divider-->
-<!--            <div class="kt-login__divider">-->
-<!--              <div class="kt-divider">-->
-<!--                <span></span>-->
-<!--                <span>OR</span>-->
-<!--                <span></span>-->
-<!--              </div>-->
-<!--            </div>-->
+            
 
-            <!--end::Divider-->
-
-            <!--begin::Options-->
-<!--            <div class="kt-login__options">-->
-<!--              <a href="#" class="btn btn-primary kt-btn">-->
-<!--                <i class="fab fa-facebook-f"></i>-->
-<!--                Facebook-->
-<!--              </a>-->
-<!--              <a href="#" class="btn btn-info kt-btn">-->
-<!--                <i class="fab fa-twitter"></i>-->
-<!--                Twitter-->
-<!--              </a>-->
-<!--              <a href="#" class="btn btn-danger kt-btn">-->
-<!--                <i class="fab fa-google"></i>-->
-<!--                Google-->
-<!--              </a>-->
-<!--            </div>-->
-
-            <!--end::Options-->
           </div>
-
           <!--end::Signin-->
         </div>
-
+        <div class="text-center kt-margin-b-15">
+          <div class="kt-login__copyright">
+              &copy 2020~2021 西安樱桃谷信息技术有限公司
+          </div>
+        </div>
         <!--end::Body-->
       </div>
 

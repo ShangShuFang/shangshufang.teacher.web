@@ -3,7 +3,7 @@
 }
 
 .selected span {
-    color: #ff6700 !important;
+    color: #3d94fb !important;
 }
 
 .last-marker {
@@ -13,6 +13,5 @@
 .course-center-header {
     height: 150px;
     background: url(/media/banner/growing_map_header.jpg) no-repeat;
-    background-size: cover;
-    box-sizing: border-box;
+    background-size: 100% 100%;
 }

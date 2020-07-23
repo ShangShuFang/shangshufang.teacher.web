@@ -1,6 +1,5 @@
 .technology-header {
-    background-image: url("/images/banner_technology.png");
-    /*height: 200px;*/
+    background-image: url("/images/banner_technology.jpg");
     color: #ffffff;
     padding: 35px;
 }
@@ -14,7 +13,12 @@
 }
 
 .technology-decs {
-    width: 900px;
+    max-width: 1060px;
+    height: 70px;
+}
+
+.btn-create-course {
+    width: 140px;
 }
 
 .count {

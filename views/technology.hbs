@@ -13,9 +13,10 @@
                 <div class="kt-widget__top">
                   <div class="kt-font-boldest kt-font-light technology-name">
                     <input type="hidden" value="{{technologyID}}" id="hidden_technologyID">
-                    <div class="kt-widget__media kt-hidden-">
+                    <div class="kt-widget__media text-center">
                       <img ng-src="\{{model.technologyInfo.technologyThumbnailSquare}}" alt="image">
                     </div>
+                    <div class="kt-widget__media text-center kt-padding-t-10">
                     <span class="kt-widget__desc">
                       <i class="la"
                         ng-class="{'la-star-o': model.technologyInfo.technologyStars < 1, 'la-star star-selected': model.technologyInfo.technologyStars >= 1}"></i>
@@ -28,6 +29,7 @@
                       <i class="la"
                         ng-class="{'la-star-o': model.technologyInfo.technologyStars < 5, 'la-star star-selected': model.technologyInfo.technologyStars >= 5}"></i>
                     </span>
+                    </div>
                   </div>
                   <div class="kt-widget__content">
                     <div class="color-white">
@@ -41,7 +43,7 @@
                       </div>
                     </div>
                     <div class="kt-widget__action">
-                      <button type="button" class="btn btn-primary btn-upper" ng-click="onCreateCourse()">创建课程</button>
+                      <button type="button" class="btn btn-primary btn-upper btn-create-course" ng-click="onCreateCourse()">创建课程</button>
                     </div>
                   </div>
                 </div>
@@ -100,9 +102,7 @@
             </small>
           </h3>
         </div>
-        <div class="kt-portlet__head-label" ng-if="model.knowledgeList.length < model.knowledgeTotalCount">
-          <a class="kt-font-brand refresh kt-font-bold" title="加载更多知识点" ng-click="onLoadMoreKnowledge()">+更多</a>
-        </div>
+        
 
       </div>
       <div class="kt-portlet__body">
@@ -144,6 +144,13 @@
                       ng-bind="knowledge.usingCompanyCount"></strong>家</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+        <div class="row kt-margin-t-25 kt-align-center">
+          <div class="col-md-12">
+            <div class="kt-portlet__head-label" ng-if="model.knowledgeList.length < model.knowledgeTotalCount">
+              <a class="kt-font-brand refresh kt-font-bold" title="加载更多知识点" ng-click="onLoadMoreKnowledge()">+加载更多</a>
             </div>
           </div>
         </div>

@@ -103,10 +103,11 @@
         <div class="kt-portlet__body">
           <div class="kt-widget kt-widget--user-profile-3">
             <div class="kt-widget__top">
-              <div class="kt-widget__pic kt-font-boldest kt-font-light btn-option"
-                ng-class="{'kt-widget__pic--success kt-font-success': $index%2 == 0, 'kt-widget__pic--danger kt-font-danger': $index%2 != 0}"
-                ng-click="onOpenTechnologyInfo(course.technologyID)" ng-bind="course.technologyName">
+
+              <div class="kt-widget__media kt-hidden-">
+                <img ng-src="\{{course.technologyThumbnailSquare}}" alt="image">
               </div>
+
               <div class="kt-widget__content">
                 <div class="kt-widget__head">
                   <a href="javascript:;" class="kt-widget__username kt-font-brand kt-link kt-font-bold"
@@ -138,9 +139,8 @@
                     <div class="kt-widget__text">
                       Progress
                     </div>
-                    <div class="progress" style="height: 5px;width: 100%;">
-                      <div class="progress-bar" role="progressbar"
-                        ng-class="{'kt-bg-success': $index%2 == 0, 'kt-bg-danger': $index%2 != 0}"
+                    <div class="progress" style="height: 5px; width: 100%;">
+                      <div class="progress-bar kt-bg-success" role="progressbar"
                         ng-style="{'width':course.courseProcess}"></div>
                     </div>
                     <div class="kt-widget__stats" ng-bind="course.courseProcess">

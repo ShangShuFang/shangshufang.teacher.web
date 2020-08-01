@@ -8,6 +8,10 @@
     width: 150px;
 }
 
+.technology-img {
+    width: 120px !important;
+}
+
 .color-white {
     color: #ffffff;
 }

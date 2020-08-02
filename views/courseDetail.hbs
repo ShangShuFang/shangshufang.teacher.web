@@ -498,7 +498,8 @@
                       <span style="width: 100px;" ng-bind="data.cellphone"></span>
                     </td>
                     <td class="kt-datatable__cell">
-                      <span style="width: 100px;">\{{data.enrollmentYear}}年</span>
+                      <span style="width: 100px;" ng-if="data.enrollmentYear !== ''">\{{data.enrollmentYear}}年</span>
+                      <span style="width: 100px;" ng-if="data.enrollmentYear == ''">  </span>
                     </td>
                     <td class="kt-datatable__cell">
                       <span style="width: 100px;">
@@ -545,10 +546,10 @@
                   </div>
                   <ul class="kt-pagination__links">
                     <li class="kt-pagination__link--first" ng-class="{'pagination-disabled': model.prePageNum4SignUp == -1}">
-                      <a href="javascript:" ng-click="onFirstPage4SignUp()"><i class="fa fa-angle-double-left"></i></a>
+                      <a href="javascript:" ng-click="onFirstPage4SignUp()"><i class="fa fa-angle-double-left kt-font-primary"></i></a>
                     </li>
                     <li class="kt-pagination__link--next" ng-class="{'pagination-disabled': model.prePageNum4SignUp == -1}">
-                      <a href="javascript:" ng-click="onPrePage4SignUp()"><i class="fa fa-angle-left"></i></a>
+                      <a href="javascript:" ng-click="onPrePage4SignUp()"><i class="fa fa-angle-left kt-font-primary"></i></a>
                     </li>
 
                     <li ng-repeat="pagination in model.paginationArray4SignUp" ng-class="{'kt-pagination__link--active': model.pageNumber4SignUp == pagination}">
@@ -556,10 +557,10 @@
                     </li>
 
                     <li class="kt-pagination__link--prev" ng-class="{'pagination-disabled': model.nextPageNum4SignUp == -1}">
-                      <a href="javascript:" ng-click="onNextPage4SignUp()"><i class="fa fa-angle-right"></i></a>
+                      <a href="javascript:" ng-click="onNextPage4SignUp()"><i class="fa fa-angle-right kt-font-primary"></i></a>
                     </li>
                     <li class="kt-pagination__link--last" ng-class="{'pagination-disabled': model.nextPageNum4SignUp == -1}">
-                      <a href="javascript:" ng-click="onNextPage4SignUp()"><i class="fa fa-angle-double-right"></i></a>
+                      <a href="javascript:" ng-click="onNextPage4SignUp()"><i class="fa fa-angle-double-right kt-font-primary"></i></a>
                     </li>
                   </ul>
                 </div>
@@ -800,10 +801,10 @@
                     </div>
                     <ul class="kt-pagination__links">
                       <li class="kt-pagination__link--first" ng-class="{'pagination-disabled': model.prePageNum4Exercises == -1}">
-                        <a href="javascript:" ng-click="onFirstPage4Exercises()"><i class="fa fa-angle-double-left"></i></a>
+                        <a href="javascript:" ng-click="onFirstPage4Exercises()"><i class="fa fa-angle-double-left kt-font-primary"></i></a>
                       </li>
                       <li class="kt-pagination__link--next" ng-class="{'pagination-disabled': model.prePageNum4Exercises == -1}">
-                        <a href="javascript:" ng-click="onPrePage4Exercises()"><i class="fa fa-angle-left"></i></a>
+                        <a href="javascript:" ng-click="onPrePage4Exercises()"><i class="fa fa-angle-left kt-font-primary"></i></a>
                       </li>
 
                       <li ng-repeat="pagination in model.paginationArray4Exercises" ng-class="{'kt-pagination__link--active': model.pageNumber4Exercises == pagination}">
@@ -811,10 +812,10 @@
                       </li>
 
                       <li class="kt-pagination__link--prev" ng-class="{'pagination-disabled': model.nextPageNum4Exercises == -1}">
-                        <a href="javascript:" ng-click="onNextPage4Exercises()"><i class="fa fa-angle-right"></i></a>
+                        <a href="javascript:" ng-click="onNextPage4Exercises()"><i class="fa fa-angle-right kt-font-primary"></i></a>
                       </li>
                       <li class="kt-pagination__link--last" ng-class="{'pagination-disabled': model.nextPageNum4Exercises == -1}">
-                        <a href="javascript:" ng-click="onLastPage4Exercises()"><i class="fa fa-angle-double-right"></i></a>
+                        <a href="javascript:" ng-click="onLastPage4Exercises()"><i class="fa fa-angle-double-right kt-font-primary"></i></a>
                       </li>
                     </ul>
                   </div>

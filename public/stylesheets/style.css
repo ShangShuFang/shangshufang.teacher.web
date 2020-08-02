@@ -461,6 +461,10 @@ a.no-hand {
     color: #f7a900;
 }
 
+.pagination-disabled i {
+    color: #93a2dd !important;
+}
+
 .kt-font-primary {
     color: #3d94fb !important;
 }

@@ -114,6 +114,10 @@ body {
     color: #fffb5b;
 }
 
+.star-selected-red {
+    color: #ff4646;
+}
+
 
 /* begin： 查询表单的下拉列表*/
 

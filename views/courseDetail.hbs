@@ -12,10 +12,11 @@
     <div class="kt-portlet__body">
       <div class="kt-widget kt-widget--user-profile-3">
         <div class="kt-widget__top">
-          <div class="kt-widget__pic kt-widget__pic--success kt-font-success kt-font-boldest kt-font-light btn-option"
-               ng-bind="model.courseInfo.technologyName"
-               ng-click="onOpenTechnologyInfo(model.courseInfo.technologyID)"></div>
-
+          <div class="kt-widget__media">
+            <a href="javascript:" ng-click="onOpenTechnologyInfo(model.courseInfo.technologyID)">
+              <img ng-src="\{{model.courseInfo.technologyThumbnail}}" alt="image">
+            </a>
+          </div>
           <div class="kt-widget__content">
             <div class="kt-widget__head">
               <h4>
@@ -117,7 +118,7 @@
               <i class="flaticon-list"></i>
             </div>
             <div class="kt-widget__details">
-              <span class="kt-widget__title">编程练习</span>
+              <span class="kt-widget__title">随堂练习</span>
               <span class="kt-widget__value" ng-bind="model.courseInfo.courseKnowledgeExercisesCount">
               </span>
             </div>

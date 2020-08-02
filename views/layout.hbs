@@ -91,7 +91,7 @@
                         <!--begin: Head -->
                         <div class="kt-user-card kt-user-card--skin-light kt-notification-item-padding-x">
                           <div class="kt-user-card__avatar">
-                            <img alt="Pic" ng-src="/media/logos/logo_web.png" class="img-circle"
+                            <img alt="Pic" ng-src="\{{model.loginUser.photo}}" class="img-circle"
                               style="border-radius: 50%" ng-if="model.loginUser.photo !== ''" />
                             <img alt="Pic" src="/media/users/teacher_default.png" class="img-circle"
                               style="border-radius: 50%" ng-if="model.loginUser.photo == ''" />

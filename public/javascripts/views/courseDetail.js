@@ -95,6 +95,7 @@ pageApp.controller('pageCtrl', function($scope, $http, $sce) {
 
         //region 批改练习
         filterStatus: 'NULL',
+        filterStudentName: '',
         fromIndex4Exercises: 0,
         toIndex4Exercises: 0,
         pageNumber4Exercises: 1,
@@ -1149,8 +1150,20 @@ pageApp.controller('pageCtrl', function($scope, $http, $sce) {
     //endregion
 
     //region 批改练习
+    $scope.onOtherExercisesKeydown = function(e) {
+        let keyCode = e.keyCode;
+        if (keyCode !== 13) {
+            return false;
+        }
+        $scope.loadCourseStudentExercises();
+    };
+
     $scope.loadCourseStudentExercises = function() {
-        $http.get(`/course/detail/courseStudentExercises?pageNumber=${$scope.model.pageNumber4Exercises}&universityCode=${$scope.model.universityCode}&schoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}&dataStatus=${$scope.model.filterStatus}`)
+        let studentName = $scope.model.filterStudentName;
+        if (commonUtility.isEmpty(studentName)) {
+            studentName = 'NULL';
+        }
+        $http.get(`/course/detail/courseStudentExercises?pageNumber=${$scope.model.pageNumber4Exercises}&universityCode=${$scope.model.universityCode}&schoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}&dataStatus=${$scope.model.filterStatus}&studentName=${studentName}`)
             .then(function successCallback(response) {
                 if (response.data.err) {
                     bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));

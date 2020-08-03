@@ -638,7 +638,7 @@
                   <div class="kt-portlet__body kt-padding-0">
                     <div class="form-group row kt-margin-0">
                       <label class="col-form-label col-xl-1 col-sm-12 text-center">状态过滤：</label>
-                      <div class="col-lg-4 col-md-9 col-sm-12 shs-padding-top-2">
+                      <div class="col-md-5 shs-padding-top-2">
                         <a href=""
                            class="btn btn-elevate btn-square btn-sm"
                            ng-class="{'btn-primary': model.filterStatus == 'NULL', 'btn-primary-hover-info': model.filterStatus != 'NULL'}"
@@ -669,6 +669,15 @@
                            ng-click="onFilterCourseStudentExercises('S')">
                           已通过
                         </a>
+                      </div>
+                      <div class="col-md-6 shs-padding-top-2">
+                        <div class="kt-input-icon kt-input-icon--right kt-pull-right" style="width: 400px">
+                          <input type="text" class="form-control" ng-model="model.filterStudentName"
+                            ng-keydown="onOtherExercisesKeydown($event)" placeholder="输入姓名，按姓名与状态联合查询">
+                          <span class="kt-input-icon__icon kt-input-icon__icon--right">
+                            <span><i class="la la-search"></i></span>
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>

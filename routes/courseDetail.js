@@ -97,8 +97,9 @@ router.get('/courseStudentExercises', function(req, res, next) {
     let schoolID = req.query.schoolID;
     let courseID = req.query.courseID;
     let dataStatus = req.query.dataStatus;
+    let studentName = req.query.studentName;
 
-    let parameter = `${pageNumber}/${sysConfig.pageSize.ten}/${universityCode}/${schoolID}/${courseID}/${dataStatus}`;
+    let parameter = `${pageNumber}/${sysConfig.pageSize.ten}/${universityCode}/${schoolID}/${courseID}/${dataStatus}/${studentName}`;
 
     service.queryWithParameter(parameter, (result) => {
         if (result.err) {

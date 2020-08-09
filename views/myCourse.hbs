@@ -118,8 +118,8 @@
                       ng-if="course.dataStatus == '2'">已结束</span>
                     <button type="button" class="btn btn-secondary btn-sm" ng-click="onOpenCourseDetail(course, 2, 6)"
                       ng-if="course.dataStatus == '1'">批改作业</button>&nbsp;
-                    <button type="button" class="btn btn-primary btn-sm btn-upper" ng-click="onFinishCourse(course)"
-                      ng-if="course.dataStatus == '1'">授课完成</button>
+                    {{!-- <button type="button" class="btn btn-primary btn-sm btn-upper" ng-click="onFinishCourse(course)"
+                      ng-if="course.dataStatus == '1'">授课完成</button> --}}
                   </div>
                 </div>
                 <div class="kt-widget__subhead">

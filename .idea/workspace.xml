@@ -19,10 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d053ca62-ce79-4623-8a84-df24999de579" name="Default Changelist" comment="优化学生能力分析相关逻辑">
-      <change beforePath="$PROJECT_DIR$/public/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/stylesheets/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/courseCenter.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/courseCenter.hbs" afterDir="false" />
-    </list>
+    <list default="true" id="d053ca62-ce79-4623-8a84-df24999de579" name="Default Changelist" comment="优化学生能力分析相关逻辑" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -170,6 +167,7 @@
       <workItem from="1591885996782" duration="1285000" />
       <workItem from="1595495984355" duration="112000" />
       <workItem from="1596290423888" duration="6000" />
+      <workItem from="1596593558541" duration="3000" />
     </task>
     <task id="LOCAL-00018" summary="添加批改历史功能">
       <created>1581775208528</created>

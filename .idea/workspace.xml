@@ -19,12 +19,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d053ca62-ce79-4623-8a84-df24999de579" name="Default Changelist" comment="优化学生能力分析相关逻辑">
+    <list default="true" id="d053ca62-ce79-4623-8a84-df24999de579" name="Default Changelist" comment="更新关于我们等链接地址&#10;更新Banner图片">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/banner/company_header.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/media/banner/company_header.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/banner/course_center_header.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/media/banner/course_center_header.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/media/banner/growing_map_header.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/media/banner/growing_map_header.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/layout.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/layout.hbs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,14 +170,8 @@
       <workItem from="1595495984355" duration="112000" />
       <workItem from="1596290423888" duration="6000" />
       <workItem from="1596593558541" duration="3000" />
-      <workItem from="1599645657501" duration="673000" />
-    </task>
-    <task id="LOCAL-00018" summary="添加批改历史功能">
-      <created>1581775208528</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1581775208528</updated>
+      <workItem from="1599645657501" duration="755000" />
+      <workItem from="1599646519032" duration="343000" />
     </task>
     <task id="LOCAL-00019" summary="批改历史添加加载更多功能">
       <created>1581782331915</created>
@@ -519,7 +509,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592179588893</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="更新关于我们等链接地址&#10;更新Banner图片">
+      <created>1599646430584</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1599646430584</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -582,7 +579,6 @@
       <path value="$PROJECT_DIR$/../../.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="完善学生能力详细分析逻辑" />
     <MESSAGE value="开发学生能力级别标准说明页面" />
     <MESSAGE value="开发查看合作企业以及每个企业所使用的技术和技术点的信息页面" />
     <MESSAGE value="添加教师端审批账户的功能" />
@@ -607,14 +603,15 @@
     <MESSAGE value="FIX MESSAGE" />
     <MESSAGE value="fix bug" />
     <MESSAGE value="优化学生能力分析相关逻辑" />
-    <option name="LAST_COMMIT_MESSAGE" value="优化学生能力分析相关逻辑" />
+    <MESSAGE value="更新关于我们等链接地址&#10;更新Banner图片" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新关于我们等链接地址&#10;更新Banner图片" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="257" y="23" width="1137" height="1027" key="CommitChangelistDialog2" timestamp="1599646026024">
+    <state x="257" y="23" width="1137" height="1027" key="CommitChangelistDialog2" timestamp="1599646429657">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
     <state x="257" y="23" width="1137" height="1027" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1592179588674" />
-    <state x="257" y="23" key="CommitChangelistDialog2/0.23.1680.952@0.23.1680.952" timestamp="1599646026024" />
+    <state x="257" y="23" key="CommitChangelistDialog2/0.23.1680.952@0.23.1680.952" timestamp="1599646429657" />
     <state x="168" y="94" width="1344" height="821" key="DiffContextDialog" timestamp="1595496023956">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -684,10 +681,11 @@
     </state>
     <state x="432" y="162" key="RollbackChangesDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1595496025630" />
     <state x="432" y="152" key="RollbackChangesDialog/0.23.1680.952@0.23.1680.952" timestamp="1599645765727" />
-    <state x="440" y="255" key="Vcs.Push.Dialog.v2" timestamp="1592179590831">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state x="440" y="238" key="Vcs.Push.Dialog.v2" timestamp="1599646433405">
+      <screen x="0" y="23" width="1680" height="952" />
     </state>
     <state x="440" y="255" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1592179590831" />
+    <state x="440" y="238" key="Vcs.Push.Dialog.v2/0.23.1680.952@0.23.1680.952" timestamp="1599646433405" />
     <state x="421" y="52" width="834" height="841" key="find.popup" timestamp="1591549421124">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>

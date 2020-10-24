@@ -1,0 +1,296 @@
+<link href="/stylesheets/plugins/todo.css" rel="stylesheet" type="text/css" />
+<div class="kt-container kt-grid__item kt-grid__item--fluid" ng-app="pageApp" ng-controller="pageCtrl">
+	<div class="kt-subheader kt-grid__item">
+		<div class="kt-container">
+			<div class="kt-subheader__main">
+				<h3 class="kt-subheader__title">
+					知识点随堂习题
+				</h3>
+				<span class="kt-subheader__separator kt-hidden"></span>
+				<div class="kt-subheader__breadcrumbs">
+					<span class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></span>
+					<span class="kt-subheader__breadcrumbs-separator"></span>
+					<span class="kt-subheader__breadcrumbs-link">基础名称</span>
+					<span class="kt-subheader__breadcrumbs-separator"></span>
+					<span class="kt-subheader__breadcrumbs-link">知识点名称 </span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="kt-grid kt-grid--desktop kt-grid--ver-desktop  kt-todo">
+		<div class="kt-grid__item   kt-portlet kt-todo__aside" id="kt_todo_aside" style="opacity: 1;">
+			<div class="kt-todo__nav">
+				<ul class="kt-nav">
+					<li class="kt-nav__item" ng-class="{'kt-nav__item--active': model.questionSource == 'C'}">
+						<a href="javascript:" class="kt-nav__link" ng-click="onSearchBySource('C')">
+							<i class="kt-nav__link-icon fa fa-genderless kt-font-warning"></i>
+							<span class="kt-nav__link-text">企业题库</span>
+						</a>
+					</li>
+					<li class="kt-nav__item" ng-class="{'kt-nav__item--active': model.questionSource == 'M'}">
+						<a href="javascript:" class="kt-nav__link" ng-click="onSearchBySource('M')">
+							<i class="kt-nav__link-icon fa fa-genderless kt-font-success"></i>
+							<span class="kt-nav__link-text">自定义题库</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="kt-grid__item kt-grid__item--fluid kt-todo__content">
+			<div class="kt-todo__tasks-top">
+				<div class="kt-portlet">
+					<div class="kt-todo__header">
+						<div class="kt-todo__nav">
+							<a href="javascript:" class="kt-todo__link"
+								ng-class="{'kt-todo__link--active': model.questionType == 'C'}" ng-click="onSearchByType('C')">
+								选择题（<span ng-bind="model.choiceQuestion.totalCount"></span>）
+							</a>
+							<a href="javascript:" class="kt-todo__link"
+								ng-class="{'kt-todo__link--active': model.questionType == 'B'}" ng-click="onSearchByType('B')">
+								填空题（<span ng-bind="model.blankQuestion.totalCount"></span>）
+							</a>
+							<a href="javascript:" class="kt-todo__link"
+								ng-class="{'kt-todo__link--active': model.questionType == 'P'}" ng-click="onSearchByType('P')">
+								编程题（<span ng-bind="model.programeQuestion.totalCount"></span>）
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="kt-todo__docs-bottom">
+				<div class="kt-portlet">
+					{{!-- begin: 企业题库 --}}
+					<div class="kt-portlet__body" ng-if="model.questionSource == 'C'">
+						<div ng-if="model.questionType === 'C'">
+							<ol>
+								<li class="kt-margin-t-10" ng-repeat="choiceQuestion in model.choiceQuestion.dataList">
+									<div class="form-group kt-margin-b-0">
+										<strong ng-bind="choiceQuestion.exercisesTitle" class="retain-white-enter"></strong>
+										<div class="kt-font-sm" ng-bind="choiceQuestion.exercisesSource"></div>
+										<div class="kt-radio-list kt-margin-t-10" ng-if="choiceQuestion.exercisesType == 'S'">
+											<label class="kt-radio kt-radio--tick kt-radio--danger"
+												ng-repeat="option in choiceQuestion.choiceOptions">
+												<input type="radio" name="radio\{{$parent.$index}}" ng-checked="option.rightAnswer"
+													disabled="disabled">
+												<label ng-bind="option.optionText"></label>
+												<strong ng-if="option.rightAnswer == true" class=" kt-font-danger">（正确答案）</strong>
+												<span></span>
+											</label>
+										</div>
+
+										<div class="kt-checkbox-list kt-margin-t-10" ng-if="choiceQuestion.exercisesType == 'M'">
+											<label class="kt-checkbox kt-checkbox--tick kt-checkbox--danger"
+												ng-repeat="option in choiceQuestion.choiceOptions">
+												<input type="checkbox" name="radio\{{$parent.$index}}" ng-checked="option.rightAnswer"
+													disabled="disabled">
+												<label ng-bind="option.optionText"></label>
+												<strong ng-if="option.rightAnswer == true" class=" kt-font-danger">（正确答案）</strong>
+												<span></span>
+											</label>
+										</div>
+									</div>
+								</li>
+							</ol>
+						</div>
+						<div ng-if="model.questionType === 'B'">
+							<ol>
+								<li class="kt-margin-t-10" ng-repeat="question in model.blankQuestion.dataList">
+									<div class="form-group kt-margin-b-0">
+										<strong ng-bind="question.exercisesTitle" class="retain-white-enter"></strong>
+										<div class="kt-font-sm kt-margin-b-5" ng-bind="question.exercisesSource"></div>
+										<input type="text" class="form-control" style="width: 35%; display:inline" disabled="disabled"
+											ng-model="question.rightAnswer">
+										<strong ng-if="question.rightAnswer != ''" class="kt-font-danger">（正确答案）</strong>
+									</div>
+								</li>
+							</ol>
+						</div>
+						<div ng-if="model.questionType === 'P'">
+							<ol>
+								<li class="kt-margin-b-10" ng-repeat="question in model.programmeQuestion.dataList">
+									<a ng-href="\{{question.documentUrl}}" class="kt-font-info" target="_blank"
+										ng-bind="question.documentUrl.substr(question.documentUrl.lastIndexOf('/')+1)"></a>
+									<div class="kt-margin-t-5">
+										<a ng-href="\{{question.answerUrl}}" class=" kt-font-warning" target="_blank">参考示例</a>
+									</div>
+								</li>
+							</ol>
+						</div>
+						<a href="javascript:"
+							ng-if="model.questionType === 'C' && model.choiceQuestion.pageNumber < model.choiceQuestion.maxPageNumber 
+                                    || model.questionType === 'B' && model.blankQuestion.pageNumber < model.blankQuestion.maxPageNumber
+                                    || model.questionType === 'P' && model.programmeQuestion.pageNumber < model.programmeQuestion.maxPageNumber"
+							class="kt-font-primary text-center" ng-click="onLoadMore(model.questionType)">加载更多</a>
+					</div>
+					{{!-- end: 企业题库 --}}
+
+					{{!-- begin: 自定义题库 --}}
+					<div class="kt-portlet__body" ng-if="model.questionSource == 'M'">
+						<div class="choice-list" ng-if="model.choiceQuestion.dataList.length > 0 && model.questionType === 'C'">
+							<div class="filter">
+								<button type="button" 
+									class="btn btn-sm"
+									ng-class="{'btn-primary': model.choiceQuestion.filterTeacher == 0, 'btn-outline-hover-primary': model.choiceQuestion.filterTeacher != 0}" 
+									ng-click="onFilterChoiceQuestion('A')">
+									全部
+								</button>
+								<button type="button" 
+									class="btn btn-sm"
+									ng-class="{'btn-primary': model.choiceQuestion.filterTeacher != 0, 'btn-outline-hover-primary': model.choiceQuestion.filterTeacher == 0}" 
+									ng-click="onFilterChoiceQuestion('M')">
+									我的
+								</button>
+							</div>
+							<ol>
+								<li class="kt-margin-t-10" ng-repeat="choiceQuestion in model.choiceQuestion.dataList">
+									{{!-- 题目区 --}}
+									<div class="form-group kt-margin-b-0">
+										{{!-- 标题 --}}
+										<strong ng-if="choiceQuestion.exercisesTitle == ''">请设置题目标题</strong>
+										<strong ng-if="choiceQuestion.exercisesTitle != ''" ng-bind="choiceQuestion.exercisesTitle"
+											class="retain-white-enter"></strong>
+
+										{{!-- 添加信息 --}}
+										<div class="kt-font-sm" ng-if="!choiceQuestion.isNew">
+											<label ng-bind="choiceQuestion.universityName"></label>
+											<label ng-bind="choiceQuestion.schoolName"></label>
+											<label ng-bind="choiceQuestion.createUser"></label><label>老师</label>
+										</div>
+
+										{{!-- 选项内容（单选） --}}
+										<div class="kt-radio-list kt-margin-t-10" ng-if="choiceQuestion.exercisesType == 'S'">
+											<label class="kt-radio kt-radio--tick kt-radio--danger"
+												ng-repeat="option in choiceQuestion.choiceOptions">
+												<input type="radio" name="radio\{{$parent.$index}}" ng-checked="option.rightAnswer"
+													disabled="disabled">
+												<label ng-if="option.optionText != ''">\{{option.optionText}}</label>
+												<label ng-if="option.optionText == ''">请设置选项内容</label>
+												<strong ng-if="option.rightAnswer == true" class=" kt-font-danger">（正确答案）</strong>
+												<span></span>
+											</label>
+										</div>
+										{{!-- 选项内容（多选） --}}
+										<div class="kt-checkbox-list kt-margin-t-10" ng-if="choiceQuestion.exercisesType == 'M'">
+											<label class="kt-checkbox kt-checkbox--tick kt-checkbox--danger"
+												ng-repeat="option in choiceQuestion.choiceOptions">
+												<input type="checkbox" name="radio\{{$parent.$index}}" ng-checked="option.rightAnswer"
+													disabled="disabled">
+												<label ng-if="option.optionText != ''">\{{option.optionText}}</label>
+												<label ng-if="option.optionText == ''">请设置选项内容</label>
+												<strong ng-if="option.rightAnswer == true" class=" kt-font-danger">（正确答案）</strong>
+												<span></span>
+											</label>
+										</div>
+									</div>
+
+									{{!-- 操作区 --}}
+									<div class="kt-margin-t-10"
+										ng-if="choiceQuestion.isNew || choiceQuestion.teacherID == model.loginUser.customerID">
+										<a href="javascript:" class="kt-link--brand" ng-if="choiceQuestion.isShowEdit == false"
+											ng-click="toggleChoiceQuestionEdit(choiceQuestion, true)">编辑</a>
+										<a href="javascript:" class="kt-link--brand" ng-if="choiceQuestion.isShowEdit == true"
+											ng-click="toggleChoiceQuestionEdit(choiceQuestion, false)">取消编辑</a>
+										<a href="javascript:" class="kt-link--brand" ng-if="choiceQuestion.isShowEdit == true"
+											ng-click="saveChoiceQuestion(choiceQuestion)">保存</a>
+										<a href="javascript:" class="kt-link--danger"
+											ng-click="onRemoveChoiceQuestion(choiceQuestion)">删除</a>
+									</div>
+
+									{{!-- 编辑区 --}}
+									<div class="exercises-select-edit kt-margin-t-10" ng-if="choiceQuestion.isShowEdit == true">
+										<form class="kt-form kt-form--label-right">
+											<div class="form-group row kt-margin-b-0-">
+												<label for="example-text-input" class="col-1 col-form-label text-left">题目标题：</label>
+												<div class="col-10">
+													<textarea class="form-control" name="" rows="3" maxlength="3000"
+														placeholder="如果题目包含代码片段，你可使用Markdown语法进行编辑"
+														ng-model="choiceQuestion.exercisesTitle"></textarea>
+												</div>
+											</div>
+											<div class="form-group row kt-margin-b-0-">
+												<label for="example-text-input" class="col-1 col-form-label text-left">类型：</label>
+												<div class="col-10">
+													<div class="kt-radio-inline">
+														<label class="kt-radio">
+															<input type="radio" name="select-type{{$index}}" value="S"
+																ng-model="choiceQuestion.exercisesType"
+																ng-checked="choiceQuestion.exercisesType == 'S'"> 单选
+															<span></span>
+														</label>
+														<label class="kt-radio">
+															<input type="radio" name="select-type{{$index}}" value="M"
+																ng-model="choiceQuestion.exercisesType"
+																ng-checked="choiceQuestion.exercisesType == 'M'"> 多选
+															<span></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row kt-margin-b-0">
+												<label for="example-text-input" class="col-1 col-form-label text-left">选项：</label>
+												<div class="col-10">
+													<table class="table">
+														<thead>
+															<tr>
+																<th style="width: 60%;">选项内容</th>
+																<th style="width: 20%;">正确答案</th>
+																<th style="width: 20%;">操作</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr ng-repeat="option in choiceQuestion.choiceOptions">
+																<td style="width: 70%;">
+																	<input type="text" class="form-control" ng-model="option.optionText" maxlength="200"
+																		placeholder="请设置选项内容">
+																</td>
+																<td style="width: 20%;">
+																	<label class="kt-checkbox kt-checkbox--tick kt-checkbox--danger">
+																		<input type="checkbox" name="choise-question-answer{{$parent.$index}}"
+																			ng-click="onSetAnswer(choiceQuestion, option, $event)"
+																			ng-checked="option.rightAnswer">
+																		<span></span>
+																	</label>
+																</td>
+																<td style="width: 10%;">
+																	<button type="button" class="btn btn-outline-hover-warning btn-sm btn-circle btn-icon"
+																		ng-click="onRemoveOption(choiceQuestion, option)"><i
+																			class="fa fa-times"></i></button>
+																</td>
+															</tr>
+															<tr>
+																<td colspan="3" style="width: 100%;">
+																	<a href="javascript:" ng-click="onCreateChoiceOption(choiceQuestion)">添加选项</a>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</form>
+									</div>
+								</li>
+							</ol>
+							<div class="col-md-12 text-center">
+								<a class="kt-link kt-font-primary" style="cursor:pointer;"
+									ng-if="model.choiceQuestion.pageNumber < model.choiceQuestion.maxPageNumber"
+									ng-click="onLoadMoreCustomChoiceExercises()">加载更多</a>&nbsp;
+								<button class="btn btn-warning" ng-click="onCreateChoiceQuestion()">添加选择题</button>
+							</div>
+						</div>
+
+					</div>
+					{{!-- end: 自定义题库 --}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<input type="hidden" id="hidden_technologyID" value="{{technologyID}}">
+<input type="hidden" id="hidden_knowledgeID" value="{{knowledgeID}}">
+
+<script>
+	$(document).ready(function () {
+		commonUtility.appendScript('/javascripts/views/knowledgeExercises.js');
+	});
+</script>

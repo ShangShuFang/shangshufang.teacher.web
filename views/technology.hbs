@@ -110,7 +110,6 @@
           <div class="col-md-6">
             <div class="kt-list-timeline">
               <div class="kt-list-timeline__items">
-
                 <div class="kt-list-timeline__item" ng-repeat="knowledge in model.knowledgeList1">
                   <span class="kt-list-timeline__badge"
                     ng-class="{'kt-list-timeline__badge--success': knowledge.learningPhaseID % 2 == 1, 'kt-list-timeline__badge--danger': knowledge.learningPhaseID % 2 == 0}"></span>
@@ -119,12 +118,9 @@
                       ng-class="{'kt-badge--success': knowledge.learningPhaseID % 2 == 1, 'kt-badge--danger': knowledge.learningPhaseID % 2 == 0}"
                       ng-bind="knowledge.learningPhaseName"></span>
                     <span ng-bind="knowledge.knowledgeName"></span>
-
                   </span>
-                  <span class="kt-list-timeline__time using-company">使用企业<strong class="count"
-                      ng-bind="knowledge.usingCompanyCount"></strong>家</span>
+                  <a href="/exercises/knowledge?technologyID=\{{knowledge.technologyID}}&knowledgeID=\{{knowledge.knowledgeID}}" target="_blank" class="kt-list-timeline__time using-company kt-font-brand">查看随堂练习</a>
                 </div>
-
               </div>
             </div>
           </div>
@@ -140,8 +136,9 @@
                       ng-bind="knowledge.learningPhaseName"></span>
                     <span ng-bind="knowledge.knowledgeName"></span>
                   </span>
-                  <span class="kt-list-timeline__time using-company">使用企业<strong class="count"
-                      ng-bind="knowledge.usingCompanyCount"></strong>家</span>
+                  <a href="javascript:" class="kt-list-timeline__time using-company kt-link--info">查看随堂练习</a>
+                  {{!-- <span class="kt-list-timeline__time using-company">使用企业<strong class="count"
+                      ng-bind="knowledge.usingCompanyCount"></strong>家</span> --}}
                 </div>
               </div>
             </div>

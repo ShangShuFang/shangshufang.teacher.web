@@ -581,7 +581,7 @@
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 10%">技术</th>
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 45%">覆盖知识点
                         </th>
-                        <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 20%">习题库数量</th>
+                        {{!-- <th class="kt-datatable__cell kt-datatable__cell--sort text-center" style="width: 20%">习题库数量</th> --}}
                         <th class="kt-datatable__cell kt-datatable__cell--sort text-center"
                             ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
                             style="width: 15%">操作
@@ -593,15 +593,21 @@
                         <td class="kt-datatable__cell text-center" style="width: 10%">第\{{exercises.courseClass}}节</td>
                         <td class="kt-datatable__cell text-center" style="width: 10%">\{{exercises.technologyName}}</td>
                         <td class="kt-datatable__cell text-center" style="width: 45%">
-                          <span ng-repeat="knowledge in exercises.knowledgeList"
-                                ng-bind="knowledge.knowledgeName"></span>
+                          <div class="row" ng-repeat="knowledge in exercises.knowledgeList" style="width: 390px; margin: 0 auto;">
+                            
+                            <div class="col-md-9 text-left"><span ng-bind="knowledge.knowledgeName"></span></div>
+                            <div class="col-md-3 text-right"><a href="/exercises/knowledge?technologyID=\{{model.courseInfo.technologyID}}&knowledgeID=\{{knowledge.knowledgeID}}" title="\{{knowledge.knowledgeName}}" class=" kt-link--brand" target="_blank">随堂练习</a></div>
+
+                            {{!-- <button type="button" class="btn btn-outline-brand btn-elevate btn-circle btn-icon"><i class="flaticon-bell"></i></button> --}}
+                            
+                          </div>
                         </td>
-                        <td class="kt-datatable__cell text-center" style="width: 20%">
+                        {{!-- <td class="kt-datatable__cell text-center" style="width: 20%">
                           <a href="javascript:;" class="kt-widget__value kt-font-brand"
                              ng-if="exercises.exercisesTotalCount > 0"
                              ng-click="onShowExercisesModal(exercises.courseClass)">共计\{{exercises.exercisesTotalCount}}个编程练习</a>
                           <span ng-if="exercises.exercisesTotalCount == 0">共计\{{exercises.exercisesTotalCount}}个编程练习</span>
-                        </td>
+                        </td> --}}
 
                         <td class="kt-datatable__cell text-center"
                             ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"

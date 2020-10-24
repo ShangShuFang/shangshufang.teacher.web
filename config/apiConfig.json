@@ -90,7 +90,16 @@
 
       "growingMapList": "/api/v1/growing_map/list/map",
       "growingMap": "/api/v1/growing_map/any/map",
-      "growingMapDetail": "/api/v1/growing_map/list/detail"
+      "growingMapDetail": "/api/v1/growing_map/list/detail",
+
+      "storeKnowledgeChoiceExercisesList": "/api/v1/exercise/knowledge/choice/list",
+      "storeKnowledgeBlankExercisesList": "/api/v1/exercise/knowledge/blank/list",
+			"storeKnowledgeProgramExercisesList": "/api/v1/knowledge/exercises/list",
+			
+      "customKnowledgeChoiceExercisesList": "/api/v1/university/exercise/knowledge/choice/list",
+      "addCustomKnowledgeChoiceExercises": "/api/v1/university/exercise/knowledge/choice/add",
+      "changeCustomKnowledgeChoiceExercises": "/api/v1/university/exercise/knowledge/choice/change",
+      "deleteCustomKnowledgeChoiceExercises": "/api/v1/university/exercise/knowledge/choice/delete"
     }
   }
 }

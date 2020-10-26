@@ -1,6 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let sysConfig = require('../config/sysConfig');
+let markdownService = require('../service/markdownService');
 let commonService = require('../service/commonService');
 
 router.get('/', function (req, res, next) {
@@ -96,7 +97,7 @@ router.get('/program/list', function (req, res, next) {
 });
 //#endregion
 
-//#region 我的题库（选择题）
+//#region 自定义题库（选择题）
 router.get('/custom/choice/list', function (req, res, next) {
 	let service = new commonService.commonInvoke('customKnowledgeChoiceExercisesList');
 	let pageNumber = req.query.pageNumber;
@@ -114,6 +115,11 @@ router.get('/custom/choice/list', function (req, res, next) {
 				msg: result.msg
 			});
 		} else {
+			if (result.content.totalCount > 0 && Array.isArray(result.content.responseData)) {
+				result.content.responseData.forEach((data) => {
+					data.exercisesTitleHtml = markdownService.convertToHtml(data.exercisesTitle);
+				});
+			}
 			let dataContent = commonService.buildRenderData('知识点练习（选择题）', pageNumber, pageSize, result);
 			res.json({
 				err: false,
@@ -213,14 +219,252 @@ router.delete('/custom/choice/delete', function(req, res, next) {
 			}
 	});
 });
+//#endregion
+
+//#region 自定义题库（填空题）
+
+router.get('/custom/blank/list', function (req, res, next) {
+	let service = new commonService.commonInvoke('customKnowledgeBlankExercisesList');
+	let pageNumber = req.query.pageNumber;
+	let pageSize = sysConfig.pageSize.ten;
+	let technologyID = req.query.technologyID;
+	let knowledgeID = req.query.knowledgeID;
+	let teacherID = req.query.teacherID;
+	let parameter = `${pageNumber}/${pageSize}/${technologyID}/${knowledgeID}/${teacherID}`;
+
+	service.queryWithParameter(parameter, function (result) {
+		if (result.err) {
+			res.json({
+				err: true,
+				code: result.code,
+				msg: result.msg
+			});
+		} else {
+			if (result.content.totalCount > 0 && Array.isArray(result.content.responseData)) {
+				result.content.responseData.forEach((data) => {
+					data.exercisesTitleHtml = markdownService.convertToHtml(data.exercisesTitle);
+				});
+			}
+			let dataContent = commonService.buildRenderData('知识点练习（填空题）', pageNumber, pageSize, result);
+			res.json({
+				err: false,
+				code: result.code,
+				msg: result.msg,
+				dataContent: dataContent
+			});
+		}
+	});
+});
+
+router.post('/custom/blank/add', function (req, res, next) {
+	let service = new commonService.commonInvoke('addCustomKnowledgeBlankExercises');
+	let data = {
+		universityCode: req.body.universityCode,
+		schoolID: req.body.schoolID,
+		teacherID: req.body.teacherID,
+		technologyID: req.body.technologyID,
+		knowledgeID: req.body.knowledgeID,
+		exercisesTitle: req.body.exercisesTitle,
+		rightAnswer: req.body.rightAnswer,
+		loginUser: req.body.loginUser
+	};
+
+	service.create(data, (result) => {
+		if (result.err) {
+			res.json({
+				err: true,
+				code: result.code,
+				msg: result.msg
+			});
+		} else {
+			res.json({
+				err: false,
+				code: result.code,
+				msg: result.msg,
+				exercisesID: result.content.responseData
+			});
+		}
+	});
+});
+
+router.put('/custom/blank/change', function (req, res, next) {
+	let service = new commonService.commonInvoke('changeCustomKnowledgeBlankExercises');
+	let data = {
+		exercisesID: req.body.exercisesID,
+		universityCode: req.body.universityCode,
+		schoolID: req.body.schoolID,
+		teacherID: req.body.teacherID,
+		technologyID: req.body.technologyID,
+		knowledgeID: req.body.knowledgeID,
+		exercisesTitle: req.body.exercisesTitle,
+		rightAnswer: req.body.rightAnswer,
+		loginUser: req.body.loginUser
+	};
+
+	service.change(data, (result) => {
+		if (result.err) {
+			res.json({
+				err: true,
+				code: result.code,
+				msg: result.msg
+			});
+		} else {
+			res.json({
+				err: false,
+				code: result.code,
+				msg: result.msg
+			});
+		}
+	});
+});
+
+router.delete('/custom/blank/delete', function(req, res, next) {
+	let service = new commonService.commonInvoke('deleteCustomKnowledgeBlankExercises');
+	let technologyID = req.query.technologyID;
+	let knowledgeID = req.query.knowledgeID;
+	let exercisesID = req.query.exercisesID;
+	let teacherID = req.query.teacherID;
+	let parameter = `${technologyID}/${knowledgeID}/${exercisesID}/${teacherID}`;
+
+	service.delete(parameter, function(result) {
+			if (result.err) {
+					res.json({
+							err: true,
+							code: result.code,
+							msg: result.msg
+					});
+			} else {
+					res.json({
+							err: false,
+							code: result.code,
+							msg: result.msg
+					});
+			}
+	});
+});
 
 //#endregion
 
-//#region 我的题库（填空题）
+//#region 自定义题库（编程题）
+router.get('/custom/program/list', function (req, res, next) {
+	let service = new commonService.commonInvoke('customKnowledgeProgramExercisesList');
+	let pageNumber = req.query.pageNumber;
+	let pageSize = sysConfig.pageSize.ten;
+	let technologyID = req.query.technologyID;
+	let knowledgeID = req.query.knowledgeID;
+	let teacherID = req.query.teacherID;
+	let parameter = `${pageNumber}/${pageSize}/${technologyID}/${knowledgeID}/${teacherID}`;
 
-//#endregion
+	service.queryWithParameter(parameter, function (result) {
+		if (result.err) {
+			res.json({
+				err: true,
+				code: result.code,
+				msg: result.msg
+			});
+		} else {
+			if (result.content.totalCount > 0 && Array.isArray(result.content.responseData)) {
+				result.content.responseData.forEach((data) => {
+					data.exercisesTitleHtml = markdownService.convertToHtml(data.exercisesTitle);
+				});
+			}
+			let dataContent = commonService.buildRenderData('知识点练习（编程题）', pageNumber, pageSize, result);
+			res.json({
+				err: false,
+				code: result.code,
+				msg: result.msg,
+				dataContent: dataContent
+			});
+		}
+	});
+});
 
-//#region 我的题库（编程题）
+router.post('/custom/program/add', function (req, res, next) {
+	let service = new commonService.commonInvoke('addCustomKnowledgeProgramExercises');
+	let data = {
+		universityCode: req.body.universityCode,
+		schoolID: req.body.schoolID,
+		teacherID: req.body.teacherID,
+		technologyID: req.body.technologyID,
+		knowledgeID: req.body.knowledgeID,
+		exercisesTitle: req.body.exercisesTitle,
+		rightAnswer: req.body.rightAnswer,
+		loginUser: req.body.loginUser
+	};
+
+	service.create(data, (result) => {
+		if (result.err) {
+			res.json({
+				err: true,
+				code: result.code,
+				msg: result.msg
+			});
+		} else {
+			res.json({
+				err: false,
+				code: result.code,
+				msg: result.msg,
+				exercisesID: result.content.responseData
+			});
+		}
+	});
+});
+
+router.put('/custom/program/change', function (req, res, next) {
+	let service = new commonService.commonInvoke('changeCustomKnowledgeProgramExercises');
+	let data = {
+		exercisesID: req.body.exercisesID,
+		universityCode: req.body.universityCode,
+		schoolID: req.body.schoolID,
+		teacherID: req.body.teacherID,
+		technologyID: req.body.technologyID,
+		knowledgeID: req.body.knowledgeID,
+		exercisesTitle: req.body.exercisesTitle,
+		rightAnswer: req.body.rightAnswer,
+		loginUser: req.body.loginUser
+	};
+
+	service.change(data, (result) => {
+		if (result.err) {
+			res.json({
+				err: true,
+				code: result.code,
+				msg: result.msg
+			});
+		} else {
+			res.json({
+				err: false,
+				code: result.code,
+				msg: result.msg
+			});
+		}
+	});
+});
+
+router.delete('/custom/program/delete', function(req, res, next) {
+	let service = new commonService.commonInvoke('deleteCustomKnowledgeProgramExercises');
+	let technologyID = req.query.technologyID;
+	let knowledgeID = req.query.knowledgeID;
+	let exercisesID = req.query.exercisesID;
+	let teacherID = req.query.teacherID;
+	let parameter = `${technologyID}/${knowledgeID}/${exercisesID}/${teacherID}`;
+
+	service.delete(parameter, function(result) {
+			if (result.err) {
+					res.json({
+							err: true,
+							code: result.code,
+							msg: result.msg
+					});
+			} else {
+					res.json({
+							err: false,
+							code: result.code,
+							msg: result.msg
+					});
+			}
+	});
+});
 
 //#endregion
 

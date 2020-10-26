@@ -99,7 +99,17 @@
       "customKnowledgeChoiceExercisesList": "/api/v1/university/exercise/knowledge/choice/list",
       "addCustomKnowledgeChoiceExercises": "/api/v1/university/exercise/knowledge/choice/add",
       "changeCustomKnowledgeChoiceExercises": "/api/v1/university/exercise/knowledge/choice/change",
-      "deleteCustomKnowledgeChoiceExercises": "/api/v1/university/exercise/knowledge/choice/delete"
+			"deleteCustomKnowledgeChoiceExercises": "/api/v1/university/exercise/knowledge/choice/delete",
+			
+			"customKnowledgeBlankExercisesList": "/api/v1/university/exercise/knowledge/blank/list",
+      "addCustomKnowledgeBlankExercises": "/api/v1/university/exercise/knowledge/blank/add",
+      "changeCustomKnowledgeBlankExercises": "/api/v1/university/exercise/knowledge/blank/change",
+			"deleteCustomKnowledgeBlankExercises": "/api/v1/university/exercise/knowledge/blank/delete",
+			
+			"customKnowledgeProgramExercisesList": "/api/v1/university/exercise/knowledge/program/list",
+      "addCustomKnowledgeProgramExercises": "/api/v1/university/exercise/knowledge/program/add",
+      "changeCustomKnowledgeProgramExercises": "/api/v1/university/exercise/knowledge/program/change",
+      "deleteCustomKnowledgeProgramExercises": "/api/v1/university/exercise/knowledge/program/delete"
     }
   }
 }

@@ -1,4 +1,5 @@
 <link href="/stylesheets/plugins/todo.css" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/plugins/github-markdown.css" rel="stylesheet" type="text/css" />
 <div class="kt-container kt-grid__item kt-grid__item--fluid" ng-app="pageApp" ng-controller="pageCtrl">
 	<div class="kt-subheader kt-grid__item">
 		<div class="kt-container">
@@ -51,7 +52,7 @@
 							</a>
 							<a href="javascript:" class="kt-todo__link"
 								ng-class="{'kt-todo__link--active': model.questionType == 'P'}" ng-click="onSearchByType('P')">
-								编程题（<span ng-bind="model.programeQuestion.totalCount"></span>）
+								编程题（<span ng-bind="model.programQuestion.totalCount"></span>）
 							</a>
 						</div>
 					</div>
@@ -65,7 +66,7 @@
 							<ol>
 								<li class="kt-margin-t-10" ng-repeat="choiceQuestion in model.choiceQuestion.dataList">
 									<div class="form-group kt-margin-b-0">
-										<strong ng-bind="choiceQuestion.exercisesTitle" class="retain-white-enter"></strong>
+										<strong ng-bind="choiceQuestion.exercisesTitle" class="text-pre-wrap"></strong>
 										<div class="kt-font-sm" ng-bind="choiceQuestion.exercisesSource"></div>
 										<div class="kt-radio-list kt-margin-t-10" ng-if="choiceQuestion.exercisesType == 'S'">
 											<label class="kt-radio kt-radio--tick kt-radio--danger"
@@ -96,7 +97,7 @@
 							<ol>
 								<li class="kt-margin-t-10" ng-repeat="question in model.blankQuestion.dataList">
 									<div class="form-group kt-margin-b-0">
-										<strong ng-bind="question.exercisesTitle" class="retain-white-enter"></strong>
+										<strong ng-bind="question.exercisesTitle" class="text-pre-wrap"></strong>
 										<div class="kt-font-sm kt-margin-b-5" ng-bind="question.exercisesSource"></div>
 										<input type="text" class="form-control" style="width: 35%; display:inline" disabled="disabled"
 											ng-model="question.rightAnswer">
@@ -107,7 +108,7 @@
 						</div>
 						<div ng-if="model.questionType === 'P'">
 							<ol>
-								<li class="kt-margin-b-10" ng-repeat="question in model.programmeQuestion.dataList">
+								<li class="kt-margin-b-10" ng-repeat="question in model.programQuestion.dataList">
 									<a ng-href="\{{question.documentUrl}}" class="kt-font-info" target="_blank"
 										ng-bind="question.documentUrl.substr(question.documentUrl.lastIndexOf('/')+1)"></a>
 									<div class="kt-margin-t-5">
@@ -119,36 +120,40 @@
 						<a href="javascript:"
 							ng-if="model.questionType === 'C' && model.choiceQuestion.pageNumber < model.choiceQuestion.maxPageNumber 
                                     || model.questionType === 'B' && model.blankQuestion.pageNumber < model.blankQuestion.maxPageNumber
-                                    || model.questionType === 'P' && model.programmeQuestion.pageNumber < model.programmeQuestion.maxPageNumber"
+                                    || model.questionType === 'P' && model.programQuestion.pageNumber < model.programQuestion.maxPageNumber"
 							class="kt-font-primary text-center" ng-click="onLoadMore(model.questionType)">加载更多</a>
 					</div>
 					{{!-- end: 企业题库 --}}
 
 					{{!-- begin: 自定义题库 --}}
 					<div class="kt-portlet__body" ng-if="model.questionSource == 'M'">
-						<div class="choice-list" ng-if="model.choiceQuestion.dataList.length > 0 && model.questionType === 'C'">
-							<div class="filter">
-								<button type="button" 
-									class="btn btn-sm"
-									ng-class="{'btn-primary': model.choiceQuestion.filterTeacher == 0, 'btn-outline-hover-primary': model.choiceQuestion.filterTeacher != 0}" 
-									ng-click="onFilterChoiceQuestion('A')">
-									全部
-								</button>
-								<button type="button" 
-									class="btn btn-sm"
-									ng-class="{'btn-primary': model.choiceQuestion.filterTeacher != 0, 'btn-outline-hover-primary': model.choiceQuestion.filterTeacher == 0}" 
-									ng-click="onFilterChoiceQuestion('M')">
-									我的
-								</button>
+						<div class="choice-list" ng-if="model.questionType === 'C'">
+							<div class="row kt-padding-l-25 kt-padding-r-25">
+								<div class="col-md-6">
+									<button type="button" class="btn btn-sm"
+										ng-class="{'btn-primary': model.choiceQuestion.filterTeacher == 0, 'btn-outline-hover-primary': model.choiceQuestion.filterTeacher != 0}"
+										ng-click="onFilterChoiceQuestion('A')">
+										全部
+									</button>
+									<button type="button" class="btn btn-sm"
+										ng-class="{'btn-primary': model.choiceQuestion.filterTeacher != 0, 'btn-outline-hover-primary': model.choiceQuestion.filterTeacher == 0}"
+										ng-click="onFilterChoiceQuestion('M')">
+										我的
+									</button>
+								</div>
+								<div class="col-md-6 text-right">
+									<button class="btn btn-warning" ng-click="onCreateChoiceQuestion()">添加选择题</button>
+								</div>
 							</div>
-							<ol>
+
+							<ol ng-if="model.choiceQuestion.dataList.length > 0">
 								<li class="kt-margin-t-10" ng-repeat="choiceQuestion in model.choiceQuestion.dataList">
 									{{!-- 题目区 --}}
 									<div class="form-group kt-margin-b-0">
 										{{!-- 标题 --}}
-										<strong ng-if="choiceQuestion.exercisesTitle == ''">请设置题目标题</strong>
-										<strong ng-if="choiceQuestion.exercisesTitle != ''" ng-bind="choiceQuestion.exercisesTitle"
-											class="retain-white-enter"></strong>
+										<strong ng-if="choiceQuestion.exercisesTitleHtml == ''">请设置选择题标题</strong>
+										<strong ng-if="choiceQuestion.exercisesTitleHtml != ''" ng-bind-html="choiceQuestion.exercisesTitleHtml"
+											class="text-pre-wrap markdown-body"></strong>
 
 										{{!-- 添加信息 --}}
 										<div class="kt-font-sm" ng-if="!choiceQuestion.isNew">
@@ -205,6 +210,10 @@
 													<textarea class="form-control" name="" rows="3" maxlength="3000"
 														placeholder="如果题目包含代码片段，你可使用Markdown语法进行编辑"
 														ng-model="choiceQuestion.exercisesTitle"></textarea>
+														<div class="kt-align-right">
+														<a href="https://www.runoob.com/markdown/md-tutorial.html" class="kt-link kt-link--info"
+															target="_blank">Markdown？</a>
+													</div>
 												</div>
 											</div>
 											<div class="form-group row kt-margin-b-0-">
@@ -274,7 +283,161 @@
 								<a class="kt-link kt-font-primary" style="cursor:pointer;"
 									ng-if="model.choiceQuestion.pageNumber < model.choiceQuestion.maxPageNumber"
 									ng-click="onLoadMoreCustomChoiceExercises()">加载更多</a>&nbsp;
-								<button class="btn btn-warning" ng-click="onCreateChoiceQuestion()">添加选择题</button>
+							</div>
+						</div>
+
+						<div class="blank-list" ng-if="model.questionType === 'B'">
+							<div class="row kt-padding-l-25 kt-padding-r-25">
+								<div class=" col-md-6">
+									<button type="button" class="btn btn-sm"
+										ng-class="{'btn-primary': model.blankQuestion.filterTeacher == 0, 'btn-outline-hover-primary': model.blankQuestion.filterTeacher != 0}"
+										ng-click="onFilterBlankQuestion('A')">
+										全部
+									</button>
+									<button type="button" class="btn btn-sm"
+										ng-class="{'btn-primary': model.blankQuestion.filterTeacher != 0, 'btn-outline-hover-primary': model.blankQuestion.filterTeacher == 0}"
+										ng-click="onFilterBlankQuestion('M')">
+										我的
+									</button>
+								</div>
+								<div class="col-md-6 text-right">
+									<button class="btn btn-warning" ng-click="onCreateBlankQuestion()">添加填空题</button>
+								</div>
+							</div>
+							<ol ng-if="model.blankQuestion.dataList.length > 0">
+								<li class="kt-margin-t-10" ng-repeat="question in model.blankQuestion.dataList">
+									<div class="form-group kt-margin-b-0">
+										<strong ng-if="question.exercisesTitleHtml == ''">请设置填空题标题</strong>
+										<strong ng-if="question.exercisesTitleHtml != ''" ng-bind-html="question.exercisesTitleHtml"
+											class="text-pre-wrap markdown-body"></strong>
+										<div class="kt-font-sm" ng-if="!question.isNew">
+											<label ng-bind="question.universityName"></label>
+											<label ng-bind="question.schoolName"></label>
+											<label ng-bind="question.createUser"></label><label>老师</label>
+										</div>
+										<div class=" kt-margin-t-5">
+											<input type="text" class="form-control" style="width: 35%; display:inline" disabled="disabled"
+												ng-model="question.rightAnswer" placeholder="请设置正确答案">
+											<strong ng-if="question.rightAnswer != ''" class="kt-font-danger">（正确答案）</strong>
+										</div>
+									</div>
+									<div class="kt-margin-t-10"
+										ng-if="question.isNew || question.teacherID == model.loginUser.customerID">
+										<a href="javascript:" class="kt-link--brand" ng-if="question.isShowEdit == false"
+											ng-click="toggleBlankQuestionEdit(question, true)">编辑</a>
+										<a href="javascript:" class="kt-link--brand" ng-if="question.isShowEdit == true"
+											ng-click="toggleBlankQuestionEdit(question, false)">取消编辑</a>
+										<a href="javascript:" class="kt-link--brand" ng-if="question.isShowEdit == true"
+											ng-click="saveBlankQuestion(question)">保存</a>
+										<a href="javascript:" class="kt-link--danger" ng-click="onRemoveBlankQuestion(question)">删除</a>
+									</div>
+									<div class="exercises-select-edit kt-margin-t-10" ng-if="question.isShowEdit == true">
+										<form class="kt-form kt-form--label-right">
+											<div class="form-group row kt-margin-b-0-">
+												<label for="example-text-input" class="col-1 col-form-label text-left">题目标题：</label>
+												<div class="col-10">
+													<textarea class="form-control" name="" rows="3" maxlength="3000"
+														placeholder="如果题目包含代码片段，你可使用Markdown语法进行编辑" ng-model="question.exercisesTitle"></textarea>
+													<div class="kt-align-right">
+														<a href="https://www.runoob.com/markdown/md-tutorial.html" class="kt-link kt-link--info"
+															target="_blank">Markdown？</a>
+													</div>
+												</div>
+											</div>
+
+
+											<div class="form-group row kt-margin-b-0-">
+												<label for="example-text-input" class="col-1 col-form-label text-left">正确答案：</label>
+												<div class="col-10">
+													<input type="text" class="form-control" maxlength="500" ng-model="question.rightAnswer"
+														placeholder="请设置正确答案">
+												</div>
+											</div>
+										</form>
+									</div>
+								</li>
+							</ol>
+							<div class="col-md-12 text-center">
+								<a class="kt-font-primary" style="cursor:pointer;"
+									ng-if="model.blankQuestion.pageNumber < model.blankQuestion.maxPageNumber"
+									ng-click="onLoadMoreCustomBlankExercises()">加载更多</a>&nbsp;
+							</div>
+						</div>
+
+						<div class="program-list" ng-if="model.questionType === 'P'">
+							<div class="row kt-padding-l-25 kt-padding-r-25">
+								<div class=" col-md-6">
+									<button type="button" class="btn btn-sm"
+										ng-class="{'btn-primary': model.programQuestion.filterTeacher == 0, 'btn-outline-hover-primary': model.programQuestion.filterTeacher != 0}"
+										ng-click="onFilterProgramQuestion('A')">
+										全部
+									</button>
+									<button type="button" class="btn btn-sm"
+										ng-class="{'btn-primary': model.programQuestion.filterTeacher != 0, 'btn-outline-hover-primary': model.programQuestion.filterTeacher == 0}"
+										ng-click="onFilterProgramQuestion('M')">
+										我的
+									</button>
+								</div>
+								<div class="col-md-6 text-right">
+									<button class="btn btn-warning" ng-click="onCreateProgramQuestion()">添加编程题</button>
+								</div>
+							</div>
+							<ol ng-if="model.programQuestion.dataList.length > 0">
+								<li class="kt-margin-t-10" ng-repeat="question in model.programQuestion.dataList">
+									<div class="form-group kt-margin-b-0">
+										<strong ng-if="question.exercisesTitleHtml == ''">请设置编程题标题</strong>
+										<strong ng-if="question.exercisesTitleHtml != ''" ng-bind-html="question.exercisesTitleHtml"
+											class="text-pre-wrap markdown-body"></strong>
+										<div class="kt-font-sm" ng-if="!question.isNew">
+											<label ng-bind="question.universityName"></label>
+											<label ng-bind="question.schoolName"></label>
+											<label ng-bind="question.createUser"></label><label>老师</label>
+										</div>
+										<div class=" kt-margin-t-10">
+											<input type="text" class="form-control" style="width: 35%; display:inline" disabled="disabled"
+												ng-model="question.rightAnswer" placeholder="请设置正确答案">
+											<strong ng-if="question.rightAnswer != ''" class="kt-font-danger">（正确答案）</strong>
+										</div>
+									</div>
+									<div class="kt-margin-t-10"
+										ng-if="question.isNew || question.teacherID == model.loginUser.customerID">
+										<a href="javascript:" class="kt-link--brand" ng-if="question.isShowEdit == false"
+											ng-click="toggleProgramQuestionEdit(question, true)">编辑</a>
+										<a href="javascript:" class="kt-link--brand" ng-if="question.isShowEdit == true"
+											ng-click="toggleProgramQuestionEdit(question, false)">取消编辑</a>
+										<a href="javascript:" class="kt-link--brand" ng-if="question.isShowEdit == true"
+											ng-click="saveProgramQuestion(question)">保存</a>
+										<a href="javascript:" class="kt-link--danger" ng-click="onRemoveProgramQuestion(question)">删除</a>
+									</div>
+									<div class="exercises-select-edit kt-margin-t-10" ng-if="question.isShowEdit == true">
+										<form class="kt-form kt-form--label-right">
+											<div class="form-group row kt-margin-b-0-">
+												<label for="example-text-input" class="col-1 col-form-label text-left">题目标题：</label>
+												<div class="col-10">
+													<textarea class="form-control" rows="5" maxlength="3000"
+														placeholder="如果题目包含代码片段，你可使用Markdown语法进行编辑" ng-model="question.exercisesTitle"></textarea>
+													<div class=" kt-align-right">
+														<a href="https://www.runoob.com/markdown/md-tutorial.html" class="kt-link kt-link--info"
+															target="_blank">Markdown？</a>
+													</div>
+												</div>
+											</div>
+
+
+											<div class="form-group row kt-margin-b-0-">
+												<label for="example-text-input" class="col-1 col-form-label text-left">正确答案：</label>
+												<div class="col-10">
+													<textarea class="form-control" rows="3" maxlength="500" ng-model="question.rightAnswer" placeholder="请设置正确答案"></textarea>
+												</div>
+											</div>
+										</form>
+									</div>
+								</li>
+							</ol>
+							<div class="col-md-12 text-center">
+								<a class="kt-font-primary" style="cursor:pointer;"
+									ng-if="model.programQuestion.pageNumber < model.programQuestion.maxPageNumber"
+									ng-click="onLoadMoreCustomProgramExercises()">加载更多</a>&nbsp;
 							</div>
 						</div>
 

@@ -510,3 +510,7 @@ a.no-hand {
 
 
 /* end: 修改框架样式 */
+
+.text-pre-wrap {
+	white-space: pre-wrap;
+}

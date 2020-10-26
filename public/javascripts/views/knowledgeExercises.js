@@ -2,7 +2,9 @@ let pageApp = angular.module('pageApp', []);
 pageApp.controller('pageCtrl', function ($scope, $sce, $http) {
 	$scope.model = {
 		technologyID: 0,
+		technologyName: '',
 		knowledgeID: 0,
+		knowledgeName: '',
 		loginUser: commonUtility.getLoginUser(),
 		// C: 企业题库  M: 我院题库
 		questionSource: 'C',
@@ -392,14 +394,14 @@ pageApp.controller('pageCtrl', function ($scope, $sce, $http) {
 
 	//#region 填空题
 
-	$scope.onFilterBlankQuestion = function (filter) { 
-		$scope.model.blankQuestion.filterTeacher = filter === 'M' 
-		? $scope.model.loginUser.customerID : 0;
+	$scope.onFilterBlankQuestion = function (filter) {
+		$scope.model.blankQuestion.filterTeacher = filter === 'M'
+			? $scope.model.loginUser.customerID : 0;
 		$scope.clearBlankQuestion();
 		$scope.loadBlankQuestionFromMyUniversity();
 	};
 
-	$scope.loadBlankQuestionFromMyUniversity = function () { 
+	$scope.loadBlankQuestionFromMyUniversity = function () {
 		$http.get('/exercises/knowledge/custom/blank/list?'
 			.concat(`pageNumber=${$scope.model.blankQuestion.pageNumber}`)
 			.concat(`&technologyID=${$scope.model.technologyID}`)
@@ -544,7 +546,8 @@ pageApp.controller('pageCtrl', function ($scope, $sce, $http) {
 	};
 
 	$scope.onRemoveBlankQuestion = function (blankQuestion) {
-		if (blankQuestion.isNew) {blankQuestion
+		if (blankQuestion.isNew) {
+			blankQuestion
 			$scope.removeBlankQuestion(blankQuestion);
 			return false;
 		}
@@ -603,15 +606,15 @@ pageApp.controller('pageCtrl', function ($scope, $sce, $http) {
 
 	//#region 编程题
 
-	$scope.onFilterProgramQuestion = function (filter) { 
-		$scope.model.programQuestion.filterTeacher = filter === 'M' 
-		? $scope.model.loginUser.customerID : 0;
+	$scope.onFilterProgramQuestion = function (filter) {
+		$scope.model.programQuestion.filterTeacher = filter === 'M'
+			? $scope.model.loginUser.customerID : 0;
 		$scope.clearProgramQuestion();
 		$scope.loadProgramQuestionFromMyUniversity();
 	};
 
 
-	$scope.loadProgramQuestionFromMyUniversity = function () { 
+	$scope.loadProgramQuestionFromMyUniversity = function () {
 		$http.get('/exercises/knowledge/custom/program/list?'
 			.concat(`pageNumber=${$scope.model.programQuestion.pageNumber}`)
 			.concat(`&technologyID=${$scope.model.technologyID}`)
@@ -828,6 +831,23 @@ pageApp.controller('pageCtrl', function ($scope, $sce, $http) {
 	//#endregion
 
 	//#region 页面初始化
+
+	$scope.loadKnowledgeInfo = function () {
+		$http.get('/exercises/knowledge/info?'
+			.concat(`technologyID=${$scope.model.technologyID}`)
+			.concat(`&knowledgeID=${$scope.model.knowledgeID}`))
+			.then(function successCallback(response) {
+				if (response.data.err) {
+					bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+					return false;
+				}
+				$scope.model.technologyName = response.data.knowledgeInfo.technologyName;
+				$scope.model.knowledgeName = response.data.knowledgeInfo.knowledgeName;
+			}, function errorCallback(response) {
+				bootbox.alert(localMessage.NETWORK_ERROR);
+			});
+	};
+
 	$scope.clearExercisesDataList = function () {
 		$scope.clearChoiceQuestion();
 		$scope.clearBlankQuestion();
@@ -910,6 +930,11 @@ pageApp.controller('pageCtrl', function ($scope, $sce, $http) {
 	$scope.setUriParameter = function () {
 		$scope.model.technologyID = document.getElementById('hidden_technologyID').value;
 		$scope.model.knowledgeID = document.getElementById('hidden_knowledgeID').value;
+		if (!commonUtility.isNumber($scope.model.technologyID) || !commonUtility.isNumber($scope.model.knowledgeID)) {
+			bootbox.alert('未取得正确的参数，请不要修改地址栏内容！');
+			return false;
+		}
+		return true;
 	};
 
 	$scope.loadExercises = function () {
@@ -936,7 +961,10 @@ pageApp.controller('pageCtrl', function ($scope, $sce, $http) {
 	};
 
 	$scope.initPage = function () {
-		$scope.setUriParameter();
+		if (!$scope.setUriParameter()) {
+			return false;
+		}
+		$scope.loadKnowledgeInfo();
 		$scope.clearExercisesDataList();
 		$scope.loadExercises();
 	};

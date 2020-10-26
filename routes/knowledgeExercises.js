@@ -468,4 +468,29 @@ router.delete('/custom/program/delete', function(req, res, next) {
 
 //#endregion
 
+//#region 
+router.get('/info', function (req, res, next) {
+	let service = new commonService.commonInvoke('searchKnowledgeById');
+	let technologyID = req.query.technologyID;
+	let knowledgeID = req.query.knowledgeID;
+	let parameter = `${technologyID}/${knowledgeID}`;
+
+	service.queryWithParameter(parameter, function (result) {
+		if (result.err) {
+			res.json({
+				err: true,
+				code: result.code,
+				msg: result.msg
+			});
+		} else {
+			res.json({
+				err: false,
+				code: result.code,
+				msg: result.msg,
+				knowledgeInfo: result.content.responseData
+			});
+		}
+	});
+});
+//#endregion
 module.exports = router;

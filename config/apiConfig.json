@@ -86,7 +86,9 @@
       "learningKnowledgeList": "/api/v1/analysis/ability/student/list/learning_knowledge",
       "noLearningKnowledgeList": "/api/v1/analysis/ability/student/list/noLearning_knowledge",
       "weakKnowledgeList": "/api/v1/analysis/ability/student/list/weak_knowledge",
-      "studentExercisesList": "/api/v1/course/exercises/list/student/technology",
+			"studentExercisesList": "/api/v1/course/exercises/list/student/technology",
+			
+			"searchKnowledgeById": "/api/v1/knowledge/any",
 
       "growingMapList": "/api/v1/growing_map/list/map",
       "growingMap": "/api/v1/growing_map/any/map",

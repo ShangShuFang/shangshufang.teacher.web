@@ -136,9 +136,7 @@
                       ng-bind="knowledge.learningPhaseName"></span>
                     <span ng-bind="knowledge.knowledgeName"></span>
                   </span>
-                  <a href="javascript:" class="kt-list-timeline__time using-company kt-link--info">查看随堂练习</a>
-                  {{!-- <span class="kt-list-timeline__time using-company">使用企业<strong class="count"
-                      ng-bind="knowledge.usingCompanyCount"></strong>家</span> --}}
+									<a href="/exercises/knowledge?technologyID=\{{knowledge.technologyID}}&knowledgeID=\{{knowledge.knowledgeID}}" target="_blank" class="kt-list-timeline__time using-company kt-font-brand">查看随堂练习</a>
                 </div>
               </div>
             </div>

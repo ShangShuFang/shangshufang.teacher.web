@@ -21,7 +21,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 			},
 			logMemo: ''
 		},
-		//region 课程基本信息
+		//#region 课程基本信息
 		universityCode: 0,
 		schoolID: 0,
 		courseID: 0,
@@ -33,9 +33,9 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 		courseEndDateFormat: '',
 		isLogin: false,
 		loginUser: null,
-		//endregion
+		//#endregion
 
-		//region 课程表信息
+		//#region 课程表信息
 		weeklyDayList: [
 			{ day: 1, dayText: '周一' },
 			{ day: 2, dayText: '周二' },
@@ -58,9 +58,9 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 		selectWeekday: null,
 		selectCourseList: [],
 		courseScheduleList: [],
-		//endregion
+		//#endregion
 
-		//region 授课计划
+		//#region 授课计划
 		coursePlanList: [],
 		courseOrder: 0,
 		selectedTechnology: null,
@@ -70,18 +70,18 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 		courseKnowledgeList: [],
 		isClickAdd: false,
 		noFinishClassCount: 0,
-		//endregion
+		//#endregion
 
-		//region 布置练习
+		//#region 布置练习
 		assignCount: 3,
 		assignExercises: null,
 		exercisesList: [],
 		exercisesCourseClass: 0,
 		courseExercisesList: [],
 		courseExercisesFilterList: [],
-		//endregion
+		//#endregion
 
-		//region 报名学生
+		//#region 报名学生
 		fromIndex4SignUp: 0,
 		toIndex4SignUp: 0,
 		pageNumber4SignUp: 1,
@@ -91,9 +91,9 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 		paginationArray4SignUp: [],
 		prePageNum4SignUp: -1,
 		nextPageNum4SignUp: -1,
-		//endregion
+		//#endregion
 
-		//region 批改练习
+		//#region 批改练习
 		filterStatus: 'NULL',
 		filterStudentName: '',
 		fromIndex4Exercises: 0,
@@ -141,9 +141,9 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 			maxPageNumber: 0,
 			dataList: [],
 		},
-		//endregion
+		//#endregion
 
-		//region 在线答疑
+		//#region 在线答疑
 		courseQuestion: {
 			pageNumber: 1,
 			totalCount: 0,
@@ -158,8 +158,19 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 			commenterID: 0,
 			commenterType: 'T',
 			messageContent: ''
+		},
+		//#endregion
+
+		//#region 下发练习
+		assignCourseExercises: {
+			containCompanyExercises: true,
+			containSelfExercises: true,
+			containOtherExercises: true,
+			maxChoiceCount: 3,
+			maxBlankCount: 3,
+			maxProgramCount: 3
 		}
-		//endregion
+		//#endregion
 	};
 
 	//region 页面初始化
@@ -995,7 +1006,33 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 		$('#kt_modal_send_exercises').modal('show');
 	};
 
+	$scope.checkAssignData = function () {
+		if (!$scope.model.assignCourseExercises.containCompanyExercises && 
+			!$scope.model.assignCourseExercises.containSelfExercises && 
+			!$scope.model.assignCourseExercises.containOtherExercises) {
+				layer.msg("请设置习题范围！");
+				return false;
+		}
+		if (commonUtility.isEmpty($scope.model.assignCourseExercises.maxChoiceCount)) {
+			layer.msg("请设置正确的选择题下发数量！");
+			return false;
+		}
+		if (commonUtility.isEmpty($scope.model.assignCourseExercises.maxBlankCount)) {
+			layer.msg("请设置正确的填空题下发数量！");
+			return false;
+		}
+		if (commonUtility.isEmpty($scope.model.assignCourseExercises.maxProgramCount)) {
+			layer.msg("请设置正确的编程题下发数量！");
+			return false;
+		}
+		return true;
+	};
+
 	$scope.onAssignExercises = function () {
+		if (!$scope.checkAssignData()) {
+			return false;
+		}
+
 		let btn = $('#btnSendExercises');
 		$(btn).attr('disabled', true);
 		KTApp.progress(btn);
@@ -1005,7 +1042,13 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 			schoolID: $scope.model.courseInfo.schoolID,
 			courseID: $scope.model.courseInfo.courseID,
 			courseClass: $scope.model.assignExercises.courseClass,
-			assignCount: $scope.model.assignCount,
+			teacherID: $scope.model.loginUser.customerID,
+			containCompanyExercises: $scope.model.assignCourseExercises.containCompanyExercises,
+			containSelfExercises: $scope.model.assignCourseExercises.containSelfExercises,
+			containOtherExercises: $scope.model.assignCourseExercises.containOtherExercises,
+			maxChoiceCount: $scope.model.assignCourseExercises.maxChoiceCount,
+			maxBlankCount: $scope.model.assignCourseExercises.maxBlankCount,
+			maxProgramCount: $scope.model.assignCourseExercises.maxProgramCount,
 			loginUser: $scope.model.loginUser.customerID
 		}).then(function successCallback(response) {
 			if (response.data.err) {

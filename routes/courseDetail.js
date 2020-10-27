@@ -345,8 +345,14 @@ router.post('/classExercises', (req, res, next) => {
         courseUniversityCode: req.body.universityCode,
         courseSchoolID: req.body.schoolID,
         courseID: req.body.courseID,
-        courseClass: req.body.courseClass,
-        assignCount: req.body.assignCount,
+				courseClass: req.body.courseClass,
+				teacherID: req.body.teacherID,
+				containCompanyExercises: req.body.containCompanyExercises,
+				containSelfExercises: req.body.containSelfExercises,
+				containOtherExercises: req.body.containOtherExercises,
+				maxChoiceCount: req.body.maxChoiceCount,
+				maxBlankCount: req.body.maxBlankCount,
+				maxProgramCount: req.body.maxProgramCount,
         loginUser: req.body.loginUser
     };
 

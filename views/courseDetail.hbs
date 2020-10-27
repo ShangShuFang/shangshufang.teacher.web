@@ -453,17 +453,17 @@
                       <th data-field="Status" class="kt-datatable__cell">
                         <span style="width: 100px;">入学年份</span>
                       </th>
-                      <th data-field="Status" class="kt-datatable__cell">
+                      {{!-- <th data-field="Status" class="kt-datatable__cell">
                         <span style="width: 100px;">课程助教</span>
-                      </th>
+                      </th> --}}
                       <th data-field="Status" class="kt-datatable__cell">
                         <span style="width: 100px;">报名状态</span>
                       </th>
-                      <th data-field="Actions"
+                      {{!-- <th data-field="Actions"
                           class="kt-datatable__cell"
                           ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID && model.courseInfo.dataStatus != '2'">
                         <span style="width: 100px;">操作</span>
-                      </th>
+                      </th> --}}
                     </tr>
 
                   </thead>
@@ -501,12 +501,12 @@
                       <span style="width: 100px;" ng-if="data.enrollmentYear !== ''">\{{data.enrollmentYear}}年</span>
                       <span style="width: 100px;" ng-if="data.enrollmentYear == ''">  </span>
                     </td>
-                    <td class="kt-datatable__cell">
+                    {{!-- <td class="kt-datatable__cell">
                       <span style="width: 100px;">
                         <span class="kt-badge kt-badge--dot kt-badge--danger" ng-if="data.assistant == 1"></span>&nbsp;
                         <span class="kt-font-bold ng-binding kt-font-danger" ng-if="data.assistant == 1">助教</span>
                       </span>
-                    </td>
+                    </td> --}}
                     <td class="kt-datatable__cell">
                           <span style="width: 100px;">
                             <span class="kt-badge kt-badge--inline kt-badge--pill"
@@ -514,7 +514,7 @@
                                   ng-bind="data.dataStatusText"></span>
                           </span>
                     </td>
-                    <td class="kt-datatable__cell"
+                    {{!-- <td class="kt-datatable__cell"
                         ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID && model.courseInfo.dataStatus != '2'">
                       <span style="overflow: visible; position: relative; width: 110px;">
                           <button type="button"
@@ -530,7 +530,7 @@
                             取消助教
                           </button>
                         </span>
-                    </td>
+                    </td> --}}
                   </tr>
                   </tbody>
                 </table>
@@ -1485,21 +1485,57 @@
     </div>
 
     <div class="modal fade" id="kt_modal_send_exercises" tabindex="-1" role="dialog" style="display: none;">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <form class="kt-form kt-form--label-right" name="sendExercisesForm" novalidate>
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">下发第\{{model.exercisesCourseClass}}节课习题</h5>
+              <h5 class="modal-title" id="exampleModalLabel">下发第\{{model.exercisesCourseClass}}节课习题（系统根据您的设置，随机向学生发送随堂练习）</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               </button>
             </div>
             <div class="modal-body">
-              <div class="form-group row kt-margin-0">
-                <label for="example-number-input" class="col-4 col-form-label">每个知识点习题数量</label>
-                <div class="col-8">
-                  <input type="number" class="form-control" name="assignCount" maxlength="2" min="1" max="99" value="3" ng-model="model.assignCount" required>
+              <div class="form-group row kt-margin-0-">
+                <label class="col-3 col-form-label">习题范围设置</label>
+                <div class="col-9">
+									<div class="kt-checkbox-inline">
+										<label class="kt-checkbox">
+											<input type="checkbox" ng-model="model.assignCourseExercises.containCompanyExercises" checked="checked"> 企业题库
+											<span></span>
+										</label>
+										<label class="kt-checkbox">
+											<input type="checkbox" ng-model="model.assignCourseExercises.containSelfExercises" checked="checked"> 我的自定义题库
+											<span></span>
+										</label>
+										<label class="kt-checkbox">
+											<input type="checkbox" ng-model="model.assignCourseExercises.containOtherExercises" checked="checked"> 其他老师自定义题库
+											<span></span>
+										</label>
+									</div>
+                  {{!-- <input type="number" class="form-control" name="assignCount" maxlength="2" min="1" max="99" value="3" ng-model="model.assignCount" required> --}}
                 </div>
               </div>
+							<div class="form-group row">
+								<label class="col-3 col-form-label">每个知识点最多布置</label>
+								<div class="col-2">
+									<input class="form-control" type="number" ng-model="model.assignCourseExercises.maxChoiceCount" min="1" max="5">
+								</div>
+								<label class="col-7 col-form-label text-left">道选择题（做少1道，最多5道）</label>
+							</div>
+							<div class="form-group row">
+								<label class="col-3 col-form-label">每个知识点最多布置</label>
+								<div class="col-2">
+									<input class="form-control text-center-" type="number" ng-model="model.assignCourseExercises.maxBlankCount" min="1" max="5">
+								</div>
+								<label class="col-7 col-form-label text-left">道填空题（做少1道，最多5道）</label>
+							</div>
+							<div class="form-group row">
+								<label class="col-3 col-form-label">每个知识点最多布置</label>
+								<div class="col-2">
+									<input class="form-control text-center-" type="number" ng-model="model.assignCourseExercises.maxProgramCount" min="1" max="5">
+								</div>
+								<label class="col-7 col-form-label text-left">道编程题（做少1道，最多5道）</label>
+							</div>
+						
 
             </div>
             <div class="modal-footer">

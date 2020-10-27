@@ -11,3 +11,6 @@
 .kt-widget__media img {
     width: 230px !important;
 }
+.form-group {
+	margin-bottom: 0.8rem;
+}

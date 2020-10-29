@@ -1,5 +1,5 @@
 let pageApp = angular.module('pageApp', []);
-pageApp.controller('pageCtrl', function ($scope, $http, $sce) {	
+pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 	$scope.model = {
 		bizLog: {
 			pageName: 'courseDetail',
@@ -1007,11 +1007,11 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 	};
 
 	$scope.checkAssignData = function () {
-		if (!$scope.model.assignCourseExercises.containCompanyExercises && 
-			!$scope.model.assignCourseExercises.containSelfExercises && 
+		if (!$scope.model.assignCourseExercises.containCompanyExercises &&
+			!$scope.model.assignCourseExercises.containSelfExercises &&
 			!$scope.model.assignCourseExercises.containOtherExercises) {
-				layer.msg("请设置习题范围！");
-				return false;
+			layer.msg("请设置习题范围！");
+			return false;
 		}
 		if (commonUtility.isEmpty($scope.model.assignCourseExercises.maxChoiceCount)) {
 			layer.msg("请设置正确的选择题下发数量！");
@@ -1206,7 +1206,13 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 		if (commonUtility.isEmpty(studentName)) {
 			studentName = 'NULL';
 		}
-		$http.get(`/course/detail/courseStudentExercises?pageNumber=${$scope.model.pageNumber4Exercises}&universityCode=${$scope.model.universityCode}&schoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}&dataStatus=${$scope.model.filterStatus}&studentName=${studentName}`)
+		$http.get('/course/detail/courseStudentExercises'
+			.concat(`?pageNumber=${$scope.model.pageNumber4Exercises}`)
+			.concat(`&universityCode=${$scope.model.universityCode}`)
+			.concat(`&schoolID=${$scope.model.schoolID}`)
+			.concat(`&courseID=${$scope.model.courseID}`)
+			.concat(`&dataStatus=${$scope.model.filterStatus}`)
+			.concat(`&studentName=${studentName}`))
 			.then(function successCallback(response) {
 				if (response.data.err) {
 					bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));

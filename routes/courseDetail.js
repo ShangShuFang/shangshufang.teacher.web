@@ -93,13 +93,11 @@ router.get('/courseStudentSignUp', function(req, res, next) {
 router.get('/courseStudentExercises', function(req, res, next) {
     let service = new commonService.commonInvoke('classExercises');
     let pageNumber = parseInt(req.query.pageNumber);
-    let universityCode = req.query.universityCode;
-    let schoolID = req.query.schoolID;
     let courseID = req.query.courseID;
     let dataStatus = req.query.dataStatus;
     let studentName = req.query.studentName;
 
-    let parameter = `${pageNumber}/${sysConfig.pageSize.ten}/${universityCode}/${schoolID}/${courseID}/${dataStatus}/${studentName}`;
+    let parameter = `${pageNumber}/${sysConfig.pageSize.ten}/${courseID}/${dataStatus}/${studentName}`;
 
     service.queryWithParameter(parameter, (result) => {
         if (result.err) {

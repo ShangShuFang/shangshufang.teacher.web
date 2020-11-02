@@ -1,0 +1,224 @@
+<link href="/stylesheets/plugins/github-markdown.css" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/views/knowledgeExercises4Student.css" rel="stylesheet" type="text/css" />
+
+<div class="kt-container kt-grid__item kt-grid__item--fluid" ng-app="pageApp" ng-controller="pageCtrl">
+	<div class="kt-subheader kt-grid__item">
+		<div class="kt-container">
+			<div class="kt-subheader__main">
+			</div>
+		</div>
+	</div>
+	<div class="text-center">
+		<h3 ng-bind="model.title"></h3>
+	</div>
+	<form class="kt-form kt-form--label-right">
+		<div class="kt-portlet__body">
+			<div class="form-group row kt-margin-b-0">
+				<label for="example-text-input" class="col-1 col-form-label">下发时间：</label>
+				<div class="col-10">
+					<label for="example-text-input" class="col-form-label text-left" ng-bind="model.createTime"></label>
+				</div>
+			</div>
+			<div class="form-group row kt-margin-b-0">
+				<label for="example-text-input" class="col-1 col-form-label">学生：</label>
+				<div class="col-10">
+					<label for="example-text-input" class="col-form-label text-left" ng-bind="model.studentName"></label>
+				</div>
+			</div>
+			<div class="form-group row kt-margin-b-0">
+				<label for="example-text-input" class="col-1 col-form-label">状态：</label>
+				<div class="col-10">
+					<label class="col-form-label text-left kt-badge kt-badge--inline kt-badge--pill" 
+					ng-class="{'kt-badge--primary': model.exercisesStatus == 'P', 'kt-badge--warning': model.exercisesStatus == 'W', 'kt-badge--danger': model.exercisesStatus == 'R', 'kt-badge--success': model.exercisesStatus == 'S'}" 
+					ng-bind="model.exercisesStatusText" style="margin-top: 8px;"></label>
+				</div>
+			</div>
+			<div class="form-group row kt-margin-b-0">
+				<label for="example-text-input" class="col-1 col-form-label">提交时间：</label>
+				<div class="col-10">
+					<label for="example-text-input" class="col-form-label text-left" ng-bind="model.submitTime"></label>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<div class="exercises-list kt-margin-t-10">
+		<div class="choice-list" ng-if="model.choiceList.length > 0">
+			<h4 class="kt-padding-l-25">选择题</h4>
+			<ol>
+				<li ng-repeat="choice in model.choiceList">
+					<div class="title">
+						<strong class="text-pre-wrap markdown-body" ng-bind-html="choice.exercisesTitleHtml"></strong>
+						<strong class="kt-margin-l-10"
+							ng-if="choice.correctResult !== 'P'"
+							ng-class="{'kt-font-success': choice.correctResult == 'Y', 'kt-font-danger': choice.correctResult == 'N'}"> 
+							<i class="fa" ng-class="{'fa-check': choice.correctResult == 'Y', 'fa-times': choice.correctResult == 'N'}"></i>
+						</strong>
+					</div>
+					<div class="source kt-margin-t-5-">
+						<small>习题来源：</small>
+						<small ng-bind="choice.exercisesSource"></small>
+					</div>
+					<div class="knowledge kt-margin-t-5">
+						<small>考察知识点：</small>
+						<small ng-bind="choice.knowledgeName"></small>
+					</div>
+					<div class="option kt-margin-t-5">
+						<div class="kt-radio-list">
+							<label class="kt-radio" ng-repeat="option in choice.optionList">
+								<input type="radio" name="{{choice.courseExercisesDetailID}}" disabled="disabled"> \{{option.optionText}}
+								<span></span>
+							</label>
+							{{!-- <label class="kt-radio">
+								<input type="radio" name="radio1" checked="checked" disabled="disabled"> Option 3
+								<span></span>
+							</label>
+							<label class="kt-radio kt-radio--tick- kt-radio--success">
+								<input type="radio" name="radio1" disabled="disabled" checked="checked"> Option 4
+								<span></span>
+							</label> --}}
+
+						</div>
+					</div>
+				</li>
+				{{!-- <li>
+					<div class="title">
+						<strong>题目1标题题目1标题题目1标题题目1标题题目1标题</strong>
+						<strong class="kt-font-danger kt-margin-l-10"><i class="fa fa-times"></i></strong>
+					</div>
+					<div class="source kt-margin-t-5">
+						<small>题目来源</small>
+					</div>
+					<div class="knowledge kt-margin-t-5">
+						<small>考察知识点：</small>
+						<small>知识点内容知识点内容知识点内容知识点内容</small>
+					</div>
+					<div class="option kt-margin-t-5">
+						<div class="kt-radio-list">
+							<label class="kt-radio kt-radio--danger-">
+								<input type="radio" name="radio2" disabled="disabled"> Option 1
+								<label></label>
+								<span></span>
+							</label>
+							<label class="kt-radio kt-radio--danger-">
+								<input type="radio" name="radio2" disabled="disabled"> Option 2
+								<span></span>
+							</label>
+							<label class="kt-radio kt-radio--danger">
+								<input type="radio" name="radio2" checked="checked" disabled="disabled"> Option 3
+								<span></span>
+							</label>
+							<label class="kt-radio kt-radio--success-">
+								<input type="radio" name="radio2" disabled="disabled"> Option 4
+								<span></span>
+							</label>
+						</div>
+					</div>
+				</li> --}}
+			</ol>
+		</div>
+
+		<div class="blank-list kt-margin-t-25">
+			<h4 class="kt-padding-l-25">填空题</h4>
+			<ol>
+				<li ng-repeat="blank in model.blankList">
+					<div class="title">
+						<strong class="text-pre-wrap markdown-body" ng-bind-html="blank.exercisesTitleHtml"></strong>
+						<strong class="kt-margin-l-10" 
+							ng-if="blank.correctResult !== 'P'"
+							ng-class="{'kt-font-success': blank.correctResult == 'Y', 'kt-font-danger': blank.correctResult == 'N'}"> 
+							<i class="fa" ng-class="{'fa-check': blank.correctResult == 'Y', 'fa-times': blank.correctResult == 'N'}"></i>
+						</strong>
+					</div>
+					<div class="source kt-margin-t-5-">
+						<small>习题来源：</small>
+						<small ng-bind="blank.exercisesSource"></small>
+					</div>
+					<div class="knowledge kt-margin-t-5">
+						<small>考察知识点：</small>
+						<small ng-bind="blank.knowledgeName"></small>
+					</div>
+					<div class="answer kt-margin-t-5">
+						{{!-- <label style="border-bottom: 1px solid #1ec9b7; width: 160px"> </label> --}}
+						<label style="border-bottom: 1px solid #cccccc; width: 160px">&nbsp;</label>
+					</div>
+				</li>
+				{{!-- <li>
+					<div class="title">
+						<strong>题目1标题题目1标题题目1标题题目1标题题目1标题</strong>
+						<strong class="kt-font-danger kt-margin-l-10"> <i class="fa fa-times"></i></strong>
+					</div>
+					<div class="source kt-margin-t-5">
+						<small>题目来源</small>
+					</div>
+					<div class="knowledge kt-margin-t-5">
+						<small>考察知识点：</small>
+						<small>知识点内容知识点内容知识点内容知识点内容</small>
+					</div>
+					<div class="answer kt-margin-t-5">
+						<label style="border-bottom: 1px solid #fd29eb; width: 160px">100</label>
+					</div>
+				</li> --}}
+			</ol>
+
+		</div>
+		<div class="program-list kt-margin-t-25">
+			<h4 class="kt-padding-l-25">编程题</h4>
+			<ol>
+				<li ng-repeat="program in model.programList">
+					<div class="title" ng-if="program.exercisesSourceType == 1">
+						<strong class="text-pre-wrap markdown-body" ng-bind-html="program.exercisesTitleHtml"></strong>
+						<strong class="kt-margin-l-10" 
+							ng-if="program.correctResult !== 'P'"
+							ng-class="{'kt-font-success': program.correctResult == 'Y', 'kt-font-danger': program.correctResult == 'W'}"> 
+							<i class="fa" ng-class="{'fa-check': program.correctResult == 'Y', 'fa-times': program.correctResult == 'W'}"></i>
+						</strong>
+					</div>
+					<div class="title" ng-if="program.exercisesSourceType == 0">
+						<strong>请按照以下文件中的要求编写程序：</strong> <br>
+						<a ng-href="\{{program.exercisesDocUri}}" class="kt-link kt-link--brand kt-margin-t-5" target="_blank" ng-bind="program.exercisesTitle"></a>
+					</div>
+					<div class="source" ng-if="program.exercisesSourceType == 1">
+						<small>习题来源：</small>
+						<small ng-bind="program.exercisesSource">题目来源</small>
+					</div>
+					<div class="knowledge kt-margin-t-5">
+						<small>考察知识点：</small>
+						<small ng-bind="program.knowledgeName"></small>
+					</div>
+					<div class="source-code kt-margin-t-5">
+						<label style="font-size: 1rem;">练习代码：</label>
+						{{!-- <a href="javascript:" class="kt-link kt-link--info kt-margin-r-15">111111111.zip</a>
+						<button type="button" class="btn btn-info btn-sm">查看批改结果</button> --}}
+					</div>
+				</li>
+				{{!-- <li>
+					<div class="title">
+						<strong>题目1标题题目1标题题目1标题题目1标题题目1标题</strong>
+						<strong class="kt-font-danger kt-margin-l-10"> <i class="fa fa-times"></i></strong>
+					</div>
+					<div class="source kt-margin-t-5">
+						<small>题目来源</small>
+					</div>
+					<div class="knowledge kt-margin-t-5">
+						<small>考察知识点：</small>
+						<small>知识点内容知识点内容知识点内容知识点内容</small>
+					</div>
+					<div class="source-code kt-margin-t-5">
+						<label style="font-size: 1rem;">练习代码：</label>
+						<a href="javascript:" class="kt-link kt-link--info kt-margin-r-15">111111111.zip</a>
+						<button type="button" class="btn btn-info btn-sm">查看批改结果</button>
+					</div>
+				</li> --}}
+			</ol>
+		</div>
+
+	</div>
+
+</div>
+<input type="hidden" value="{{courseExercisesID}}" id="hidden_courseExercisesID">
+<script>
+	$(document).ready(function () {
+		commonUtility.appendScript('/javascripts/views/knowledgeExercises4Student.js');
+	});
+</script>

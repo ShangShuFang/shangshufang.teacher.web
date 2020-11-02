@@ -25,6 +25,7 @@ let abilityLevelRouter = require('./routes/abilityLevel');
 let companyRouter = require('./routes/company');
 let approveRouter = require('./routes/approve');
 let knowledgeExercisesRouter = require('./routes/knowledgeExercises');
+let knowledgeExercises4StudentRouter = require('./routes/knowledgeExercises4Student');
 let commonRouter = require('./routes/common');
 
 let app = express();
@@ -59,9 +60,8 @@ app.use('/ability/detail', abilityDetailRouter);
 app.use('/ability/level', abilityLevelRouter);
 app.use('/company', companyRouter);
 app.use('/approve', approveRouter);
-
 app.use('/exercises/knowledge', knowledgeExercisesRouter);
-
+app.use('/exercises/knowledge/student', knowledgeExercises4StudentRouter);
 app.use('/common', commonRouter);
 
 // catch 404 and forward to error handler

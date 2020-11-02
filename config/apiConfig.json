@@ -111,7 +111,9 @@
 			"customKnowledgeProgramExercisesList": "/api/v1/university/exercise/knowledge/program/list",
       "addCustomKnowledgeProgramExercises": "/api/v1/university/exercise/knowledge/program/add",
       "changeCustomKnowledgeProgramExercises": "/api/v1/university/exercise/knowledge/program/change",
-      "deleteCustomKnowledgeProgramExercises": "/api/v1/university/exercise/knowledge/program/delete"
+			"deleteCustomKnowledgeProgramExercises": "/api/v1/university/exercise/knowledge/program/delete",
+			
+			"studentCourseExercises": "/api/v1/course/exercises/any"
     }
   }
 }

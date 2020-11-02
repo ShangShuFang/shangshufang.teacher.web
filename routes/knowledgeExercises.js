@@ -468,7 +468,7 @@ router.delete('/custom/program/delete', function(req, res, next) {
 
 //#endregion
 
-//#region 
+//#region 查询技术和知识点名称
 router.get('/info', function (req, res, next) {
 	let service = new commonService.commonInvoke('searchKnowledgeById');
 	let technologyID = req.query.technologyID;
@@ -493,4 +493,5 @@ router.get('/info', function (req, res, next) {
 	});
 });
 //#endregion
+
 module.exports = router;

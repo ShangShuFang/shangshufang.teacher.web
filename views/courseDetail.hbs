@@ -648,8 +648,8 @@
                         </a>
                         <a href=""
                            class="btn btn-outline-hover-info btn-elevate btn-square btn-sm"
-                           ng-class="{'btn-primary': model.filterStatus == 'W', 'btn-primary-hover-info': model.filterStatus != 'W'}"
-                           ng-click="onFilterCourseStudentExercises('W')">
+                           ng-class="{'btn-primary': model.filterStatus == 'C', 'btn-primary-hover-info': model.filterStatus != 'C'}"
+                           ng-click="onFilterCourseStudentExercises('C')">
                           批改中
                         </a>
                         <a href=""
@@ -722,7 +722,7 @@
                       <td class="kt-datatable__cell">
                             <span style="width: 60px;">
                               <span class="kt-badge kt-badge--inline kt-badge--pill"
-                                    ng-class="{'kt-badge--primary': data.dataStatus == 'P', 'kt-badge--warning': data.dataStatus == 'W', 'kt-badge--danger': data.dataStatus == 'R', 'kt-badge--success': data.dataStatus == 'S'}"
+                                    ng-class="{'kt-badge--primary': data.dataStatus == 'P', 'kt-badge--warning': data.dataStatus == 'C', 'kt-badge--danger': data.dataStatus == 'R', 'kt-badge--success': data.dataStatus == 'S'}"
                                     ng-bind="data.dataStatusText">
                               </span>
                             </span>

@@ -40,7 +40,10 @@ pageApp.controller('pageCtrl', function ($scope, $sce, $http) {
 				if (response.data.courseExercises.createTime !== response.data.courseExercises.updateTime) {
 					$scope.model.submitTime = response.data.courseExercises.updateTime;
 				}
-				response.data.courseExercises.choiceExercisesList.forEach((data) => {
+				response.data.courseExercises.singleChoiceExercisesList.forEach((data) => {
+					data.exercisesTitleHtml = $sce.trustAsHtml(data.exercisesTitleHtml);
+				});
+				response.data.courseExercises.multipleChoiceExercisesList.forEach((data) => {
 					data.exercisesTitleHtml = $sce.trustAsHtml(data.exercisesTitleHtml);
 				});
 				response.data.courseExercises.blankExercisesList.forEach((data) => {
@@ -52,7 +55,8 @@ pageApp.controller('pageCtrl', function ($scope, $sce, $http) {
 					}
 				});
 
-				$scope.model.choiceList = response.data.courseExercises.choiceExercisesList;
+				$scope.model.singleChoiceList = response.data.courseExercises.singleChoiceExercisesList;
+				$scope.model.multipleChoiceList = response.data.courseExercises.multipleChoiceExercisesList;
 				$scope.model.blankList = response.data.courseExercises.blankExercisesList;
 				$scope.model.programList = response.data.courseExercises.programExercisesList;
 			}, function errorCallback(response) {

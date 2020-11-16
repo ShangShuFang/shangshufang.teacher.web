@@ -54,4 +54,29 @@ router.get('/data', function (req, res, next) {
 	});
 });
 
+router.get('/review/program', function (req, res, next) {
+	let service = new commonService.commonInvoke('programReviewList');
+	let courseExercisesID = req.query.courseExercisesID;
+	let courseExercisesDetailID = req.query.courseExercisesDetailID;
+	let parameter = `${courseExercisesID}/${courseExercisesDetailID}`;
+
+	service.queryWithParameter(parameter, (result) => {
+		if(result.err){
+			res.json({
+				err: true,
+				code: result.code,
+				msg: result.msg
+			});
+		}else{
+
+			res.json({
+				err: false,
+				code: result.code,
+				msg: result.msg,
+				dataList: result.content.responseData
+			});
+		}
+	});
+});
+
 module.exports = router;

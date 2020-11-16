@@ -4,10 +4,8 @@
     "port": 8081,
     "path": {
       "login": "/api/v1/account/teacher/login",
-
       "universityList": "/api/v1/customer/university/list",
       "schoolList": "/api/v1/customer/school/list",
-
       "universityAccount": "/api/v1/account/teacher/add",
       "approveAccount": "/api/v1/account/teacher/client",
       "waitApprove": "/api/v1/account/teacher/client/waitApprove",
@@ -15,29 +13,20 @@
       "checkCellphone4ChangePassword": "/api/v1/account/teacher/check/cellphone/change_password",
       "changeUniversityAccountStatus": "/api/v1/account/teacher/change/status",
       "changePassword": "/api/v1/account/teacher/change/password",
-
       "technologyList": "/api/v1/technology/client",
       "technology": "/api/v1/technology/any",
       "technologySimple": "/api/v1/technology/simple",
       "learningTechnology": "/api/v1/technology/learning",
-
       "developmentDirections": "/api/v1/develop_direction/list/direction",
-
       "directionList": "/api/v1/develop_direction/list",
       "technologyCategoryList": "/api/v1/technology/category/list",
-
       "knowledgeList": "/api/v1/knowledge/list",
       "knowledgeSimpleList": "/api/v1/knowledge/list/simple",
-
       "learningPhase": "/api/v1/sys_parm/learning_phase/list",
-
       "usingLearningPhase": "/api/v1/sys_parm/learning_phase/list/has_knowledge",
-
       "knowledgeExercises": "/api/v1/knowledge/exercises/list/assigned",
-
       "checkVerificationCode": "/api/v1/verification_code/any",
       "addVerificationCode": "/api/v1/verification_code/add",
-
       "courseList": "/api/v1/course/list",
       "courseDetail": "/api/v1/course/any",
       "addCourse": "/api/v1/course/add",
@@ -60,21 +49,16 @@
       "addClassExercisesReview": "/api/v1/course/exercises/review/add",
       "changeClassExercisesReview": "/api/v1/course/exercises/review/change",
       "codeStandard": "/api/v1/code_standard/list",
-
       "teachersList": "/api/v1/user/teacher/list",
       "changeTeacher": "/api/v1/user/teacher/change",
       "checkCustomerEmail": "/api/v1/user/teacher/check/email",
       "changeAssistant": "/api/v1/course/sign_up/change/assistant",
-
       "businessAnalyseLog": "/api/v1/burying_point/add",
-
       "suggestType": "/api/v1/sys_parm/suggest_type/list",
       "addSuggest": "/api/v1/suggest/add",
-
       "company": "/api/v1/customer/company/list",
       "companyUsingTechnology": "/api/v1/customer/company/list/using/technology",
       "companyUsingKnowledge": "/api/v1/customer/company/list/using/knowledge/client",
-
       "studentAbilityResultList": "/api/v1/analysis/ability/student/list",
       "studentAbilityResultSummary": "/api/v1/analysis/ability/student/any/student_summary",
       "studentLearningTechnologyAbilityResultSummary": "/api/v1/analysis/ability/student/list/learning_technology",
@@ -86,34 +70,28 @@
       "learningKnowledgeList": "/api/v1/analysis/ability/student/list/learning_knowledge",
       "noLearningKnowledgeList": "/api/v1/analysis/ability/student/list/noLearning_knowledge",
       "weakKnowledgeList": "/api/v1/analysis/ability/student/list/weak_knowledge",
-			"studentExercisesList": "/api/v1/course/exercises/list/student/technology",
-			
-			"searchKnowledgeById": "/api/v1/knowledge/any",
-
+      "studentExercisesList": "/api/v1/course/exercises/list/student/technology",
+      "searchKnowledgeById": "/api/v1/knowledge/any",
       "growingMapList": "/api/v1/growing_map/list/map",
       "growingMap": "/api/v1/growing_map/any/map",
       "growingMapDetail": "/api/v1/growing_map/list/detail",
-
       "storeKnowledgeChoiceExercisesList": "/api/v1/exercise/knowledge/choice/list",
       "storeKnowledgeBlankExercisesList": "/api/v1/exercise/knowledge/blank/list",
-			"storeKnowledgeProgramExercisesList": "/api/v1/knowledge/exercises/list",
-			
+      "storeKnowledgeProgramExercisesList": "/api/v1/knowledge/exercises/list",
       "customKnowledgeChoiceExercisesList": "/api/v1/university/exercise/knowledge/choice/list",
       "addCustomKnowledgeChoiceExercises": "/api/v1/university/exercise/knowledge/choice/add",
       "changeCustomKnowledgeChoiceExercises": "/api/v1/university/exercise/knowledge/choice/change",
-			"deleteCustomKnowledgeChoiceExercises": "/api/v1/university/exercise/knowledge/choice/delete",
-			
-			"customKnowledgeBlankExercisesList": "/api/v1/university/exercise/knowledge/blank/list",
+      "deleteCustomKnowledgeChoiceExercises": "/api/v1/university/exercise/knowledge/choice/delete",
+      "customKnowledgeBlankExercisesList": "/api/v1/university/exercise/knowledge/blank/list",
       "addCustomKnowledgeBlankExercises": "/api/v1/university/exercise/knowledge/blank/add",
       "changeCustomKnowledgeBlankExercises": "/api/v1/university/exercise/knowledge/blank/change",
-			"deleteCustomKnowledgeBlankExercises": "/api/v1/university/exercise/knowledge/blank/delete",
-			
-			"customKnowledgeProgramExercisesList": "/api/v1/university/exercise/knowledge/program/list",
+      "deleteCustomKnowledgeBlankExercises": "/api/v1/university/exercise/knowledge/blank/delete",
+      "customKnowledgeProgramExercisesList": "/api/v1/university/exercise/knowledge/program/list",
       "addCustomKnowledgeProgramExercises": "/api/v1/university/exercise/knowledge/program/add",
       "changeCustomKnowledgeProgramExercises": "/api/v1/university/exercise/knowledge/program/change",
-			"deleteCustomKnowledgeProgramExercises": "/api/v1/university/exercise/knowledge/program/delete",
-			
-			"studentCourseExercises": "/api/v1/course/exercises/any"
+      "deleteCustomKnowledgeProgramExercises": "/api/v1/university/exercise/knowledge/program/delete",
+      "studentCourseExercises": "/api/v1/course/exercises/any",
+      "programReviewList": "/api/v1/course/exercises/list/review/program"
     }
   }
 }

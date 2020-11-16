@@ -1,6 +1,8 @@
 let pageApp = angular.module('pageApp', []);
 pageApp.controller('pageCtrl', function ($scope, $sce, $http) {
 	$scope.model = {
+		courseExercisesID: 0,
+		courseExercisesDetailID: 0,
 		title: '',
 		studentName: '',
 		exercisesStatus: '',
@@ -11,6 +13,11 @@ pageApp.controller('pageCtrl', function ($scope, $sce, $http) {
 		blankList: [],
 		programList: []
 	};
+	$scope.reviewHistoryModel = {
+		title: '',
+		dataList: []
+	};
+
 	$scope.initPage = function () {
 		$scope.setMenuActive();
 		$scope.loadExercises();
@@ -63,6 +70,27 @@ pageApp.controller('pageCtrl', function ($scope, $sce, $http) {
 				bootbox.alert(localMessage.NETWORK_ERROR);
 			});
 	};
+
+	//region 批改历史
+	$scope.showMarkHistoryDialog = function (program) {
+		$scope.model.courseExercisesID = program.courseExercisesID;
+		$scope.model.courseExercisesDetailID = program.courseExercisesDetailID;
+		$scope.reviewHistoryModel.title = program.exercisesTitle;
+		$http.get('/exercises/knowledge/student/review/program'
+				.concat(`?courseExercisesID=${$scope.model.courseExercisesID}`)
+				.concat(`&courseExercisesDetailID=${$scope.model.courseExercisesDetailID}`))
+				.then(function successCallback(response) {
+					if (response.data.err) {
+						bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+						return false;
+					}
+					$scope.reviewHistoryModel.dataList = response.data.dataList;
+					$('#kt_modal_review_history').modal('show');
+				}, function errorCallback(response) {
+					bootbox.alert(localMessage.NETWORK_ERROR);
+				});
+	}
+	//endregion
 
 	$scope.initPage();
 });

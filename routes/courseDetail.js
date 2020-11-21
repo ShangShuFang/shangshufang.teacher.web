@@ -118,6 +118,36 @@ router.get('/courseStudentExercises', function(req, res, next) {
     });
 });
 
+router.get('/knowledgeAnalyse', function(req, res, next) {
+    let service = new commonService.commonInvoke('courseKnowledgeLearnAnalyse');
+    let pageNumber = parseInt(req.query.pageNumber);
+    let pageSize = sysConfig.pageSize.ten;
+    let universityCode = req.query.universityCode;
+    let schoolID = req.query.schoolID;
+    let courseID = req.query.courseID;
+
+    let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${courseID}`;
+
+    service.queryWithParameter(parameter, (result) => {
+        if (result.err) {
+            res.json({
+                err: true,
+                code: result.code,
+                msg: result.msg
+            });
+        } else {
+            let dataContent = commonService.buildRenderData('知识点掌握情况分析', pageNumber, pageSize, result);
+            res.json({
+                err: false,
+                code: result.code,
+                msg: result.msg,
+                dataContent: dataContent
+            });
+        }
+    });
+});
+
+
 router.get('/courseStudentExercisesReview', function(req, res, next) {
     let service = new commonService.commonInvoke('classExercisesReviewList');
     let pageNumber = parseInt(req.query.pageNumber);

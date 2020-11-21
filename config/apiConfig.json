@@ -42,6 +42,10 @@
       "signUp4Student": "/api/v1/course/sign_up/list/student",
       "signUp4Course": "/api/v1/course/sign_up/list/course",
       "courseQuestionList": "/api/v1/course/question/list",
+
+      "courseKnowledgeLearnAnalyse": "/api/v1/course//list/knowledge/analyse",
+
+
       "addCourseQuestionLeaveMessage": "/api/v1/course/answer/add",
       "classExercises": "/api/v1/course/exercises/list",
       "assignClassExercises": "/api/v1/course/exercises/assign",

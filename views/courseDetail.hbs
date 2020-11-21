@@ -181,6 +181,9 @@
             <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#kt_tabs_7" role="tab" aria-selected="false">在线答疑</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#kt_tabs_8" role="tab" aria-selected="false">知识点掌握情况分析</a>
+            </li>
           </ul>
           <div class="tab-content course-detail">
             <div class="tab-pane active" id="kt_tabs_1" role="tabpanel">
@@ -792,7 +795,7 @@
                           <span class="kt-badge kt-badge--success kt-badge--inline" ng-if="question.leaveMessageList.length > 0">已回复</span>
                         </div>
                         <div class="kt-notes__dropdown">
-                          <a href="javascript:;"
+                          <a href="javascript:"
                              title="问题回复"
                              class="btn btn-sm btn-icon-md btn-icon"
                              ng-if="model.isLogin && model.loginUser.customerID == model.courseInfo.teacherID"
@@ -826,6 +829,88 @@
                 </div>
             </div>
           </div>
+            <div class="tab-pane" id="kt_tabs_8" role="tabpanel">
+              <div class="kt-datatable kt-datatable--default kt-datatable--brand kt-datatable--loaded" style="width: 100%; margin: 0 auto">
+                <table class="kt-datatable__table" style="display: block;">
+                  <thead class="kt-datatable__head">
+                    <tr class="kt-datatable__row" style="left: 0;">
+                      <th class="kt-datatable__cell text-center" style="width: 100px">
+                        节次
+                      </th>
+                      <th class="kt-datatable__cell text-center" style="width: 360px">
+                        知识点
+                      </th>
+                      <th class="kt-datatable__cell text-center" style="width: 100px">
+                        未提交
+                      </th>
+                      <th class="kt-datatable__cell text-center" style="width: 100px">
+                        批改中
+                      </th>
+                      <th class="kt-datatable__cell text-center" style="width: 100px">
+                        已掌握
+                      </th>
+                      <th class="kt-datatable__cell text-center" style="width: 100px">
+                        较薄弱
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="kt-datatable__body" style="">
+                    <tr class="kt-datatable__row" style="left: 0;" ng-repeat="data in knowledgeAnalyseModel.dataList">
+                      <td class="kt-datatable__cell text-center" style="width: 100px">
+                        第\{{data.courseClass}}节
+                      </td>
+                      <td class="kt-datatable__cell text-center" ng-bind="data.knowledgeName" style="width: 360px">
+                      </td>
+                      <td class="kt-datatable__cell text-center" style="width: 100px">
+                        <span>\{{data.pendingCount}}人</span>
+                        <span ng-if="data.pendingCount > 0">\{{data.pendingPercent*100}}%</span>
+                      </td>
+                      <td class="kt-datatable__cell text-center" style="width: 100px">
+                        <span>\{{data.correctingCount}}人</span>
+                        <span ng-if="data.correctingCount > 0">\{{data.correctingPercent*100}}%</span>
+                      </td>
+                      <td class="kt-datatable__cell text-center" style="width: 100px">
+                        <span ng-class="{'kt-font-success': data.learnedPercent >= 1.0}">\{{data.learnedCount}}人</span>
+                        <span ng-class="{'kt-font-success': data.learnedPercent >= 1.0}" ng-if="data.learnedCount > 0">\{{data.learnedPercent*100}}%</span>
+                      </td>
+                      <td class="kt-datatable__cell text-center" style="width: 100px">
+                        <span ng-class="{'kt-font-danger': data.weaknessPercent >= 0.3}">\{{data.weaknessCount}}人</span>
+                        <span ng-class="{'kt-font-danger': data.weaknessPercent >= 0.3}" ng-if="data.weaknessCount > 0">\{{data.weaknessPercent*100}}%</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="kt-container kt-grid__item kt-grid__item--fluid kt-margin-t-15" ng-if="knowledgeAnalyseModel.totalCount > 0">
+                <div class="kt-pagination kt-pagination--warning kt-pagination--circle">
+                  <div class="kt-pagination__toolbar">
+                      <span class="pagination__desc">
+                        共查询到<span ng-bind="knowledgeAnalyseModel.totalCount"></span>个满足条件的分析数据，
+                        当前显示第<span ng-bind="knowledgeAnalyseModel.fromIndex"></span>到第<span ng-bind="knowledgeAnalyseModel.toIndex"></span>个练习
+                      </span>
+                  </div>
+                  <ul class="kt-pagination__links">
+                    <li class="kt-pagination__link--first" ng-class="{'pagination-disabled': knowledgeAnalyseModel.prePageNum == -1}">
+                      <a href="javascript:" ng-click="onFirstPage4KnowledgeAnalyse()"><i class="fa fa-angle-double-left kt-font-primary"></i></a>
+                    </li>
+                    <li class="kt-pagination__link--next" ng-class="{'pagination-disabled': knowledgeAnalyseModel.prePageNum == -1}">
+                      <a href="javascript:" ng-click="onPrePage4KnowledgeAnalyse()"><i class="fa fa-angle-left kt-font-primary"></i></a>
+                    </li>
+
+                    <li ng-repeat="pagination in knowledgeAnalyseModel.paginationArray" ng-class="{'kt-pagination__link--active': knowledgeAnalyseModel.pageNumber == pagination}">
+                      <a href="javascript:" ng-bind="pagination" ng-click="onPagination4KnowledgeAnalyse(pagination)"></a>
+                    </li>
+
+                    <li class="kt-pagination__link--prev" ng-class="{'pagination-disabled': knowledgeAnalyseModel.nextPageNum == -1}">
+                      <a href="javascript:" ng-click="onNextPage4KnowledgeAnalyse()"><i class="fa fa-angle-right kt-font-primary"></i></a>
+                    </li>
+                    <li class="kt-pagination__link--last" ng-class="{'pagination-disabled': knowledgeAnalyseModel.nextPageNum == -1}">
+                      <a href="javascript:" ng-click="onLastPage4KnowledgeAnalyse()"><i class="fa fa-angle-double-right kt-font-primary"></i></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
         </div>
         </div>
       </div>

@@ -173,6 +173,17 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 		//#endregion
 	};
 
+	$scope.knowledgeAnalyseModel = {
+		fromIndex: 0,
+		toIndex: 0,
+		pageNumber: 1,
+		totalCount: 0,
+		maxPageNumber: 0,
+		dataList: [],
+		paginationArray: [],
+		prePageNum: -1,
+		nextPageNum: -1,
+	};
 	//region 页面初始化
 	$scope.initPage = function () {
 		if (!$scope.loadParameter()) {
@@ -184,6 +195,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 		$scope.loadCourseStudent();
 		$scope.loadCourseStudentExercises();
 		$scope.loadCourseQuestion();
+		$scope.loadKnowledgeAnalyse();
 		$scope.setDefaultTab();
 	};
 
@@ -1579,6 +1591,76 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 	};
 	//endregion
 
+	//region 知识点掌握情况分析
+	$scope.loadKnowledgeAnalyse = function () {
+		$http.get(`/course/detail/knowledgeAnalyse?pageNumber=${$scope.knowledgeAnalyseModel.pageNumber}&universityCode=${$scope.model.universityCode}&schoolID=${$scope.model.schoolID}&courseID=${$scope.model.courseID}`)
+				.then(function successCallback(response) {
+					if (response.data.err) {
+						bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
+						return false;
+					}
+					if (response.data.dataContent === null) {
+						return false;
+					}
+
+					let currentPageNumber = parseInt(response.data.dataContent.currentPageNum);
+					let currentPageSize = parseInt(response.data.dataContent.pageSize);
+
+					$scope.knowledgeAnalyseModel.totalCount = response.data.dataContent.totalCount;
+					$scope.knowledgeAnalyseModel.dataList = response.data.dataContent.dataList;
+					$scope.knowledgeAnalyseModel.pageNumber = currentPageNumber;
+					$scope.knowledgeAnalyseModel.maxPageNumber = Math.ceil(response.data.dataContent.totalCount / currentPageSize);
+					$scope.knowledgeAnalyseModel.paginationArray = response.data.dataContent.paginationArray;
+					$scope.knowledgeAnalyseModel.prePageNum = response.data.dataContent.prePageNum === undefined ? -1 : response.data.dataContent.prePageNum;
+					$scope.knowledgeAnalyseModel.nextPageNum = response.data.dataContent.nextPageNum === undefined ? -1 : response.data.dataContent.nextPageNum;
+					$scope.knowledgeAnalyseModel.fromIndex = response.data.dataContent.dataList === null ? 0 : (parseInt(response.data.dataContent.currentPageNum) - 1) * currentPageSize + 1;
+					$scope.knowledgeAnalyseModel.toIndex = response.data.dataContent.dataList === null ? 0 : (parseInt(response.data.dataContent.currentPageNum) - 1) * currentPageSize + response.data.dataContent.dataList.length;
+				}, function errorCallback(response) {
+					bootbox.alert(localMessage.NETWORK_ERROR);
+				});
+	}
+
+	$scope.onFirstPage4KnowledgeAnalyse = function () {
+		if ($scope.knowledgeAnalyseModel.pageNumber === 1) {
+			return false;
+		}
+		$scope.knowledgeAnalyseModel.pageNumber = 1;
+		$scope.loadKnowledgeAnalyse();
+	};
+
+	$scope.onPrePage4KnowledgeAnalyse = function () {
+		if ($scope.knowledgeAnalyseModel.pageNumber === 1) {
+			return false;
+		}
+		$scope.knowledgeAnalyseModel.pageNumber--;
+		$scope.loadKnowledgeAnalyse();
+	};
+
+	$scope.onPagination4KnowledgeAnalyse = function (pageNumber) {
+		if ($scope.knowledgeAnalyseModel.pageNumber === pageNumber) {
+			return false;
+		}
+		$scope.knowledgeAnalyseModel.pageNumber = pageNumber;
+		$scope.loadKnowledgeAnalyse();
+	};
+
+	$scope.onNextPage4KnowledgeAnalyse = function () {
+		if ($scope.knowledgeAnalyseModel.pageNumber === $scope.knowledgeAnalyseModel.maxPageNumber) {
+			return false;
+		}
+		$scope.model.pageNumber4Exercises++;
+		$scope.loadKnowledgeAnalyse();
+	};
+
+	$scope.onLastPage4KnowledgeAnalyse = function () {
+		if ($scope.knowledgeAnalyseModel.pageNumber === $scope.knowledgeAnalyseModel.maxPageNumber) {
+			return false;
+		}
+		$scope.knowledgeAnalyseModel.pageNumber = $scope.knowledgeAnalyseModel.maxPageNumber;
+		$scope.loadKnowledgeAnalyse();
+	};
+
+	//endregion
 	$scope.initPage();
 });
 angular.bootstrap(document.querySelector('[ng-app="pageApp"]'), ['pageApp']);

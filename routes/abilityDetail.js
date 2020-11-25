@@ -14,12 +14,9 @@ router.get('/', function(req, res, next) {
 
 router.get('/studentInfo', (req, res, next) => {
     let service = new commonService.commonInvoke('studentAbilityResultSummary');
-    let studentUniversityCode = req.query.studentUniversityCode;
-    let studentSchoolID = req.query.studentSchoolID;
     let studentID = req.query.studentID;
-    let parameter = `${studentUniversityCode}/${studentSchoolID}/${studentID}`;
 
-    service.queryWithParameter(parameter, (result) => {
+    service.queryWithParameter(studentID, (result) => {
         if (result.err) {
             res.json({
                 err: true,
@@ -38,13 +35,10 @@ router.get('/studentInfo', (req, res, next) => {
 });
 
 router.get('/learningTechnology', (req, res, next) => {
-    let service = new commonService.commonInvoke('studentLearningTechnologyAbilityResultSummary');
-    let studentUniversityCode = req.query.studentUniversityCode;
-    let studentSchoolID = req.query.studentSchoolID;
+    let service = new commonService.commonInvoke('studentLearningTechnology');
     let studentID = req.query.studentID;
-    let parameter = `${studentUniversityCode}/${studentSchoolID}/${studentID}`;
 
-    service.queryWithParameter(parameter, (result) => {
+    service.queryWithParameter(studentID, (result) => {
         if (result.err) {
             res.json({
                 err: true,
@@ -90,11 +84,9 @@ router.get('/technologyAnalysis', (req, res, next) => {
 
 router.get('/knowledgeAnalysis', (req, res, next) => {
     let service = new commonService.commonInvoke('studentAbility4knowledge');
-    let studentUniversityCode = req.query.studentUniversityCode;
-    let studentSchoolID = req.query.studentSchoolID;
     let studentID = req.query.studentID;
     let technologyID = req.query.technologyID;
-    let parameter = `${studentUniversityCode}/${studentSchoolID}/${studentID}/${technologyID}`;
+    let parameter = `${studentID}/${technologyID}`;
 
     service.queryWithParameter(parameter, (result) => {
         if (result.err) {
@@ -116,11 +108,9 @@ router.get('/knowledgeAnalysis', (req, res, next) => {
 
 router.get('/codeStandardAnalysis', (req, res, next) => {
     let service = new commonService.commonInvoke('studentAbility4codeStandard');
-    let studentUniversityCode = req.query.studentUniversityCode;
-    let studentSchoolID = req.query.studentSchoolID;
     let studentID = req.query.studentID;
     let languageID = req.query.languageID;
-    let parameter = `${studentUniversityCode}/${studentSchoolID}/${studentID}/${languageID}`;
+    let parameter = `${studentID}/${languageID}`;
 
     service.queryWithParameter(parameter, (result) => {
         if (result.err) {
@@ -196,40 +186,9 @@ router.get('/knowledge/finish', (req, res, next) => {
     let service = new commonService.commonInvoke('finishKnowledgeList');
     let pageNumber = req.query.pageNumber;
     let pageSize = sysConfig.pageSize.all;
-    let universityCode = req.query.universityCode;
-    let schoolID = req.query.schoolID;
     let studentID = req.query.studentID;
     let technologyID = req.query.technologyID;
-    let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${studentID}/${technologyID}`;
-
-    service.queryWithParameter(parameter, (result) => {
-        if (result.err) {
-            res.json({
-                err: true,
-                code: result.code,
-                msg: result.msg
-            });
-        } else {
-            res.json({
-                err: false,
-                code: result.code,
-                msg: result.msg,
-                totalCount: result.content.totalCount,
-                list: result.content.responseData
-            });
-        }
-    });
-});
-
-router.get('/knowledge/learning', (req, res, next) => {
-    let service = new commonService.commonInvoke('learningKnowledgeList');
-    let pageNumber = req.query.pageNumber;
-    let pageSize = sysConfig.pageSize.all;
-    let universityCode = req.query.universityCode;
-    let schoolID = req.query.schoolID;
-    let studentID = req.query.studentID;
-    let technologyID = req.query.technologyID;
-    let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${studentID}/${technologyID}`;
+    let parameter = `${pageNumber}/${pageSize}/${studentID}/${technologyID}`;
 
     service.queryWithParameter(parameter, (result) => {
         if (result.err) {
@@ -254,11 +213,9 @@ router.get('/knowledge/noLearning', (req, res, next) => {
     let service = new commonService.commonInvoke('noLearningKnowledgeList');
     let pageNumber = req.query.pageNumber;
     let pageSize = sysConfig.pageSize.all;
-    let universityCode = req.query.universityCode;
-    let schoolID = req.query.schoolID;
     let studentID = req.query.studentID;
     let technologyID = req.query.technologyID;
-    let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${studentID}/${technologyID}`;
+    let parameter = `${pageNumber}/${pageSize}/${studentID}/${technologyID}`;
 
     service.queryWithParameter(parameter, (result) => {
         if (result.err) {
@@ -280,14 +237,12 @@ router.get('/knowledge/noLearning', (req, res, next) => {
 });
 
 router.get('/knowledge/weak', (req, res, next) => {
-    let service = new commonService.commonInvoke('weakKnowledgeList');
+    let service = new commonService.commonInvoke('weaknessKnowledgeList');
     let pageNumber = req.query.pageNumber;
     let pageSize = sysConfig.pageSize.all;
-    let universityCode = req.query.universityCode;
-    let schoolID = req.query.schoolID;
     let studentID = req.query.studentID;
     let technologyID = req.query.technologyID;
-    let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${studentID}/${technologyID}`;
+    let parameter = `${pageNumber}/${pageSize}/${studentID}/${technologyID}`;
 
     service.queryWithParameter(parameter, (result) => {
         if (result.err) {

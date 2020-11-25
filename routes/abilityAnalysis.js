@@ -34,18 +34,18 @@ router.get('/technologySimple', (req, res, next) => {
 });
 
 router.get('/data', function(req, res, next) {
-    let service = new commonService.commonInvoke('studentAbilityResultList');
+    let service = new commonService.commonInvoke('studentAbilityList');
     let pageNumber = parseInt(req.query.pageNumber);
     let pageSize = sysConfig.pageSize.sixteen;
     let directionID = req.query.directionID;
     let categoryID = req.query.categoryID;
     let technologyID = req.query.technologyID;
-    let studentUniversityCode = req.query.studentUniversityCode;
-    let studentSchoolID = req.query.studentSchoolID;
+    let universityCode = req.query.universityCode;
+    let schoolID = req.query.schoolID;
     let studentName = req.query.studentName;
     let studentID = 0;
 
-    let parameter = `${pageNumber}/${pageSize}/${directionID}/${categoryID}/${technologyID}/${studentUniversityCode}/${studentSchoolID}/${studentName}/${studentID}`;
+    let parameter = `${pageNumber}/${pageSize}/${directionID}/${categoryID}/${technologyID}/${universityCode}/${schoolID}/${studentName}/${studentID}`;
 
     service.queryWithParameter(parameter, (result) => {
         if (result.err) {

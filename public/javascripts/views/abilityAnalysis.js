@@ -167,15 +167,6 @@ pageApp.controller('pageCtrl', function($scope, $http) {
             teacherSchoolID: 0,
             teacherID: 0
         });
-        // $scope.model.studentTypeList.push({
-        //   studentTypeID: 3,
-        //   studentTypeText: '我的学生',
-        //   studentUniversityCode: 0,
-        //   studentSchoolID: 0,
-        //   teacherUniversityCode: $scope.model.loginUser.universityCode,
-        //   teacherSchoolID: $scope.model.loginUser.schoolID,
-        //   teacherID: $scope.model.loginUser.customerID
-        // });
     };
 
     $scope.initData = function() {
@@ -202,9 +193,14 @@ pageApp.controller('pageCtrl', function($scope, $http) {
         if (commonUtility.isEmpty(studentName)) {
             studentName = 'NULL';
         }
-        let pageSize = Constants.PAGE_SIZE;
-        // $scope.initData();
-        $http.get(`/ability/analysis/data?pageNumber=${$scope.model.pageNumber}&directionID=${$scope.model.selectedDirection.directionID}&categoryID=${$scope.model.selectedCategory.categoryID}&technologyID=${$scope.model.selectedTechnology.technologyID}&studentUniversityCode=${$scope.model.selectedStudentType.studentUniversityCode}&studentSchoolID=${$scope.model.selectedStudentType.studentSchoolID}&teacherUniversityCode=${$scope.model.selectedStudentType.teacherUniversityCode}&teacherSchoolID=${$scope.model.selectedStudentType.teacherSchoolID}&teacherID=${$scope.model.selectedStudentType.teacherID}&studentName=${studentName}`)
+        $http.get('/ability/analysis/data'
+            .concat(`?pageNumber=${$scope.model.pageNumber}`)
+            .concat(`&directionID=${$scope.model.selectedDirection.directionID}`)
+            .concat(`&categoryID=${$scope.model.selectedCategory.categoryID}`)
+            .concat(`&technologyID=${$scope.model.selectedTechnology.technologyID}`)
+            .concat(`&universityCode=${$scope.model.selectedStudentType.studentUniversityCode}`)
+            .concat(`&schoolID=${$scope.model.selectedStudentType.studentSchoolID}`)
+            .concat(`&studentName=${studentName}`))
             .then(function successCallback(response) {
                 if (response.data.err) {
                     bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
@@ -218,10 +214,8 @@ pageApp.controller('pageCtrl', function($scope, $http) {
                 }
 
                 response.data.dataContent.dataList.forEach(function(data) {
-                    data.finishKnowledgePercent = data.finishKnowledgePercent + '%';
+                    data.finishKnowledgePercent = data.finishedKnowledgePercent + '%';
                     data.positionSite = data.positionSite + '%';
-                    data.onceCompilationSuccessRate = data.onceCompilationSuccessRate + '%';
-                    data.onceRunSuccessRate = data.onceRunSuccessRate + '%';
                 });
 
                 $scope.model.totalCount = response.data.dataContent.totalCount;
@@ -231,8 +225,8 @@ pageApp.controller('pageCtrl', function($scope, $http) {
                 $scope.model.paginationArray = response.data.dataContent.paginationArray;
                 $scope.model.prePageNum = response.data.dataContent.prePageNum === undefined ? -1 : response.data.dataContent.prePageNum;
                 $scope.model.nextPageNum = response.data.dataContent.nextPageNum === undefined ? -1 : response.data.dataContent.nextPageNum;
-                $scope.model.fromIndex = response.data.dataContent.dataList === null ? 0 : ($scope.model.pageNumber - 1) * pageSize + 1;
-                $scope.model.toIndex = response.data.dataContent.dataList === null ? 0 : ($scope.model.pageNumber - 1) * pageSize + $scope.model.dataList.length;
+                $scope.model.fromIndex = response.data.dataContent.dataList === null ? 0 : ($scope.model.pageNumber - 1) * response.data.dataContent.pageSize + 1;
+                $scope.model.toIndex = response.data.dataContent.dataList === null ? 0 : ($scope.model.pageNumber - 1) * response.data.dataContent.pageSize + $scope.model.dataList.length;
                 KTApp.unblockPage();
             }, function errorCallback(response) {
                 bootbox.alert(localMessage.NETWORK_ERROR);

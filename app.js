@@ -40,7 +40,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
+app.use('/', courseCenterRouter);
 app.use('/course/center', courseCenterRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);

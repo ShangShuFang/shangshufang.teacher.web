@@ -37,11 +37,12 @@ router.get('/knowledgeExercises', function(req, res, next) {
 router.get('/courseSignUp', function(req, res, next) {
     let service = new commonService.commonInvoke('signUp4Student');
     let pageNumber = parseInt(req.query.pageNumber);
+    let pageSize = sysConfig.pageSize.ten;
     let universityCode = req.query.universityCode;
     let schoolID = req.query.schoolID;
     let courseID = req.query.courseID;
 
-    let parameter = `${pageNumber}/${sysConfig.pageSize.ten}/${universityCode}/${schoolID}/${courseID}`;
+    let parameter = `${pageNumber}/${pageSize}/${universityCode}/${schoolID}/${courseID}`;
 
     service.queryWithParameter(parameter, (result) => {
         if (result.err) {
@@ -51,7 +52,7 @@ router.get('/courseSignUp', function(req, res, next) {
                 msg: result.msg
             });
         } else {
-            let dataContent = commonService.buildRenderData('报名学生', pageNumber, sysConfig.pageSize.ten, result);
+            let dataContent = commonService.buildRenderData('报名学生', pageNumber, pageSize, result);
             res.json({
                 err: false,
                 code: result.code,

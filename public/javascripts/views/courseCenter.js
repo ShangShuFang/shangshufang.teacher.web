@@ -56,7 +56,7 @@ pageApp.controller('pageCtrl', function($scope, $http) {
     };
 
     $scope.setMenuActive = function() {
-        $('ul.main-menu_nav li:nth-child(2)').addClass('kt-menu__item--here');
+        $('ul.main-menu_nav li:nth-child(1)').addClass('kt-menu__item--here');
     };
 
     $scope.loadDirectionList = function() {

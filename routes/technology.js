@@ -31,6 +31,32 @@ router.get('/technologyInfo', (req, res, next) => {
     });
 });
 
+router.get('/using/company', (req, res, next) => {
+    let service = new commonService.commonInvoke('usingTechnologyCompany');
+    let pageNumber = 1;
+    let pageSize = sysConfig.pageSize.twelve;
+    let technologyID = req.query.technologyID;
+    let parameter = `${pageNumber}/${pageSize}/${technologyID}`;
+
+    service.queryWithParameter(parameter, (result) => {
+        if (result.err) {
+            res.json({
+                err: true,
+                code: result.code,
+                msg: result.msg
+            });
+        } else {
+            res.json({
+                err: false,
+                code: result.code,
+                msg: result.msg,
+                totalCount:result.content.totalCount,
+                dataList: result.content.responseData
+            });
+        }
+    });
+});
+
 router.get('/knowledgeList', (req, res, next) => {
     let service = new commonService.commonInvoke('knowledgeList');
     let pageNumber = parameterUtils.processNumberParameter(req.query.pageNumber, Constants.PAGE_NUMBER_DEFAULT);
@@ -56,28 +82,6 @@ router.get('/knowledgeList', (req, res, next) => {
         }
     });
 });
-
-// router.get('/developmentDirections', function(req, res, next) {
-//   let service = new commonService.commonInvoke('developmentDirections');
-//   let technologyID = req.query.technologyID;
-//
-//   service.queryWithParameter(technologyID, function (result) {
-//     if(result.err){
-//       res.json({
-//         err: true,
-//         code: result.code,
-//         msg: result.msg
-//       });
-//     }else{
-//       res.json({
-//         err: false,
-//         code: result.code,
-//         msg: result.msg,
-//         directionList: result.content.responseData
-//       });
-//     }
-//   });
-// });
 
 router.get('/courseSignUp', function(req, res, next) {
     let service = new commonService.commonInvoke('signUp4Technology');

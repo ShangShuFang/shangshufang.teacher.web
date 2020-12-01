@@ -24,25 +24,35 @@ router.get('/data', function (req, res, next) {
 			});
 		} else {
 			if (result.content.responseData !== null) {
-				result.content.responseData.singleChoiceExercisesList.forEach((data) => {
-					data.exercisesTitleHtml = markdownService.convertToHtml(data.exercisesTitle);
-				});
-				result.content.responseData.multipleChoiceExercisesList.forEach((data) => {
-					data.exercisesTitleHtml = markdownService.convertToHtml(data.exercisesTitle);
-				});
-				result.content.responseData.blankExercisesList.forEach((data) => {
-					data.exercisesTitleHtml = markdownService.convertToHtml(data.exercisesTitle);
-				});
-				result.content.responseData.programExercisesList.forEach((data) => {
-					data.sourceCodeUrl = data.submitSourceCodeUrl
-					data.originalSourceCodeUrl = data.submitSourceCodeUrl;
-					if (data.exercisesSourceType === 0) {
-						data.exercisesDocUri = data.exercisesTitle;
-						data.exercisesTitle = data.exercisesTitle.substr(data.exercisesTitle.lastIndexOf('/') + 1);
-					} else {
+				if (result.content.responseData.singleChoiceExercisesList != null) {
+					result.content.responseData.singleChoiceExercisesList.forEach((data) => {
 						data.exercisesTitleHtml = markdownService.convertToHtml(data.exercisesTitle);
-					}
-				});
+					});
+				}
+				if (result.content.responseData.multipleChoiceExercisesList != null) {
+					result.content.responseData.multipleChoiceExercisesList.forEach((data) => {
+						data.exercisesTitleHtml = markdownService.convertToHtml(data.exercisesTitle);
+					});
+				}
+
+				if (result.content.responseData.blankExercisesList != null) {
+					result.content.responseData.blankExercisesList.forEach((data) => {
+						data.exercisesTitleHtml = markdownService.convertToHtml(data.exercisesTitle);
+					});
+				}
+
+				if (result.content.responseData.programExercisesList != null) {
+					result.content.responseData.programExercisesList.forEach((data) => {
+						data.sourceCodeUrl = data.submitSourceCodeUrl
+						data.originalSourceCodeUrl = data.submitSourceCodeUrl;
+						if (data.exercisesSourceType === 0) {
+							data.exercisesDocUri = data.exercisesTitle;
+							data.exercisesTitle = data.exercisesTitle.substr(data.exercisesTitle.lastIndexOf('/') + 1);
+						} else {
+							data.exercisesTitleHtml = markdownService.convertToHtml(data.exercisesTitle);
+						}
+					});
+				}
 			}
 			res.json({
 				err: false,

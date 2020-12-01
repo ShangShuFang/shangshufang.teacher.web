@@ -728,6 +728,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 					$scope.model.knowledgeList.push({
 						technologyID: $scope.model.courseInfo.technologyID,
 						technologyName: $scope.model.courseInfo.technologyName,
+						technologyThumbnailSquare: $scope.model.courseInfo.technologyThumbnailSquare,
 						technologyThumbnail: $scope.model.courseInfo.technologyThumbnail,
 						learningPhaseID: $scope.model.selectedLearningPhase.learningPhaseID,
 						learningPhaseName: $scope.model.selectedLearningPhase.learningPhaseName,
@@ -921,13 +922,13 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 				return false;
 			}
 			$scope.model.exercisesList = [];
-			response.data.courseExercisesList.forEach(function (courseExercises) {
-				let exercisesTotalCount = 0;
-				courseExercises.knowledgeList.forEach(function (knowledge) {
-					exercisesTotalCount += knowledge.knowledgeExercisesList.length;
-				});
-				courseExercises.exercisesTotalCount = exercisesTotalCount;
-			});
+			// response.data.courseExercisesList.forEach(function (courseExercises) {
+			// 	let exercisesTotalCount = 0;
+			// 	courseExercises.knowledgeList.forEach(function (knowledge) {
+			// 		exercisesTotalCount += knowledge.knowledgeExercisesList.length;
+			// 	});
+			// 	courseExercises.exercisesTotalCount = exercisesTotalCount;
+			// });
 			$scope.model.exercisesList = response.data.courseExercisesList;
 		}, function errorCallback(response) {
 			bootbox.alert(localMessage.NETWORK_ERROR);
@@ -1103,6 +1104,7 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 			$scope.model.assignExercises = null;
 			$('#kt_modal_send_exercises').modal('hide');
 			$scope.loadCourseInfo();
+			$scope.loadCourseStudentExercises();
 		}, function errorCallback(response) {
 			bootbox.alert(localMessage.NETWORK_ERROR);
 		});
@@ -1132,14 +1134,17 @@ pageApp.controller('pageCtrl', function ($scope, $http, $sce) {
 				$scope.model.paginationArray4SignUp = response.data.dataContent.paginationArray;
 				$scope.model.prePageNum4SignUp = response.data.dataContent.prePageNum === undefined ? -1 : response.data.dataContent.prePageNum;
 				$scope.model.nextPageNum4SignUp = response.data.dataContent.nextPageNum === undefined ? -1 : response.data.dataContent.nextPageNum;
-				$scope.model.fromIndex4SignUp = response.data.dataContent.dataList === null ? 0 : ($scope.model.pageNumber4SignUp - 1) * Constants.PAGE_SIZE + 1;
-				$scope.model.toIndex4SignUp = response.data.dataContent.dataList === null ? 0 : ($scope.model.pageNumber4SignUp - 1) * Constants.PAGE_SIZE + $scope.model.dataList4SignUp.length;
+				$scope.model.fromIndex4SignUp = response.data.dataContent.dataList === null ? 0 : ($scope.model.pageNumber4SignUp - 1) * response.data.dataContent.pageSize + 1;
+				$scope.model.toIndex4SignUp = response.data.dataContent.dataList === null ? 0 : ($scope.model.pageNumber4SignUp - 1) * response.data.dataContent.pageSize + $scope.model.dataList4SignUp.length;
 			}, function errorCallback(response) {
 				bootbox.alert(localMessage.NETWORK_ERROR);
 			});
 	};
 
 	$scope.onFirstPage4SignUp = function () {
+		if ($scope.model.pageNumber4SignUp === 1) {
+			return false;
+		}
 		$scope.model.pageNumber4SignUp = 1;
 		$scope.loadCourseStudent();
 	};

@@ -53,14 +53,11 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
 
   $scope.initPage = function () {
     $scope.setMenuActive();
-    $scope.setParameter();
+    let result = $scope.setParameter();
+    if (!result) {
+      return false;
+    }
     $scope.loadTechnologyInfo();
-    $scope.loadCompanyList();
-    $scope.loadKnowledgeList();
-    $scope.loadCourseOfUniversityList();
-    $scope.loadCourseOfOtherUniversityList();
-    $scope.loadCourseStudent();
-    // $('.carousel').carousel();
   };
 
   $scope.setMenuActive = function () {
@@ -87,6 +84,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
         $scope.model.bizLog.operationName.PAGE_LOAD,
         bizLogger.OPERATION_TYPE.LOAD,
         bizLogger.OPERATION_RESULT.SUCCESS);
+    return true;
   };
 
   $scope.loadTechnologyInfo = function () {
@@ -97,10 +95,20 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
           return false;
         }
         if(response.data.technologyInfo === null){
-          bootbox.alert(localMessage.NO_TECHNOLOGY_INFO);
+          $scope.model.technologyInfo = null;
+          // bootbox.alert(localMessage.NO_TECHNOLOGY_INFO);
           return false;
         }
         $scope.model.technologyInfo = response.data.technologyInfo;
+        if ($scope.model.technologyInfo.dataStatus === 'D') {
+          return false;
+        }
+        $scope.loadCompanyList();
+        $scope.loadKnowledgeList();
+        $scope.loadCourseOfUniversityList();
+        $scope.loadCourseOfOtherUniversityList();
+        $scope.loadCourseStudent();
+
       }, function errorCallback(response) {
         bootbox.alert(localMessage.NETWORK_ERROR);
     });
@@ -141,7 +149,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.loadCompanyList = function () {
-    $http.get(`/common/company?maxCount=12`)
+    $http.get(`/technology/using/company?technologyID=${$scope.model.technologyID}`)
       .then(function successCallback (response) {
         if(response.data.err){
           bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));

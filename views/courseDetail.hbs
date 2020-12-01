@@ -119,8 +119,8 @@
             </div>
             <div class="kt-widget__details">
               <span class="kt-widget__title">随堂练习</span>
-              <span class="kt-widget__value" ng-bind="model.courseInfo.courseKnowledgeExercisesCount">
-              </span>
+<!--              <span class="kt-widget__value" ng-bind="model.courseInfo.courseKnowledgeExercisesCount"></span>-->
+              <span class="kt-widget__value">500+</span>
             </div>
           </div>
           <div class="kt-widget__item">
@@ -607,21 +607,21 @@
                           <button type="button"
                                   id="btnAssignExercises\{{exercises.courseClass}}"
                                   class="btn btn-info btn-sm" ng-click="onShowAssignExercisesModal(exercises)"
-                                  ng-if="exercises.dataStatus === 'P' && exercises.exercisesTotalCount > 0 && model.courseInfo.dataStatus == '1' && model.courseInfo.courseSingUpCount > 0">
+                                  ng-if="exercises.dataStatus === 'P' && exercises.classExercisesTotalCount > 0 && model.courseInfo.dataStatus == '1' && model.courseInfo.courseSingUpCount > 0">
                             下发练习
                           </button>
 
                           <button type="button" class="btn btn-secondary btn-hover-brand btn-sm"
                                   ng-click="onFinishClass(exercises)"
-                                  ng-if="exercises.dataStatus === 'P' && exercises.exercisesTotalCount == 0 && model.courseInfo.dataStatus == '1' && model.courseInfo.courseSingUpCount > 0">
+                                  ng-if="exercises.dataStatus === 'P' && exercises.classExercisesTotalCount == 0 && model.courseInfo.dataStatus == '1' && model.courseInfo.courseSingUpCount > 0">
                             结束本节
                           </button>
                           <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success"
                                 style="color: #ffffff; display: inline-flex; "
-                                ng-if="exercises.dataStatus === 'F' && exercises.exercisesTotalCount > 0">练习已下发</span>
+                                ng-if="exercises.dataStatus === 'F' && exercises.classExercisesTotalCount > 0">作业已下发</span>
                           <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success"
                                 style="color: #ffffff; display: inline-flex; "
-                                ng-if="exercises.dataStatus === 'F' && exercises.exercisesTotalCount === 0">已结束</span>
+                                ng-if="exercises.dataStatus === 'F' && exercises.classExercisesTotalCount === 0">已结束</span>
                         </td>
                       </tr>
                       </tbody>
@@ -701,7 +701,7 @@
                       <span style="width: 160px;">提交时间</span>
                     </th>
                     <th data-field="Status" class="kt-datatable__cell kt-datatable__cell--sort">
-                      <span style="width: 100px;"> </span>
+                      <span style="width: 100px;">操作</span>
                     </th>
                   </tr>
                   </thead>
@@ -731,7 +731,8 @@
                             </span>
                       </td>
 											<td class="kt-datatable__cell">
-                        <span style="width: 160px;" ng-bind="data.updateTime"></span>
+                        <span style="width: 160px;" ng-bind="data.updateTime" ng-if="data.dataStatus != 'P'"></span>
+                        <span style="width: 160px;" ng-if="data.dataStatus == 'P'"></span>
                       </td>
                       <td class="kt-datatable__cell">
 												<span style="width: 100px;">
@@ -870,8 +871,8 @@
                         <span ng-if="data.correctingCount > 0">\{{data.correctingPercent*100}}%</span>
                       </td>
                       <td class="kt-datatable__cell text-center" style="width: 100px">
-                        <span ng-class="{'kt-font-success': data.learnedPercent >= 1.0}">\{{data.learnedCount}}人</span>
-                        <span ng-class="{'kt-font-success': data.learnedPercent >= 1.0}" ng-if="data.learnedCount > 0">\{{data.learnedPercent*100}}%</span>
+                        <span ng-class="{'kt-font-success': data.learnedPercent >= 0.1}">\{{data.learnedCount}}人</span>
+                        <span ng-class="{'kt-font-success': data.learnedPercent >= 0.1}" ng-if="data.learnedCount > 0">\{{data.learnedPercent*100}}%</span>
                       </td>
                       <td class="kt-datatable__cell text-center" style="width: 100px">
                         <span ng-class="{'kt-font-danger': data.weaknessPercent >= 0.3}">\{{data.weaknessCount}}人</span>
@@ -1032,7 +1033,7 @@
                       <div class="kt-notification__item-icon course-knowledge-technology">
                         <img ng-src="\{{courseKnowledge.technologyThumbnailSquare}}">
                       </div>
-                      <div class="kt-notification__item-details">
+                      <div class="kt-notification__item-details kt-padding-l-10">
                         <div class="kt-notification__item-title" ng-bind="courseKnowledge.knowledgeName">
                         </div>
                         <div class="kt-notification__item-time" ng-bind="courseKnowledge.learningPhaseName">

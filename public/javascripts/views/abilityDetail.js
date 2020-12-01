@@ -75,16 +75,12 @@ $(document).ready(function () {
 
   function setMenuActive() {
     $('ul.kt-menu__nav li').removeClass('kt-menu__item--here');
-    $('ul.kt-menu__nav li:nth-child(5)').addClass('kt-menu__item--here');
+    $('ul.kt-menu__nav li:nth-child(4)').addClass('kt-menu__item--here');
   }
 
   function setParameters() {
-    model.universityCode = $('#hidden_university_code').val();
-    model.schoolID = $('#hidden_school_id').val();
     model.studentID = $('#hidden_student_id').val();
-    if (!commonUtility.isNumber(model.universityCode) ||
-        !commonUtility.isNumber(model.schoolID) ||
-        !commonUtility.isNumber(model.studentID)) {
+    if (!commonUtility.isNumber(model.studentID)) {
       model.isParameterValid = false;
       return false;
     }
@@ -260,13 +256,6 @@ $(document).ready(function () {
             model.technologyID = $(this).attr('data-technology-id');
             $('#kt_modal_code_standard').modal('show');
           });
-
-          $("div.technology-analysis-detail").on("click", ".btn-detail-exercises", function () {
-            model.technologyID = $(this).attr('data-technology-id');
-            knowledgeExercisesModel.pageNumber = 1;
-            loadStudentExercise();
-            $('#kt_modal_exercise').modal('show');
-          });
         });
 
         setLevelClass();
@@ -418,159 +407,6 @@ $(document).ready(function () {
         $('.noLearning-knowledge-message-complete').addClass('kt-hidden');
         $('.noLearning-knowledge-message-none').addClass('kt-hidden');
 
-      },
-      error: function (e) {
-        bootbox.alert(localMessage.NETWORK_ERROR);
-      }
-    });
-  }
-
-  function loadStudentExercise() {
-    $.ajax({
-      type: 'GET',
-      url: '/ability/detail/exercise/list',
-      data: {
-        pageNumber: knowledgeExercisesModel.pageNumber,
-        universityCode: model.universityCode,
-        schoolID: model.schoolID,
-        studentID: model.studentID,
-        technologyID: model.technologyID,
-        dataStatus: knowledgeExercisesModel.dataStatus
-      },
-      dataType: "JSON",
-      success: function (result) {
-        if (result.err) {
-          bootbox.alert(localMessage.formatMessage(result.code, result.msg));
-          return false;
-        }
-        knowledgeExercisesModel.totalCount = result.dataContent.totalCount;
-        knowledgeExercisesModel.dataList = result.dataContent.dataList;
-        knowledgeExercisesModel.pageNumber = parseInt(result.dataContent.currentPageNum);
-        knowledgeExercisesModel.maxPageNumber = Math.ceil(result.dataContent.totalCount / result.dataContent.pageSize);
-        knowledgeExercisesModel.paginationArray = result.dataContent.paginationArray;
-        knowledgeExercisesModel.prePageNum = result.dataContent.prePageNum === undefined ? -1 : parseInt(result.dataContent.prePageNum);
-        knowledgeExercisesModel.nextPageNum = result.dataContent.nextPageNum === undefined ? -1 : parseInt(result.dataContent.nextPageNum);
-        knowledgeExercisesModel.fromIndex = result.dataContent.dataList === null ? 0 : (knowledgeExercisesModel.pageNumber - 1) * Constants.PAGE_SIZE + 1;
-        knowledgeExercisesModel.toIndex = result.dataContent.dataList === null ? 0 : (knowledgeExercisesModel.pageNumber - 1) * Constants.PAGE_SIZE + knowledgeExercisesModel.dataList.length;
-
-        if (commonUtility.isEmptyList(knowledgeExercisesModel.dataList)) {
-          $('#table_exercise tbody').empty();
-          $('ul.exercise-pagination').empty();
-          $('.kt-pagination__toolbar').empty();
-          return false;
-        }
-        $('#table_exercise tbody').empty();
-        knowledgeExercisesModel.dataList.forEach((data) => {
-          let tr =
-              `<tr>
-                <td style="width: 25%">${data.knowledgeName}</td>
-                <td style="width: 25%"><a href="${data.exercisesDocumentUrl}" class="kt-link--info" target="_blank">${data.exercisesDocumentUrl.substr(data.exercisesDocumentUrl.lastIndexOf('/') + 1)}</a></td>
-                <td style="width: 15%">${data.createTime}</td>`
-          if (data.dataStatus !== 'P') {
-            tr = tr + `<td style="width: 15%">${data.updateTime}</td>`
-          } else {
-            tr = tr + `<td style="width: 15%">&nbsp;</td>`
-          }
-
-          switch (data.dataStatus) {
-            case 'P':
-              tr = tr + `<td style="width: 10%"><span class="kt-badge kt-badge--brand kt-badge--inline kt-badge--pill">${data.dataStatusText}</span></td>`;
-              break;
-            case 'W':
-              tr = tr + `<td style="width: 10%"><span class="kt-badge kt-badge--warning kt-badge--inline kt-badge--pill">${data.dataStatusText}</span></td>`;
-              break;
-            case 'R':
-              tr = tr + `<td style="width: 10%"><span class="kt-badge kt-badge--danger kt-badge--inline kt-badge--pill">${data.dataStatusText}</span></td>`;
-              break;
-            case 'S':
-              tr = tr + `<td style="width: 10%"><span class="kt-badge kt-badge--success kt-badge--inline kt-badge--pill">${data.dataStatusText}</span></td>`;
-              break;
-          }
-          if (!commonUtility.isEmpty(data.sourceCodeGitUrl)) {
-            tr = tr +
-                `  <td style="width: 10%"> <a href="${data.sourceCodeGitUrl}" class="kt-link--info" target="_blank">查看</a> </td>
-            </tr>`;
-          } else {
-            tr = tr +
-                `  <td style="width: 10%">&nbsp;</td>
-            </tr>`;
-          }
-
-          $('#table_exercise tbody').append(tr);
-        });
-
-        $('ul.exercise-pagination').empty();
-        $('ul.exercise-pagination').append(
-            `<li class="kt-pagination__link--first">
-                  <a href="javascript:"><i class="fa fa-angle-double-left kt-font-warning"></i></a>
-                </li>
-                <li class="kt-pagination__link--prev">
-                  <a href="javascript:"><i class="fa fa-angle-left kt-font-warning"></i></a>
-               </li>`);
-        if (!commonUtility.isEmptyList(knowledgeExercisesModel.paginationArray)) {
-          knowledgeExercisesModel.paginationArray.forEach((pagination) => {
-            if (knowledgeExercisesModel.pageNumber === pagination) {
-              $('ul.exercise-pagination').append(`<li class="kt-pagination kt-pagination__link--active"><a href="javascript:">${pagination}</a></li>`);
-            } else {
-              $('ul.exercise-pagination').append(`<li class="kt-pagination"><a href="javascript:">${pagination}</a></li>`);
-            }
-          });
-        }
-        $('ul.exercise-pagination').append(
-            `<li class="kt-pagination__link--next">
-                <a href="javascript:"><i class="fa fa-angle-right kt-font-warning"></i></a>
-               </li>
-               <li class="kt-pagination__link--last">
-                <a href="javascript:"><i class="fa fa-angle-double-right kt-font-warning"></i></a>
-               </li>`);
-
-        $('.kt-pagination__toolbar').text(`显示第${knowledgeExercisesModel.fromIndex}到第${knowledgeExercisesModel.toIndex}条数据，共计${knowledgeExercisesModel.totalCount}条数据`);
-
-        $('ul.exercise-pagination .kt-pagination__link--first').off().click(function () {
-          if (knowledgeExercisesModel.pageNumber === 1) {
-            return false;
-          }
-          knowledgeExercisesModel.pageNumber = 1;
-          setActivePagination();
-          loadStudentExercise();
-        });
-
-        $('ul.exercise-pagination .kt-pagination__link--prev').off().click(function () {
-          if (knowledgeExercisesModel.pageNumber === 1) {
-            return false;
-          }
-          knowledgeExercisesModel.pageNumber--;
-          setActivePagination();
-          loadStudentExercise();
-        });
-
-        $('ul.exercise-pagination .kt-pagination').off().click(function () {
-          let pagination = parseInt($(this).text());
-          if (knowledgeExercisesModel.pageNumber === pagination) {
-            return false;
-          }
-          knowledgeExercisesModel.pageNumber = pagination;
-          setActivePagination();
-          loadStudentExercise();
-        });
-
-        $('ul.exercise-pagination .kt-pagination__link--next').off().click(function () {
-          if (knowledgeExercisesModel.pageNumber === knowledgeExercisesModel.maxPageNumber) {
-            return false;
-          }
-          knowledgeExercisesModel.pageNumber++;
-          setActivePagination();
-          loadStudentExercise();
-        });
-
-        $('ul.exercise-pagination .kt-pagination__link--last').off().click(function () {
-          if (knowledgeExercisesModel.pageNumber === knowledgeExercisesModel.maxPageNumber) {
-            return false;
-          }
-          knowledgeExercisesModel.pageNumber = knowledgeExercisesModel.maxPageNumber;
-          setActivePagination();
-          loadStudentExercise();
-        });
       },
       error: function (e) {
         bootbox.alert(localMessage.NETWORK_ERROR);
@@ -762,16 +598,6 @@ $(document).ready(function () {
       }
     });
   }
-
-  $('.btn-filter').click(function () {
-    knowledgeExercisesModel.dataStatus = $(this).attr('data-status');
-    knowledgeExercisesModel.pageNumber = 1;
-    $('.btn-filter').removeClass('btn-info');
-    $('.btn-filter').addClass('btn-outline-hover-info');
-    $(this).addClass('btn-info');
-    $(this).removeClass('btn-outline-hover-info');
-    loadStudentExercise();
-  });
 
   initPage();
 });

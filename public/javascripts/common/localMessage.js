@@ -9,7 +9,7 @@ localMessage.SET_SUCCESS = '设置成功！';
 localMessage.NO_USING_LEARNING_PHASE = '未查询到该技术的学习路径！';
 localMessage.NO_USING_KNOWLEDGE = '未查询到该学习路径的知识点！';
 localMessage.NO_TECHNOLOGY_DATA = '抱歉，暂时没有更多热门技术了, 后续会持续添加，敬请期待！';
-localMessage.NO_TECHNOLOGY_INFO = '已将所有的技术加载完成啦！';
+localMessage.NO_TECHNOLOGY_INFO = '没有找到该技术的相关信息！';
 localMessage.LOADED_ALL_KNOWLEDGE = '已将所有的知识点加载完成！';
 
 localMessage.EXERCISES_TYPE_SINGLE_INVALID = '单点练习只能选择一个技术的一个学习阶段的内容！';

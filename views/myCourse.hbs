@@ -116,10 +116,8 @@
                     <span class="kt-badge kt-badge--inline kt-badge--info" ng-if="course.dataStatus == '0'">未开始</span>
                     <span class="kt-badge kt-badge--inline kt-badge--success"
                       ng-if="course.dataStatus == '2'">已结束</span>
-                    <button type="button" class="btn btn-secondary btn-sm" ng-click="onOpenCourseDetail(course, 2, 6)"
-                      ng-if="course.dataStatus == '1'">批改作业</button>&nbsp;
-                    {{!-- <button type="button" class="btn btn-primary btn-sm btn-upper" ng-click="onFinishCourse(course)"
-                      ng-if="course.dataStatus == '1'">授课完成</button> --}}
+                    <button type="button" class="btn btn-secondary btn-sm" ng-click="onOpenCourseDetail(course, 0, 1)"
+                      ng-if="course.dataStatus == '1'">进入课程</button>&nbsp;
                   </div>
                 </div>
                 <div class="kt-widget__subhead">
@@ -178,8 +176,11 @@
                 </div>
                 <div class="kt-widget__details">
                   <span class="kt-widget__title">随堂练习题</span>
+<!--                  <a href="javascript:;" class="kt-widget__value no-hand">-->
+<!--                    \{{course.courseKnowledgeExercisesCount}}-->
+<!--                  </a>-->
                   <a href="javascript:;" class="kt-widget__value no-hand">
-                    \{{course.courseKnowledgeExercisesCount}}
+                    500+
                   </a>
                 </div>
               </div>

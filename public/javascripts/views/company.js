@@ -17,7 +17,7 @@ pageApp.controller('pageCtrl', function($scope, $http) {
 
     $scope.setMenuActive = function() {
         $('ul.kt-menu__nav li').removeClass('kt-menu__item--here');
-        $('ul.kt-menu__nav li:nth-child(6)').addClass('kt-menu__item--here');
+        $('ul.kt-menu__nav li:nth-child(5)').addClass('kt-menu__item--here');
     };
 
     $scope.loadCompany = function() {

@@ -47,20 +47,31 @@ pageApp.controller('pageCtrl', function ($scope, $sce, $http) {
 				if (response.data.courseExercises.createTime !== response.data.courseExercises.updateTime) {
 					$scope.model.submitTime = response.data.courseExercises.updateTime;
 				}
-				response.data.courseExercises.singleChoiceExercisesList.forEach((data) => {
-					data.exercisesTitleHtml = $sce.trustAsHtml(data.exercisesTitleHtml);
-				});
-				response.data.courseExercises.multipleChoiceExercisesList.forEach((data) => {
-					data.exercisesTitleHtml = $sce.trustAsHtml(data.exercisesTitleHtml);
-				});
-				response.data.courseExercises.blankExercisesList.forEach((data) => {
-					data.exercisesTitleHtml = $sce.trustAsHtml(data.exercisesTitleHtml);
-				});
-				response.data.courseExercises.programExercisesList.forEach((data) => {
-					if (data.exercisesSourceType === 1) {
+				if (!commonUtility.isEmptyList(response.data.courseExercises.singleChoiceExercisesList)) {
+					response.data.courseExercises.singleChoiceExercisesList.forEach((data) => {
 						data.exercisesTitleHtml = $sce.trustAsHtml(data.exercisesTitleHtml);
-					}
-				});
+					});
+				}
+
+				if (!commonUtility.isEmptyList(response.data.courseExercises.multipleChoiceExercisesList)) {
+					response.data.courseExercises.multipleChoiceExercisesList.forEach((data) => {
+						data.exercisesTitleHtml = $sce.trustAsHtml(data.exercisesTitleHtml);
+					});
+				}
+
+				if (!commonUtility.isEmptyList(response.data.courseExercises.blankExercisesList)) {
+					response.data.courseExercises.blankExercisesList.forEach((data) => {
+						data.exercisesTitleHtml = $sce.trustAsHtml(data.exercisesTitleHtml);
+					});
+				}
+
+				if (!commonUtility.isEmptyList(response.data.courseExercises.programExercisesList)) {
+					response.data.courseExercises.programExercisesList.forEach((data) => {
+						if (data.exercisesSourceType === 1) {
+							data.exercisesTitleHtml = $sce.trustAsHtml(data.exercisesTitleHtml);
+						}
+					});
+				}
 
 				$scope.model.singleChoiceList = response.data.courseExercises.singleChoiceExercisesList;
 				$scope.model.multipleChoiceList = response.data.courseExercises.multipleChoiceExercisesList;

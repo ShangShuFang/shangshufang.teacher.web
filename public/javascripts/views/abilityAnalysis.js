@@ -42,7 +42,7 @@ pageApp.controller('pageCtrl', function($scope, $http) {
 
     $scope.setMenuActive = function() {
         $('ul.kt-menu__nav li').removeClass('kt-menu__item--here');
-        $('ul.kt-menu__nav li:nth-child(5)').addClass('kt-menu__item--here');
+        $('ul.kt-menu__nav li:nth-child(4)').addClass('kt-menu__item--here');
     };
 
     $scope.loadDirectionList = function() {

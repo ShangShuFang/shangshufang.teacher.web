@@ -110,7 +110,7 @@
                           ng-bind="data.difficultyLevelText"></span>
                   </div>
                   <div class="kt-widget__contact">
-                    <span class="kt-widget__label">涵盖知识点:</span>
+                    <span class="kt-widget__label">项目高频知识点:</span>
                     <span class="kt-widget__data" ng-bind="data.knowledgeCount"></span>
                   </div>
                   <div class="kt-widget__contact">
@@ -126,8 +126,7 @@
                   <div class="item">
                     <ul ng-if="data.topStudentMainInfoList != null">
                       <li ng-repeat="student in data.topStudentMainInfoList">
-                        <a ng-href="/ability/detail?universityCode=\{{student.universityCode}}&schoolID=\
-                        {{student.schoolID}}&studentID=\{{student.studentID}}" target="_blank">
+                        <a ng-href="/ability/detail?studentID=\{{student.studentID}}" target="_blank">
                         <img src="/media/users/teacher_default.png" ng-if="student.studentPhoto == ''">
                         <img ng-src="\{{student.studentPhoto}}" ng-if="student.studentPhoto != ''">
                         </a>

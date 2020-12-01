@@ -1,8 +1,10 @@
 {
   "pageSize": {
+    "two": "2",
     "five": "5",
     "eight": "8",
     "ten": "10",
+    "twelve": "12",
     "sixteen": "16",
     "all": "9999"
   }

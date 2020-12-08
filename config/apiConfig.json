@@ -43,7 +43,7 @@
       "signUp4Course": "/api/v1/course/sign_up/list/course",
       "courseQuestionList": "/api/v1/course/question/list",
 
-      "courseKnowledgeLearnAnalyse": "/api/v1/course//list/knowledge/analyse",
+      "courseKnowledgeLearnAnalyse": "/api/v1/course/list/knowledge/analyse",
 
 
       "addCourseQuestionLeaveMessage": "/api/v1/course/answer/add",
@@ -103,7 +103,8 @@
       "changeCustomKnowledgeProgramExercises": "/api/v1/university/exercise/knowledge/program/change",
       "deleteCustomKnowledgeProgramExercises": "/api/v1/university/exercise/knowledge/program/delete",
       "studentCourseExercises": "/api/v1/course/exercises/any",
-      "programReviewList": "/api/v1/course/exercises/list/review/program"
+      "programReviewList": "/api/v1/course/exercises/list/review/program",
+      "addThirdPartyService": "/api/v1/thirdParty/service/add"
     }
   }
 }

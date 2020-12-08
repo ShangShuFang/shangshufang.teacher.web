@@ -1,7 +1,9 @@
 let express = require('express');
 let router = express.Router();
 let dateUtils = require('../common/dateUtils');
+let smsUtils = require('../common/smsUtils');
 let commonService = require('../service/commonService');
+let sysConfig = require('../config/sysConfig.json');
 
 router.get('/dateFormat', (req, res, next) => {
   let formatDate = dateUtils.formatGMT(req.query.utcDate);
@@ -296,29 +298,59 @@ router.get('/verificationCode/check', (req, res, next) => {
 });
 
 router.post('/verificationCode/send', function (req, res, next) {
-  //todo 调用阿里云，发送手机验证码
-  let service = new commonService.commonInvoke('addVerificationCode');
-  let data = {
-    systemFunction: req.body.systemFunction,
-    cellphone: req.body.cellphone,
-    code: req.body.verificationCode
-  };
+  let cellphone = req.body.cellphone;
+  let code = req.body.verificationCode;
+  smsUtils.sendVerificationCode(cellphone, code, (response) => {
+    //保存调用日志
+    let service = new commonService.commonInvoke('addThirdPartyService');
+    let data = {
+      serviceType: sysConfig.thirdPartyService.aliSms,
+      requestContent: JSON.stringify(response.reqContent),
+      responseContent: JSON.stringify(response.resContent),
+      result: response.result? 'Y' : 'N'
+    };
+    service.create(data, (result) => {
+      if(result.err){
+        res.json({
+          err: true,
+          code: result.code,
+          msg: result.msg
+        });
+      }else{
+        if (response.result) {
+          //保存发送的验证码
+          let service = new commonService.commonInvoke('addVerificationCode');
+          let data = {
+            systemFunction: req.body.systemFunction,
+            cellphone: req.body.cellphone,
+            code: req.body.verificationCode
+          };
 
-  service.create(data, (result) => {
-    if(result.err){
-      res.json({
-        err: true,
-        code: result.code,
-        msg: result.msg
-      });
-    }else{
-      res.json({
-        err: false,
-        code: result.code,
-        msg: result.msg
-      });
-    }
-  });
+          service.create(data, (result) => {
+            if(result.err){
+              res.json({
+                err: true,
+                code: result.code,
+                msg: result.msg
+              });
+            }else{
+              res.json({
+                err: false,
+                code: result.code,
+                msg: result.msg
+              });
+            }
+          });
+        } else {
+          res.json({
+            err: true,
+            code: '2C99',
+            msg: `验证码发送失败，原因：${response.resContent.message}`
+          });
+        }
+      }
+    });
+  })
 });
 
 module.exports = router;

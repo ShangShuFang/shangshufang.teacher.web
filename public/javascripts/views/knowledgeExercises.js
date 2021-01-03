@@ -964,6 +964,7 @@ pageApp.controller('pageCtrl', function ($scope, $sce, $http) {
 		if (!$scope.setUriParameter()) {
 			return false;
 		}
+		tracking.view(trackingSetting.view.customKnowledgeExercises);
 		$scope.loadKnowledgeInfo();
 		$scope.clearExercisesDataList();
 		$scope.loadExercises();

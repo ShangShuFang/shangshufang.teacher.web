@@ -104,7 +104,8 @@
       "deleteCustomKnowledgeProgramExercises": "/api/v1/university/exercise/knowledge/program/delete",
       "studentCourseExercises": "/api/v1/course/exercises/any",
       "programReviewList": "/api/v1/course/exercises/list/review/program",
-      "addThirdPartyService": "/api/v1/thirdParty/service/add"
+      "addThirdPartyService": "/api/v1/thirdParty/service/add",
+      "addUserTracking": "/api/v1/tracking/add"
     }
   }
 }

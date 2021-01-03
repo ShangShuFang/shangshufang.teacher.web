@@ -69,15 +69,11 @@ pageApp.controller('pageCtrl', function($scope, $http) {
     };
 
     $scope.initPage = function() {
-        bizLogger.logInfo(
-            $scope.model.bizLog.pageName,
-            $scope.model.bizLog.operationName.PAGE_LOAD,
-            bizLogger.OPERATION_TYPE.LOAD,
-            bizLogger.OPERATION_RESULT.SUCCESS);
         if (!commonUtility.isLogin()) {
             location.href = '/login?backUrl=/course';
             return false;
         }
+        tracking.view(trackingSetting.view.createCourse);
         $scope.model.loginUser = commonUtility.getLoginUser();
         $scope.setMenuActive();
         $scope.setCourseTechnology();
@@ -493,21 +489,11 @@ pageApp.controller('pageCtrl', function($scope, $http) {
             loginUser: $scope.model.loginUser.customerID
         }).then(function successCallback(response) {
             if (response.data.err) {
-                bizLogger.logInfo(
-                    $scope.model.bizLog.pageName,
-                    $scope.model.bizLog.operationName.SAVE_COURSE,
-                    bizLogger.OPERATION_TYPE.INSERT,
-                    bizLogger.OPERATION_RESULT.FAILED);
                 KTApp.unprogress(btn);
                 bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
                 return false;
             }
             $scope.model.isSubmitSuccess = true;
-            bizLogger.logInfo(
-                $scope.model.bizLog.pageName,
-                $scope.model.bizLog.operationName.SAVE_COURSE,
-                bizLogger.OPERATION_TYPE.INSERT,
-                bizLogger.OPERATION_RESULT.SUCCESS);
         }, function errorCallback(response) {
             bootbox.alert(localMessage.NETWORK_ERROR);
         });

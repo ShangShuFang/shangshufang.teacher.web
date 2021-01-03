@@ -11,6 +11,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.initPage = function() {
+    tracking.view(trackingSetting.view.feedback);
     if(commonUtility.isLogin()){
       $scope.model.loginUserID = commonUtility.getLoginUser().customerID;
     }

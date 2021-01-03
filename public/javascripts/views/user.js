@@ -31,19 +31,13 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.initPage = function () {
+    tracking.view(trackingSetting.view.userInfo);
     $scope.model.isLogin = commonUtility.isLogin();
     $scope.model.loginUser = commonUtility.getLoginUser();
     if(!$scope.model.isLogin){
       location.href = '/';
       return false;
     }
-
-    bizLogger.logInfo(
-        $scope.model.bizLog.pageName,
-        $scope.model.bizLog.operationName.PAGE_LOAD,
-        bizLogger.OPERATION_TYPE.LOAD,
-        bizLogger.OPERATION_RESULT.SUCCESS);
-
     $scope.initUploadPlugin();
     $scope.loadCustomerInfo();
   };
@@ -171,21 +165,11 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       loginUser: $scope.model.loginUser.customerID
     }).then(function successCallback(response) {
       if(response.data.err){
-        bizLogger.logInfo(
-            $scope.model.bizLog.pageName,
-            $scope.model.bizLog.operationName.CHANGE_USER_INFO,
-            bizLogger.OPERATION_TYPE.UPDATE,
-            bizLogger.OPERATION_RESULT.FAILED);
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
       }
       commonUtility.setCookie(Constants.COOKIE_LOGIN_USER, JSON.stringify($scope.model.loginUser));
       layer.msg(localMessage.SAVE_SUCCESS);
-      bizLogger.logInfo(
-          $scope.model.bizLog.pageName,
-          $scope.model.bizLog.operationName.CHANGE_USER_INFO,
-          bizLogger.OPERATION_TYPE.UPDATE,
-          bizLogger.OPERATION_RESULT.SUCCESS);
     }, function errorCallback(response) {
       bootbox.alert(localMessage.NETWORK_ERROR);
     });

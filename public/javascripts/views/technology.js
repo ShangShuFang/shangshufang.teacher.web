@@ -57,6 +57,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     if (!result) {
       return false;
     }
+    tracking.view(trackingSetting.view.technologyDetail);
     $scope.loadTechnologyInfo();
   };
 
@@ -70,20 +71,9 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.model.technologyID = $('#hidden_technologyID').val();
     if(commonUtility.isEmpty($scope.model.technologyID) || Number.isNaN($scope.model.technologyID)){
       $scope.model.bizLog.logMemo = `${localMessage.PARAMETER_ERROR}, technologyID: ${$scope.model.technologyID}`;
-      bizLogger.logInfo(
-          $scope.model.bizLog.pageName,
-          $scope.model.bizLog.operationName.PAGE_LOAD,
-          bizLogger.OPERATION_TYPE.LOAD,
-          bizLogger.OPERATION_RESULT.FAILED,
-          $scope.model.bizLog.logMemo);
       bootbox.alert(localMessage.PARAMETER_ERROR);
       return false;
     }
-    bizLogger.logInfo(
-        $scope.model.bizLog.pageName,
-        $scope.model.bizLog.operationName.PAGE_LOAD,
-        bizLogger.OPERATION_TYPE.LOAD,
-        bizLogger.OPERATION_RESULT.SUCCESS);
     return true;
   };
 
@@ -303,20 +293,9 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     $scope.model.knowledgePageNumber++;
     $scope.model.isShowLoadCompleteMessage = true;
     $scope.loadKnowledgeList();
-    bizLogger.logInfo(
-        $scope.model.bizLog.pageName,
-        $scope.model.bizLog.operationName.LOAD_MORE_KNOWLEDGE,
-        bizLogger.OPERATION_TYPE.LOAD,
-        bizLogger.OPERATION_RESULT.SUCCESS);
   };
 
   $scope.onCreateCourse = function(){
-    bizLogger.logInfo(
-        $scope.model.bizLog.pageName,
-        $scope.model.bizLog.operationName.TECHNOLOGY_CREATE_COURSE,
-        bizLogger.OPERATION_TYPE.REDIRECT,
-        bizLogger.OPERATION_RESULT.SUCCESS);
-
     const newCourseTechnology = {
       technologyID: $scope.model.technologyInfo.technologyID,
       technologyName: $scope.model.technologyInfo.technologyName,
@@ -333,21 +312,11 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   $scope.onLoadMoreCourseSelfUniversity = function() {
     $scope.model.courseProcessing4UniversityPageNumber++;
     $scope.loadCourseOfUniversityList();
-    bizLogger.logInfo(
-        $scope.model.bizLog.pageName,
-        $scope.model.bizLog.operationName.LOAD_MORE_SELF_COURSE,
-        bizLogger.OPERATION_TYPE.LOAD,
-        bizLogger.OPERATION_RESULT.SUCCESS);
   };
 
   $scope.onLoadMoreCourseOtherUniversity = function() {
     $scope.model.courseProcessing4OtherUniversityPageNumber++;
     $scope.loadCourseOfOtherUniversityList();
-    bizLogger.logInfo(
-        $scope.model.bizLog.pageName,
-        $scope.model.bizLog.operationName.LOAD_MORE_OTHER_COURSE,
-        bizLogger.OPERATION_TYPE.LOAD,
-        bizLogger.OPERATION_RESULT.SUCCESS);
   };
 
   $scope.onOpenCourseDetail = function(course, flag) {
@@ -359,11 +328,6 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     let operationName = flag === 0 ?
         $scope.model.bizLog.operationName.SELF_COURSE_REDIRECT :
         $scope.model.bizLog.operationName.OTHER_COURSE_REDIRECT;
-    bizLogger.logInfo(
-        $scope.model.bizLog.pageName,
-        operationName,
-        bizLogger.OPERATION_TYPE.LOAD,
-        bizLogger.OPERATION_RESULT.SUCCESS);
     localStorage.setItem(Constants.KEY_INFO_COURSE_IDENTIFY, courseParam);
     window.open('/course/detail');
   };

@@ -14,7 +14,7 @@ bizLogger.OPERATION_TYPE = {
 };
 
 bizLogger.logInfo = function (pageName, operationName, operationType, operationResult, memo) {
-  let ipAddress = commonUtility.getIpAddress();
+  let ipAddress = commonUtility.getClientObject();
   let browser = commonUtility.getBrowserName();
   let device = commonUtility.getDeviceName();
   let portal = 'T';

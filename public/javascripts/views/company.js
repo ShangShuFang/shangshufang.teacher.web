@@ -11,8 +11,9 @@ pageApp.controller('pageCtrl', function($scope, $http) {
     };
 
     $scope.initPage = function() {
-        $scope.setMenuActive();
-        $scope.loadCompany();
+      tracking.view(trackingSetting.view.jobEvaluation);
+      $scope.setMenuActive();
+      $scope.loadCompany();
     };
 
     $scope.setMenuActive = function() {

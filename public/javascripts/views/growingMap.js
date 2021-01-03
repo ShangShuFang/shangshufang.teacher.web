@@ -7,6 +7,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.initPage = function () {
+    tracking.view(trackingSetting.view.growthMap);
     commonUtility.setNavActive();
     $scope.loadGrowingList();
   };

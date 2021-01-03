@@ -58,11 +58,7 @@ $(document).ready(function () {
   };
 
   function initPage() {
-    bizLogger.logInfo(
-        model.bizLog.pageName,
-        model.bizLog.operationName.PAGE_LOAD,
-        bizLogger.OPERATION_TYPE.LOAD,
-        bizLogger.OPERATION_RESULT.SUCCESS);
+    tracking.view(trackingSetting.view.abilityAnalysisDetail);
     setMenuActive();
     setParameters();
     if (!model.isParameterValid) {

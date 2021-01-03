@@ -353,4 +353,34 @@ router.post('/verificationCode/send', function (req, res, next) {
   })
 });
 
+router.post('/tracking', (req, res, next) => {
+  let service = new commonService.commonInvoke('addUserTracking');
+  let data = {
+    cityIP: req.body.cityIP,
+    cityID: req.body.cityID,
+    cityName: req.body.cityName,
+    customer: req.body.customer,
+    device: req.body.device,
+    browser: req.body.browser,
+    systemID: req.body.systemID,
+    viewID: req.body.viewID
+  };
+
+  service.create(data, (result) => {
+    if(result.err){
+      res.json({
+        err: true,
+        code: result.code,
+        msg: result.msg
+      });
+    }else{
+      res.json({
+        err: false,
+        code: result.code,
+        msg: result.msg
+      });
+    }
+  });
+});
+
 module.exports = router;

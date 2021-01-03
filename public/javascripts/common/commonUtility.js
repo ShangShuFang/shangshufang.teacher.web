@@ -100,7 +100,7 @@ commonUtility.isLogin = function () {
   return login_cookie !== null;
 };
 
-commonUtility.getIpAddress = function () {
+commonUtility.getClientObject = function () {
   try {
     let cityIP = returnCitySN["cip"];
     let cityID = returnCitySN["cid"];

@@ -19,6 +19,7 @@ pageApp.controller('pageCtrl', function ($scope, $sce, $http) {
 	};
 
 	$scope.initPage = function () {
+		tracking.view(trackingSetting.view.studentKnowledgeExercises);
 		$scope.setMenuActive();
 		$scope.loadExercises();
 	};

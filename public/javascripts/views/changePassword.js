@@ -27,17 +27,13 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.initPage = function () {
+    tracking.view(trackingSetting.view.changePassword);
     $scope.model.isLogin = commonUtility.isLogin();
     $scope.model.loginUser = commonUtility.getLoginUser();
     if(!$scope.model.isLogin){
       location.href = '/';
       return false;
     }
-    bizLogger.logInfo(
-        $scope.model.bizLog.pageName,
-        $scope.model.bizLog.operationName.PAGE_LOAD,
-        bizLogger.OPERATION_TYPE.LOAD,
-        bizLogger.OPERATION_RESULT.SUCCESS);
   };
 
   $scope.onPasswordBlur = function() {
@@ -94,19 +90,9 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
       loginUser: $scope.model.loginUser.customerID
     }).then(function successCallback(response) {
       if(response.data.err){
-        bizLogger.logInfo(
-            $scope.model.bizLog.pageName,
-            $scope.model.bizLog.operationName.CHANGE_USER_PASSWORD,
-            bizLogger.OPERATION_TYPE.UPDATE,
-            bizLogger.OPERATION_RESULT.FAILED);
         bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
         return false;
       }
-      bizLogger.logInfo(
-          $scope.model.bizLog.pageName,
-          $scope.model.bizLog.operationName.CHANGE_USER_PASSWORD,
-          bizLogger.OPERATION_TYPE.UPDATE,
-          bizLogger.OPERATION_RESULT.SUCCESS);
       $scope.model.isChangeSuccess = true;
     }, function errorCallback(response) {
       bootbox.alert(localMessage.NETWORK_ERROR);

@@ -30,6 +30,7 @@ pageApp.controller('pageCtrl', function($scope, $http) {
     };
 
     $scope.initPage = function() {
+        tracking.view(trackingSetting.view.abilityAnalysisList);
         $scope.model.isLogin = commonUtility.isLogin();
         $scope.model.loginUser = commonUtility.getLoginUser();
         $scope.setMenuActive();

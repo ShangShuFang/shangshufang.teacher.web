@@ -44,11 +44,7 @@ pageApp.controller('pageCtrl', function($scope, $http) {
     };
 
     $scope.initPage = function() {
-        bizLogger.logInfo(
-            $scope.model.bizLog.pageName,
-            $scope.model.bizLog.operationName.PAGE_LOAD,
-            bizLogger.OPERATION_TYPE.LOAD,
-            bizLogger.OPERATION_RESULT.SUCCESS);
+        tracking.view(trackingSetting.view.myCourse);
         $scope.model.isLogin = commonUtility.isLogin();
         $scope.model.loginUser = commonUtility.getLoginUser();
         $scope.setMenuActive();
@@ -214,42 +210,21 @@ pageApp.controller('pageCtrl', function($scope, $http) {
     };
 
     $scope.onSelectedTime = function(data) {
-        bizLogger.logInfo(
-            $scope.model.bizLog.pageName,
-            $scope.model.bizLog.operationName.FILTER_COURSE_YEAR,
-            bizLogger.OPERATION_TYPE.SEARCH,
-            bizLogger.OPERATION_RESULT.SUCCESS);
         $scope.model.selectedTime = data;
         $scope.loadCourseList();
     };
 
     $scope.onSelectDataStatus = function(data) {
-        bizLogger.logInfo(
-            $scope.model.bizLog.pageName,
-            $scope.model.bizLog.operationName.FILTER_COURSE_STATUS,
-            bizLogger.OPERATION_TYPE.SEARCH,
-            bizLogger.OPERATION_RESULT.SUCCESS);
         $scope.model.selectedDataStatus = data;
         $scope.loadCourseList();
     };
 
     $scope.onLoadMoreCourse = function() {
-        bizLogger.logInfo(
-            $scope.model.bizLog.pageName,
-            $scope.model.bizLog.operationName.LOAD_MORE_COURSE,
-            bizLogger.OPERATION_TYPE.SEARCH,
-            bizLogger.OPERATION_RESULT.SUCCESS);
         $scope.model.pageNumber++;
         $scope.loadCourseList();
     };
 
     $scope.onOpenTechnologyInfo = function(technologyID) {
-        bizLogger.logInfo(
-            $scope.model.bizLog.pageName,
-            $scope.model.bizLog.operationName.COURSE_IMAGE_LINK,
-            bizLogger.OPERATION_TYPE.REDIRECT,
-            bizLogger.OPERATION_RESULT.SUCCESS);
-
         window.open(`/technology?technology=${technologyID}`);
     };
 
@@ -266,13 +241,6 @@ pageApp.controller('pageCtrl', function($scope, $http) {
                 operationName = $scope.model.bizLog.operationName.COURSE_REDIRECT_REVIEW;
                 break;
         }
-
-        bizLogger.logInfo(
-            $scope.model.bizLog.pageName,
-            operationName,
-            bizLogger.OPERATION_TYPE.REDIRECT,
-            bizLogger.OPERATION_RESULT.SUCCESS);
-
         let courseParam = JSON.stringify({
             universityCode: course.universityCode,
             schoolID: course.schoolID,
@@ -288,11 +256,7 @@ pageApp.controller('pageCtrl', function($scope, $http) {
     };
 
     $scope.onFinishCourse = function(course) {
-        bizLogger.logInfo(
-            $scope.model.bizLog.pageName,
-            $scope.model.bizLog.operationName.COURSE_CHANGE_FINISH,
-            bizLogger.OPERATION_TYPE.UPDATE,
-            bizLogger.OPERATION_RESULT.SUCCESS);
+
     };
 
     $scope.initPage();

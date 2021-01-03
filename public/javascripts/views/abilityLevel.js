@@ -6,6 +6,7 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.initPage = function() {
+    tracking.view(trackingSetting.view.levelStandard);
     $scope.setMenuActive();
     $scope.setAbilityLevel();
   };

@@ -13,11 +13,6 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
   };
 
   $scope.initPage = function () {
-    bizLogger.logInfo(
-        $scope.model.bizLog.pageName,
-        $scope.model.bizLog.operationName.PAGE_LOAD,
-        bizLogger.OPERATION_TYPE.LOAD,
-        bizLogger.OPERATION_RESULT.SUCCESS);
     $scope.model.isLogin = commonUtility.isLogin();
     $scope.model.loginUser = commonUtility.getLoginUser();
     $scope.setMenuActive();    
@@ -132,12 +127,6 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
     } else {
       operationName = $scope.model.bizLog.operationName.CREATE_COURSE_LINK;
     }
-    bizLogger.logInfo(
-        $scope.model.bizLog.pageName,
-        operationName,
-        bizLogger.OPERATION_TYPE.REDIRECT,
-        bizLogger.OPERATION_RESULT.SUCCESS);
-
     if(technologyID !== 0){
       localStorage.setItem(Constants.KEY_NEW_COURSE_TECHNOLOGY, technologyID);
     }
@@ -161,13 +150,6 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
         operationName = $scope.model.bizLog.operationName.COURSE_REDIRECT_REVIEW;
         break;
     }
-
-    bizLogger.logInfo(
-        $scope.model.bizLog.pageName,
-        operationName,
-        bizLogger.OPERATION_TYPE.REDIRECT,
-        bizLogger.OPERATION_RESULT.SUCCESS);
-
     let courseParam = JSON.stringify({
       universityCode: course.universityCode,
       schoolID: course.schoolID,
@@ -209,20 +191,10 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
             loginUser: $scope.model.loginUser.customerID
           }).then(function successCallback(response) {
             if (response.data.err) {
-              bizLogger.logInfo(
-                  $scope.model.bizLog.pageName,
-                  $scope.model.bizLog.operationName.COURSE_CHANGE_FINISH,
-                  bizLogger.OPERATION_TYPE.UPDATE,
-                  bizLogger.OPERATION_RESULT.FAILED);
               KTApp.unprogress(btn);
               bootbox.alert(localMessage.formatMessage(response.data.code, response.data.msg));
               return false;
             }
-            bizLogger.logInfo(
-                $scope.model.bizLog.pageName,
-                $scope.model.bizLog.operationName.COURSE_CHANGE_FINISH,
-                bizLogger.OPERATION_TYPE.UPDATE,
-                bizLogger.OPERATION_RESULT.SUCCESS);
             $scope.loadCourseList();
           }, function errorCallback(response) {
             bootbox.alert(localMessage.NETWORK_ERROR);
@@ -248,12 +220,6 @@ pageApp.controller('pageCtrl', function ($scope, $http) {
         operationName = $scope.model.bizLog.operationName.COURSE_IMAGE_LINK;
         break;
     }
-    bizLogger.logInfo(
-        $scope.model.bizLog.pageName,
-        operationName,
-        bizLogger.OPERATION_TYPE.REDIRECT,
-        bizLogger.OPERATION_RESULT.SUCCESS);
-
     window.open(`/technology?technology=${technologyID}`);
   };
 
